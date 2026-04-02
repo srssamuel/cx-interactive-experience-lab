@@ -3,249 +3,259 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A Equação Invisível — Por que entregar o resultado certo da forma errada ainda é fracasso. Uma experiência interativa sobre Customer Experience.">
+    <meta name="description" content="A Equação Invisível — Por que entregar o resultado certo da forma errada ainda é fracasso.">
     <meta property="og:title" content="A Equação Invisível — Experiência do Cliente Repensada">
     <meta property="og:description" content="Sucesso do cliente = Resultado Esperado + Experiência Apropriada. Uma experiência digital de facilitação executiva.">
     <title>A Equação Invisível — Experiência do Cliente Repensada</title>
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap" rel="stylesheet">
-
     <style>
         :root {
-            --bg: #0a1128;
-            --bg-alt: #060e20;
-            --surface: #0f1a30;
-            --surface-hover: #162040;
-            --primary: #00d4aa;
-            --primary-rgb: 0, 212, 170;
-            --primary-muted: rgba(0, 212, 170, 0.10);
-            --accent: #6366f1;
-            --accent-rgb: 99, 102, 241;
-            --accent-muted: rgba(99, 102, 241, 0.10);
-            --text: #e4e9f2;
-            --text-sec: #8a94a8;
-            --text-muted: #576175;
-            --border: rgba(255,255,255,0.07);
-            --border-hover: rgba(255,255,255,0.14);
-            --font-d: 'Playfair Display', Georgia, serif;
-            --font-b: 'Inter', -apple-system, sans-serif;
-            --ease: cubic-bezier(0.16, 1, 0.3, 1);
-            --max-w: 1140px;
-            --content-w: 760px;
+            --bg:#0a1128; --bg-alt:#060e1d; --surface:#0f1a30; --surface-h:#162040;
+            --primary:#00d4aa; --p-rgb:0,212,170; --p-muted:rgba(0,212,170,0.10); --p-glow:rgba(0,212,170,0.25);
+            --accent:#6366f1; --a-rgb:99,102,241; --a-muted:rgba(99,102,241,0.10);
+            --warn:#f87171; --warn-muted:rgba(248,113,113,0.10);
+            --text:#e4e9f2; --text-s:#8a94a8; --text-m:#576175; --border:rgba(255,255,255,0.07); --border-h:rgba(255,255,255,0.14);
+            --fd:'Playfair Display',Georgia,serif; --fb:'Inter',-apple-system,sans-serif;
+            --ease:cubic-bezier(0.16,1,0.3,1); --mw:1140px; --cw:760px;
         }
-        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-        html { scroll-behavior: smooth; font-size: 16px; scroll-padding-top: 40px; }
-        body { font-family: var(--font-b); background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-        ::selection { background: var(--primary); color: var(--bg); }
-        img { max-width:100%; display:block; }
-        a { color: var(--primary); text-decoration: none; }
-        button { cursor: pointer; font-family: inherit; }
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth;font-size:16px;scroll-padding-top:40px}
+        body{font-family:var(--fb);background:var(--bg);color:var(--text);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+        ::selection{background:var(--primary);color:var(--bg)}
+        img{max-width:100%;display:block} a{color:var(--primary);text-decoration:none} button{cursor:pointer;font-family:inherit}
 
-        h1,h2,h3,h4 { font-family: var(--font-d); line-height:1.15; font-weight:700; color: var(--text); }
-        h1 { font-size: clamp(2.2rem, 5vw, 4.2rem); letter-spacing:-0.025em; }
-        h2 { font-size: clamp(1.6rem, 3.5vw, 2.8rem); letter-spacing:-0.015em; }
-        h3 { font-size: clamp(1.15rem, 2vw, 1.5rem); }
-        p { font-size: 1.1rem; color: var(--text-sec); max-width: 65ch; }
-        p + p { margin-top: 1.25rem; }
+        h1,h2,h3,h4{font-family:var(--fd);line-height:1.15;font-weight:700;color:var(--text)}
+        h1{font-size:clamp(2.2rem,5vw,4.5rem);letter-spacing:-0.03em}
+        h2{font-size:clamp(1.6rem,3.5vw,2.8rem);letter-spacing:-0.02em}
+        h3{font-size:clamp(1.15rem,2vw,1.5rem)}
+        p{font-size:1.1rem;color:var(--text-s);max-width:65ch} p+p{margin-top:1.25rem}
+        strong{color:var(--text);font-weight:600}
 
-        .label { font-size: 0.72rem; font-weight:600; text-transform:uppercase; letter-spacing:0.14em; color: var(--primary); display:inline-block; }
-        .container { width:100%; max-width: var(--max-w); margin:0 auto; padding:0 2rem; }
-        .content-narrow { max-width: var(--content-w); }
-        section { padding: 7rem 0; position: relative; }
+        .label{font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.14em;color:var(--primary);display:inline-block}
+        .container{width:100%;max-width:var(--mw);margin:0 auto;padding:0 2rem}
+        section{padding:7rem 0;position:relative}
+        main{position:relative}
 
-        /* Ambient */
-        body::before { content:''; position:fixed; inset:0; background: radial-gradient(ellipse 80% 50% at 20% 40%, rgba(var(--primary-rgb),0.03) 0%, transparent 70%), radial-gradient(ellipse 60% 40% at 80% 60%, rgba(var(--accent-rgb),0.025) 0%, transparent 70%); pointer-events:none; z-index:0; }
-        body > * { position:relative; z-index:1; }
+        /* ─── AMBIENT ─── */
+        body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 50% at 20% 40%,rgba(var(--p-rgb),0.035) 0%,transparent 70%),radial-gradient(ellipse 60% 40% at 80% 60%,rgba(var(--a-rgb),0.025) 0%,transparent 70%);pointer-events:none;z-index:0}
+        body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");background-size:200px;pointer-events:none;z-index:0;opacity:0.5}
+        body>*{position:relative;z-index:1}
 
-        /* ── NAV DOTS ── */
-        .nav-dots { position:fixed; right:1.5rem; top:50%; transform:translateY(-50%); z-index:200; display:flex; flex-direction:column; gap:0.6rem; opacity:0; transition: opacity 0.3s var(--ease); }
-        .nav-dots.show { opacity:1; }
-        .nav-dot { width:9px; height:9px; border-radius:50%; background: var(--border); border:none; padding:0; transition: all 0.2s var(--ease); position:relative; }
-        .nav-dot::after { content: attr(aria-label); position:absolute; right:20px; top:50%; transform:translateY(-50%); font-size:0.68rem; color:var(--text-muted); white-space:nowrap; opacity:0; transition:opacity 0.15s; pointer-events:none; font-family:var(--font-b); }
-        .nav-dot:hover::after { opacity:1; }
-        .nav-dot:hover { background: var(--text-muted); }
-        .nav-dot.active { background: var(--primary); box-shadow: 0 0 8px rgba(var(--primary-rgb),0.5); }
+        /* ─── NAV DOTS ─── */
+        .nav-dots{position:fixed;right:1.5rem;top:50%;transform:translateY(-50%);z-index:200;display:flex;flex-direction:column;gap:0.65rem;opacity:0;transition:opacity 0.4s var(--ease)}
+        .nav-dots.show{opacity:1}
+        .nav-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.12);border:none;padding:0;transition:all 0.2s var(--ease);position:relative}
+        .nav-dot::before{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid transparent;transition:border-color 0.2s}
+        .nav-dot::after{content:attr(aria-label);position:absolute;right:22px;top:50%;transform:translateY(-50%);font-size:0.65rem;color:var(--text-m);white-space:nowrap;opacity:0;transition:opacity 0.15s;pointer-events:none;font-family:var(--fb);background:var(--surface);padding:0.2rem 0.6rem;border-radius:4px;border:1px solid var(--border)}
+        .nav-dot:hover::after{opacity:1} .nav-dot:hover{background:var(--text-m)}
+        .nav-dot.active{background:var(--primary);box-shadow:0 0 10px rgba(var(--p-rgb),0.4)}
+        .nav-dot.active::before{border-color:rgba(var(--p-rgb),0.3)}
 
-        /* ── HERO ── */
-        .hero { min-height:100vh; display:flex; align-items:center; justify-content:center; text-align:center; position:relative; overflow:hidden; padding: 4rem 2rem; }
-        .hero::before { content:''; position:absolute; inset:0; background: radial-gradient(ellipse 60% 45% at 50% 35%, rgba(var(--primary-rgb),0.09) 0%, transparent 65%); pointer-events:none; }
-        .hero::after { content:''; position:absolute; bottom:0; left:0; right:0; height:180px; background: linear-gradient(transparent, var(--bg)); pointer-events:none; }
-        .hero__label { margin-bottom:1.2rem; }
-        .hero__title { margin-bottom:1.5rem; max-width:16ch; margin-left:auto; margin-right:auto; }
-        .hero__sub { font-size:1.2rem; max-width:48ch; margin:0 auto 2.5rem; line-height:1.65; color: var(--text-sec); }
-        .hero__cta { display:inline-flex; align-items:center; gap:0.5rem; padding:0.85rem 2rem; background:transparent; border:1px solid var(--primary); color:var(--primary); font-size:0.85rem; font-weight:500; letter-spacing:0.04em; border-radius:999px; transition: all 0.25s var(--ease); }
-        .hero__cta:hover { background:var(--primary); color:var(--bg); }
-        .hero__scroll { position:absolute; bottom:2rem; left:50%; transform:translateX(-50%); color:var(--text-muted); font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase; display:flex; flex-direction:column; align-items:center; gap:0.4rem; animation: float 2s ease-in-out infinite; }
-        @keyframes float { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(-5px)} }
+        /* ─── HERO ─── */
+        .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;padding:4rem 2rem}
+        .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 40% at 50% 30%,rgba(var(--p-rgb),0.12) 0%,transparent 60%),radial-gradient(ellipse 40% 30% at 60% 70%,rgba(var(--a-rgb),0.06) 0%,transparent 60%);pointer-events:none;animation:heroPulse 8s ease-in-out infinite}
+        @keyframes heroPulse{0%,100%{opacity:1}50%{opacity:0.7}}
+        .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(transparent,var(--bg));pointer-events:none}
+        .hero__label{margin-bottom:1.2rem}
+        .hero__title{margin-bottom:1.5rem;max-width:16ch;margin-left:auto;margin-right:auto}
+        .hero__sub{font-size:1.2rem;max-width:46ch;margin:0 auto 2.5rem;line-height:1.65;color:var(--text-s)}
+        .hero__cta{display:inline-flex;align-items:center;gap:0.5rem;padding:0.9rem 2.2rem;background:transparent;border:1px solid rgba(var(--p-rgb),0.4);color:var(--primary);font-size:0.82rem;font-weight:500;letter-spacing:0.06em;border-radius:999px;transition:all 0.3s var(--ease);text-transform:uppercase}
+        .hero__cta:hover{background:var(--primary);color:var(--bg);border-color:var(--primary);box-shadow:0 0 30px rgba(var(--p-rgb),0.2)}
+        .hero__scroll{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);color:var(--text-m);font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:0.5rem;animation:float 2.5s ease-in-out infinite}
+        @keyframes float{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-6px)}}
 
-        /* ── SECTION HEADER ── */
-        .sec-header { margin-bottom: 3rem; }
-        .sec-header .label { margin-bottom: 0.8rem; }
-        .sec-header h2 { margin-bottom: 0.8rem; }
+        /* ─── SECTION HEADER ─── */
+        .sec-header{margin-bottom:3.5rem}
+        .sec-header .label{margin-bottom:0.8rem}
+        .sec-header h2{margin-bottom:0.8rem}
 
-        /* ── EQUATION SECTION ── */
-        .equation { text-align:center; padding: 6rem 2rem; }
-        .equation__formula { display:flex; align-items:center; justify-content:center; gap:1rem; flex-wrap:wrap; margin: 3rem 0 2rem; }
-        .equation__term { background: var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.5rem 2rem; min-width:220px; transition: all 0.3s var(--ease); }
-        .equation__term:hover { border-color: var(--primary); transform:translateY(-3px); }
-        .equation__term h3 { font-family: var(--font-b); font-size:0.95rem; font-weight:600; margin-bottom:0.4rem; }
-        .equation__term p { font-size:0.85rem; color:var(--text-muted); max-width:none; }
-        .equation__op { font-family: var(--font-d); font-size:2rem; color:var(--primary); font-weight:700; }
-        .equation__result { margin-top:2rem; }
-        .equation__result h3 { font-size:1.3rem; color:var(--primary); }
+        /* ─── EQUATION ─── */
+        .equation{text-align:center;padding:7rem 2rem}
+        .equation__formula{display:flex;align-items:center;justify-content:center;gap:1.2rem;flex-wrap:wrap;margin:3rem 0 2.5rem}
+        .equation__term{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.8rem 2.2rem;min-width:240px;transition:all 0.3s var(--ease);position:relative}
+        .equation__term::before{content:'';position:absolute;inset:-1px;border-radius:14px;background:linear-gradient(135deg,rgba(var(--p-rgb),0.15),transparent 60%);opacity:0;transition:opacity 0.3s;z-index:-1}
+        .equation__term:hover{border-color:rgba(var(--p-rgb),0.3);transform:translateY(-4px)}
+        .equation__term:hover::before{opacity:1}
+        .equation__term h3{font-family:var(--fb);font-size:1rem;font-weight:600;margin-bottom:0.4rem}
+        .equation__term p{font-size:0.85rem;color:var(--text-m);max-width:none}
+        .equation__op{font-family:var(--fd);font-size:2.2rem;color:var(--primary);font-weight:700}
+        .equation__result{margin-top:1rem}
+        .equation__result h3{font-size:1.4rem;color:var(--primary);background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
-        /* ── MYTH CARDS ── */
-        .myth-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:1rem; }
-        .myth-card { background: var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.8rem; cursor:pointer; transition: all 0.3s var(--ease); position:relative; overflow:hidden; }
-        .myth-card:hover { border-color: var(--border-hover); }
-        .myth-card.flipped { border-color: var(--primary); background: var(--primary-muted); }
-        .myth-card__front, .myth-card__back { transition: opacity 0.3s var(--ease); }
-        .myth-card__back { display:none; }
-        .myth-card.flipped .myth-card__front { display:none; }
-        .myth-card.flipped .myth-card__back { display:block; }
-        .myth-card__myth { font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:#f87171; margin-bottom:0.6rem; }
-        .myth-card__truth { font-size:0.75rem; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--primary); margin-bottom:0.6rem; }
-        .myth-card h3 { font-family: var(--font-b); font-size:1rem; font-weight:600; margin-bottom:0.5rem; }
-        .myth-card p { font-size:0.88rem; }
-        .myth-card__hint { font-size:0.7rem; color:var(--text-muted); margin-top:0.8rem; font-style:italic; }
+        /* ─── MYTH CARDS ─── */
+        .myth-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem}
+        .myth-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.8rem;cursor:pointer;transition:all 0.35s var(--ease);position:relative;overflow:hidden;min-height:180px}
+        .myth-card:hover{border-color:var(--border-h);transform:translateY(-2px)}
+        .myth-card.flipped{border-color:rgba(var(--p-rgb),0.3);background:var(--p-muted)}
+        .myth-card__front,.myth-card__back{transition:opacity 0.35s var(--ease),transform 0.35s var(--ease)}
+        .myth-card__back{position:absolute;inset:0;padding:1.8rem;display:flex;flex-direction:column;justify-content:center;opacity:0;transform:scale(0.95)}
+        .myth-card.flipped .myth-card__front{opacity:0;transform:scale(0.95)}
+        .myth-card.flipped .myth-card__back{opacity:1;transform:scale(1)}
+        .myth-card__myth{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--warn);margin-bottom:0.5rem}
+        .myth-card__truth{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--primary);margin-bottom:0.5rem}
+        .myth-card h3{font-family:var(--fb);font-size:1rem;font-weight:600;margin-bottom:0.5rem}
+        .myth-card p{font-size:0.88rem}
+        .myth-card__hint{font-size:0.68rem;color:var(--text-m);margin-top:0.8rem;font-style:italic}
 
-        /* ── TABS ── */
-        .tabs { margin:2rem 0; }
-        .tabs__nav { display:flex; gap:0.2rem; border-bottom:1px solid var(--border); overflow-x:auto; -webkit-overflow-scrolling:touch; }
-        .tabs__btn { background:none; border:none; padding:0.9rem 1.4rem; font-size:0.85rem; font-weight:500; color:var(--text-muted); border-bottom:2px solid transparent; transition: all 0.15s; white-space:nowrap; }
-        .tabs__btn:hover { color:var(--text-sec); }
-        .tabs__btn.active { color:var(--primary); border-bottom-color:var(--primary); }
-        .tabs__panel { display:none; padding:2rem 0; animation: fadeUp 0.3s var(--ease); }
-        .tabs__panel.active { display:block; }
-        .tabs__panel h3 { margin-bottom:0.6rem; }
+        /* ─── TABS ─── */
+        .tabs{margin:2rem 0}
+        .tabs__nav{display:flex;gap:0.2rem;border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch}
+        .tabs__btn{background:none;border:none;padding:0.9rem 1.5rem;font-size:0.85rem;font-weight:500;color:var(--text-m);border-bottom:2px solid transparent;transition:all 0.15s;white-space:nowrap}
+        .tabs__btn:hover{color:var(--text-s)}
+        .tabs__btn.active{color:var(--primary);border-bottom-color:var(--primary)}
+        .tabs__panel{display:none;padding:2rem 0;animation:fadeUp 0.3s var(--ease)}
+        .tabs__panel.active{display:block}
+        .tabs__panel h3{margin-bottom:0.6rem}
 
-        /* ── ACCORDION ── */
-        .accordion { display:flex; flex-direction:column; gap:0.4rem; }
-        .acc-item { border:1px solid var(--border); border-radius:12px; overflow:hidden; transition: border-color 0.2s; }
-        .acc-item.open { border-color: var(--border-hover); }
-        .acc-trigger { width:100%; background:var(--surface); border:none; padding:1.2rem 1.5rem; display:flex; justify-content:space-between; align-items:center; font-size:0.95rem; font-weight:500; color:var(--text); text-align:left; transition: background 0.15s; }
-        .acc-trigger:hover { background: var(--surface-hover); }
-        .acc-chevron { width:18px; height:18px; transition: transform 0.3s var(--ease); color:var(--text-muted); flex-shrink:0; }
-        .acc-item.open .acc-chevron { transform:rotate(180deg); }
-        .acc-body { max-height:0; overflow:hidden; transition: max-height 0.4s var(--ease); }
-        .acc-content { padding:0 1.5rem 1.5rem; }
-        .acc-content p { font-size:0.95rem; }
+        /* ─── ACCORDION ─── */
+        .accordion{display:flex;flex-direction:column;gap:0.5rem}
+        .acc-item{border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color 0.2s}
+        .acc-item.open{border-color:rgba(var(--p-rgb),0.2)}
+        .acc-trigger{width:100%;background:var(--surface);border:none;padding:1.3rem 1.5rem;display:flex;justify-content:space-between;align-items:center;font-size:0.95rem;font-weight:500;color:var(--text);text-align:left;transition:background 0.15s;gap:1rem}
+        .acc-trigger:hover{background:var(--surface-h)}
+        .acc-chevron{width:18px;height:18px;transition:transform 0.3s var(--ease);color:var(--text-m);flex-shrink:0}
+        .acc-item.open .acc-chevron{transform:rotate(180deg);color:var(--primary)}
+        .acc-body{max-height:0;overflow:hidden;transition:max-height 0.45s var(--ease)}
+        .acc-content{padding:0 1.5rem 1.5rem}
+        .acc-content p{font-size:0.95rem}
 
-        /* ── UBER MODULE ── */
-        .uber-scenarios { display:grid; grid-template-columns: 1fr 1fr; gap:1.5rem; margin-top:2rem; }
-        .uber-card { background: var(--surface); border:1px solid var(--border); border-radius:12px; padding:2rem; transition: all 0.3s var(--ease); }
-        .uber-card--good { border-left: 3px solid var(--primary); }
-        .uber-card--bad { border-left: 3px solid #f87171; }
-        .uber-card h3 { font-family:var(--font-b); font-size:1rem; font-weight:600; margin-bottom:0.5rem; }
-        .uber-card .tag { display:inline-block; font-size:0.68rem; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; padding:0.25rem 0.7rem; border-radius:999px; margin-bottom:0.8rem; }
-        .uber-card--good .tag { background: var(--primary-muted); color:var(--primary); }
-        .uber-card--bad .tag { background: rgba(248,113,113,0.12); color:#f87171; }
+        /* ─── UBER ─── */
+        .uber-scenarios{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2rem}
+        .uber-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:2rem;transition:all 0.3s var(--ease)}
+        .uber-card--good{border-left:3px solid var(--primary)}
+        .uber-card--bad{border-left:3px solid var(--warn)}
+        .uber-card h3{font-family:var(--fb);font-size:1.05rem;font-weight:600;margin-bottom:0.5rem}
+        .uber-card .tag{display:inline-block;font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;padding:0.3rem 0.8rem;border-radius:999px;margin-bottom:0.8rem}
+        .uber-card--good .tag{background:var(--p-muted);color:var(--primary)}
+        .uber-card--bad .tag{background:var(--warn-muted);color:var(--warn)}
+        .uber-verdict{font-size:0.9rem;margin-top:1.2rem;font-weight:500;padding-top:1rem;border-top:1px solid var(--border)}
 
-        /* ── SYSTEM VIZ ── */
-        .system-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap:0.8rem; max-width:600px; margin:2rem auto; }
-        .system-node { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:1.2rem; text-align:center; cursor:pointer; transition: all 0.25s var(--ease); }
-        .system-node:hover { border-color:var(--primary); background:var(--primary-muted); transform:translateY(-2px); }
-        .system-node.active { border-color:var(--primary); background:var(--primary-muted); }
-        .system-node__icon { font-size:1.5rem; margin-bottom:0.3rem; }
-        .system-node__label { font-size:0.78rem; font-weight:600; color:var(--text); }
-        .system-detail { text-align:center; margin-top:1.5rem; min-height:80px; }
-        .system-detail p { margin:0 auto; font-size:0.95rem; max-width:50ch; }
+        /* ─── SYSTEM VIZ ─── */
+        .system-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.8rem;max-width:620px;margin:2rem auto}
+        .system-node{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.3rem 1rem;text-align:center;cursor:pointer;transition:all 0.25s var(--ease)}
+        .system-node:hover{border-color:rgba(var(--p-rgb),0.3);background:var(--p-muted);transform:translateY(-2px)}
+        .system-node.active{border-color:var(--primary);background:var(--p-muted);box-shadow:0 0 20px rgba(var(--p-rgb),0.08)}
+        .system-node__icon{font-size:1.4rem;margin-bottom:0.35rem;display:block}
+        .system-node__label{font-size:0.75rem;font-weight:600;color:var(--text);letter-spacing:0.02em}
+        .system-detail{text-align:center;margin-top:2rem;min-height:80px;padding:0 1rem}
+        .system-detail p{margin:0 auto;font-size:0.95rem;max-width:50ch}
 
-        /* ── TOGGLE ── */
-        .toggle-wrap { display:flex; flex-direction:column; align-items:center; gap:1.5rem; }
-        .toggle-sw { display:flex; background:var(--surface); border-radius:999px; padding:3px; }
-        .toggle-btn { padding:0.6rem 1.8rem; border:none; background:transparent; font-size:0.82rem; font-weight:500; color:var(--text-muted); border-radius:999px; transition: all 0.2s; }
-        .toggle-btn.active { background:var(--primary); color:var(--bg); }
-        .toggle-pane { width:100%; display:none; animation: fadeUp 0.3s var(--ease); }
-        .toggle-pane.active { display:block; }
+        /* ─── TOGGLE ─── */
+        .toggle-wrap{display:flex;flex-direction:column;align-items:center;gap:1.5rem}
+        .toggle-sw{display:flex;background:var(--surface);border-radius:999px;padding:3px;border:1px solid var(--border)}
+        .toggle-btn{padding:0.65rem 2rem;border:none;background:transparent;font-size:0.82rem;font-weight:500;color:var(--text-m);border-radius:999px;transition:all 0.25s var(--ease)}
+        .toggle-btn.active{background:var(--primary);color:var(--bg);font-weight:600}
+        .toggle-pane{width:100%;display:none;animation:fadeUp 0.3s var(--ease)}
+        .toggle-pane.active{display:block}
+        .tg-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.5rem}
+        .tg-card--new{background:var(--p-muted);border-color:rgba(var(--p-rgb),0.2)}
+        .tg-card h3{font-family:var(--fb);font-size:0.95rem;font-weight:600;margin-bottom:0.4rem}
+        .tg-card p{font-size:0.88rem}
 
-        /* ── TIMELINE ── */
-        .tl { position:relative; padding-left:2.5rem; }
-        .tl::before { content:''; position:absolute; left:5px; top:0; bottom:0; width:2px; background:linear-gradient(var(--border), var(--primary), var(--accent), var(--border)); }
-        .tl-item { position:relative; padding-bottom:2.5rem; }
-        .tl-item:last-child { padding-bottom:0; }
-        .tl-dot { position:absolute; left:-2.5rem; top:4px; width:12px; height:12px; border-radius:50%; background:var(--bg); border:2px solid var(--primary); }
-        .tl-label { font-size:0.7rem; font-weight:600; color:var(--primary); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:0.2rem; }
-        .tl-item h3 { font-size:1.1rem; margin-bottom:0.3rem; }
-        .tl-item p { font-size:0.92rem; }
+        /* ─── TIMELINE ─── */
+        .tl{position:relative;padding-left:2.8rem}
+        .tl::before{content:'';position:absolute;left:6px;top:0;bottom:0;width:2px;background:linear-gradient(var(--border),var(--primary),var(--accent),rgba(167,139,250,0.5),var(--border))}
+        .tl-item{position:relative;padding-bottom:3rem}
+        .tl-item:last-child{padding-bottom:0}
+        .tl-dot{position:absolute;left:-2.8rem;top:4px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--primary)}
+        .tl-label{font-size:0.68rem;font-weight:600;color:var(--primary);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.3rem}
+        .tl-item h3{font-size:1.15rem;margin-bottom:0.4rem}
+        .tl-item p{font-size:0.92rem}
 
-        /* ── IA CARDS ── */
-        .ia-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap:1rem; }
-        .ia-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.5rem; cursor:pointer; transition: all 0.3s var(--ease); }
-        .ia-card:hover { border-color:var(--border-hover); transform:translateY(-2px); }
-        .ia-card.expanded { border-color:var(--accent); background:var(--accent-muted); }
-        .ia-card__icon { font-size:1.3rem; margin-bottom:0.5rem; }
-        .ia-card h3 { font-family:var(--font-b); font-size:0.95rem; font-weight:600; margin-bottom:0.3rem; }
-        .ia-card__brief { font-size:0.85rem; color:var(--text-sec); }
-        .ia-card__detail { display:none; margin-top:0.8rem; padding-top:0.8rem; border-top:1px solid var(--border); }
-        .ia-card.expanded .ia-card__detail { display:block; }
-        .ia-card__detail p { font-size:0.85rem; }
+        /* ─── IA CARDS ─── */
+        .ia-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
+        .ia-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.6rem;cursor:pointer;transition:all 0.3s var(--ease)}
+        .ia-card:hover{border-color:var(--border-h);transform:translateY(-2px)}
+        .ia-card.expanded{border-color:rgba(var(--a-rgb),0.3);background:var(--a-muted)}
+        .ia-card__icon{font-size:1.3rem;margin-bottom:0.5rem}
+        .ia-card h3{font-family:var(--fb);font-size:0.95rem;font-weight:600;margin-bottom:0.3rem}
+        .ia-card__brief{font-size:0.85rem;color:var(--text-s)}
+        .ia-card__detail{display:none;margin-top:0.8rem;padding-top:0.8rem;border-top:1px solid var(--border)}
+        .ia-card.expanded .ia-card__detail{display:block}
+        .ia-card__detail p{font-size:0.85rem}
 
-        /* ── WORKSHOP BLOCKS ── */
-        .ws-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap:1.2rem; }
-        .ws-block { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:2rem; }
-        .ws-block__cat { font-size:0.68rem; font-weight:600; text-transform:uppercase; letter-spacing:0.12em; color:var(--accent); margin-bottom:1rem; }
-        .ws-block ol, .ws-block ul { padding-left:1.2rem; }
-        .ws-block li { font-size:0.92rem; color:var(--text-sec); margin-bottom:0.6rem; line-height:1.55; }
+        /* ─── WORKSHOP ─── */
+        .ws-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem}
+        .ws-block{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:2rem;transition:border-color 0.2s}
+        .ws-block:hover{border-color:var(--border-h)}
+        .ws-block__cat{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem}
+        .ws-block ol,.ws-block ul{padding-left:1.2rem}
+        .ws-block li{font-size:0.92rem;color:var(--text-s);margin-bottom:0.7rem;line-height:1.55}
+        .ws-block li em{color:var(--primary);font-style:normal;font-weight:500}
 
-        /* ── PULL QUOTE ── */
-        .pq { text-align:center; padding:5rem 2rem; }
-        .pq blockquote { font-family:var(--font-d); font-size:clamp(1.4rem,2.8vw,2.2rem); font-style:italic; font-weight:400; color:var(--text); max-width:36ch; margin:0 auto; line-height:1.4; }
-        .pq blockquote::before { content:''; display:block; width:40px; height:3px; background:var(--primary); margin:0 auto 1.5rem; }
+        /* ─── FACILITATOR HINT ─── */
+        .fac-hint{display:flex;align-items:flex-start;gap:0.8rem;background:rgba(var(--a-rgb),0.06);border:1px solid rgba(var(--a-rgb),0.12);border-radius:10px;padding:1rem 1.3rem;margin-top:1.5rem;font-size:0.82rem;color:var(--text-s);line-height:1.5}
+        .fac-hint__icon{font-size:1rem;flex-shrink:0;margin-top:0.1rem}
 
-        /* ── CTA FINAL ── */
-        .cta-final { text-align:center; padding:7rem 2rem; background: linear-gradient(180deg, var(--bg) 0%, var(--bg-alt) 100%); position:relative; }
-        .cta-final::before { content:''; position:absolute; inset:0; background: radial-gradient(ellipse 50% 40% at 50% 50%, rgba(var(--primary-rgb),0.06) 0%, transparent 70%); pointer-events:none; }
-        .cta-final h2 { margin-bottom:1rem; }
-        .cta-final p { margin:0 auto; text-align:center; }
-        .cta-final .takeaways { display:flex; flex-direction:column; gap:1rem; max-width:600px; margin:2.5rem auto 0; text-align:left; }
-        .takeaway { display:flex; gap:0.8rem; align-items:flex-start; }
-        .takeaway__num { font-family:var(--font-d); font-size:1.3rem; font-weight:800; color:var(--primary); opacity:0.4; line-height:1.3; flex-shrink:0; }
-        .takeaway p { font-size:0.95rem; color:var(--text); }
+        /* ─── PULL QUOTE ─── */
+        .pq{text-align:center;padding:5.5rem 2rem;position:relative}
+        .pq::before{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:300px;height:300px;border-radius:50%;background:radial-gradient(rgba(var(--p-rgb),0.04),transparent 70%);pointer-events:none}
+        .pq blockquote{font-family:var(--fd);font-size:clamp(1.4rem,2.8vw,2.2rem);font-style:italic;font-weight:400;color:var(--text);max-width:36ch;margin:0 auto;line-height:1.4}
+        .pq blockquote::before{content:'';display:block;width:48px;height:3px;background:linear-gradient(90deg,var(--primary),var(--accent));margin:0 auto 1.5rem;border-radius:2px}
 
-        /* ── DIVIDER ── */
-        .divider { height:1px; background:linear-gradient(90deg, transparent, var(--border), transparent); }
+        /* ─── CTA FINAL ─── */
+        .cta-final{text-align:center;padding:7rem 2rem;background:linear-gradient(180deg,var(--bg) 0%,var(--bg-alt) 100%);position:relative}
+        .cta-final::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 40% at 50% 50%,rgba(var(--p-rgb),0.07) 0%,transparent 70%);pointer-events:none}
+        .cta-final h2{margin-bottom:1.2rem;max-width:18ch;margin-left:auto;margin-right:auto}
+        .cta-final>div>p{margin:0 auto;text-align:center}
+        .takeaways{display:flex;flex-direction:column;gap:1.2rem;max-width:620px;margin:3rem auto 0;text-align:left}
+        .takeaway{display:flex;gap:1rem;align-items:flex-start;padding:0.8rem 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+        .takeaway:last-child{border-bottom:none}
+        .takeaway__num{font-family:var(--fd);font-size:1.4rem;font-weight:800;color:var(--primary);opacity:0.35;line-height:1.2;flex-shrink:0;min-width:2rem}
+        .takeaway p{font-size:0.95rem;color:var(--text)}
 
-        /* ── FOOTER ── */
-        footer { padding:2.5rem 0 1.5rem; text-align:center; border-top:1px solid var(--border); }
-        footer p { font-size:0.7rem; color:var(--text-muted); letter-spacing:0.05em; margin:0 auto; max-width:none; }
+        /* ─── DIVIDER ─── */
+        .divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:0}
 
-        /* ── REVEAL ── */
-        .reveal { opacity:0; transform:translateY(22px); transition: opacity 0.55s var(--ease), transform 0.55s var(--ease); }
-        .reveal.vis { opacity:1; transform:translateY(0); }
-        @keyframes fadeUp { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+        /* ─── FOOTER ─── */
+        footer{padding:3rem 0 1.5rem;text-align:center;border-top:1px solid var(--border)}
+        footer p{font-size:0.68rem;color:var(--text-m);letter-spacing:0.06em;margin:0 auto;max-width:none}
 
-        /* ── FOCUS ── */
-        :focus-visible { outline:2px solid var(--primary); outline-offset:2px; }
+        /* ─── REVEAL ─── */
+        .reveal{opacity:0;transform:translateY(22px);transition:opacity 0.6s var(--ease),transform 0.6s var(--ease)}
+        .reveal.vis{opacity:1;transform:translateY(0)}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
-        /* ── RESPONSIVE ── */
-        @media(max-width:1024px) { .nav-dots{display:none;} section{padding:5rem 0;} }
-        @media(max-width:768px) {
-            section{padding:3.5rem 0;} .container{padding:0 1.2rem;}
-            .hero{min-height:85vh; padding:3rem 1.2rem;}
-            .equation__formula{flex-direction:column;}
-            .uber-scenarios{grid-template-columns:1fr;}
-            .system-grid{grid-template-columns:repeat(3,1fr); gap:0.5rem;}
-            .myth-grid{grid-template-columns:1fr 1fr;}
-            .tabs__btn{padding:0.7rem 1rem; font-size:0.78rem;}
-            .pq blockquote{font-size:1.2rem;}
+        /* ─── FOCUS ─── */
+        :focus-visible{outline:2px solid var(--primary);outline-offset:3px;border-radius:3px}
+
+        /* ─── PROJECTION (large screens) ─── */
+        @media(min-width:1600px){
+            h1{font-size:5rem} h2{font-size:3.2rem} h3{font-size:1.7rem}
+            p,.acc-trigger,.tabs__btn,.ia-card h3,.uber-card h3{font-size:1.15rem}
+            .label{font-size:0.8rem}
+            section{padding:9rem 0}
+            .hero__sub{font-size:1.4rem}
         }
-        @media(max-width:480px) { .myth-grid{grid-template-columns:1fr;} .system-grid{grid-template-columns:repeat(2,1fr);} }
-        @media(prefers-reduced-motion:reduce) { *,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important;scroll-behavior:auto!important;} .reveal{opacity:1;transform:none;} }
+
+        /* ─── RESPONSIVE ─── */
+        @media(max-width:1024px){.nav-dots{display:none}section{padding:5rem 0}}
+        @media(max-width:768px){
+            section{padding:3.5rem 0}.container{padding:0 1.2rem}
+            .hero{min-height:85vh;padding:3rem 1.2rem}
+            .equation__formula{flex-direction:column}
+            .uber-scenarios{grid-template-columns:1fr}
+            .system-grid{grid-template-columns:repeat(3,1fr);gap:0.5rem}
+            .myth-grid{grid-template-columns:1fr 1fr}
+            .tabs__btn{padding:0.7rem 1rem;font-size:0.78rem}
+            .pq blockquote{font-size:1.2rem}
+            .fac-hint{flex-direction:column;gap:0.4rem}
+        }
+        @media(max-width:480px){.myth-grid{grid-template-columns:1fr}.system-grid{grid-template-columns:repeat(2,1fr)}}
+        @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none}}
     </style>
 </head>
 <body>
 
-<!-- Nav Dots -->
-<nav class="nav-dots" aria-label="Navegação">
+<nav class="nav-dots" aria-label="Navegação por seções">
     <button class="nav-dot active" data-target="hero" aria-label="Início"></button>
     <button class="nav-dot" data-target="equation" aria-label="A Equação"></button>
     <button class="nav-dot" data-target="myths" aria-label="Mitos"></button>
     <button class="nav-dot" data-target="resultado" aria-label="Resultado"></button>
     <button class="nav-dot" data-target="experiencia" aria-label="Experiência"></button>
-    <button class="nav-dot" data-target="uber" aria-label="Uber"></button>
+    <button class="nav-dot" data-target="uber" aria-label="Caso Uber"></button>
     <button class="nav-dot" data-target="sistema" aria-label="Sistema"></button>
     <button class="nav-dot" data-target="mudou" aria-label="O que mudou"></button>
     <button class="nav-dot" data-target="futuro" aria-label="Futuro"></button>
@@ -254,13 +264,12 @@
     <button class="nav-dot" data-target="fechamento" aria-label="Fechamento"></button>
 </nav>
 
-<!-- ═══════════ 1. HERO ═══════════ -->
 <header>
 <section class="hero" id="hero">
-    <div class="container" style="position:relative;z-index:2;">
+    <div class="container" style="position:relative;z-index:2">
         <span class="label hero__label">Experiência do Cliente — Repensada</span>
         <h1 class="hero__title">Seu cliente chegou ao destino. Mas não voltaria a viajar com você.</h1>
-        <p class="hero__sub">A maioria das empresas entrega o resultado certo da forma errada — e chama isso de sucesso. Este material mostra por que essa conta não fecha.</p>
+        <p class="hero__sub">Entregar o resultado certo da forma errada tem nome: fracasso silencioso. A maioria das empresas comete esse erro todos os dias — e os dashboards não acusam.</p>
         <a href="#equation" class="hero__cta">Explorar a equação ↓</a>
     </div>
     <div class="hero__scroll" aria-hidden="true">
@@ -272,18 +281,18 @@
 
 <main>
 
-<!-- ═══════════ 2. A EQUAÇÃO ═══════════ -->
+<!-- ═══════ 1. EQUAÇÃO ═══════ -->
 <section class="equation" id="equation">
     <div class="container">
         <div class="reveal">
             <span class="label">01 — A ideia que muda tudo</span>
-            <h2 style="margin-top:0.8rem;">Uma equação que a maioria das empresas resolve pela metade</h2>
-            <p style="max-width:55ch; margin:1rem auto 0; text-align:center;">Existe uma fórmula que separa empresas que retêm clientes de empresas que apenas processam transações.</p>
+            <h2 style="margin-top:0.8rem">A equação que separa empresas que retêm de empresas que apenas processam</h2>
+            <p style="max-width:54ch;margin:1rem auto 0;text-align:center">Existe uma fórmula invisível operando em cada interação com o cliente. A maioria resolve apenas a primeira metade — e se pergunta por que perde clientes que diziam estar satisfeitos.</p>
         </div>
         <div class="equation__formula reveal">
             <div class="equation__term">
                 <h3>Resultado Esperado</h3>
-                <p>O que o cliente veio buscar</p>
+                <p>O que o cliente veio resolver</p>
             </div>
             <span class="equation__op">+</span>
             <div class="equation__term">
@@ -295,19 +304,23 @@
                 <h3>Sucesso do Cliente</h3>
             </div>
         </div>
-        <p class="reveal" style="text-align:center; margin:1.5rem auto 0; max-width:52ch; font-size:1rem;">Resultado sem experiência é commoditie. Experiência sem resultado é teatro. Só quando os dois se encontram, o cliente sente que teve sucesso.</p>
+        <p class="reveal" style="text-align:center;margin:1.5rem auto 0;max-width:54ch;font-size:1rem"><strong>Resultado sem experiência é commodity.</strong> Qualquer concorrente substitui. <strong>Experiência sem resultado é teatro.</strong> O cliente percebe e vai embora. Sucesso só existe quando os dois se encontram.</p>
+        <div class="fac-hint reveal">
+            <span class="fac-hint__icon">💬</span>
+            <span><strong>Para facilitação:</strong> Pergunte ao grupo — "Na nossa empresa, qual das duas metades recebe mais investimento? E qual o cliente mais sente falta?"</span>
+        </div>
     </div>
 </section>
 
 <div class="container"><div class="divider"></div></div>
 
-<!-- ═══════════ 3. MITOS ═══════════ -->
+<!-- ═══════ 2. MITOS ═══════ -->
 <section id="myths">
     <div class="container">
         <div class="sec-header reveal">
             <span class="label">02 — O que quase todo mundo entende errado</span>
             <h2>Cinco crenças que parecem corretas — até você pensar melhor</h2>
-            <p>Clique em cada card para revelar o que realmente está em jogo.</p>
+            <p>Cada card esconde uma crença rasa e revela o que realmente está em jogo. Clique para virar.</p>
         </div>
         <div class="myth-grid reveal">
             <div class="myth-card" data-myth>
@@ -315,38 +328,38 @@
                     <span class="myth-card__myth">Crença comum</span>
                     <h3>"Experiência é atendimento"</h3>
                     <p>Se o atendimento for bom, a experiência é boa.</p>
-                    <span class="myth-card__hint">clique para revelar →</span>
+                    <span class="myth-card__hint">toque para revelar →</span>
                 </div>
                 <div class="myth-card__back">
                     <span class="myth-card__truth">Na verdade</span>
-                    <h3>Atendimento é remédio — não saúde</h3>
-                    <p>O cliente ideal nem precisa de atendimento. A melhor experiência é a que resolve antes de gerar contato.</p>
+                    <h3>Atendimento é remédio, não saúde</h3>
+                    <p>O cliente ideal nem precisa de atendimento. A melhor experiência resolve antes de gerar contato. Investir em atendimento sem redesenhar o que gera atrito é tratar sintoma.</p>
                 </div>
             </div>
             <div class="myth-card" data-myth>
                 <div class="myth-card__front">
                     <span class="myth-card__myth">Crença comum</span>
                     <h3>"Experiência é NPS"</h3>
-                    <p>Se o NPS é alto, a experiência está funcionando.</p>
-                    <span class="myth-card__hint">clique para revelar →</span>
+                    <p>NPS alto = experiência funcionando.</p>
+                    <span class="myth-card__hint">toque para revelar →</span>
                 </div>
                 <div class="myth-card__back">
                     <span class="myth-card__truth">Na verdade</span>
-                    <h3>NPS mede intenção — não comportamento</h3>
-                    <p>Clientes dão nota 9 e cancelam no mês seguinte. O esforço percebido prediz deslealdade melhor que qualquer pesquisa de satisfação.</p>
+                    <h3>NPS mede intenção, não comportamento</h3>
+                    <p>Clientes dão nota 9 e cancelam no mês seguinte. O Customer Effort Score — o esforço percebido — prediz deslealdade com mais precisão que qualquer métrica de satisfação.</p>
                 </div>
             </div>
             <div class="myth-card" data-myth>
                 <div class="myth-card__front">
                     <span class="myth-card__myth">Crença comum</span>
                     <h3>"Experiência é UX"</h3>
-                    <p>Basta ter um app bonito e intuitivo.</p>
-                    <span class="myth-card__hint">clique para revelar →</span>
+                    <p>App bonito e intuitivo resolve.</p>
+                    <span class="myth-card__hint">toque para revelar →</span>
                 </div>
                 <div class="myth-card__back">
                     <span class="myth-card__truth">Na verdade</span>
-                    <h3>UX é uma fatia — não o bolo</h3>
-                    <p>A experiência do cliente inclui o produto, mas também o processo de compra, a entrega, o suporte, a cobrança, a renovação. Cada ponto de contato é experiência.</p>
+                    <h3>UX é uma fatia, não o bolo</h3>
+                    <p>A experiência total inclui compra, entrega, suporte, cobrança, renovação. O app pode ser impecável — mas se o boleto vem errado ou o suporte demora 3 dias, a experiência fracassou.</p>
                 </div>
             </div>
             <div class="myth-card" data-myth>
@@ -354,12 +367,12 @@
                     <span class="myth-card__myth">Crença comum</span>
                     <h3>"Experiência é encantar"</h3>
                     <p>Surpreender o cliente é o objetivo.</p>
-                    <span class="myth-card__hint">clique para revelar →</span>
+                    <span class="myth-card__hint">toque para revelar →</span>
                 </div>
                 <div class="myth-card__back">
                     <span class="myth-card__truth">Na verdade</span>
-                    <h3>Encantamento cansa — consistência fideliza</h3>
-                    <p>O cliente não quer ser surpreendido toda vez. Quer previsibilidade, fluidez e menos esforço. Consistência gera confiança. Confiança gera permanência.</p>
+                    <h3>Encantamento cansa. Consistência fideliza.</h3>
+                    <p>O cliente não quer ser surpreendido toda vez — quer previsibilidade, fluidez e zero esforço desnecessário. Confiança se constrói na repetição, não na exceção.</p>
                 </div>
             </div>
             <div class="myth-card" data-myth>
@@ -367,27 +380,31 @@
                     <span class="myth-card__myth">Crença comum</span>
                     <h3>"Experiência é simpatia"</h3>
                     <p>Gentileza resolve tudo.</p>
-                    <span class="myth-card__hint">clique para revelar →</span>
+                    <span class="myth-card__hint">toque para revelar →</span>
                 </div>
                 <div class="myth-card__back">
                     <span class="myth-card__truth">Na verdade</span>
                     <h3>Gentileza sem resolução é frustração educada</h3>
-                    <p>Um atendente simpático que não resolve o problema gera mais frustração que um processo automático que resolve em 30 segundos.</p>
+                    <p>Um atendente simpático que não resolve gera mais frustração que um processo automático que resolve em 30 segundos. Efetividade precede simpatia.</p>
                 </div>
             </div>
+        </div>
+        <div class="fac-hint reveal" style="margin-top:2rem">
+            <span class="fac-hint__icon">🎤</span>
+            <span><strong>Para workshop:</strong> Antes de revelar os cards, pergunte ao grupo qual crença eles acham que está mais presente na empresa. Depois revele — e discuta a distância entre percepção e realidade.</span>
         </div>
     </div>
 </section>
 
 <div class="container"><div class="divider"></div></div>
 
-<!-- ═══════════ 4. RESULTADO ESPERADO ═══════════ -->
+<!-- ═══════ 3. RESULTADO ESPERADO ═══════ -->
 <section id="resultado">
     <div class="container">
         <div class="sec-header reveal">
             <span class="label">03 — Resultado Esperado</span>
-            <h2>A primeira metade da equação: o que o cliente veio buscar</h2>
-            <p>Todo cliente chega com uma missão. Mas essa missão tem mais camadas do que parece.</p>
+            <h2>O que o cliente veio buscar tem mais camadas do que parece</h2>
+            <p>A maioria das empresas entende resultado como tarefa cumprida. Mas o cliente opera em quatro dimensões simultâneas — e só a funcional aparece nos relatórios.</p>
         </div>
         <div class="tabs reveal">
             <div class="tabs__nav" role="tablist">
@@ -398,23 +415,23 @@
             </div>
             <div class="tabs__panel active" id="res-func" role="tabpanel">
                 <h3>Resultado Funcional</h3>
-                <p>É o mais óbvio: a tarefa que o cliente quer cumprir. Transferir dinheiro. Receber a encomenda. Resolver um problema técnico. Chegar ao destino.</p>
-                <p>A maioria das empresas para aqui. E é exatamente por isso que se tornam commodities — porque se dois concorrentes entregam o mesmo resultado funcional, o diferencial migra para outro lugar.</p>
+                <p>A tarefa que o cliente quer cumprir. Transferir dinheiro. Receber a encomenda. Resolver um bug. Chegar ao destino.</p>
+                <p>A maioria das empresas para aqui — e é exatamente por isso que se tornam substituíveis. Quando dois concorrentes entregam o mesmo resultado funcional, o diferencial migra para as camadas que ninguém está gerenciando.</p>
             </div>
             <div class="tabs__panel" id="res-emoc" role="tabpanel">
                 <h3>Resultado Emocional</h3>
-                <p>O que o cliente quer sentir ao usar o produto ou serviço. Segurança ao fazer uma transação financeira. Alívio ao resolver um problema. Orgulho ao usar uma marca.</p>
-                <p>O resultado emocional é invisível nos dashboards, mas é ele que cria memória. E memória é o que gera recompra.</p>
+                <p>O que o cliente quer <strong>sentir</strong>. Segurança ao fazer uma transação. Alívio ao resolver um problema. Orgulho ao usar uma marca. Tranquilidade ao deixar o filho na escola.</p>
+                <p>O resultado emocional não aparece em nenhum dashboard — mas é ele que cria memória. E memória é o que gera recompra, indicação e permanência.</p>
             </div>
             <div class="tabs__panel" id="res-cont" role="tabpanel">
                 <h3>Resultado Contextual</h3>
-                <p>O que o cliente precisa naquele momento específico da vida dele. Um pai com pressa precisa de um checkout rápido. Um CEO precisa de um relatório antes da reunião das 9h. Um paciente precisa de resposta fora do horário comercial.</p>
-                <p>Contexto é o filtro que define se o mesmo resultado funcional é percebido como sucesso ou frustração.</p>
+                <p>O que o cliente precisa <strong>naquele momento específico</strong>. Um pai com pressa precisa de checkout em um clique. Um CEO precisa do relatório antes da reunião das 9h. Um paciente precisa de resposta às 23h.</p>
+                <p>Contexto é o filtro que define se o mesmo resultado funcional é percebido como sucesso ou como frustração. A empresa que ignora contexto entrega certo — na hora errada.</p>
             </div>
             <div class="tabs__panel" id="res-rel" role="tabpanel">
                 <h3>Resultado Relacional</h3>
-                <p>O que o cliente espera da relação com a empresa ao longo do tempo. Ser reconhecido como cliente antigo. Não precisar repetir informações. Sentir que a empresa se lembra dele.</p>
-                <p>Empresas que tratam cada interação como se fosse a primeira destroem o resultado relacional — e perdem clientes que não sabem explicar por que saíram.</p>
+                <p>O que o cliente espera da <strong>relação ao longo do tempo</strong>. Ser reconhecido como cliente antigo. Não repetir informações. Sentir que a empresa evolui junto com ele.</p>
+                <p>Empresas que tratam cada interação como se fosse a primeira destroem o resultado relacional. O cliente não sabe nomear esse sentimento — mas sabe que quer ir embora.</p>
             </div>
         </div>
     </div>
@@ -422,246 +439,234 @@
 
 <div class="container"><div class="divider"></div></div>
 
-<!-- ═══════════ 5. EXPERIÊNCIA APROPRIADA ═══════════ -->
+<!-- ═══════ 4. EXPERIÊNCIA APROPRIADA ═══════ -->
 <section id="experiencia">
     <div class="container">
         <div class="sec-header reveal">
             <span class="label">04 — Experiência Apropriada</span>
-            <h2>A metade que quase ninguém gerencia</h2>
-            <p>Não basta entregar. É preciso entregar do jeito certo, no momento certo, para aquele cliente específico. Isso é experiência apropriada.</p>
+            <h2>A metade da equação que quase ninguém gerencia</h2>
+            <p>Entregar não é suficiente. A forma como se entrega — o contexto, a preferência, o esforço, a fluidez — é o que transforma transação em relação. Explore cada dimensão.</p>
         </div>
         <div class="accordion reveal">
             <div class="acc-item">
                 <button class="acc-trigger" aria-expanded="false"><span>Contexto — Onde o cliente está naquele momento?</span><svg class="acc-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                <div class="acc-body"><div class="acc-content"><p>O mesmo cliente pode precisar de respostas diferentes em horários diferentes, em canais diferentes, em momentos de vida diferentes. Uma empresa que trata todos os contextos da mesma forma entrega experiência genérica — e genérico é o oposto de apropriado.</p></div></div>
+                <div class="acc-body"><div class="acc-content"><p>O mesmo cliente precisa de respostas diferentes em horários diferentes, canais diferentes, momentos de vida diferentes. Uma empresa que trata todos os contextos da mesma forma entrega experiência genérica — e genérico é o antônimo de apropriado.</p><p>Um exemplo: o cliente que liga às 22h de um domingo tem urgência diferente do que liga na segunda às 10h. Tratar os dois com o mesmo roteiro é negar o contexto.</p></div></div>
             </div>
             <div class="acc-item">
-                <button class="acc-trigger" aria-expanded="false"><span>Preferência — Como esse cliente gosta de ser atendido?</span><svg class="acc-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                <div class="acc-body"><div class="acc-content"><p>Alguns clientes querem conversar. Outros querem resolver sozinhos. Alguns preferem e-mail. Outros, WhatsApp. Experiência apropriada respeita preferência — não impõe o canal que é mais barato para a operação.</p></div></div>
+                <button class="acc-trigger" aria-expanded="false"><span>Preferência — Como esse cliente gosta de interagir?</span><svg class="acc-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                <div class="acc-body"><div class="acc-content"><p>Alguns clientes querem conversar. Outros querem resolver sozinhos. Alguns preferem e-mail. Outros, WhatsApp. Experiência apropriada respeita preferência — não impõe o canal que é mais barato para a operação.</p><p>A pergunta que revela: "estamos oferecendo o canal que o cliente quer — ou o que nos custa menos?"</p></div></div>
             </div>
             <div class="acc-item">
-                <button class="acc-trigger" aria-expanded="false"><span>Esforço — Quanto o cliente precisa trabalhar para conseguir?</span><svg class="acc-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                <div class="acc-body"><div class="acc-content"><p>O esforço é o preditor mais forte de deslealdade — mais que satisfação, mais que NPS. Cada formulário desnecessário, cada transferência entre departamentos, cada "pode repetir seus dados?" é esforço acumulado que corrói a relação.</p></div></div>
+                <button class="acc-trigger" aria-expanded="false"><span>Esforço — Quanto trabalho o cliente faz para conseguir algo?</span><svg class="acc-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                <div class="acc-body"><div class="acc-content"><p>O esforço é o preditor mais forte de deslealdade — mais que satisfação, mais que NPS. Cada formulário desnecessário, cada transferência entre departamentos, cada "pode repetir seus dados?" é atrito acumulado que corrói a relação em silêncio.</p><p>A pesquisa do CEB/Gartner mostrou: <strong>96% dos clientes que tiveram experiências de alto esforço se tornaram desleais.</strong> Entre os de baixo esforço, apenas 9%.</p></div></div>
             </div>
             <div class="acc-item">
                 <button class="acc-trigger" aria-expanded="false"><span>Fluidez — A jornada é contínua ou fragmentada?</span><svg class="acc-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                <div class="acc-body"><div class="acc-content"><p>O cliente não pensa em canais. Ele começa no app, continua no WhatsApp e liga para o call center. Se a empresa não mantém o contexto entre essas transições, a experiência se fragmenta — e o cliente sente que ninguém sabe quem ele é.</p></div></div>
+                <div class="acc-body"><div class="acc-content"><p>O cliente não pensa em canais. Ele começa no app, continua no WhatsApp e liga para o call center. Se a empresa não mantém o contexto entre essas transições, a experiência se fragmenta — e o cliente sente que está lidando com três empresas diferentes dentro da mesma marca.</p></div></div>
             </div>
             <div class="acc-item">
-                <button class="acc-trigger" aria-expanded="false"><span>Coerência — A promessa da marca se sustenta na prática?</span><svg class="acc-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                <div class="acc-body"><div class="acc-content"><p>A propaganda diz "somos simples". O contrato tem 47 páginas. O marketing diz "estamos com você". O suporte demora 3 dias. Quando a experiência contradiz a promessa, a empresa perde algo que não se recupera: credibilidade.</p></div></div>
+                <button class="acc-trigger" aria-expanded="false"><span>Coerência — A promessa se sustenta na prática?</span><svg class="acc-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+                <div class="acc-body"><div class="acc-content"><p>A propaganda diz "somos simples". O contrato tem 47 páginas. O marketing diz "estamos com você". O suporte demora 3 dias. Quando a experiência real contradiz a promessa da marca, a empresa perde algo que nenhuma campanha recupera: credibilidade.</p></div></div>
             </div>
             <div class="acc-item">
                 <button class="acc-trigger" aria-expanded="false"><span>Previsibilidade — O cliente sabe o que esperar?</span><svg class="acc-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 7.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-                <div class="acc-body"><div class="acc-content"><p>Incerteza gera ansiedade. Ansiedade gera contato. Contato gera custo. A experiência apropriada reduz incerteza: prazos claros, status visível, comunicação proativa. Quando o cliente não precisa perguntar "e aí?", a experiência está funcionando.</p></div></div>
+                <div class="acc-body"><div class="acc-content"><p>Incerteza gera ansiedade. Ansiedade gera contato. Contato gera custo. A experiência apropriada elimina incerteza antes que ela se transforme em ligação: prazos claros, status visível, comunicação proativa. Quando o cliente não precisa perguntar "e aí?", a experiência está funcionando.</p></div></div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Pull Quote -->
 <div class="pq reveal">
     <blockquote>"Sucesso do cliente é o resultado esperado mais a experiência apropriada. Não basta chegar ao destino. É preciso chegar da forma certa."</blockquote>
 </div>
 
 <div class="container"><div class="divider"></div></div>
 
-<!-- ═══════════ 6. UBER ═══════════ -->
+<!-- ═══════ 5. UBER ═══════ -->
 <section id="uber">
     <div class="container">
         <div class="sec-header reveal">
-            <span class="label">05 — O Exemplo do Uber</span>
-            <h2>O mesmo destino. Duas experiências. Resultados opostos.</h2>
-            <p>Imagine que você pediu um Uber para ir ao aeroporto. Em ambos os cenários, você chega no horário. O resultado funcional é idêntico. Mas a experiência — e o que você sente depois — é radicalmente diferente.</p>
+            <span class="label">05 — A equação na prática</span>
+            <h2>Mesmo destino. Duas experiências. Resultados opostos.</h2>
+            <p>Você pediu um Uber para o aeroporto. Nos dois cenários, chega no horário. O resultado funcional é idêntico. O que sente depois — radicalmente diferente.</p>
         </div>
         <div class="uber-scenarios reveal">
             <div class="uber-card uber-card--good">
-                <span class="tag">Experiência Apropriada ✓</span>
-                <h3>Cenário A</h3>
-                <p style="font-size:0.92rem;">O carro chega limpo e no horário. O motorista cumprimenta sem excesso. O ar está na temperatura confortável. O som está baixo. O trajeto é o mais eficiente. Você consegue revisar suas anotações em silêncio. Chega ao aeroporto tranquilo, no tempo previsto pelo app.</p>
-                <p style="font-size:0.88rem; color:var(--primary); margin-top:1rem; font-weight:500;">→ Resultado alcançado + Experiência respeitou seu contexto = Sucesso</p>
+                <span class="tag">Experiência apropriada</span>
+                <h3>Cenário A — O cliente que volta</h3>
+                <p style="font-size:0.92rem">Carro limpo, no horário. O motorista cumprimenta sem excesso. Ar na temperatura certa. Som baixo. Trajeto eficiente. Você revisa suas anotações em silêncio. Chega tranquilo, no tempo que o app previu.</p>
+                <p class="uber-verdict" style="color:var(--primary)">→ Resultado alcançado + experiência que respeitou contexto e preferência = <strong>Sucesso</strong></p>
             </div>
             <div class="uber-card uber-card--bad">
-                <span class="tag">Experiência Inapropriada ✗</span>
-                <h3>Cenário B</h3>
-                <p style="font-size:0.92rem;">O carro chega com 8 minutos de atraso. O banco está quente. O motorista puxa conversa quando você claramente está no celular. O som está alto. Ele pega um caminho mais longo. Você chega no aeroporto — mas irritado, suado e com a sensação de que perdeu tempo.</p>
-                <p style="font-size:0.88rem; color:#f87171; margin-top:1rem; font-weight:500;">→ Resultado alcançado + Experiência ignorou seu contexto = Fracasso percebido</p>
+                <span class="tag">Experiência inapropriada</span>
+                <h3>Cenário B — O cliente que não volta</h3>
+                <p style="font-size:0.92rem">Carro com 8 minutos de atraso. Banco quente. Motorista puxa conversa enquanto você está no celular. Som alto. Caminho mais longo. Você chega — irritado, suado, com a sensação de ter perdido tempo.</p>
+                <p class="uber-verdict" style="color:var(--warn)">→ Resultado alcançado + experiência que ignorou contexto e preferência = <strong>Fracasso percebido</strong></p>
             </div>
         </div>
-        <div class="reveal" style="margin-top:2rem; text-align:center;">
-            <p style="margin:0 auto; max-width:55ch; font-size:1rem; color:var(--text);">Nos dois cenários, o cliente chegou ao destino. Mas apenas no primeiro ele teve <strong>sucesso</strong> — porque o resultado veio acompanhado de uma experiência que respeitou suas preferências, seu momento e seu contexto.</p>
+        <div class="reveal" style="margin-top:2.5rem;text-align:center">
+            <p style="margin:0 auto;max-width:52ch;font-size:1.05rem;color:var(--text)">Nos dois cenários, o cliente chegou ao destino. Mas apenas no primeiro ele diria que teve <strong>sucesso</strong>. Porque resultado veio acompanhado de experiência que respeitou quem ele é e o que precisava naquele momento.</p>
+        </div>
+        <div class="fac-hint reveal" style="margin-top:2rem">
+            <span class="fac-hint__icon">🎤</span>
+            <span><strong>Para workshop:</strong> Peça ao grupo para descrever "o nosso Cenário B" — onde entregamos o resultado mas destruímos a experiência. Cada área terá um exemplo diferente.</span>
         </div>
     </div>
 </section>
 
 <div class="container"><div class="divider"></div></div>
 
-<!-- ═══════════ 7. SISTEMA ═══════════ -->
+<!-- ═══════ 6. SISTEMA ═══════ -->
 <section id="sistema">
     <div class="container">
         <div class="sec-header reveal">
-            <span class="label">06 — Experiência como Sistema</span>
+            <span class="label">06 — Experiência como sistema</span>
             <h2>O cliente sente na ponta o que a empresa organiza — ou desorganiza — por trás</h2>
-            <p>A experiência que o cliente percebe não nasce no atendimento. Nasce na forma como a empresa se estrutura. Clique em cada elemento para entender seu papel.</p>
+            <p>A experiência não nasce no atendimento. Nasce na arquitetura da empresa. Clique em cada camada.</p>
         </div>
         <div class="reveal">
             <div class="system-grid" id="systemGrid">
-                <div class="system-node" data-sys="Liderança define a prioridade. Se CX não está na agenda do C-level, não estará na cultura, no orçamento ou nos processos. Experiência começa como decisão de quem lidera."><span class="system-node__icon">◈</span><span class="system-node__label">Liderança</span></div>
-                <div class="system-node" data-sys="Cultura é o que as pessoas fazem quando ninguém está olhando. Se a cultura valoriza eficiência acima de tudo, a experiência será rápida mas fria. Se valoriza o cliente de verdade, será consistente."><span class="system-node__icon">◈</span><span class="system-node__label">Cultura</span></div>
-                <div class="system-node" data-sys="Processos são as regras invisíveis da experiência. Um processo de devolução em 12 etapas diz ao cliente: estamos dificultando para você desistir de reclamar."><span class="system-node__icon">◈</span><span class="system-node__label">Processos</span></div>
-                <div class="system-node" data-sys="Tecnologia pode ser habilitadora ou limitadora. Um CRM que não integra com o suporte gera a pergunta que o cliente mais odeia: 'pode repetir seus dados?'"><span class="system-node__icon">◈</span><span class="system-node__label">Tecnologia</span></div>
-                <div class="system-node" data-sys="Dados conectam os pontos. Sem dados unificados, cada departamento vê um pedaço do cliente. Com dados, a empresa pode antecipar necessidades antes de serem verbalizadas."><span class="system-node__icon">◈</span><span class="system-node__label">Dados</span></div>
-                <div class="system-node" data-sys="Operação é onde a experiência se materializa. Logística, SLA, tempo de resposta, qualidade de entrega. Não importa o que o marketing promete se a operação não sustenta."><span class="system-node__icon">◈</span><span class="system-node__label">Operação</span></div>
-                <div class="system-node" data-sys="Produto é experiência contínua. Cada tela, cada funcionalidade, cada bug é um momento de experiência. O produto não termina no lançamento — ele recomeça a cada uso."><span class="system-node__icon">◈</span><span class="system-node__label">Produto</span></div>
-                <div class="system-node" data-sys="Jornada é a visão completa. Não começa quando o cliente compra e não termina quando ele recebe. Começa quando ele pesquisa e não termina nunca — se a empresa fizer seu trabalho."><span class="system-node__icon">◈</span><span class="system-node__label">Jornada</span></div>
-                <div class="system-node" data-sys="Atendimento é o último recurso, não o primeiro pilar. Se atendimento é o principal investimento em CX, algo está errado antes — nos processos, na tecnologia ou no produto."><span class="system-node__icon">◈</span><span class="system-node__label">Atendimento</span></div>
+                <div class="system-node" data-sys="Se CX não está na agenda do C-level, não estará na cultura, no orçamento ou nos processos. Experiência começa como decisão estratégica — ou não começa."><span class="system-node__icon">👤</span><span class="system-node__label">Liderança</span></div>
+                <div class="system-node" data-sys="Cultura é o que as pessoas fazem quando ninguém está olhando. Se a cultura premia velocidade acima de tudo, a experiência será rápida mas fria. Cultura é o código-fonte da experiência."><span class="system-node__icon">🏛</span><span class="system-node__label">Cultura</span></div>
+                <div class="system-node" data-sys="Processos são as regras invisíveis. Um processo de devolução em 12 etapas diz ao cliente: estamos dificultando para você desistir de reclamar. Processo ruim é experiência ruim por design."><span class="system-node__icon">⚙️</span><span class="system-node__label">Processos</span></div>
+                <div class="system-node" data-sys="Tecnologia pode habilitar ou limitar. Um CRM que não integra com o suporte gera a pergunta que mais corrói a experiência: 'pode repetir seus dados?' Tecnologia fragmentada = experiência fragmentada."><span class="system-node__icon">💻</span><span class="system-node__label">Tecnologia</span></div>
+                <div class="system-node" data-sys="Dados conectam os pontos. Sem dados unificados, cada departamento vê um pedaço do cliente e nenhum vê a pessoa inteira. Com dados, a empresa antecipa. Sem dados, ela reage — sempre atrasada."><span class="system-node__icon">📊</span><span class="system-node__label">Dados</span></div>
+                <div class="system-node" data-sys="Operação é onde a experiência se materializa. Logística, SLA, tempo de resposta, qualidade. Não importa o que o marketing promete — é a operação que entrega ou que desmente."><span class="system-node__icon">🔧</span><span class="system-node__label">Operação</span></div>
+                <div class="system-node" data-sys="Produto é experiência contínua. Cada tela, funcionalidade e bug é um momento de experiência. O produto não termina no lançamento — ele recomeça a cada uso. Produto bom com experiência ruim ao redor ainda fracassa."><span class="system-node__icon">📦</span><span class="system-node__label">Produto</span></div>
+                <div class="system-node" data-sys="Jornada é a visão completa. Não começa quando o cliente compra — começa quando pesquisa. Não termina quando recebe — se estende por toda a relação. Quem mapeia apenas touchpoints perde o filme inteiro."><span class="system-node__icon">🗺</span><span class="system-node__label">Jornada</span></div>
+                <div class="system-node" data-sys="Atendimento é o último recurso, não o primeiro pilar. Se atendimento é o maior investimento em CX, algo falhou antes — no processo, na tecnologia ou no produto. A melhor experiência é a que não precisa de atendimento."><span class="system-node__icon">🎧</span><span class="system-node__label">Atendimento</span></div>
             </div>
             <div class="system-detail" id="systemDetail">
-                <p style="color:var(--text-muted); font-style:italic;">← Clique em um elemento para explorar seu papel na experiência</p>
+                <p style="color:var(--text-m);font-style:italic">← Clique em uma camada para explorar seu papel na experiência</p>
             </div>
+        </div>
+        <div class="fac-hint reveal" style="margin-top:2rem">
+            <span class="fac-hint__icon">💬</span>
+            <span><strong>Para discussão:</strong> "Qual dessas 9 camadas está mais desorganizada na nossa empresa? E qual o impacto disso na experiência que o cliente percebe?"</span>
         </div>
     </div>
 </section>
 
 <div class="container"><div class="divider"></div></div>
 
-<!-- ═══════════ 8. O QUE MUDOU ═══════════ -->
+<!-- ═══════ 7. O QUE MUDOU ═══════ -->
 <section id="mudou">
     <div class="container">
         <div class="sec-header reveal">
-            <span class="label">07 — O que mudou na expectativa dos clientes</span>
-            <h2>O cliente de hoje não compara você com seu concorrente. Compara com a melhor experiência que já teve.</h2>
+            <span class="label">07 — O novo cliente</span>
+            <h2>Ele não compara você com seu concorrente. Compara com a melhor experiência que já teve — em qualquer setor.</h2>
         </div>
         <div class="toggle-wrap reveal">
             <div class="toggle-sw">
-                <button class="toggle-btn active" data-toggle="antes-pane">Antes</button>
-                <button class="toggle-btn" data-toggle="agora-pane">Agora</button>
+                <button class="toggle-btn active" data-toggle="antes-pane">Como era</button>
+                <button class="toggle-btn" data-toggle="agora-pane">Como é agora</button>
             </div>
             <div class="toggle-pane active" id="antes-pane">
-                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:1rem;">
-                    <div style="background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.5rem;">
-                        <h3 style="font-family:var(--font-b); font-size:0.95rem; font-weight:600; margin-bottom:0.4rem;">Comparação setorial</h3>
-                        <p style="font-size:0.88rem;">O cliente comparava banco com banco, loja com loja.</p>
-                    </div>
-                    <div style="background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.5rem;">
-                        <h3 style="font-family:var(--font-b); font-size:0.95rem; font-weight:600; margin-bottom:0.4rem;">Tolerância ao esforço</h3>
-                        <p style="font-size:0.88rem;">Filas, formulários e espera eram parte aceita do processo.</p>
-                    </div>
-                    <div style="background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.5rem;">
-                        <h3 style="font-family:var(--font-b); font-size:0.95rem; font-weight:600; margin-bottom:0.4rem;">Canal único</h3>
-                        <p style="font-size:0.88rem;">Cada canal era uma experiência separada e independente.</p>
-                    </div>
-                    <div style="background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.5rem;">
-                        <h3 style="font-family:var(--font-b); font-size:0.95rem; font-weight:600; margin-bottom:0.4rem;">Expectativa padrão</h3>
-                        <p style="font-size:0.88rem;">Todos recebiam a mesma experiência, sem personalização.</p>
-                    </div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem">
+                    <div class="tg-card"><h3>Comparação setorial</h3><p>Banco com banco. Loja com loja. O benchmark era o concorrente direto.</p></div>
+                    <div class="tg-card"><h3>Tolerância ao esforço</h3><p>Filas, formulários e espera eram parte aceita do jogo. "É assim mesmo" era resposta aceitável.</p></div>
+                    <div class="tg-card"><h3>Canal único</h3><p>Cada canal era uma experiência isolada e independente.</p></div>
+                    <div class="tg-card"><h3>Expectativa padrão</h3><p>Todos recebiam a mesma coisa. Personalização era luxo.</p></div>
                 </div>
             </div>
             <div class="toggle-pane" id="agora-pane">
-                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:1rem;">
-                    <div style="background:var(--primary-muted); border:1px solid rgba(var(--primary-rgb),0.2); border-radius:12px; padding:1.5rem;">
-                        <h3 style="font-family:var(--font-b); font-size:0.95rem; font-weight:600; margin-bottom:0.4rem;">Comparação cross-industry</h3>
-                        <p style="font-size:0.88rem;">Compara o banco com a Uber, a loja com a Amazon, o hospital com o iFood.</p>
-                    </div>
-                    <div style="background:var(--primary-muted); border:1px solid rgba(var(--primary-rgb),0.2); border-radius:12px; padding:1.5rem;">
-                        <h3 style="font-family:var(--font-b); font-size:0.95rem; font-weight:600; margin-bottom:0.4rem;">Zero tolerância ao esforço</h3>
-                        <p style="font-size:0.88rem;">Cada clique desnecessário é um motivo para ir embora.</p>
-                    </div>
-                    <div style="background:var(--primary-muted); border:1px solid rgba(var(--primary-rgb),0.2); border-radius:12px; padding:1.5rem;">
-                        <h3 style="font-family:var(--font-b); font-size:0.95rem; font-weight:600; margin-bottom:0.4rem;">Experiência contínua</h3>
-                        <p style="font-size:0.88rem;">O cliente espera que app, loja, suporte e produto sejam uma coisa só.</p>
-                    </div>
-                    <div style="background:var(--primary-muted); border:1px solid rgba(var(--primary-rgb),0.2); border-radius:12px; padding:1.5rem;">
-                        <h3 style="font-family:var(--font-b); font-size:0.95rem; font-weight:600; margin-bottom:0.4rem;">Expectativa contextual</h3>
-                        <p style="font-size:0.88rem;">Quer ser tratado como indivíduo, no contexto certo, no canal que preferir.</p>
-                    </div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem">
+                    <div class="tg-card tg-card--new"><h3>Comparação cross-industry</h3><p>Compara o banco com a Uber, a loja com a Amazon, o hospital com o iFood. O benchmark é a melhor experiência que já teve.</p></div>
+                    <div class="tg-card tg-card--new"><h3>Zero tolerância ao esforço</h3><p>Cada clique desnecessário é motivo para ir embora. "Não deveria ser tão difícil" virou padrão de exigência.</p></div>
+                    <div class="tg-card tg-card--new"><h3>Experiência contínua</h3><p>App, loja, suporte e produto devem ser uma coisa só. Trocar de canal e perder contexto é inaceitável.</p></div>
+                    <div class="tg-card tg-card--new"><h3>Expectativa contextual</h3><p>Quer ser tratado como indivíduo, no contexto certo, no canal que preferir, na hora que precisar.</p></div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
+<div class="pq reveal">
+    <blockquote>"O cliente não sai porque está insatisfeito. Sai porque encontrou alguém que faz a mesma coisa — com menos esforço da parte dele."</blockquote>
+</div>
+
 <div class="container"><div class="divider"></div></div>
 
-<!-- ═══════════ 9. FUTURO ═══════════ -->
+<!-- ═══════ 8. FUTURO ═══════ -->
 <section id="futuro">
     <div class="container">
         <div class="sec-header reveal">
             <span class="label">08 — Para onde a experiência está indo</span>
             <h2>A experiência do futuro é a que o cliente não percebe — porque simplesmente funciona</h2>
+            <p>Três horizontes. Cada um exige capacidades que a maioria das empresas ainda não construiu.</p>
         </div>
         <div class="tl reveal">
             <div class="tl-item">
                 <div class="tl-dot"></div>
                 <div class="tl-label">Agora → 2 anos</div>
                 <h3>Experiência com menos atrito</h3>
-                <p>Processos simplificados, jornadas redesenhadas para reduzir esforço, self-service inteligente. O cliente resolve sozinho — e prefere assim.</p>
+                <p>Processos simplificados, jornadas redesenhadas para reduzir esforço, self-service inteligente. O cliente resolve sozinho — e prefere assim. Empresas que ainda dependem de atendimento humano para operações simples já estão atrasadas.</p>
             </div>
             <div class="tl-item">
-                <div class="tl-dot" style="border-color:var(--accent);"></div>
-                <div class="tl-label" style="color:var(--accent);">2 → 5 anos</div>
+                <div class="tl-dot" style="border-color:var(--accent)"></div>
+                <div class="tl-label" style="color:var(--accent)">2 → 5 anos</div>
                 <h3>Experiência preditiva e contextual</h3>
-                <p>A empresa antecipa necessidades antes do cliente verbalizar. Recomendações proativas, alertas inteligentes, personalização em tempo real. A experiência se adapta ao contexto sem que o cliente precise pedir.</p>
+                <p>A empresa antecipa necessidades antes do cliente verbalizar. Recomendações proativas, alertas inteligentes, personalização em tempo real. A experiência se adapta ao momento sem que o cliente precise configurar nada. O produto "aprende" com o uso.</p>
             </div>
             <div class="tl-item">
-                <div class="tl-dot" style="border-color:#a78bfa;"></div>
-                <div class="tl-label" style="color:#a78bfa;">5 → 10 anos</div>
+                <div class="tl-dot" style="border-color:#a78bfa"></div>
+                <div class="tl-label" style="color:#a78bfa">5 → 10 anos</div>
                 <h3>Experiência invisível e orquestrada</h3>
-                <p>A experiência ideal é a que desaparece. O cliente não percebe que está sendo bem atendido porque tudo funciona. IA orquestra múltiplos pontos de contato em tempo real. A empresa opera como um sistema vivo que se ajusta continuamente.</p>
+                <p>A melhor experiência é a que desaparece. O cliente não percebe que está sendo bem atendido porque tudo funciona sem atrito visível. IA orquestra múltiplos touchpoints em tempo real. A empresa opera como um organismo que se ajusta continuamente ao contexto de cada pessoa.</p>
             </div>
         </div>
-        <div class="reveal" style="margin-top:2.5rem; background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:2rem; text-align:center;">
-            <p style="margin:0 auto; color:var(--text); font-size:1rem; max-width:55ch;"><strong>A pergunta estratégica não é "como encantar o cliente".</strong> É: "como construir um sistema de experiência tão inteligente que o cliente nem precisa pensar sobre ele?"</p>
+        <div class="reveal" style="margin-top:3rem;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:2rem;text-align:center">
+            <p style="margin:0 auto;color:var(--text);font-size:1.05rem;max-width:52ch"><strong>A pergunta estratégica não é "como encantar o cliente".</strong> É: como construir um sistema de experiência tão inteligente que o cliente nem precisa pensar sobre ele?</p>
         </div>
     </div>
 </section>
 
 <div class="container"><div class="divider"></div></div>
 
-<!-- ═══════════ 10. IA ═══════════ -->
+<!-- ═══════ 9. IA ═══════ -->
 <section id="ia">
     <div class="container">
         <div class="sec-header reveal">
             <span class="label">09 — IA aplicada à experiência</span>
-            <h2>IA não substitui a experiência. Ela permite experiências que antes eram impossíveis.</h2>
-            <p>Clique em cada aplicação para ver como funciona na prática.</p>
+            <h2>IA não substitui a experiência humana. Ela torna impossível esconder a falta dela.</h2>
+            <p>Seis aplicações que transformam a equação. Clique em cada uma para ver o impacto real.</p>
         </div>
         <div class="ia-grid reveal">
             <div class="ia-card" data-expand>
                 <div class="ia-card__icon">⚡</div>
                 <h3>Detecção de atrito em tempo real</h3>
-                <p class="ia-card__brief">Identificar frustração antes que vire reclamação.</p>
-                <div class="ia-card__detail"><p>IA analisa padrões de navegação, tempo em tela, abandonos e repetições para identificar pontos de atrito que o cliente sente mas não reporta. O resultado: a empresa corrige o problema antes de perder o cliente.</p></div>
+                <p class="ia-card__brief">Ver frustração antes que vire reclamação.</p>
+                <div class="ia-card__detail"><p>IA analisa padrões de navegação, abandonos, repetições e tempo em tela para identificar atrito que o cliente sente mas não reporta. A empresa corrige antes de perder — em vez de descobrir no relatório de churn do trimestre seguinte.</p></div>
             </div>
             <div class="ia-card" data-expand>
                 <div class="ia-card__icon">🎯</div>
                 <h3>Next Best Action</h3>
-                <p class="ia-card__brief">Recomendar a ação certa no momento certo.</p>
-                <div class="ia-card__detail"><p>Em vez de oferecer o mesmo para todos, IA calcula qual ação tem maior probabilidade de sucesso para aquele cliente naquele momento. Pode ser uma oferta, uma informação, um contato proativo ou simplesmente — não fazer nada.</p></div>
+                <p class="ia-card__brief">A ação certa, para o cliente certo, na hora certa.</p>
+                <div class="ia-card__detail"><p>Em vez de oferecer o mesmo para todos, IA calcula a ação com maior probabilidade de sucesso para aquele cliente naquele momento. Pode ser uma oferta, uma informação, um contato proativo — ou simplesmente não fazer nada. Saber quando não agir também é inteligência.</p></div>
             </div>
             <div class="ia-card" data-expand>
                 <div class="ia-card__icon">🔮</div>
                 <h3>Personalização contextual</h3>
-                <p class="ia-card__brief">Adaptar a experiência ao contexto sem perguntar.</p>
-                <div class="ia-card__detail"><p>IA combina histórico, preferências, horário, canal e comportamento recente para adaptar a experiência automaticamente. O cliente sente que "a empresa me conhece" — sem preencher formulários.</p></div>
+                <p class="ia-card__brief">Adaptar sem perguntar.</p>
+                <div class="ia-card__detail"><p>IA combina histórico, preferências, horário, canal e comportamento recente para adaptar a experiência automaticamente. O cliente sente que "a empresa me conhece" — sem preencher formulário nenhum. É experiência apropriada operando em escala.</p></div>
             </div>
             <div class="ia-card" data-expand>
                 <div class="ia-card__icon">📊</div>
-                <h3>Leitura de jornada</h3>
-                <p class="ia-card__brief">Entender a história completa do cliente, não só o último contato.</p>
-                <div class="ia-card__detail"><p>IA unifica dados de múltiplos touchpoints para dar ao time uma visão completa: o que o cliente comprou, onde travou, como se sentiu, o que precisa agora. O atendente não pergunta "como posso ajudar?" — já sabe.</p></div>
+                <h3>Leitura de jornada completa</h3>
+                <p class="ia-card__brief">Ver a pessoa, não o ticket.</p>
+                <div class="ia-card__detail"><p>IA unifica dados de múltiplos touchpoints para dar ao time uma visão completa: o que o cliente comprou, onde travou, como se sentiu, o que precisa agora. O atendente abre a tela e já sabe. Zero "como posso ajudar?". Máximo contexto.</p></div>
             </div>
             <div class="ia-card" data-expand>
-                <div class="ia-card__icon">🛡️</div>
+                <div class="ia-card__icon">🛡</div>
                 <h3>Prevenção de risco</h3>
-                <p class="ia-card__brief">Agir antes da perda, não depois.</p>
-                <div class="ia-card__detail"><p>Modelos de propensão a churn que vão além do óbvio. IA identifica sinais fracos — redução sutil de uso, mudança de padrão, ausência de engajamento — e dispara ações antes que o cliente decida sair.</p></div>
+                <p class="ia-card__brief">Agir antes da perda. Não depois.</p>
+                <div class="ia-card__detail"><p>Modelos de propensão a churn que vão além do óbvio. IA identifica sinais fracos — redução sutil de uso, mudança de padrão, ausência onde antes havia engajamento — e dispara ações antes que o cliente decida sair. Quando o cliente avisa que vai embora, já era tarde há semanas.</p></div>
             </div>
             <div class="ia-card" data-expand>
                 <div class="ia-card__icon">🔄</div>
                 <h3>Inteligência operacional</h3>
-                <p class="ia-card__brief">Otimizar a operação que sustenta a experiência.</p>
-                <div class="ia-card__detail"><p>IA aplicada a filas, roteamento, priorização e alocação de recursos. Não é sobre atender mais rápido — é sobre atender certo: o recurso certo, para o cliente certo, com o contexto certo.</p></div>
+                <p class="ia-card__brief">A máquina por trás da experiência.</p>
+                <div class="ia-card__detail"><p>IA aplicada a filas, roteamento, priorização e alocação. Não é sobre atender mais rápido — é sobre atender certo: o recurso certo, para o cliente certo, com o contexto certo. A operação deixa de ser custo e se torna motor de experiência.</p></div>
             </div>
         </div>
     </div>
@@ -669,69 +674,73 @@
 
 <div class="container"><div class="divider"></div></div>
 
-<!-- ═══════════ 11. NA PRÁTICA ═══════════ -->
+<!-- ═══════ 10. NA PRÁTICA ═══════ -->
 <section id="pratica">
     <div class="container">
         <div class="sec-header reveal">
             <span class="label">10 — Na prática</span>
-            <h2>Perguntas para transformar este conteúdo em conversa e ação</h2>
-            <p>Use estes blocos em workshops, reuniões de liderança ou sessões com seu time. Cada pergunta foi desenhada para provocar reflexão e gerar movimento.</p>
+            <h2>Perguntas que transformam este conteúdo em conversa, decisão e ação</h2>
+            <p>Cada bloco funciona como módulo de facilitação. Use em workshops, reuniões de liderança ou sessões de estratégia.</p>
         </div>
         <div class="ws-grid reveal">
             <div class="ws-block">
-                <div class="ws-block__cat">Para reflexão individual</div>
+                <div class="ws-block__cat">🪞 Reflexão individual</div>
                 <ol>
-                    <li>O que exatamente nosso cliente espera como resultado ao nos contratar?</li>
+                    <li>O que exatamente nosso cliente espera como <em>resultado</em> ao nos contratar?</li>
                     <li>Estamos entregando esse resultado de forma consistente?</li>
                     <li>Se sim — estamos entregando da forma <em>apropriada</em> ao contexto de cada cliente?</li>
-                    <li>Se alguém perguntar "qual é a experiência que entregamos?", a resposta seria a mesma em todas as áreas?</li>
+                    <li>Se alguém perguntar "qual experiência entregamos?", a resposta seria a mesma em todas as áreas?</li>
                 </ol>
             </div>
             <div class="ws-block">
-                <div class="ws-block__cat">Para discussão com o time</div>
+                <div class="ws-block__cat">👥 Discussão com o time</div>
                 <ol>
-                    <li>Onde nosso cliente precisa fazer mais esforço do que deveria? Quais são os pontos de atrito invisíveis?</li>
-                    <li>Se o cliente comparar nossa experiência com a do Spotify ou da Amazon, onde perdemos?</li>
-                    <li>O que sabemos sobre nosso cliente que não estamos usando para melhorar a experiência dele?</li>
-                    <li>Se tivéssemos que eliminar metade das etapas da jornada, quais sobreviveriam?</li>
+                    <li>Onde nosso cliente faz mais esforço do que deveria? Quais atritons são <em>invisíveis</em> para nós mas óbvios para ele?</li>
+                    <li>Se o cliente comparar nossa experiência com Spotify, Nubank ou Amazon — onde perdemos?</li>
+                    <li>O que <em>sabemos</em> sobre nosso cliente que não estamos <em>usando</em> para melhorar a experiência?</li>
+                    <li>Se eliminássemos metade das etapas da jornada, quais sobreviveriam?</li>
                 </ol>
             </div>
             <div class="ws-block">
-                <div class="ws-block__cat">Para a liderança</div>
+                <div class="ws-block__cat">🏢 Para a liderança</div>
                 <ol>
-                    <li>Experiência do cliente é prioridade real ou apenas discurso? Como sabemos?</li>
-                    <li>Nossas métricas atuais capturam experiência apropriada — ou apenas resultado funcional?</li>
-                    <li>Se tivéssemos que escolher: reduzir custo da operação ou reduzir esforço do cliente — qual escolheríamos? E o que isso diz sobre nossas prioridades?</li>
-                    <li>Qual decisão sobre experiência do cliente estamos adiando que deveríamos tomar esta semana?</li>
+                    <li>Experiência do cliente é prioridade real ou discurso de apresentação? <em>Como sabemos?</em></li>
+                    <li>Nossas métricas capturam experiência apropriada — ou apenas resultado funcional?</li>
+                    <li>Se tivéssemos que escolher: reduzir custo da operação ou reduzir esforço do cliente — qual escolheríamos? <em>O que isso diz sobre nós?</em></li>
+                    <li>Qual decisão sobre CX estamos adiando que deveria ser tomada esta semana?</li>
                 </ol>
             </div>
             <div class="ws-block">
-                <div class="ws-block__cat">Para provocar</div>
+                <div class="ws-block__cat">🔥 Para provocar</div>
                 <ol>
-                    <li>Se nosso cliente descrevesse a experiência conosco para um amigo, o que ele diria? E o que ele <em>não</em> diria?</li>
-                    <li>Estamos investindo mais em adquirir novos clientes ou em não perder os atuais?</li>
-                    <li>Qual é a nossa versão do "Cenário B do Uber" — onde entregamos o resultado mas destruímos a experiência?</li>
+                    <li>Se nosso cliente descrevesse a experiência conosco para um amigo, o que diria? E o que <em>não</em> diria?</li>
+                    <li>Investimos mais em adquirir clientes novos ou em não perder os que já temos?</li>
+                    <li>Qual é o nosso "Cenário B do Uber" — onde entregamos o resultado mas destruímos a experiência?</li>
                 </ol>
             </div>
+        </div>
+        <div class="fac-hint reveal" style="margin-top:2rem">
+            <span class="fac-hint__icon">💬</span>
+            <span><strong>Dica de facilitação:</strong> Escolha 2-3 perguntas por bloco. Dê 3 minutos para reflexão individual antes de abrir para o grupo. As respostas mais honestas vêm do silêncio — não da pressão.</span>
         </div>
     </div>
 </section>
 
-<!-- ═══════════ 12. FECHAMENTO ═══════════ -->
+<!-- ═══════ 11. FECHAMENTO ═══════ -->
 <section class="cta-final" id="fechamento">
     <div class="container">
         <div class="reveal">
             <span class="label">Fechamento</span>
-            <h2 style="max-width:18ch; margin:0.8rem auto 1.5rem;">A experiência que o cliente lembra é a que define se ele volta</h2>
-            <p>Sete ideias para levar desta conversa:</p>
+            <h2>A experiência que o cliente lembra é a que define se ele volta</h2>
+            <p style="margin-bottom:0.5rem">Sete ideias para levar desta conversa:</p>
             <div class="takeaways">
-                <div class="takeaway"><span class="takeaway__num">01</span><p>Resultado sem experiência é commoditie. Qualquer concorrente substitui.</p></div>
-                <div class="takeaway"><span class="takeaway__num">02</span><p>Experiência sem resultado é teatro. O cliente percebe e vai embora.</p></div>
-                <div class="takeaway"><span class="takeaway__num">03</span><p>Apropriado não é universal. O que encanta um cliente irrita outro.</p></div>
-                <div class="takeaway"><span class="takeaway__num">04</span><p>O esforço é o inimigo silencioso. Reduzir atrito vale mais que surpreender.</p></div>
-                <div class="takeaway"><span class="takeaway__num">05</span><p>Experiência não nasce no atendimento. Nasce na estrutura da empresa.</p></div>
-                <div class="takeaway"><span class="takeaway__num">06</span><p>O cliente já compara sua empresa com as melhores do mundo — independente do setor.</p></div>
-                <div class="takeaway"><span class="takeaway__num">07</span><p>A melhor experiência do futuro é a que o cliente nem percebe — porque simplesmente funciona.</p></div>
+                <div class="takeaway"><span class="takeaway__num">01</span><p><strong>Resultado sem experiência é commodity.</strong> Qualquer concorrente que entregar o mesmo resultado com menos atrito leva o cliente.</p></div>
+                <div class="takeaway"><span class="takeaway__num">02</span><p><strong>Experiência sem resultado é teatro.</strong> Encantar sem resolver é investir energia no lugar errado.</p></div>
+                <div class="takeaway"><span class="takeaway__num">03</span><p><strong>Apropriado não é universal.</strong> O que funciona para um cliente é invasivo para outro. Contexto é tudo.</p></div>
+                <div class="takeaway"><span class="takeaway__num">04</span><p><strong>Esforço é o inimigo silencioso.</strong> O cliente não reclama do atrito — simplesmente vai embora. Reduzir esforço vale mais que surpreender.</p></div>
+                <div class="takeaway"><span class="takeaway__num">05</span><p><strong>Experiência nasce na estrutura, não no atendimento.</strong> Se a empresa é desorganizada por trás, o cliente sente na ponta.</p></div>
+                <div class="takeaway"><span class="takeaway__num">06</span><p><strong>O benchmark é cross-industry.</strong> Seu cliente já compara você com as melhores experiências do mundo — independente do setor.</p></div>
+                <div class="takeaway"><span class="takeaway__num">07</span><p><strong>A melhor experiência do futuro é invisível.</strong> Funciona tão bem que o cliente nem percebe. E é isso que ele vai esperar de você.</p></div>
             </div>
         </div>
     </div>
@@ -752,37 +761,55 @@
     // ── Scroll Reveal ──
     const revObs = new IntersectionObserver(entries => {
         entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('vis'); revObs.unobserve(e.target); }});
-    }, { threshold:0.08, rootMargin:'0px 0px -40px 0px' });
+    }, {threshold:0.07, rootMargin:'0px 0px -40px 0px'});
     document.querySelectorAll('.reveal').forEach(el => revObs.observe(el));
 
     // ── Nav Dots ──
     const dots = document.querySelector('.nav-dots');
     const allDots = document.querySelectorAll('.nav-dot');
     const secs = document.querySelectorAll('section[id]');
+    const secIds = Array.from(secs).map(s => s.id);
+    let currentIdx = 0;
 
     const heroObs = new IntersectionObserver(([e]) => {
         dots?.classList.toggle('show', !e.isIntersecting);
-    }, { threshold:0.3 });
+    }, {threshold:0.3});
     const heroEl = document.getElementById('hero');
     if(heroEl) heroObs.observe(heroEl);
 
     const secObs = new IntersectionObserver(entries => {
         entries.forEach(e => {
             if(e.isIntersecting){
+                currentIdx = secIds.indexOf(e.target.id);
                 allDots.forEach(d => d.classList.remove('active'));
                 const d = document.querySelector(`.nav-dot[data-target="${e.target.id}"]`);
                 if(d) d.classList.add('active');
             }
         });
-    }, { threshold:0.2, rootMargin:'-10% 0px -60% 0px' });
+    }, {threshold:0.2, rootMargin:'-10% 0px -60% 0px'});
     secs.forEach(s => secObs.observe(s));
 
     allDots.forEach(d => d.addEventListener('click', () => {
         const t = document.getElementById(d.dataset.target);
-        if(t) t.scrollIntoView({ behavior:'smooth' });
+        if(t) t.scrollIntoView({behavior:'smooth'});
     }));
 
-    // ── Myth Cards (flip) ──
+    // ── Keyboard Navigation (← → for sections) ──
+    document.addEventListener('keydown', e => {
+        if(e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        if(e.key === 'ArrowRight' || e.key === 'ArrowDown'){
+            e.preventDefault();
+            const next = Math.min(currentIdx + 1, secs.length - 1);
+            secs[next].scrollIntoView({behavior:'smooth'});
+        }
+        if(e.key === 'ArrowLeft' || e.key === 'ArrowUp'){
+            e.preventDefault();
+            const prev = Math.max(currentIdx - 1, 0);
+            secs[prev].scrollIntoView({behavior:'smooth'});
+        }
+    });
+
+    // ── Myth Cards (smooth flip) ──
     document.querySelectorAll('[data-myth]').forEach(card => {
         card.addEventListener('click', () => card.classList.toggle('flipped'));
     });
@@ -794,7 +821,7 @@
             if(!btn) return;
             const sec = btn.closest('section') || btn.closest('.tabs').parentElement;
             const tid = btn.dataset.tab;
-            sec.querySelectorAll('.tabs__btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+            sec.querySelectorAll('.tabs__btn').forEach(b => {b.classList.remove('active');b.setAttribute('aria-selected','false')});
             sec.querySelectorAll('.tabs__panel').forEach(p => p.classList.remove('active'));
             btn.classList.add('active');
             btn.setAttribute('aria-selected','true');
@@ -809,9 +836,8 @@
             const item = trigger.closest('.acc-item');
             const body = item.querySelector('.acc-body');
             const isOpen = item.classList.contains('open');
-            // close siblings
             item.closest('.accordion').querySelectorAll('.acc-item.open').forEach(o => {
-                if(o !== item){ o.classList.remove('open'); o.querySelector('.acc-trigger').setAttribute('aria-expanded','false'); o.querySelector('.acc-body').style.maxHeight='0'; }
+                if(o !== item){o.classList.remove('open');o.querySelector('.acc-trigger').setAttribute('aria-expanded','false');o.querySelector('.acc-body').style.maxHeight='0'}
             });
             item.classList.toggle('open', !isOpen);
             trigger.setAttribute('aria-expanded', String(!isOpen));
@@ -828,11 +854,12 @@
             if(!node) return;
             sysGrid.querySelectorAll('.system-node').forEach(n => n.classList.remove('active'));
             node.classList.add('active');
-            sysDetail.innerHTML = '<p style="color:var(--text);font-size:0.95rem;max-width:50ch;margin:0 auto;">'+node.dataset.sys+'</p>';
+            const text = node.dataset.sys;
+            sysDetail.innerHTML = '<p style="color:var(--text);font-size:0.98rem;max-width:50ch;margin:0 auto;animation:fadeUp 0.3s var(--ease)">'+text+'</p>';
         });
     }
 
-    // ── Toggle (Before/After) ──
+    // ── Toggle ──
     document.querySelectorAll('.toggle-sw').forEach(sw => {
         sw.addEventListener('click', e => {
             const btn = e.target.closest('.toggle-btn');
@@ -846,7 +873,7 @@
         });
     });
 
-    // ── IA Cards (expand) ──
+    // ── IA Cards ──
     document.querySelectorAll('[data-expand]').forEach(card => {
         card.addEventListener('click', () => {
             const wasOpen = card.classList.contains('expanded');
