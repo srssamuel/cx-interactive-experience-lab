@@ -33,8 +33,7 @@ tmp/
 *.tmp
 .cache/
 
-# Output gerado (versionado seletivamente)
-output/**/*.html
+# Output placeholder
 !output/.gitkeep
 
 # Coverage
