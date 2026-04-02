@@ -222,12 +222,27 @@
         :focus-visible{outline:2px solid var(--primary);outline-offset:3px;border-radius:3px}
 
         /* ─── PROJECTION (large screens) ─── */
-        @media(min-width:1600px){
-            h1{font-size:5rem} h2{font-size:3.2rem} h3{font-size:1.7rem}
-            p,.acc-trigger,.tabs__btn,.ia-card h3,.uber-card h3{font-size:1.15rem}
-            .label{font-size:0.8rem}
-            section{padding:9rem 0}
-            .hero__sub{font-size:1.4rem}
+        @media(min-width:1440px){
+            :root{--mw:1280px;--cw:840px}
+            h1{font-size:4.8rem} h2{font-size:3rem} h3{font-size:1.6rem}
+            p,.acc-trigger,.tabs__btn,.ia-card h3,.uber-card h3,.tg-card h3{font-size:1.12rem}
+            .label{font-size:0.78rem;letter-spacing:0.16em}
+            section{padding:8rem 0}
+            .hero__sub{font-size:1.35rem}
+            .equation__term{padding:2rem 2.5rem;min-width:260px}
+            .equation__op{font-size:2.5rem}
+            .takeaway p{font-size:1.05rem}
+            .myth-card{padding:2rem;min-height:200px}
+            .uber-card{padding:2.5rem}
+            .ws-block{padding:2.5rem}
+            .acc-trigger{padding:1.5rem 1.8rem;font-size:1.05rem}
+            .fac-hint{font-size:0.9rem;padding:1.2rem 1.5rem}
+        }
+        @media(min-width:1800px){
+            h1{font-size:5.5rem} h2{font-size:3.5rem}
+            section{padding:10rem 0}
+            .hero__sub{font-size:1.5rem}
+            p{font-size:1.2rem}
         }
 
         /* ─── RESPONSIVE ─── */
@@ -286,7 +301,7 @@
     <div class="container">
         <div class="reveal">
             <span class="label">01 — A ideia que muda tudo</span>
-            <h2 style="margin-top:0.8rem">A equação que separa empresas que retêm de empresas que apenas processam</h2>
+            <h2 style="margin-top:0.8rem">Existe uma equação que ninguém te mostrou — e ela explica por que seus clientes satisfeitos estão saindo</h2>
             <p style="max-width:54ch;margin:1rem auto 0;text-align:center">Existe uma fórmula invisível operando em cada interação com o cliente. A maioria resolve apenas a primeira metade — e se pergunta por que perde clientes que diziam estar satisfeitos.</p>
         </div>
         <div class="equation__formula reveal">
@@ -307,7 +322,7 @@
         <p class="reveal" style="text-align:center;margin:1.5rem auto 0;max-width:54ch;font-size:1rem"><strong>Resultado sem experiência é commodity.</strong> Qualquer concorrente substitui. <strong>Experiência sem resultado é teatro.</strong> O cliente percebe e vai embora. Sucesso só existe quando os dois se encontram.</p>
         <div class="fac-hint reveal">
             <span class="fac-hint__icon">💬</span>
-            <span><strong>Para facilitação:</strong> Pergunte ao grupo — "Na nossa empresa, qual das duas metades recebe mais investimento? E qual o cliente mais sente falta?"</span>
+            <span><strong>Pause aqui.</strong> Mostre a equação e pergunte: "Se tivéssemos que dar uma nota de 0 a 10 para cada metade da equação na nossa empresa — resultado esperado e experiência apropriada — quais seriam os números? E o que isso revela?"</span>
         </div>
     </div>
 </section>
@@ -319,7 +334,7 @@
     <div class="container">
         <div class="sec-header reveal">
             <span class="label">02 — O que quase todo mundo entende errado</span>
-            <h2>Cinco crenças que parecem corretas — até você pensar melhor</h2>
+            <h2>Cinco coisas que você acredita sobre experiência do cliente — e que estão te atrasando</h2>
             <p>Cada card esconde uma crença rasa e revela o que realmente está em jogo. Clique para virar.</p>
         </div>
         <div class="myth-grid reveal">
@@ -391,7 +406,7 @@
         </div>
         <div class="fac-hint reveal" style="margin-top:2rem">
             <span class="fac-hint__icon">🎤</span>
-            <span><strong>Para workshop:</strong> Antes de revelar os cards, pergunte ao grupo qual crença eles acham que está mais presente na empresa. Depois revele — e discuta a distância entre percepção e realidade.</span>
+            <span><strong>Dinâmica:</strong> Antes de clicar, leia cada crença em voz alta e peça ao grupo: "Quem aqui concorda?" Deixe as mãos levantarem. Depois clique para revelar. O silêncio que se segue é o momento de aprendizagem.</span>
         </div>
     </div>
 </section>
@@ -403,7 +418,7 @@
     <div class="container">
         <div class="sec-header reveal">
             <span class="label">03 — Resultado Esperado</span>
-            <h2>O que o cliente veio buscar tem mais camadas do que parece</h2>
+            <h2>O cliente não veio buscar um produto. Veio buscar quatro coisas ao mesmo tempo — e você só está entregando uma</h2>
             <p>A maioria das empresas entende resultado como tarefa cumprida. Mas o cliente opera em quatro dimensões simultâneas — e só a funcional aparece nos relatórios.</p>
         </div>
         <div class="tabs reveal">
@@ -444,7 +459,7 @@
     <div class="container">
         <div class="sec-header reveal">
             <span class="label">04 — Experiência Apropriada</span>
-            <h2>A metade da equação que quase ninguém gerencia</h2>
+            <h2>Você resolve o problema do cliente. Mas da forma errada. E é aí que perde ele.</h2>
             <p>Entregar não é suficiente. A forma como se entrega — o contexto, a preferência, o esforço, a fluidez — é o que transforma transação em relação. Explore cada dimensão.</p>
         </div>
         <div class="accordion reveal">
@@ -477,7 +492,7 @@
 </section>
 
 <div class="pq reveal">
-    <blockquote>"Sucesso do cliente é o resultado esperado mais a experiência apropriada. Não basta chegar ao destino. É preciso chegar da forma certa."</blockquote>
+    <blockquote>"O cliente não cancela porque o produto parou de funcionar. Cancela porque a experiência ao redor parou de fazer sentido."</blockquote>
 </div>
 
 <div class="container"><div class="divider"></div></div>
@@ -487,7 +502,7 @@
     <div class="container">
         <div class="sec-header reveal">
             <span class="label">05 — A equação na prática</span>
-            <h2>Mesmo destino. Duas experiências. Resultados opostos.</h2>
+            <h2>Dois passageiros chegam ao aeroporto. Um volta a usar o app. O outro nunca mais.</h2>
             <p>Você pediu um Uber para o aeroporto. Nos dois cenários, chega no horário. O resultado funcional é idêntico. O que sente depois — radicalmente diferente.</p>
         </div>
         <div class="uber-scenarios reveal">
@@ -505,11 +520,11 @@
             </div>
         </div>
         <div class="reveal" style="margin-top:2.5rem;text-align:center">
-            <p style="margin:0 auto;max-width:52ch;font-size:1.05rem;color:var(--text)">Nos dois cenários, o cliente chegou ao destino. Mas apenas no primeiro ele diria que teve <strong>sucesso</strong>. Porque resultado veio acompanhado de experiência que respeitou quem ele é e o que precisava naquele momento.</p>
+            <p style="margin:0 auto;max-width:52ch;font-size:1.05rem;color:var(--text)">O destino foi o mesmo. O preço foi o mesmo. O tempo foi o mesmo. A única diferença foi a <strong>forma como aconteceu</strong>. E essa diferença é o que separa um cliente que volta de um que nunca mais abre o app.</p>
         </div>
         <div class="fac-hint reveal" style="margin-top:2rem">
             <span class="fac-hint__icon">🎤</span>
-            <span><strong>Para workshop:</strong> Peça ao grupo para descrever "o nosso Cenário B" — onde entregamos o resultado mas destruímos a experiência. Cada área terá um exemplo diferente.</span>
+            <span><strong>Exercício ao vivo:</strong> Divida a sala em duplas. Cada dupla tem 2 minutos para descrever "o nosso Cenário B" — um momento real onde entregamos o resultado mas a experiência foi péssima. Depois, peça 3 voluntários para compartilhar. O padrão que emerge é o diagnóstico.</span>
         </div>
     </div>
 </section>
@@ -521,7 +536,7 @@
     <div class="container">
         <div class="sec-header reveal">
             <span class="label">06 — Experiência como sistema</span>
-            <h2>O cliente sente na ponta o que a empresa organiza — ou desorganiza — por trás</h2>
+            <h2>A experiência que o cliente percebe é o reflexo exato do que a empresa é por dentro</h2>
             <p>A experiência não nasce no atendimento. Nasce na arquitetura da empresa. Clique em cada camada.</p>
         </div>
         <div class="reveal">
@@ -542,7 +557,7 @@
         </div>
         <div class="fac-hint reveal" style="margin-top:2rem">
             <span class="fac-hint__icon">💬</span>
-            <span><strong>Para discussão:</strong> "Qual dessas 9 camadas está mais desorganizada na nossa empresa? E qual o impacto disso na experiência que o cliente percebe?"</span>
+            <span><strong>Votação silenciosa:</strong> Peça a cada pessoa que escreva em um papel qual das 9 camadas é a mais fraca na empresa. Recolha e leia em voz alta. Onde houver convergência, há problema real — e provavelmente há meses sendo ignorado.</span>
         </div>
     </div>
 </section>
@@ -554,7 +569,7 @@
     <div class="container">
         <div class="sec-header reveal">
             <span class="label">07 — O novo cliente</span>
-            <h2>Ele não compara você com seu concorrente. Compara com a melhor experiência que já teve — em qualquer setor.</h2>
+            <h2>Seu cliente não compara você com seu concorrente. Compara com o Uber, a Apple e o Nubank — mesmo que você venda parafusos.</h2>
         </div>
         <div class="toggle-wrap reveal">
             <div class="toggle-sw">
@@ -582,7 +597,7 @@
 </section>
 
 <div class="pq reveal">
-    <blockquote>"O cliente não sai porque está insatisfeito. Sai porque encontrou alguém que faz a mesma coisa — com menos esforço da parte dele."</blockquote>
+    <blockquote>"O cliente não sai porque está insatisfeito. Sai porque alguém fez a mesma coisa — pedindo menos dele."</blockquote>
 </div>
 
 <div class="container"><div class="divider"></div></div>
@@ -592,7 +607,7 @@
     <div class="container">
         <div class="sec-header reveal">
             <span class="label">08 — Para onde a experiência está indo</span>
-            <h2>A experiência do futuro é a que o cliente não percebe — porque simplesmente funciona</h2>
+            <h2>O futuro da experiência não é encantar. É desaparecer.</h2>
             <p>Três horizontes. Cada um exige capacidades que a maioria das empresas ainda não construiu.</p>
         </div>
         <div class="tl reveal">
@@ -628,8 +643,8 @@
     <div class="container">
         <div class="sec-header reveal">
             <span class="label">09 — IA aplicada à experiência</span>
-            <h2>IA não substitui a experiência humana. Ela torna impossível esconder a falta dela.</h2>
-            <p>Seis aplicações que transformam a equação. Clique em cada uma para ver o impacto real.</p>
+            <h2>IA não vai melhorar sua experiência. Vai tornar impossível fingir que ela existe.</h2>
+            <p>Com IA, o cliente vai esperar que você saiba mais sobre ele do que ele precisaria explicar. Seis aplicações que já estão transformando a equação. Clique para explorar.</p>
         </div>
         <div class="ia-grid reveal">
             <div class="ia-card" data-expand>
@@ -679,7 +694,7 @@
     <div class="container">
         <div class="sec-header reveal">
             <span class="label">10 — Na prática</span>
-            <h2>Perguntas que transformam este conteúdo em conversa, decisão e ação</h2>
+            <h2>As perguntas que ninguém faz — e que mudam a conversa sobre experiência na sua empresa</h2>
             <p>Cada bloco funciona como módulo de facilitação. Use em workshops, reuniões de liderança ou sessões de estratégia.</p>
         </div>
         <div class="ws-grid reveal">
@@ -721,7 +736,7 @@
         </div>
         <div class="fac-hint reveal" style="margin-top:2rem">
             <span class="fac-hint__icon">💬</span>
-            <span><strong>Dica de facilitação:</strong> Escolha 2-3 perguntas por bloco. Dê 3 minutos para reflexão individual antes de abrir para o grupo. As respostas mais honestas vêm do silêncio — não da pressão.</span>
+            <span><strong>Método recomendado:</strong> Escolha 1 pergunta de cada bloco. Projete na tela. Dê 2 minutos de silêncio absoluto para cada pessoa escrever sua resposta. Só então abra para discussão. As respostas escritas em silêncio são 3x mais honestas que as ditas sob pressão do grupo.</span>
         </div>
     </div>
 </section>
@@ -731,16 +746,16 @@
     <div class="container">
         <div class="reveal">
             <span class="label">Fechamento</span>
-            <h2>A experiência que o cliente lembra é a que define se ele volta</h2>
-            <p style="margin-bottom:0.5rem">Sete ideias para levar desta conversa:</p>
+            <h2>O cliente não lembra do que você entregou. Lembra de como se sentiu.</h2>
+            <p style="margin-bottom:0.5rem">Se você levar apenas sete ideias desta conversa, que sejam estas:</p>
             <div class="takeaways">
-                <div class="takeaway"><span class="takeaway__num">01</span><p><strong>Resultado sem experiência é commodity.</strong> Qualquer concorrente que entregar o mesmo resultado com menos atrito leva o cliente.</p></div>
-                <div class="takeaway"><span class="takeaway__num">02</span><p><strong>Experiência sem resultado é teatro.</strong> Encantar sem resolver é investir energia no lugar errado.</p></div>
-                <div class="takeaway"><span class="takeaway__num">03</span><p><strong>Apropriado não é universal.</strong> O que funciona para um cliente é invasivo para outro. Contexto é tudo.</p></div>
-                <div class="takeaway"><span class="takeaway__num">04</span><p><strong>Esforço é o inimigo silencioso.</strong> O cliente não reclama do atrito — simplesmente vai embora. Reduzir esforço vale mais que surpreender.</p></div>
-                <div class="takeaway"><span class="takeaway__num">05</span><p><strong>Experiência nasce na estrutura, não no atendimento.</strong> Se a empresa é desorganizada por trás, o cliente sente na ponta.</p></div>
-                <div class="takeaway"><span class="takeaway__num">06</span><p><strong>O benchmark é cross-industry.</strong> Seu cliente já compara você com as melhores experiências do mundo — independente do setor.</p></div>
-                <div class="takeaway"><span class="takeaway__num">07</span><p><strong>A melhor experiência do futuro é invisível.</strong> Funciona tão bem que o cliente nem percebe. E é isso que ele vai esperar de você.</p></div>
+                <div class="takeaway"><span class="takeaway__num">01</span><p><strong>Entregar certo não é suficiente.</strong> Se o concorrente entrega igual com menos atrito, o cliente vai — sem avisar.</p></div>
+                <div class="takeaway"><span class="takeaway__num">02</span><p><strong>Encantar sem resolver é o pior investimento em CX.</strong> O cliente quer que funcione. Depois, se possível, que surpreenda.</p></div>
+                <div class="takeaway"><span class="takeaway__num">03</span><p><strong>O que encanta um cliente irrita outro.</strong> Experiência não é padronizável. É contextual ou é genérica.</p></div>
+                <div class="takeaway"><span class="takeaway__num">04</span><p><strong>O cliente não reclama do esforço. Ele simplesmente vai embora.</strong> Reduzir atrito é a decisão de maior ROI em experiência.</p></div>
+                <div class="takeaway"><span class="takeaway__num">05</span><p><strong>A experiência que o cliente sente é o espelho da empresa que você construiu.</strong> Desorganização interna sempre vaza para fora.</p></div>
+                <div class="takeaway"><span class="takeaway__num">06</span><p><strong>Seu cliente já viveu a melhor experiência do mundo — e agora espera isso de você.</strong> O benchmark não é o concorrente. É o Uber, a Apple, o Nubank.</p></div>
+                <div class="takeaway"><span class="takeaway__num">07</span><p><strong>A experiência do futuro é a que desaparece.</strong> Funciona tão bem que ninguém percebe. E em 5 anos, isso será o mínimo.</p></div>
             </div>
         </div>
     </div>
