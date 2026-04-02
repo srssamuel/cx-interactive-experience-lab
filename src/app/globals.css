@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #06090f;
+  --color-bg2: #0a0f1a;
+  --color-bg3: #0e1525;
+  --color-surface: rgba(14, 21, 37, 0.65);
+  --color-primary: #00e4b8;
+  --color-primary-muted: rgba(0, 228, 184, 0.08);
+  --color-accent: #818cf8;
+  --color-accent-muted: rgba(129, 140, 248, 0.08);
+  --color-warn: #fb7185;
+  --color-text: #f0f4f8;
+  --color-text-secondary: #8899ac;
+  --color-text-muted: #4a5a6f;
+  --color-glass-border: rgba(255, 255, 255, 0.06);
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 72px;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-primary);
+  color: var(--color-bg);
+}
+
+/* Film grain overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+}
