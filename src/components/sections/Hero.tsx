@@ -19,19 +19,25 @@ export function Hero() {
 
   return (
     <section id="hero" className="snap-section justify-center">
+      {/* Background image */}
+      <div className="absolute inset-0 z-0">
+        <img src="https://images.unsplash.com/photo-1436491865332-7a61a109db05?w=1920&q=80" alt="" className="absolute inset-0 w-full h-full object-cover" loading="eager" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[rgba(5,8,16,0.6)] via-[rgba(5,8,16,0.75)] to-[var(--color-bg)]" />
+      </div>
+
       {/* Mouse-reactive gradient */}
       <div
-        className="absolute inset-0 transition-all duration-[3000ms]"
+        className="absolute inset-0 transition-all duration-[3000ms] z-[1]"
         style={{
           background: `
-            radial-gradient(900px ellipse at ${mouse.x * 100}% ${mouse.y * 100}%, rgba(0,228,184,0.07), transparent 50%),
-            radial-gradient(600px ellipse at ${100 - mouse.x * 60}% ${100 - mouse.y * 60}%, rgba(129,140,248,0.04), transparent 50%)
+            radial-gradient(900px ellipse at ${mouse.x * 100}% ${mouse.y * 100}%, rgba(0,228,184,0.06), transparent 50%),
+            radial-gradient(600px ellipse at ${100 - mouse.x * 60}% ${100 - mouse.y * 60}%, rgba(129,140,248,0.03), transparent 50%)
           `,
         }}
       />
 
       {/* Grid */}
-      <div className="absolute inset-0 opacity-[0.025]" style={{
+      <div className="absolute inset-0 opacity-[0.02] z-[1]" style={{
         backgroundImage: "linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)",
         backgroundSize: "80px 80px",
       }} />

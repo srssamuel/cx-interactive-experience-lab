@@ -9,13 +9,13 @@ export const chapters = [
   { id: "myths", label: "Mitos", num: "02" },
   { id: "resultado", label: "Resultado", num: "03" },
   { id: "experiencia", label: "Experiência", num: "04" },
-  { id: "uber", label: "Caso Uber", num: "05" },
-  { id: "sistema", label: "Sistema", num: "06" },
-  { id: "mudou", label: "O Novo Cliente", num: "07" },
-  { id: "futuro", label: "Futuro", num: "08" },
-  { id: "ia", label: "IA", num: "09" },
-  { id: "pratica", label: "Workshop", num: "10" },
-  { id: "fechamento", label: "Fechamento", num: "11" },
+  { id: "uber", label: "Caso Uber", num: "06" },
+  { id: "sistema", label: "Sistema", num: "07" },
+  { id: "mudou", label: "O Novo Cliente", num: "08" },
+  { id: "futuro", label: "Futuro", num: "10" },
+  { id: "ia", label: "IA", num: "11" },
+  { id: "pratica", label: "Workshop", num: "12" },
+  { id: "fechamento", label: "Fechamento", num: "13" },
 ];
 
 export function Navigation() {
