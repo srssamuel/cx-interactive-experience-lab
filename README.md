@@ -1,85 +1,131 @@
-# CX Interactive Experience Lab
+# CX Experience Lab
 
-> Cada ideia merece uma forma à altura do seu impacto.
-
----
-
-Este estúdio existe para transformar pensamento estratégico em experiências digitais que não se parecem com nada que você já viu em HTML. Não fazemos páginas. Fazemos peças que reorganizam a forma como o leitor enxerga um problema — e sai com uma nova lente.
+> Plataforma premium de experiências digitais interativas para a Diretoria de Qualidade e Dados da AeC.
 
 ---
 
-## O que este estúdio produz
+## Manifesto
 
-**Manifestos visuais interativos** — teses sobre CX, liderança e estratégia que ganham forma cinematográfica. O leitor não lê. Ele atravessa.
+Cada ideia estratégica merece uma experiência à altura do seu impacto.
 
-**Playbooks executivos com interatividade cognitiva** — frameworks e modelos de decisão onde cada clique revela uma camada, ensina um conceito, provoca uma reflexão.
+Este não é um repositório de páginas web. É uma plataforma de criação de **experiências digitais premium** — artefatos interativos que funcionam como keynotes de palco, playbooks executivos, ferramentas de aprendizagem e peças de posicionamento institucional.
 
-**Experiências de aprendizagem sobre tendências e futuro** — sinais fracos, cenários emergentes e provocações sobre o que vem depois, apresentados como jornadas navegáveis.
-
-**Dashboards narrativos** — dados que contam histórias. Não são gráficos com legenda. São argumentos visuais com evidência.
+Cada experiência produzida aqui defende uma tese, conta uma história, provoca reflexão e convida ação. Nenhuma é genérica. Nenhuma é previsível. Nenhuma tem "cara de IA".
 
 ---
 
-## O que NÃO produzimos
+## O Que Esta Plataforma Produz
 
-- Landing pages comerciais
-- Apresentações convertidas em HTML
-- Conteúdo genérico com template bonito
-- Material informativo sem ponto de vista
+**Portais interativos premium** — Experiências navegáveis que combinam storytelling editorial, dados vivos e interatividade cognitiva.
 
-Se não tem tese, não sai daqui.
+**Microsites de workshop** — Artefatos projetados para uso ao vivo em sala, com chapter navigation, pontos de pausa, prompts de discussão e modo apresentação.
 
----
+**Experiências de apresentação executiva** — Keynotes digitais com motion design cinematográfico, tipografia de impacto e navegação por capítulos.
 
-## Como pensamos
+**Peças de posicionamento** — Materiais que demonstram maturidade técnica, estratégica e operacional da diretoria.
 
-Neutralidade é mediocridade. Todo material que sai deste estúdio defende uma ideia — com rigor, com narrativa e com design que comunica antes de qualquer palavra ser lida.
-
-Storytelling não é decoração. É a estrutura. A sequência em que uma ideia é revelada muda completamente o que ela significa.
-
-Interatividade não é clique por clique. Cada interação existe para ensinar, revelar ou provocar. Se o clique não muda o entendimento, ele não deveria existir.
-
-Forma e conteúdo são a mesma coisa. O design não ilustra o texto — ele é o argumento.
+**Experiências de aprendizagem** — Jornadas interativas que ensinam frameworks, desconstroem mitos e constroem modelos mentais.
 
 ---
 
-## Processo
+## Temas Centrais
+
+- Customer Experience
+- Customer Success
+- Dados & Analytics
+- Inteligência Artificial
+- Gestão & Liderança
+- Atendimento ao Cliente
+- Eficiência Operacional
+- Transformação de Experiência e Performance
+
+---
+
+## Stack Técnica
+
+| Camada | Tecnologia |
+|--------|-----------|
+| Framework | Next.js 15 (App Router) |
+| UI | React 19, TypeScript |
+| Styling | Tailwind CSS 4, Design Tokens CSS |
+| Motion | Framer Motion, GSAP + ScrollTrigger |
+| Scroll | Lenis (smooth scroll) |
+| 3D | Three.js, @react-three/fiber, @react-three/drei |
+| Fonts | next/font (Instrument Serif + Inter + JetBrains Mono) |
+| Deploy | Vercel |
+
+---
+
+## Modos de Uso
+
+Cada experiência suporta três modos:
+
+- **Leitura** — Scroll livre, exploração ao próprio ritmo
+- **Apresentação** — Fullscreen, navegação por capítulos, keyboard-driven
+- **Workshop** — Painel de facilitação, discussion prompts, timer, pontos de pausa
+
+---
+
+## Filosofia
+
+1. **Sempre com tese** — Todo material defende uma ideia. Neutralidade é mediocridade.
+2. **Storytelling como arquitetura** — A narrativa é a espinha dorsal, não decoração.
+3. **Interatividade cognitiva** — Cada clique ensina, revela ou provoca.
+4. **Motion como narrativa** — Cada animação avança a história.
+5. **Anti-IA por sistema** — Nenhum output pode parecer gerado por modelo.
+6. **Presença de palco** — Todo material funciona projetado em sala.
+
+---
+
+## Estrutura do Projeto
 
 ```
-1. Tese         → Qual ideia este material defende?
-2. Headline     → Em uma frase, o que muda para quem lê?
-3. Narrativa    → Qual sequência de revelação maximiza o impacto?
-4. Design       → Como a forma amplifica o argumento?
-5. Interação    → Onde o clique transforma compreensão?
-6. Construção   → HTML único, autocontido, sem dependências
-7. Refinamento  → Cada frase, cada pixel, cada transição justificada
-8. Validação    → Nota A ou volta. Sem exceções.
+src/
+├── app/                    # Rotas Next.js
+│   ├── page.tsx            # Portal de experiências
+│   └── experiencias/       # Rota dinâmica por experiência
+├── components/             # Design system e componentes
+│   ├── design-system/      # Primitivos (Typography, Section, Card)
+│   ├── interactive/        # Tabs, Accordion, Timeline, Reveal
+│   ├── navigation/         # ChapterNav, ProgressBar
+│   ├── motion/             # ScrollReveal, StaggerGroup, Counter
+│   ├── workshop/           # DiscussionPrompt, PausePoint, Timer
+│   └── cinematic/          # ParticleField, HeroCinematic
+├── experiences/            # Conteúdo de cada experiência
+├── lib/                    # Hooks, providers, utilidades
+└── styles/                 # Design tokens CSS
+
+skills/                     # Modos especialistas para geração
+prompts/                    # Prompts mestres
+references/                 # Quality gates e guidelines
 ```
 
 ---
 
-## Stack
+## Quality Standard
 
-**HTML5 semântico** como fundação — porque a web já tem tudo que precisamos.
+Cada experiência passa por 6 quality gates antes de ser publicada:
 
-**CSS moderno** (Custom Properties, Grid, animações intencionais) — porque design premium não precisa de biblioteca, precisa de domínio.
-
-**JavaScript vanilla** (Intersection Observer, event delegation, zero dependências) — porque frameworks resolvem problemas que não temos. Nosso problema é fazer o leitor pensar diferente.
-
-**Single-file HTML** como formato de entrega — um arquivo. Abre em qualquer lugar. Não depende de nada. Não quebra. Não expira.
-
-**Google Fonts via CDN** — a única dependência externa, porque tipografia é metade do argumento visual.
-
-Sem frameworks. Sem build. Sem node_modules. Cada arquivo é completo em si mesmo.
+1. **Narrativa** — Tese clara, arco provocativo, zero clichês
+2. **Design** — Identidade visual própria, ritmo visual, tipografia de impacto
+3. **Motion** — Animações com propósito narrativo, scroll-triggered effects
+4. **Interatividade** — Cada interação ensina algo que o estático não pode
+5. **Workshop/Presentation** — Funciona em projetor, chapter nav, pause points
+6. **Anti-IA** — Nenhum padrão reconhecível de output automático
 
 ---
 
-## Começar
+## Desenvolvimento
 
-Leia [`CLAUDE.md`](CLAUDE.md). Tudo começa ali.
+```bash
+npm install
+npm run dev
+```
+
+Deploy automático via Vercel em cada push.
 
 ---
 
-## Licença
+## Contexto Institucional
 
-[LICENSE](LICENSE)
+Plataforma da **Diretoria de Qualidade e Dados da AeC** — maior empresa de contact center do Brasil — para aceleração de criação de experiências digitais de alto impacto com IA.
