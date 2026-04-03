@@ -14,7 +14,7 @@ export function Futuro() {
   const inView = useInView(ref, { once: true, amount: 0.3 });
 
   return (
-    <section id="futuro" className="snap-section items-center bg-[#060a12]">
+    <section id="futuro" className="snap-section flex items-center items-center bg-[#060a12]">
       <div ref={ref} className="relative z-10 w-full max-w-[1000px] mx-auto px-6 py-16">
         <motion.span className="inline-flex items-center gap-2 text-[0.55rem] font-bold uppercase tracking-[0.3em] text-[var(--color-primary)] mb-6"
           initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}>

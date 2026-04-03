@@ -16,7 +16,7 @@ export function Resultado() {
   const [active, setActive] = useState(0);
 
   return (
-    <section id="resultado" className="snap-section items-center">
+    <section id="resultado" className="snap-section flex items-center items-center">
       <div ref={ref} className="relative z-10 w-full max-w-[1100px] mx-auto px-6 py-16">
         <motion.span className="inline-flex items-center gap-2 text-[0.55rem] font-bold uppercase tracking-[0.3em] text-[var(--color-primary)] mb-6"
           initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}}>

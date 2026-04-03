@@ -9,7 +9,7 @@ export function Equation() {
   const inView = useInView(ref, { once: true, amount: 0.3 });
 
   return (
-    <section id="equation" className="snap-section justify-center bg-[#060a12] relative">
+    <section id="equation" className="snap-section flex items-center justify-center bg-[#060a12] relative">
       <BackgroundBeams />
 
       <div ref={ref} className="relative z-10 w-full max-w-[1100px] mx-auto px-6 text-center">

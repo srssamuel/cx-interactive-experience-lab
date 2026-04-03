@@ -8,7 +8,7 @@ export function PullQuote({ children, id }: { children: string; id?: string }) {
   const inView = useInView(ref, { once: true, amount: 0.5 });
 
   return (
-    <section id={id} className="snap-section justify-center" style={{ minHeight: "70vh" }}>
+    <section id={id} className="snap-section flex items-center justify-center" style={{ minHeight: "70vh" }}>
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_50%_50%,rgba(0,228,184,0.03),transparent)]" />
       <div ref={ref} className="relative z-10 text-center px-8 max-w-[900px] mx-auto">
         <motion.blockquote

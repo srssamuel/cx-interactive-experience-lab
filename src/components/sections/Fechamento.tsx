@@ -18,7 +18,7 @@ export function Fechamento() {
   const inView = useInView(ref, { once: true, amount: 0.3 });
 
   return (
-    <section id="fechamento" className="snap-section items-center">
+    <section id="fechamento" className="snap-section flex items-center items-center">
       {/* Subtle glow */}
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_50%_40%_at_50%_60%,rgba(0,228,184,0.04),transparent)]" />
 

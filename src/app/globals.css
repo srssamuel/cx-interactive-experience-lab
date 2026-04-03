@@ -60,8 +60,6 @@ body::after {
   scroll-snap-align: start;
   scroll-snap-stop: always;
   position: relative;
-  display: flex;
-  align-items: center;
   overflow: hidden;
 }
 
