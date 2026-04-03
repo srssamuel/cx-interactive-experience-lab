@@ -1,5 +1,7 @@
 "use client";
 
+import { ScrollProvider } from "@/components/providers/scroll-provider";
+import { NavBar } from "@/components/NavBar";
 import { Hero } from "@/components/Hero";
 import { Equation } from "@/components/Equation";
 import { Myths } from "@/components/Myths";
@@ -7,7 +9,8 @@ import { SectionDivider } from "@/components/SectionDivider";
 
 export default function Home() {
   return (
-    <>
+    <ScrollProvider>
+      <NavBar />
       <Hero />
       <main>
         <Equation />
@@ -19,6 +22,6 @@ export default function Home() {
           A Equação Invisível — CX Interactive Experience Lab
         </p>
       </footer>
-    </>
+    </ScrollProvider>
   );
 }

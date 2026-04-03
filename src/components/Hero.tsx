@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Meteors } from "./ui/meteors";
+import { AnimatedCounter } from "./ui/animated-counter";
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -113,6 +114,24 @@ export function Hero() {
         >
           Entregar o resultado certo da forma errada tem nome: fracasso silencioso.
         </motion.p>
+
+        {/* Impact stat */}
+        <motion.div
+          className="flex items-center justify-center gap-8 mb-14"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.6, duration: 0.8 }}
+        >
+          <div className="text-center">
+            <AnimatedCounter target={73} suffix="%" className="text-[3.5rem] font-bold block leading-none bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-accent)] bg-clip-text text-transparent" />
+            <span className="text-[0.65rem] text-[var(--color-text-muted)] uppercase tracking-[0.15em] mt-2 block">dos clientes saem sem reclamar</span>
+          </div>
+          <div className="w-px h-12 bg-white/[0.06]" />
+          <div className="text-center">
+            <AnimatedCounter target={96} suffix="%" className="text-[3.5rem] font-bold block leading-none bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-accent)] bg-clip-text text-transparent" />
+            <span className="text-[0.65rem] text-[var(--color-text-muted)] uppercase tracking-[0.15em] mt-2 block">de alto esforço se tornam desleais</span>
+          </div>
+        </motion.div>
 
         {/* CTA */}
         <motion.a
