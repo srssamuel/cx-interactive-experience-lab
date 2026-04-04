@@ -4,32 +4,33 @@
   --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
 
-  /* ─── Colors — Deep Tech Navy ─── */
-  --bg: #050a14;
-  --surface: #0a1628;
-  --surface-elevated: #0f1d35;
-  --text: #E4EAF5;
-  --text-secondary: #8295B8;
-  --text-muted: #4A5F82;
-  --border: rgba(100, 160, 255, 0.06);
-  --border-hover: rgba(100, 160, 255, 0.14);
+  /* ─── Colors — Warm Obsidian (anti-cyan, anti-AI) ─── */
+  --bg: #09090b;
+  --bg-warm: #0c0a09;
+  --surface: #18181b;
+  --surface-elevated: #27272a;
+  --text: #fafaf9;
+  --text-secondary: #a8a29e;
+  --text-muted: #57534e;
+  --border: rgba(168, 162, 158, 0.08);
+  --border-hover: rgba(168, 162, 158, 0.16);
 
-  /* ─── Accent colors — Tech Palette ─── */
-  --accent-primary: #0EA5E9;
-  --accent-primary-rgb: 14, 165, 233;
-  --accent-secondary: #06B6D4;
-  --accent-secondary-rgb: 6, 182, 212;
-  --accent-tertiary: #8B5CF6;
-  --accent-tertiary-rgb: 139, 92, 246;
-  --accent-warm: #F59E0B;
-  --accent-warm-rgb: 245, 158, 11;
-  --accent-danger: #EF4444;
-  --accent-danger-rgb: 239, 68, 68;
+  /* ─── Accent colors — Refined Palette (no cyan default) ─── */
+  --accent-primary: #e7e5e4;
+  --accent-primary-rgb: 231, 229, 228;
+  --accent-secondary: #a8a29e;
+  --accent-secondary-rgb: 168, 162, 158;
+  --accent-tertiary: #78716c;
+  --accent-tertiary-rgb: 120, 113, 108;
+  --accent-warm: #d97706;
+  --accent-warm-rgb: 217, 119, 6;
+  --accent-danger: #dc2626;
+  --accent-danger-rgb: 220, 38, 38;
 
   /* ─── Glow colors ─── */
-  --glow-primary: rgba(14, 165, 233, 0.15);
-  --glow-primary-strong: rgba(14, 165, 233, 0.25);
-  --glow-warm: rgba(245, 158, 11, 0.12);
+  --glow-primary: rgba(231, 229, 228, 0.06);
+  --glow-primary-strong: rgba(231, 229, 228, 0.12);
+  --glow-warm: rgba(217, 119, 6, 0.08);
 
   /* ─── Spacing scale ─── */
   --space-1: 4px;
@@ -75,27 +76,50 @@
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* ─── Shadows ─── */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.2);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.45), 0 2px 4px rgba(0, 0, 0, 0.25);
-  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5), 0 6px 10px rgba(0, 0, 0, 0.3);
-  --shadow-glow: 0 0 20px rgba(var(--accent-primary-rgb), 0.2), 0 0 60px rgba(var(--accent-primary-rgb), 0.08);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.55), 0 6px 10px rgba(0, 0, 0, 0.35);
+  --shadow-glow: 0 0 20px rgba(var(--accent-primary-rgb), 0.08), 0 0 60px rgba(var(--accent-primary-rgb), 0.03);
 }
 
 /* ─── Experience-specific accent themes ─── */
-.theme-cyan {
-  --accent-primary: #0EA5E9;
-  --accent-primary-rgb: 14, 165, 233;
-  --accent-secondary: #06B6D4;
+
+/* CX Experience: Deep amber / warm cognac */
+.theme-cx {
+  --accent-primary: #d97706;
+  --accent-primary-rgb: 217, 119, 6;
+  --accent-secondary: #b45309;
+  --accent-secondary-rgb: 180, 83, 9;
 }
 
-.theme-teal {
-  --accent-primary: #0D9488;
-  --accent-primary-rgb: 13, 148, 136;
-  --accent-secondary: #0EA5E9;
+/* CS Experience: Forest / deep emerald */
+.theme-cs {
+  --accent-primary: #059669;
+  --accent-primary-rgb: 5, 150, 105;
+  --accent-secondary: #047857;
+  --accent-secondary-rgb: 4, 120, 87;
 }
 
-.theme-amber {
-  --accent-primary: #F59E0B;
-  --accent-primary-rgb: 245, 158, 11;
-  --accent-secondary: #0EA5E9;
+/* Data Intelligence: Electric violet */
+.theme-data {
+  --accent-primary: #7c3aed;
+  --accent-primary-rgb: 124, 58, 237;
+  --accent-secondary: #6d28d9;
+  --accent-secondary-rgb: 109, 40, 217;
+}
+
+/* AI Strategy: Rose / warm crimson */
+.theme-ai {
+  --accent-primary: #e11d48;
+  --accent-primary-rgb: 225, 29, 72;
+  --accent-secondary: #be123c;
+  --accent-secondary-rgb: 190, 18, 60;
+}
+
+/* Efficiency: Steel blue */
+.theme-efficiency {
+  --accent-primary: #0284c7;
+  --accent-primary-rgb: 2, 132, 199;
+  --accent-secondary: #0369a1;
+  --accent-secondary-rgb: 3, 105, 161;
 }

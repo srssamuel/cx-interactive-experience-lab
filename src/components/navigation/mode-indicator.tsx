@@ -11,9 +11,9 @@ const modeLabels: Record<ExperienceMode, string> = {
 };
 
 const modeShortcuts: Record<ExperienceMode, string> = {
-  reading: "",
-  presentation: "Ctrl+Shift+P",
-  workshop: "Ctrl+Shift+W",
+  reading: "R",
+  presentation: "P",
+  workshop: "W",
 };
 
 export function ModeIndicator() {
