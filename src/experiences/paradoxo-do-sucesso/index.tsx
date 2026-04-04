@@ -7,6 +7,10 @@ import {
   Overline,
   Provocation,
   AccentText,
+  PullQuote,
+  SplitContent,
+  FullBleedText,
+  EvidenceBlock,
   Section,
   Container,
   HeroSection,
@@ -46,167 +50,165 @@ import {
 } from "./content";
 import { motion } from "framer-motion";
 
-/* ─── Teal accent palette override via CSS variables ─── */
-const ACCENT_STYLE = {
-  "--accent-primary": "#0D9488",
-  "--accent-primary-rgb": "13, 148, 136",
-  "--accent-secondary": "#F59E0B",
-} as React.CSSProperties;
-
 export default function ParadoxoDoSucesso() {
   return (
-    <div style={ACCENT_STYLE}>
+    <div className="theme-teal">
       <WorkshopLayout discussions={workshopDiscussions}>
         <PresentationShell>
           <ChapterNav chapters={chapters} />
           <ModeIndicator />
 
-          {/* ═══════════════════════════════════════════════
-              HERO — Clean, data-driven opening (no particles, different feel)
-              ═══════════════════════════════════════════════ */}
+          {/* ═══════════════════════════════════════
+              HERO — Centered but with asymmetric data layout
+              ═══════════════════════════════════════ */}
           <HeroSection
             id="hero"
             backgroundElement={
               <>
-                {/* Teal radial glow — distinct from amber experience */}
                 <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(13,148,136,0.08)_0%,transparent_50%)]" />
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(13,148,136,0.04)_0%,transparent_60%)]" />
-                {/* Horizontal lines pattern */}
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,rgba(13,148,136,0.04)_0%,transparent_40%)]" />
                 <div
-                  className="absolute inset-0 opacity-[0.02]"
+                  className="absolute inset-0 opacity-[0.015]"
                   style={{
                     backgroundImage:
-                      "repeating-linear-gradient(0deg, rgba(13,148,136,1) 0px, transparent 1px, transparent 60px)",
+                      "repeating-linear-gradient(0deg, rgba(13,148,136,1) 0px, transparent 1px, transparent 80px)",
                   }}
                 />
               </>
             }
           >
-            <Container size="default" className="text-center">
-              <ScrollReveal delay={0.2}>
-                <Overline className="mb-8 justify-center">
-                  {hero.overline}
-                </Overline>
-              </ScrollReveal>
+            <Container size="default">
+              <div className="max-w-[680px] mx-auto text-center">
+                <ScrollReveal delay={0.2}>
+                  <Overline className="mb-6 justify-center">
+                    {hero.overline}
+                  </Overline>
+                </ScrollReveal>
 
-              <ScrollReveal delay={0.4}>
-                <DisplayHeading className="mx-auto max-w-[18ch]">
-                  {hero.headline}{" "}
-                  <AccentText>{hero.headlineAccent}</AccentText>
-                </DisplayHeading>
-              </ScrollReveal>
+                <ScrollReveal delay={0.4}>
+                  <DisplayHeading className="mx-auto">
+                    {hero.headline}{" "}
+                    <AccentText>{hero.headlineAccent}</AccentText>
+                  </DisplayHeading>
+                </ScrollReveal>
 
-              <ScrollReveal delay={0.6}>
-                <BodyText className="mx-auto mt-6 max-w-[42ch] text-center">
-                  {hero.subtext}
-                </BodyText>
-              </ScrollReveal>
+                <ScrollReveal delay={0.6}>
+                  <BodyText className="mx-auto mt-6 max-w-[40ch] text-center">
+                    {hero.subtext}
+                  </BodyText>
+                </ScrollReveal>
+              </div>
 
+              {/* Stats: asymmetric, not centered row */}
               <ScrollReveal delay={0.8}>
-                <div className="mt-12 flex items-center justify-center gap-12 md:gap-20">
-                  {hero.stats.map((stat, i) => (
-                    <div key={i} className="text-center">
-                      <GSAPCounter
-                        value={stat.value}
-                        suffix={stat.suffix}
-                        className="block font-mono text-[clamp(2.5rem,6vw,5rem)] font-bold leading-none tracking-tight text-[var(--accent-primary)]"
-                      />
-                      <span className="mt-2 block max-w-[14ch] text-xs font-medium uppercase tracking-[0.12em] text-[var(--text-muted)]">
-                        {stat.label}
-                      </span>
-                    </div>
-                  ))}
+                <div className="mt-14 grid gap-8 md:grid-cols-[1fr_auto_1fr] md:items-end">
+                  <EvidenceBlock
+                    stat={`${hero.stats[0].value}${hero.stats[0].suffix}`}
+                    context={hero.stats[0].label}
+                    className="md:text-right md:border-l-0 md:border-r-2 md:border-[var(--accent-primary)]/30 md:pr-6 md:pl-0"
+                  />
+                  <div className="hidden md:block h-12 w-px bg-[var(--border)]" />
+                  <EvidenceBlock
+                    stat={`${hero.stats[1].value}${hero.stats[1].suffix}`}
+                    context={hero.stats[1].label}
+                  />
                 </div>
               </ScrollReveal>
 
               <ScrollReveal delay={1}>
-                <motion.button
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() =>
-                    document
-                      .getElementById("paradoxo")
-                      ?.scrollIntoView({ behavior: "smooth" })
-                  }
-                  className="mt-14 rounded-full border border-[var(--accent-primary)]/30 bg-[var(--accent-primary)]/[0.06] px-8 py-4 text-xs font-bold uppercase tracking-[0.12em] text-[var(--accent-primary)] transition-all duration-200 hover:border-[var(--accent-primary)]/50 hover:bg-[var(--accent-primary)]/10 hover:shadow-lg hover:shadow-[var(--accent-primary)]/10"
-                >
-                  {hero.cta} ↓
-                </motion.button>
+                <div className="mt-12 text-center">
+                  <motion.button
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() =>
+                      document
+                        .getElementById("paradoxo")
+                        ?.scrollIntoView({ behavior: "smooth" })
+                    }
+                    className="rounded-full border border-[var(--accent-primary)]/30 bg-[var(--accent-primary)]/[0.06] px-8 py-4 text-xs font-bold uppercase tracking-[0.12em] text-[var(--accent-primary)] transition-all duration-200 hover:border-[var(--accent-primary)]/50 hover:bg-[var(--accent-primary)]/10"
+                  >
+                    {hero.cta} ↓
+                  </motion.button>
+                </div>
               </ScrollReveal>
             </Container>
           </HeroSection>
 
-          {/* ═══════════════════════════════════════════════
-              PARADOXO — The core thesis
-              ═══════════════════════════════════════════════ */}
+          {/* ═══════════════════════════════════════
+              PARADOXO — The core thesis, editorial single-column
+              ═══════════════════════════════════════ */}
           <Section id="paradoxo" background="surface" variant="default">
-            <Container>
-              <GSAPReveal
-                from={{ opacity: 0, x: -40 }}
-                to={{ opacity: 1, x: 0, duration: 0.8, ease: "power3.out" }}
-              >
-                <Overline>{paradoxo.overline}</Overline>
-              </GSAPReveal>
-
-              <GSAPReveal
-                from={{ opacity: 0, y: 40 }}
-                to={{ opacity: 1, y: 0, duration: 1, ease: "power3.out" }}
-                start="top 80%"
-              >
-                <SectionHeading className="mt-4 max-w-[18ch]">
-                  {paradoxo.headline}
-                </SectionHeading>
-              </GSAPReveal>
-
-              <GSAPReveal
-                from={{ opacity: 0 }}
-                to={{ opacity: 1, duration: 0.8, ease: "power2.out" }}
-                start="top 75%"
-              >
-                <BodyText className="mt-4 max-w-[48ch]">
-                  {paradoxo.subtext}
-                </BodyText>
-              </GSAPReveal>
-
-              {/* Ativo vs Saudável — side-by-side contrast */}
-              <GSAPStaggerReveal
-                className="mt-14 grid gap-6 md:grid-cols-2"
-                staggerAmount={0.2}
-              >
-                <ComparisonCard
-                  label="O que parece"
-                  title={paradoxo.parts[0].title}
-                  description={paradoxo.parts[0].description}
-                  accent="negative"
-                />
-                <ComparisonCard
-                  label="O que importa"
-                  title={paradoxo.parts[1].title}
-                  description={paradoxo.parts[1].description}
-                  accent="positive"
-                />
-              </GSAPStaggerReveal>
-
-              <GSAPReveal
-                from={{ opacity: 0, y: 20 }}
-                to={{ opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }}
-                start="top 65%"
-              >
-                <Card
-                  variant="highlighted"
-                  className="mx-auto mt-10 max-w-2xl text-center"
+            <Container size="default">
+              <div className="max-w-[560px]">
+                <GSAPReveal
+                  from={{ opacity: 0, x: -25 }}
+                  to={{ opacity: 1, x: 0, duration: 0.7, ease: "power3.out" }}
                 >
-                  <BodyText className="text-[var(--text)]">
-                    {paradoxo.insight}
-                  </BodyText>
-                </Card>
+                  <Overline>{paradoxo.overline}</Overline>
+                </GSAPReveal>
+
+                <GSAPReveal
+                  from={{ opacity: 0, y: 25 }}
+                  to={{ opacity: 1, y: 0, duration: 0.9, ease: "power3.out" }}
+                  start="top 80%"
+                >
+                  <SectionHeading className="mt-4">
+                    {paradoxo.headline}
+                  </SectionHeading>
+                </GSAPReveal>
+
+                <GSAPReveal
+                  from={{ opacity: 0 }}
+                  to={{ opacity: 1, duration: 0.7 }}
+                  start="top 75%"
+                >
+                  <BodyText className="mt-4">{paradoxo.subtext}</BodyText>
+                </GSAPReveal>
+              </div>
+
+              {/* Ativo vs Saudável — side-by-side, entering from opposing sides */}
+              <div className="mt-14 grid gap-6 md:grid-cols-2">
+                <GSAPReveal
+                  from={{ opacity: 0, x: -30 }}
+                  to={{ opacity: 1, x: 0, duration: 0.7, ease: "power2.out" }}
+                  start="top 78%"
+                >
+                  <ComparisonCard
+                    label="O que parece"
+                    title={paradoxo.parts[0].title}
+                    description={paradoxo.parts[0].description}
+                    accent="negative"
+                  />
+                </GSAPReveal>
+                <GSAPReveal
+                  from={{ opacity: 0, x: 30 }}
+                  to={{ opacity: 1, x: 0, duration: 0.7, ease: "power2.out" }}
+                  start="top 78%"
+                >
+                  <ComparisonCard
+                    label="O que importa"
+                    title={paradoxo.parts[1].title}
+                    description={paradoxo.parts[1].description}
+                    accent="positive"
+                  />
+                </GSAPReveal>
+              </div>
+
+              <GSAPReveal
+                from={{ opacity: 0, y: 15 }}
+                to={{ opacity: 1, y: 0, duration: 0.6 }}
+                start="top 68%"
+              >
+                <PullQuote className="mt-10 max-w-2xl">
+                  {paradoxo.insight}
+                </PullQuote>
               </GSAPReveal>
             </Container>
           </Section>
 
-          {/* ═══════════════════════════════════════════════
-              CHAPTER DIVIDER
-              ═══════════════════════════════════════════════ */}
+          {/* ═══════════════════════════════════════
+              CHAPTER 02 DIVIDER
+              ═══════════════════════════════════════ */}
           <Section variant="fullbleed" background="base">
             <Container>
               <ChapterDivider
@@ -216,74 +218,73 @@ export default function ParadoxoDoSucesso() {
             </Container>
           </Section>
 
-          {/* ═══════════════════════════════════════════════
-              SINAIS — Accordion (different from first experience's expandable cards)
-              ═══════════════════════════════════════════════ */}
+          {/* ═══════════════════════════════════════
+              SINAIS — Accordion with split layout
+              ═══════════════════════════════════════ */}
           <Section id="sinais" variant="default">
-            <Container>
-              <ScrollReveal>
-                <Overline>{sinais.overline}</Overline>
-              </ScrollReveal>
-
-              <ScrollReveal delay={0.1}>
-                <SectionHeading className="mt-4 max-w-[22ch]">
-                  {sinais.headline}
-                </SectionHeading>
-              </ScrollReveal>
-
-              <ScrollReveal delay={0.2}>
-                <BodyText className="mt-4">{sinais.subtext}</BodyText>
-              </ScrollReveal>
-
-              <div className="mt-12 max-w-3xl">
-                <Accordion
-                  items={sinais.items.map((item, i) => ({
-                    id: `signal-${i}`,
-                    trigger: (
-                      <div className="flex items-center gap-4">
-                        <span
-                          className={`h-2 w-2 flex-shrink-0 rounded-full ${
-                            item.severity === "crítico"
-                              ? "bg-rose-500"
-                              : item.severity === "alto"
-                                ? "bg-amber-500"
-                                : "bg-yellow-500"
-                          }`}
-                        />
-                        <span className="text-base font-semibold text-[var(--text)]">
-                          {item.signal}
-                        </span>
-                        <span className="ml-auto text-[0.6rem] font-bold uppercase tracking-[0.12em] text-[var(--text-muted)]">
-                          {item.severity}
-                        </span>
-                      </div>
-                    ),
-                    content: (
-                      <p className="pl-6 text-sm leading-relaxed text-[var(--text-secondary)]">
-                        {item.description}
-                      </p>
-                    ),
-                  }))}
-                />
-              </div>
+            <Container size="wide">
+              <SplitContent
+                ratio="wide-right"
+                left={
+                  <>
+                    <GSAPReveal from={{ opacity: 0, x: -20 }} to={{ opacity: 1, x: 0, duration: 0.6 }}>
+                      <Overline>{sinais.overline}</Overline>
+                    </GSAPReveal>
+                    <GSAPReveal from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0, duration: 0.8 }} start="top 82%">
+                      <SectionHeading className="mt-4">
+                        {sinais.headline}
+                      </SectionHeading>
+                    </GSAPReveal>
+                    <GSAPReveal from={{ opacity: 0 }} to={{ opacity: 1, duration: 0.6 }} start="top 78%">
+                      <BodyText className="mt-3">{sinais.subtext}</BodyText>
+                    </GSAPReveal>
+                  </>
+                }
+                right={
+                  <Accordion
+                    items={sinais.items.map((item, i) => ({
+                      id: `signal-${i}`,
+                      trigger: (
+                        <div className="flex items-center gap-4">
+                          <span
+                            className={`h-2 w-2 flex-shrink-0 rounded-full ${
+                              item.severity === "crítico"
+                                ? "bg-rose-500"
+                                : item.severity === "alto"
+                                  ? "bg-amber-500"
+                                  : "bg-yellow-500"
+                            }`}
+                          />
+                          <span className="text-base font-semibold text-[var(--text)]">
+                            {item.signal}
+                          </span>
+                          <span className="ml-auto text-[0.6rem] font-bold uppercase tracking-[0.12em] text-[var(--text-muted)]">
+                            {item.severity}
+                          </span>
+                        </div>
+                      ),
+                      content: (
+                        <p className="pl-6 text-sm leading-relaxed text-[var(--text-secondary)]">
+                          {item.description}
+                        </p>
+                      ),
+                    }))}
+                  />
+                }
+              />
             </Container>
           </Section>
 
-          {/* ═══════════════════════════════════════════════
-              PROVOCAÇÃO — Breathing moment
-              ═══════════════════════════════════════════════ */}
+          {/* ═══════════════════════════════════════
+              PROVOCAÇÃO — Left-aligned, not centered
+              ═══════════════════════════════════════ */}
           <Section variant="breathing" background="accent-muted">
-            <Container size="narrow" className="text-center">
+            <Container size="default" align="left" className="md:pl-[12%]">
               <GSAPReveal
-                from={{ opacity: 0, scale: 0.95 }}
-                to={{
-                  opacity: 1,
-                  scale: 1,
-                  duration: 1.2,
-                  ease: "power2.out",
-                }}
+                from={{ opacity: 0, y: 20 }}
+                to={{ opacity: 1, y: 0, duration: 1.2, ease: "power2.out" }}
               >
-                <Provocation className="mx-auto text-center">
+                <Provocation>
                   O cliente não vai te avisar que parou de progredir. Ele vai
                   simplesmente parar de renovar.
                 </Provocation>
@@ -291,9 +292,9 @@ export default function ParadoxoDoSucesso() {
             </Container>
           </Section>
 
-          {/* ═══════════════════════════════════════════════
+          {/* ═══════════════════════════════════════
               MÉTRICAS — Tabs contrasting vanity vs real
-              ═══════════════════════════════════════════════ */}
+              ═══════════════════════════════════════ */}
           <Section id="metricas" background="surface" variant="default">
             <Container>
               <ScrollReveal>
@@ -314,48 +315,54 @@ export default function ParadoxoDoSucesso() {
                       id: "vanity",
                       label: "Métricas de vaidade",
                       content: (
-                        <GSAPStaggerReveal
-                          className="grid gap-4 md:grid-cols-3"
-                          staggerAmount={0.1}
-                        >
+                        <div className="grid gap-4 md:grid-cols-3">
                           {metricas.vanity.map((item, i) => (
-                            <Card key={i} className="border-rose-500/10">
-                              <span className="text-xs font-bold uppercase tracking-[0.12em] text-rose-400">
-                                Vaidade
-                              </span>
-                              <h4 className="mt-2 text-base font-semibold text-[var(--text)]">
-                                {item.metric}
-                              </h4>
-                              <p className="mt-2 text-sm text-[var(--text-secondary)]">
-                                {item.problem}
-                              </p>
-                            </Card>
+                            <GSAPReveal
+                              key={i}
+                              from={{ opacity: 0, y: 20 }}
+                              to={{ opacity: 1, y: 0, duration: 0.5, delay: i * 0.06 }}
+                            >
+                              <div className="border-t border-rose-500/20 pt-4">
+                                <span className="text-[0.6rem] font-bold uppercase tracking-[0.12em] text-rose-400">
+                                  Vaidade
+                                </span>
+                                <h4 className="mt-2 text-base font-semibold text-[var(--text)]">
+                                  {item.metric}
+                                </h4>
+                                <p className="mt-2 text-sm text-[var(--text-secondary)]">
+                                  {item.problem}
+                                </p>
+                              </div>
+                            </GSAPReveal>
                           ))}
-                        </GSAPStaggerReveal>
+                        </div>
                       ),
                     },
                     {
                       id: "real",
                       label: "Métricas que importam",
                       content: (
-                        <GSAPStaggerReveal
-                          className="grid gap-4 md:grid-cols-3"
-                          staggerAmount={0.1}
-                        >
+                        <div className="grid gap-4 md:grid-cols-3">
                           {metricas.real.map((item, i) => (
-                            <Card key={i} variant="insight">
-                              <span className="text-xs font-bold uppercase tracking-[0.12em] text-emerald-400">
-                                Real
-                              </span>
-                              <h4 className="mt-2 text-base font-semibold text-[var(--text)]">
-                                {item.metric}
-                              </h4>
-                              <p className="mt-2 text-sm text-[var(--text-secondary)]">
-                                {item.insight}
-                              </p>
-                            </Card>
+                            <GSAPReveal
+                              key={i}
+                              from={{ opacity: 0, y: 20 }}
+                              to={{ opacity: 1, y: 0, duration: 0.5, delay: i * 0.06 }}
+                            >
+                              <div className="border-l-2 border-emerald-500/30 pl-4">
+                                <span className="text-[0.6rem] font-bold uppercase tracking-[0.12em] text-emerald-400">
+                                  Real
+                                </span>
+                                <h4 className="mt-2 text-base font-semibold text-[var(--text)]">
+                                  {item.metric}
+                                </h4>
+                                <p className="mt-2 text-sm text-[var(--text-secondary)]">
+                                  {item.insight}
+                                </p>
+                              </div>
+                            </GSAPReveal>
                           ))}
-                        </GSAPStaggerReveal>
+                        </div>
                       ),
                     },
                   ]}
@@ -364,20 +371,22 @@ export default function ParadoxoDoSucesso() {
             </Container>
           </Section>
 
-          {/* ═══════════════════════════════════════════════
-              COMPARAÇÃO — Slider: Operação sem CS vs com CS orquestrado
-              ═══════════════════════════════════════════════ */}
-          <Section variant="default" background="base">
+          {/* ═══════════════════════════════════════
+              COMPARAÇÃO — Slider
+              ═══════════════════════════════════════ */}
+          <Section variant="asymmetric" background="base">
             <Container>
-              <ScrollReveal>
-                <Overline>A diferença na prática</Overline>
-              </ScrollReveal>
-              <ScrollReveal delay={0.1}>
-                <SectionHeading className="mt-4 max-w-[24ch]">
-                  Arraste para ver o contraste
-                </SectionHeading>
-              </ScrollReveal>
-              <div className="mt-12">
+              <div className="max-w-[440px]">
+                <ScrollReveal>
+                  <Overline>A diferença na prática</Overline>
+                </ScrollReveal>
+                <ScrollReveal delay={0.1}>
+                  <SectionHeading className="mt-4">
+                    Arraste para ver o contraste
+                  </SectionHeading>
+                </ScrollReveal>
+              </div>
+              <div className="mt-10">
                 <ComparisonSlider
                   before={{
                     label: "Sem CS estruturado",
@@ -418,33 +427,35 @@ export default function ParadoxoDoSucesso() {
             </Container>
           </Section>
 
-          {/* ═══════════════════════════════════════════════
-              STAT MOMENT — Full-screen breathing data
-              ═══════════════════════════════════════════════ */}
-          <Section variant="breathing" background="base">
-            <Container size="narrow" className="text-center">
-              <GSAPReveal
-                from={{ opacity: 0, y: 30 }}
-                to={{ opacity: 1, y: 0, duration: 1, ease: "power3.out" }}
-              >
-                <GSAPCounter
-                  value={67}
-                  suffix="%"
-                  className="block font-mono text-[clamp(4rem,12vw,10rem)] font-bold leading-none tracking-tight text-[var(--accent-primary)]"
-                />
-                <p className="mt-6 text-xl text-[var(--text-secondary)]">
-                  do churn começa no onboarding.
-                </p>
-                <p className="mt-2 text-sm text-[var(--text-muted)]">
-                  Não por falha técnica. Por expectativa não alinhada.
-                </p>
-              </GSAPReveal>
+          {/* ═══════════════════════════════════════
+              STAT MOMENT — Right-aligned, not centered
+              ═══════════════════════════════════════ */}
+          <Section variant="compact" background="base">
+            <Container size="wide">
+              <div className="md:ml-auto md:max-w-[50%]">
+                <GSAPReveal
+                  from={{ opacity: 0, x: 30 }}
+                  to={{ opacity: 1, x: 0, duration: 1, ease: "power3.out" }}
+                >
+                  <GSAPCounter
+                    value={67}
+                    suffix="%"
+                    className="block font-mono text-[clamp(4rem,12vw,9rem)] font-bold leading-none tracking-tight text-[var(--accent-primary)]"
+                  />
+                  <p className="mt-4 max-w-[30ch] text-xl text-[var(--text-secondary)]">
+                    do churn começa no onboarding.
+                  </p>
+                  <p className="mt-2 text-sm text-[var(--text-muted)]">
+                    Não por falha técnica. Por expectativa não alinhada.
+                  </p>
+                </GSAPReveal>
+              </div>
             </Container>
           </Section>
 
-          {/* ═══════════════════════════════════════════════
-              CHAPTER DIVIDER
-              ═══════════════════════════════════════════════ */}
+          {/* ═══════════════════════════════════════
+              CHAPTER 04 DIVIDER
+              ═══════════════════════════════════════ */}
           <Section variant="fullbleed" background="base">
             <Container>
               <ChapterDivider
@@ -454,30 +465,32 @@ export default function ParadoxoDoSucesso() {
             </Container>
           </Section>
 
-          {/* ═══════════════════════════════════════════════
-              MODELO — Timeline maturity (same component, different data)
-              ═══════════════════════════════════════════════ */}
+          {/* ═══════════════════════════════════════
+              MODELO — Timeline maturity
+              ═══════════════════════════════════════ */}
           <Section id="modelo" background="surface" variant="default">
             <Container>
-              <ScrollReveal>
-                <Overline>{modelo.overline}</Overline>
-              </ScrollReveal>
+              <div className="max-w-[480px]">
+                <ScrollReveal>
+                  <Overline>{modelo.overline}</Overline>
+                </ScrollReveal>
 
-              <ScrollReveal delay={0.1}>
-                <SectionHeading className="mt-4 max-w-[22ch]">
-                  {modelo.headline}
-                </SectionHeading>
-              </ScrollReveal>
+                <ScrollReveal delay={0.1}>
+                  <SectionHeading className="mt-4">
+                    {modelo.headline}
+                  </SectionHeading>
+                </ScrollReveal>
+              </div>
 
-              <div className="mt-16">
+              <div className="mt-14">
                 <Timeline items={modelo.stages} />
               </div>
             </Container>
           </Section>
 
-          {/* ═══════════════════════════════════════════════
-              CHAPTER DIVIDER
-              ═══════════════════════════════════════════════ */}
+          {/* ═══════════════════════════════════════
+              CHAPTER 05 DIVIDER
+              ═══════════════════════════════════════ */}
           <Section variant="fullbleed" background="base">
             <Container>
               <ChapterDivider
@@ -487,9 +500,9 @@ export default function ParadoxoDoSucesso() {
             </Container>
           </Section>
 
-          {/* ═══════════════════════════════════════════════
-              JORNADA — Numbered cards (different layout: single column, editorial)
-              ═══════════════════════════════════════════════ */}
+          {/* ═══════════════════════════════════════
+              JORNADA — Editorial, single column, border-top style
+              ═══════════════════════════════════════ */}
           <Section id="jornada" variant="editorial">
             <Container size="narrow">
               <ScrollReveal>
@@ -497,47 +510,48 @@ export default function ParadoxoDoSucesso() {
               </ScrollReveal>
 
               <ScrollReveal delay={0.1}>
-                <SectionHeading className="mt-4 max-w-[22ch]">
+                <SectionHeading className="mt-4">
                   {jornada.headline}
                 </SectionHeading>
               </ScrollReveal>
 
-              <GSAPStaggerReveal
-                className="mt-12 space-y-6"
-                staggerAmount={0.12}
-              >
+              <div className="mt-12 space-y-0">
                 {jornada.phases.map((phase, i) => (
-                  <div
+                  <GSAPReveal
                     key={i}
-                    className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--border-hover)]"
+                    from={{ opacity: 0, y: 15 }}
+                    to={{ opacity: 1, y: 0, duration: 0.5, delay: i * 0.06, ease: "power2.out" }}
+                    start="top 80%"
                   >
-                    <div className="flex items-start gap-5">
-                      <span className="flex-shrink-0 font-mono text-[2rem] font-bold leading-none text-[var(--accent-primary)]/20">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <div>
-                        <h3 className="text-lg font-semibold text-[var(--text)]">
-                          {phase.title}
-                        </h3>
-                        <p className="mt-1 text-sm font-medium text-[var(--accent-primary)]">
-                          {phase.question}
-                        </p>
-                        <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
-                          {phase.answer}
-                        </p>
+                    <div className="border-t border-[var(--border)] py-6 transition-colors duration-200 hover:bg-[var(--surface)]/50">
+                      <div className="flex items-start gap-5">
+                        <span className="flex-shrink-0 font-mono text-[1.5rem] font-bold leading-none text-[var(--accent-primary)]/15">
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                        <div>
+                          <h3 className="text-base font-semibold text-[var(--text)]">
+                            {phase.title}
+                          </h3>
+                          <p className="mt-1 text-sm font-medium text-[var(--accent-primary)]/80">
+                            {phase.question}
+                          </p>
+                          <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
+                            {phase.answer}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </GSAPReveal>
                 ))}
-              </GSAPStaggerReveal>
+              </div>
             </Container>
           </Section>
 
           <PausePoint />
 
-          {/* ═══════════════════════════════════════════════
+          {/* ═══════════════════════════════════════
               DISCUSSÃO — Workshop prompt
-              ═══════════════════════════════════════════════ */}
+              ═══════════════════════════════════════ */}
           <Section id="discussao" variant="breathing">
             <Container size="narrow">
               <DiscussionPrompt
@@ -548,57 +562,49 @@ export default function ParadoxoDoSucesso() {
             </Container>
           </Section>
 
-          {/* ═══════════════════════════════════════════════
-              FECHAMENTO — Provocative close
-              ═══════════════════════════════════════════════ */}
+          {/* ═══════════════════════════════════════
+              FECHAMENTO — Split: big text + insights list
+              ═══════════════════════════════════════ */}
           <Section id="fechamento" background="surface" variant="default">
-            <Container size="narrow" className="text-center">
+            <Container size="wide">
               <GSAPReveal
-                from={{ opacity: 0, y: 40 }}
+                from={{ opacity: 0, y: 30 }}
                 to={{ opacity: 1, y: 0, duration: 1.2, ease: "power3.out" }}
               >
-                <Provocation className="mx-auto text-center">
+                <FullBleedText className="max-w-[16ch]">
                   {fechamento.headline}
-                </Provocation>
+                </FullBleedText>
               </GSAPReveal>
 
-              <div className="mx-auto mt-16 max-w-2xl text-left">
-                <GSAPStaggerReveal staggerAmount={0.1}>
+              <div className="mt-16 grid gap-12 md:grid-cols-[1.2fr_1fr]">
+                <GSAPStaggerReveal staggerAmount={0.07}>
                   {fechamento.insights.map((insight, i) => (
                     <div
                       key={i}
-                      className="flex gap-4 border-b border-[var(--border)] py-5"
+                      className="flex gap-4 border-b border-[var(--border)] py-4 last:border-0"
                     >
-                      <span className="font-mono text-sm font-bold text-[var(--accent-primary)]/40">
+                      <span className="font-mono text-xs font-bold text-[var(--accent-primary)]/30">
                         {String(i + 1).padStart(2, "0")}
                       </span>
-                      <p className="text-[var(--text)] leading-relaxed">
+                      <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
                         {insight}
                       </p>
                     </div>
                   ))}
                 </GSAPStaggerReveal>
-              </div>
 
-              <GSAPReveal
-                from={{ opacity: 0, scale: 0.95 }}
-                to={{
-                  opacity: 1,
-                  scale: 1,
-                  duration: 0.8,
-                  ease: "power2.out",
-                }}
-                start="top 70%"
-              >
-                <Card
-                  variant="highlighted"
-                  className="mx-auto mt-16 max-w-2xl text-center"
+                <GSAPReveal
+                  from={{ opacity: 0, y: 20 }}
+                  to={{ opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }}
+                  start="top 72%"
                 >
-                  <BodyText className="font-display text-lg text-[var(--text)]">
-                    {fechamento.provocation}
-                  </BodyText>
-                </Card>
-              </GSAPReveal>
+                  <div className="border-l-2 border-[var(--accent-primary)]/15 pl-6 pt-2">
+                    <BodyText className="font-display text-lg text-[var(--text)]">
+                      {fechamento.provocation}
+                    </BodyText>
+                  </div>
+                </GSAPReveal>
+              </div>
             </Container>
           </Section>
 

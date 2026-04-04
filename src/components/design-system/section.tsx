@@ -7,7 +7,7 @@ interface SectionProps {
   children: ReactNode;
   className?: string;
   id?: string;
-  variant?: "default" | "fullbleed" | "editorial" | "immersive" | "breathing";
+  variant?: "default" | "fullbleed" | "editorial" | "immersive" | "breathing" | "asymmetric" | "compact";
   background?: "base" | "surface" | "elevated" | "accent-muted";
 }
 
@@ -21,11 +21,13 @@ export const Section = forwardRef<HTMLElement, SectionProps>(
     };
 
     const variantStyles = {
-      default: "py-24 md:py-32 lg:py-40",
+      default: "py-20 md:py-28 lg:py-36",
       fullbleed: "py-0",
-      editorial: "py-24 md:py-32 lg:py-40 max-w-[65ch] mx-auto",
+      editorial: "py-20 md:py-28 lg:py-36",
       immersive: "py-0 min-h-screen flex items-center relative overflow-hidden",
-      breathing: "py-32 md:py-48 lg:py-64",
+      breathing: "py-24 md:py-32 lg:py-44",
+      asymmetric: "py-16 md:py-24 lg:py-32",
+      compact: "py-12 md:py-16 lg:py-20",
     };
 
     return (
@@ -51,12 +53,14 @@ interface ContainerProps {
   children: ReactNode;
   className?: string;
   size?: "narrow" | "default" | "wide" | "full";
+  align?: "center" | "left" | "right";
 }
 
 export function Container({
   children,
   className,
   size = "default",
+  align = "center",
 }: ContainerProps) {
   const sizeStyles = {
     narrow: "max-w-3xl",
@@ -65,11 +69,18 @@ export function Container({
     full: "max-w-none",
   };
 
+  const alignStyles = {
+    center: "mx-auto",
+    left: "mr-auto",
+    right: "ml-auto",
+  };
+
   return (
     <div
       className={cn(
-        "relative z-10 mx-auto w-full px-6 md:px-12",
+        "relative z-10 w-full px-6 md:px-12",
         sizeStyles[size],
+        alignStyles[align],
         className
       )}
     >
@@ -84,6 +95,7 @@ interface HeroSectionProps {
   id?: string;
   overlay?: boolean;
   backgroundElement?: ReactNode;
+  align?: "center" | "left";
 }
 
 export function HeroSection({
@@ -92,13 +104,15 @@ export function HeroSection({
   id,
   overlay = true,
   backgroundElement,
+  align = "center",
 }: HeroSectionProps) {
   return (
     <section
       id={id}
       className={cn(
-        "relative flex min-h-screen items-center justify-center overflow-hidden",
+        "relative flex min-h-screen overflow-hidden",
         "bg-[var(--bg)]",
+        align === "center" ? "items-center justify-center" : "items-end pb-24 md:pb-32 lg:pb-40",
         className
       )}
     >
@@ -127,18 +141,18 @@ export function ChapterDivider({
   return (
     <div
       className={cn(
-        "flex items-center gap-6 py-16 md:py-24",
+        "flex items-center gap-6 py-12 md:py-20",
         className
       )}
     >
-      <span className="font-mono text-[clamp(4rem,10vw,8rem)] font-bold leading-none text-[var(--accent-primary)]/[0.08]">
+      <span className="font-mono text-[clamp(3rem,8vw,6rem)] font-bold leading-none text-[var(--accent-primary)]/[0.06]">
         {number}
       </span>
       <div>
-        <span className="text-xs font-semibold uppercase tracking-[0.15em] text-[var(--accent-primary)]">
+        <span className="text-[0.6rem] font-semibold uppercase tracking-[0.18em] text-[var(--accent-primary)]/70">
           Capítulo {number}
         </span>
-        <h2 className="mt-1 font-display text-2xl tracking-tight text-[var(--text)] md:text-3xl">
+        <h2 className="mt-1 font-display text-xl tracking-tight text-[var(--text)] md:text-2xl">
           {title}
         </h2>
       </div>

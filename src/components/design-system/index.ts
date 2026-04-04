@@ -8,6 +8,10 @@ export {
   StatLabel,
   Provocation,
   AccentText,
+  PullQuote,
+  SplitContent,
+  FullBleedText,
+  EvidenceBlock,
 } from "./typography";
 
 export {

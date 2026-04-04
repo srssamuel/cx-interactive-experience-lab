@@ -73,3 +73,16 @@
   --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.4), 0 6px 10px rgba(0, 0, 0, 0.25);
   --shadow-glow: 0 0 20px rgba(var(--accent-primary-rgb), 0.15), 0 0 60px rgba(var(--accent-primary-rgb), 0.05);
 }
+
+/* ─── Experience-specific accent themes ─── */
+.theme-amber {
+  --accent-primary: #F59E0B;
+  --accent-primary-rgb: 245, 158, 11;
+  --accent-secondary: #0D9488;
+}
+
+.theme-teal {
+  --accent-primary: #0D9488;
+  --accent-primary-rgb: 13, 148, 136;
+  --accent-secondary: #F59E0B;
+}
