@@ -1,193 +1,308 @@
 # Skill: Microinteraction Designer
 
 ## Objetivo
-Projetar microinterações que elevam a experiência — hover states, transições, feedback visual, animações de entrada e pequenos detalhes que transformam uma página estática em uma experiência viva.
+Projetar microinteracoes que elevam a experiencia — hover states, transicoes, feedback visual, animacoes de entrada e pequenos detalhes que transformam uma pagina estatica em uma experiencia viva. Implementacao com Framer Motion para estados interativos e GSAP para scroll-driven microinteracoes.
 
 ## Quando Usar
-- Ao refinar a camada interativa de qualquer HTML
-- Quando o material está funcional mas precisa de "vida"
-- Ao decidir timings, easings e feedback visual
+- Ao refinar a camada interativa de qualquer experiencia
+- Quando o material esta funcional mas precisa de "vida"
+- Ao decidir timings, easings, springs e feedback visual
 
 ## Como Pensar
-- Microinterações são a linguagem corporal da interface
-- Cada transição comunica algo: hierarquia, relação, feedback
-- O timing é tudo: rápido demais parece quebrado, lento demais parece travado
-- A melhor microinteração é a que o usuário sente mas não percebe conscientemente
-- Consistência é mais importante que criatividade em microinterações
+- Microinteracoes sao a linguagem corporal da interface
+- Cada transicao comunica algo: hierarquia, relacao, feedback
+- O timing e tudo: rapido demais parece quebrado, lento demais parece travado
+- A melhor microinteracao e a que o usuario sente mas nao percebe conscientemente
+- Consistencia e mais importante que criatividade em microinteracoes
 
-## Boas Práticas
-- Hover states: escala sutil (translateY -2 a -4px), brightness ou background shift
-- Transições: 150-200ms para feedback, 300-400ms para mudança de conteúdo, 500ms para entrada
-- Easing: ease-out para entradas, ease-in-out para transições, ease-in para saídas
-- Scroll reveals: fade + translateY (20-30px), stagger de 50-100ms entre elementos
-- Focus states visíveis e elegantes (outline ou ring com cor primary)
-- Loading states quando há delay perceptível
-- Active states com feedback imediato (< 100ms)
+## Boas Praticas
+- Hover states: `whileHover` com translateY(-2 a -4px) via Framer Motion spring
+- Tap feedback: `whileTap` com scale(0.97-0.98) via Framer Motion
+- Transicoes de conteudo: `AnimatePresence mode="wait"` para troca suave
+- Scroll reveals: GSAP ScrollTrigger com stagger para sequencia narrativa
+- Focus states visiveis e elegantes (ring com cor accent)
+- Loading states com Framer Motion `animate` quando ha delay perceptivel
+- Active states com feedback imediato (spring stiffness alta)
 
 ## Erros a Evitar
-- Animações que demoram mais de 500ms para elementos pequenos
-- Bouncing effects (parecem infantis)
-- Animações de entrada que bloqueiam leitura
-- Inconsistência de timing entre elementos similares
-- Ausência de prefers-reduced-motion
+- Animacoes que demoram mais de 500ms para elementos pequenos
+- Bouncing effects (springs com damping < 15 parecem infantis)
+- Animacoes de entrada que bloqueiam leitura
+- Inconsistencia de timing entre elementos similares
+- Ausencia de `prefers-reduced-motion`
 - Overuse — quando tudo anima, nada se destaca
 
-## Critério de Excelência
-A interface deve parecer "respirar" — tudo responde com naturalidade ao toque e ao scroll. O usuário deve sentir que está interagindo com algo vivo e polido, sem conseguir apontar exatamente por quê. A diferença de qualidade deve ser sentida, não analisada.
+## Criterio de Excelencia
+A interface deve parecer "respirar" — tudo responde com naturalidade ao toque e ao scroll. O usuario deve sentir que esta interagindo com algo vivo e polido, sem conseguir apontar exatamente por que.
 
 ---
 
-## Tabela de Referência de Timing
+## Tabela de Referencia de Timing
 
-Valores exatos de CSS para cada tipo de microinteração. Use como referência — não invente valores.
+Valores canonicos para cada tipo de microinteracao. Nao invente — use esta tabela.
 
-| Interação | Propriedade CSS | Duração | Easing | Transform/Valor | Observação |
-|---|---|---|---|---|---|
-| **Hover lift (card)** | `transition: transform, box-shadow` | `200ms` | `cubic-bezier(0.34, 1.56, 0.64, 1)` | `translateY(-3px)` + `box-shadow: 0 8px 25px rgba(0,0,0,0.15)` | O cubic-bezier com overshoot sutil dá sensação de "responder" |
-| **Hover lift (botão)** | `transition: transform, background` | `150ms` | `ease-out` | `translateY(-1px)` + background ligeiramente mais claro | Botões precisam de resposta mais rápida que cards |
-| **Tab switch (conteúdo)** | `transition: opacity` | `250ms` | `ease-in-out` | `opacity: 0 → 1` (com classe `.active`) | Fade é mais elegante que slide para troca de conteúdo em tabs |
-| **Tab switch (indicador)** | `transition: left, width` | `300ms` | `cubic-bezier(0.25, 0.46, 0.45, 0.94)` | Mover underline/background para a tab ativa | O indicador deve "deslizar", não pular |
-| **Accordion abrir** | `transition: max-height, opacity` | `350ms` | `cubic-bezier(0.4, 0, 0.2, 1)` | `max-height: 0 → 500px` + `opacity: 0 → 1` | Usar max-height com valor generoso; opacity com delay de 50ms |
-| **Accordion fechar** | `transition: max-height, opacity` | `250ms` | `cubic-bezier(0.4, 0, 0.2, 1)` | `max-height: 500px → 0` + `opacity: 1 → 0` | Fechar deve ser mais rápido que abrir |
-| **Accordion seta** | `transition: transform` | `300ms` | `ease-in-out` | `rotate(0deg) → rotate(180deg)` | Acompanha a abertura do accordion |
-| **Scroll reveal (fade up)** | `transition: opacity, transform` | `600ms` | `cubic-bezier(0.16, 1, 0.3, 1)` | `translateY(30px) + opacity: 0 → translateY(0) + opacity: 1` | O easing com desaceleração longa dá sensação suave |
-| **Scroll reveal (stagger)** | `transition-delay` | `+80ms` por item | — | Cada item consecutivo atrasa 80ms | Máximo 5 itens com stagger; depois fica lento demais |
-| **Contador de estatísticas** | `animation` com JS | `1500ms` | `ease-out` | Incremento numérico de 0 ao valor final | Usar requestAnimationFrame, não setInterval |
-| **Fade in geral** | `transition: opacity` | `400ms` | `ease-out` | `opacity: 0 → 1` | Para elementos que aparecem por qualquer trigger |
-| **Tooltip aparecer** | `transition: opacity, transform` | `150ms` | `ease-out` | `opacity: 0 → 1` + `translateY(4px) → translateY(0)` | Precisa ser rápido; delay de 200ms antes de mostrar |
-| **Active/press** | `transition: transform` | `100ms` | `ease-in` | `scale(0.97)` | Feedback tátil — precisa ser instantâneo |
-| **Focus ring** | `transition: box-shadow` | `150ms` | `ease-out` | `box-shadow: 0 0 0 3px var(--color-accent)` com opacidade 0.4 | Visível mas não agressivo |
+| Interacao | Ferramenta | Duracao/Config | Transform/Valor |
+|---|---|---|---|
+| **Hover lift (card)** | Framer Motion `whileHover` | `spring({ stiffness: 400, damping: 25 })` | `y: -3` + border-color shift |
+| **Hover lift (botao)** | Framer Motion `whileHover` | `spring({ stiffness: 500, damping: 30 })` | `y: -1` + background lighten |
+| **Active/press** | Framer Motion `whileTap` | `spring({ stiffness: 600, damping: 30 })` | `scale: 0.97` |
+| **Tab switch (conteudo)** | Framer Motion `AnimatePresence` | `duration: 0.25, ease: 'easeOut'` | `opacity: 0→1, y: 8→0` |
+| **Tab indicator** | Framer Motion `layoutId` | `spring({ stiffness: 300, damping: 30 })` | Slider automatico via layout animation |
+| **Accordion abrir** | Framer Motion `AnimatePresence` | `duration: 0.35, ease: 'easeOut'` | `opacity: 0→1, height: 0→auto` |
+| **Accordion fechar** | Framer Motion `AnimatePresence` | `duration: 0.25, ease: 'easeIn'` | `opacity: 1→0, height: auto→0` |
+| **Scroll reveal (fade up)** | GSAP ScrollTrigger | `duration: 0.6, ease: 'power2.out'` | `y: 30→0, opacity: 0→1` |
+| **Scroll reveal (stagger)** | GSAP ScrollTrigger | `stagger: 0.08` | Cada item atrasa 80ms (max 5 itens) |
+| **Contador numerico** | GSAP | `duration: 1.5, ease: 'power3.out'` | `textContent: 0→valor, snap: 1` |
+| **Focus ring** | Tailwind CSS | `transition-duration: 150ms` | `ring-2 ring-accent/40` via `focus-visible:` |
+| **Tooltip aparecer** | Framer Motion `AnimatePresence` | `duration: 0.15, ease: 'easeOut'` | `opacity: 0→1, y: 4→0` (delay 200ms antes de mostrar) |
 
 ---
 
-## Ferramentas de Execução
+## Framer Motion — Padroes de Microinteracao
 
-### Template CSS de Microinterações Base
-Cole no início da seção de animações do seu CSS:
+### Card com Hover Premium
 
-```css
-/* ========== MICROINTERAÇÕES ========== */
+```tsx
+import { motion } from 'framer-motion';
 
-/* Hover lift para cards */
-.card {
-  transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1),
-              box-shadow 200ms ease-out;
+export function Card({ children }: Props) {
+  return (
+    <motion.div
+      className="bg-surface border border-border rounded-xl p-8"
+      whileHover={{
+        y: -3,
+        borderColor: 'rgba(255,255,255,0.15)',
+      }}
+      whileTap={{ scale: 0.98 }}
+      transition={{
+        type: 'spring',
+        stiffness: 400,
+        damping: 25,
+      }}
+    >
+      {children}
+    </motion.div>
+  );
 }
-.card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-}
+```
 
-/* Scroll reveal */
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
-              transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+### Tab Indicator com Layout Animation
 
-/* Stagger para listas */
-.reveal-stagger > * { transition-delay: calc(var(--i, 0) * 80ms); }
+```tsx
+export function TabGroup({ tabs, active, onChange }: Props) {
+  return (
+    <div role="tablist" className="relative flex gap-1 bg-elevated rounded-lg p-1">
+      {tabs.map((tab, i) => (
+        <button
+          key={tab.id}
+          role="tab"
+          aria-selected={active === i}
+          onClick={() => onChange(i)}
+          className="relative z-10 px-5 py-2.5 text-sm"
+        >
+          {active === i && (
+            <motion.div
+              layoutId="tab-indicator"
+              className="absolute inset-0 bg-surface rounded-md"
+              style={{ zIndex: -1 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            />
+          )}
+          {tab.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+```
 
-/* Acessibilidade */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
+### Tooltip com Delay
+
+```tsx
+export function Tooltip({ content, children }: Props) {
+  const [show, setShow] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout>();
+
+  const handleEnter = () => {
+    timeoutRef.current = setTimeout(() => setShow(true), 200); // 200ms delay
+  };
+  const handleLeave = () => {
+    clearTimeout(timeoutRef.current);
+    setShow(false);
+  };
+
+  return (
+    <div onMouseEnter={handleEnter} onMouseLeave={handleLeave} className="relative">
+      {children}
+      <AnimatePresence>
+        {show && (
+          <motion.div
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 4 }}
+            transition={{ duration: 0.15, ease: 'easeOut' }}
+            className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-elevated text-sm rounded-md"
+          >
+            {content}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+```
+
+---
+
+## GSAP — Microinteracoes Scroll-Driven
+
+### Scroll Reveal com Stagger
+
+```tsx
+import { useRef } from 'react';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+export function RevealGroup({ children }: Props) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    const items = gsap.utils.toArray<HTMLElement>(
+      ref.current?.querySelectorAll('.reveal-item') || []
+    );
+    gsap.set(items, { opacity: 0, y: 30 });
+    gsap.to(items, {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      stagger: 0.08,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: ref.current,
+        start: 'top 80%',
+        toggleActions: 'play none none none',
+      },
+    });
+  }, { scope: ref });
+
+  return <div ref={ref}>{children}</div>;
+}
+```
+
+### Contador Animado
+
+```tsx
+export function AnimatedStat({ value, suffix = '' }: Props) {
+  const ref = useRef<HTMLSpanElement>(null);
+
+  useGSAP(() => {
+    gsap.from(ref.current, {
+      textContent: 0,
+      duration: 1.5,
+      ease: 'power3.out',
+      snap: { textContent: 1 },
+      scrollTrigger: {
+        trigger: ref.current,
+        start: 'top 85%',
+      },
+    });
+  }, { scope: ref });
+
+  return (
+    <span className="font-mono text-accent">
+      <span ref={ref} data-value={value}>{value}</span>
+      {suffix}
+    </span>
+  );
+}
+```
+
+---
+
+## Spring Physics — Referencia Rapida
+
+| Tipo de Resposta | stiffness | damping | mass | Sensacao |
+|------------------|-----------|---------|------|----------|
+| Snap instantaneo | 500-600 | 30 | 0.5 | Preciso, mecanico |
+| Feedback rapido | 400 | 25 | 0.8 | Responsivo, natural |
+| Slide suave | 300 | 30 | 1 | Elegante, fluido |
+| Bounce sutil | 200 | 20 | 1 | Organico, playful (com contencao) |
+| Drift lento | 100 | 30 | 1.5 | Relaxado, ambiental |
+
+**Regra:** Na duvida, use `stiffness: 400, damping: 25`. E o padrao "responsivo sem ser agressivo".
+
+**Nunca:** `damping < 15` (bounce excessivo), `stiffness > 800` (parece sem animacao), `mass > 2` (pesado demais).
+
+---
+
+## Acessibilidade
+
+### prefers-reduced-motion
+
+```tsx
+// Hook
+import { useReducedMotion } from 'framer-motion';
+
+export function Card({ children }: Props) {
+  const reduced = useReducedMotion();
+
+  return (
+    <motion.div
+      whileHover={reduced ? {} : { y: -3 }}
+      whileTap={reduced ? {} : { scale: 0.98 }}
+      transition={reduced ? { duration: 0 } : { type: 'spring', stiffness: 400, damping: 25 }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+```
+
+Para GSAP scroll reveals com reduced motion:
+```tsx
+useGSAP(() => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // Mostra tudo imediatamente
+    gsap.set('.reveal-item', { opacity: 1, y: 0 });
+    return;
   }
-}
+  // ... animacoes normais
+}, { scope: ref });
 ```
 
-### Checklist de Consistência
-Antes de finalizar as microinterações:
-- [ ] Todos os cards têm o mesmo hover behavior
-- [ ] Todos os botões têm o mesmo timing de hover e active
-- [ ] Todos os links têm a mesma transição de cor
-- [ ] O stagger é consistente (mesmo delay entre itens em todas as seções)
-- [ ] prefers-reduced-motion está implementado e testado
-- [ ] Não há animação que bloqueia interação (o usuário pode clicar durante a transição)
-- [ ] Focus states visíveis em todos os elementos interativos
+### Focus Visible
 
-### Ferramenta de Teste de Timing
-Processo para calibrar animações:
-1. Implemente com os valores da tabela de referência
-2. Teste no browser com CPU throttle 4x (DevTools → Performance → CPU)
-3. Se parecer lento com throttle, reduza a duração em 30%
-4. Teste em mobile real (ou Chrome DevTools com device emulation)
-5. Teste com prefers-reduced-motion ativado no sistema
+```tsx
+// Tailwind classes para focus states
+className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
+```
+
+Todos os elementos interativos (botoes, tabs, cards clicaveis, links) DEVEM ter focus visible. Nunca `outline: none` sem substituto.
 
 ---
 
-## Exemplos Concretos
+## Checklist de Consistencia
 
-### Exemplo 1: Hover state genérico vs. premium
-
-**Genérico:**
-```css
-.card:hover { background: #f0f0f0; }
-```
-Sem transição. A mudança é abrupta. Parece toggle, não interação.
-
-**Premium:**
-```css
-.card {
-  transition: transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1),
-              box-shadow 200ms ease-out,
-              border-color 200ms ease-out;
-}
-.card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-  border-color: rgba(6, 182, 212, 0.3);
-}
-```
-Múltiplas propriedades animando em sincronia. O card "levanta", ganha sombra e destaque de borda. Parece responder ao toque.
-
-### Exemplo 2: Scroll reveal correto vs. exagerado
-
-**Exagerado:**
-```css
-.reveal { transform: translateY(80px) scale(0.8) rotate(5deg); transition: all 1200ms ease; }
-```
-O elemento vem de longe, cresce e rotaciona. Chama atenção demais. Depois de 3 seções, é irritante.
-
-**Correto:**
-```css
-.reveal { opacity: 0; transform: translateY(30px); transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1), transform 600ms cubic-bezier(0.16, 1, 0.3, 1); }
-```
-Movimento mínimo (30px), opacidade como principal mecanismo. O easing com desaceleração longa dá elegância sem exagero.
-
-### Exemplo 3: Contador de estatísticas
-
-**Ruim:** Número aparece instantaneamente — perde o impacto de "construção".
-
-**Bom (JavaScript):**
-```javascript
-function animateCounter(el) {
-  const target = parseInt(el.dataset.target);
-  const duration = 1500;
-  const start = performance.now();
-  function update(now) {
-    const progress = Math.min((now - start) / duration, 1);
-    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
-    el.textContent = Math.round(eased * target);
-    if (progress < 1) requestAnimationFrame(update);
-  }
-  requestAnimationFrame(update);
-}
-```
-O número "cresce" de 0 ao valor final com desaceleração. Combinado com Intersection Observer, dispara ao entrar na viewport.
+Antes de finalizar as microinteracoes:
+- [ ] Todos os cards usam o mesmo `whileHover` e `whileTap`
+- [ ] Todos os botoes usam o mesmo spring config
+- [ ] Tabs usam `layoutId` para indicator animado
+- [ ] Scroll reveals usam GSAP com stagger consistente (0.08s)
+- [ ] `prefers-reduced-motion` tratado em Framer Motion E GSAP
+- [ ] Nenhuma animacao bloqueia interacao (usuario pode clicar durante transicao)
+- [ ] Focus visible em todos os elementos interativos
+- [ ] Springs nao tem bounce excessivo (damping >= 20)
+- [ ] Contadores numericos usam GSAP com ScrollTrigger
 
 ---
 
-## Diagnóstico Rápido
+## Diagnostico Rapido
 
-1. **Todos os elementos interativos têm transição CSS explícita?** Se não, há mudanças abruptas que parecem bug.
-2. **O material respeita prefers-reduced-motion?** Se não, falha de acessibilidade obrigatória.
-3. **Os timings estão dentro da faixa 100-600ms?** Se não (muito curto ou muito longo), a interface parece quebrada ou travada.
-4. **Existe consistência entre elementos do mesmo tipo?** Se cards diferentes têm hovers diferentes, a interface parece descuidada.
-5. **As animações funcionam suavemente com CPU throttle 4x?** Se não, vão travar em dispositivos reais mais lentos.
+1. **Todos os elementos interativos tem `whileHover`/`whileTap` ou hover CSS?** Se nao, ha elementos que parecem "mortos".
+2. **O material respeita `prefers-reduced-motion`?** Se nao, falha de acessibilidade.
+3. **Os springs estao dentro da faixa stiffness 200-600, damping 20-30?** Se nao, a sensacao e errada.
+4. **Existe consistencia entre elementos do mesmo tipo?** Se cards diferentes tem configs diferentes, parece descuidado.
+5. **As animacoes scroll-driven usam GSAP (nao Framer Motion)?** GSAP e otimizado para scroll. Framer Motion e para estados.

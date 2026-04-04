@@ -1,145 +1,140 @@
-# Quality Check — Auditoria de HTML Premium
+# Quality Gates — Sistema de 6 Portões
 
-Este checklist é a última barreira entre o material e a entrega.
-Cada seção tem peso. Cada item tem critério objetivo. Não há "mais ou menos aprovado".
-
----
-
-## Como Usar
-
-1. Rode cada seção em sequência
-2. Marque cada item como ✅ (passa) ou ❌ (falha)
-3. Anote observações em itens que falharam
-4. Calcule a classificação final
-5. Se não atingir A, volte para refinamento
+Este é o sistema de qualidade da plataforma CX Experience Lab.
+Cada experiência deve passar por todos os 6 portões antes da publicação.
+Falha em portão eliminatório = refação obrigatória.
 
 ---
 
-## 1. Tese e Narrativa (peso: crítico)
+## Gate 1: Narrativa (Eliminatório)
 
-Falha aqui = material precisa ser repensado, não apenas ajustado.
+Falha aqui = o material não pode ser publicado.
 
-- [ ] **Tese identificável em 10 segundos** — Alguém lendo só o hero sabe o que o material defende?
-- [ ] **Headline como promessa** — O título funciona sozinho como frase compartilhável? (teste: colaria no LinkedIn?)
-- [ ] **Arco narrativo completo** — Há abertura (gancho), desenvolvimento (argumento), clímax (virada) e fechamento (provocação)?
-- [ ] **Zero seções ociosas** — Cada seção, se removida, faria falta ao argumento?
-- [ ] **Transições com propósito** — Cada seção termina criando expectativa para a próxima?
-- [ ] **Ponto de vista forte** — O material toma posição? (não é um resumo neutro?)
-- [ ] **Fechamento provocativo** — Termina com provocação ou call-to-action intelectual? (não com resumo?)
-- [ ] **Momento wow** — Existe pelo menos 1 dado, analogia ou insight que surpreende?
+- [ ] Tese definida em uma frase provocativa
+- [ ] Abertura provoca curiosidade ou desconforto (não começa com definição)
+- [ ] Cada seção adiciona algo que as anteriores não disseram
+- [ ] Existe arco claro: tensão → desconstrução → reconstrução → provocação
+- [ ] Fechamento provoca ação/reflexão (não resume o que já disse)
+- [ ] Zero clichês da lista proibida ("no mundo atual", "é fundamental", "nesse contexto")
 
-**Red flag**: Se o material começa com definição ("CX é...") ou clichê ("No mundo atual..."), falhou automaticamente.
+**Teste**: Leia a primeira e a última frase. As duas funcionam sozinhas como promessas intelectuais?
 
 ---
 
-## 2. Conteúdo e Escrita (peso: crítico)
+## Gate 2: Design (Eliminatório)
 
-- [ ] **Teste de leitura em voz alta** — O texto flui quando lido em voz alta? Nenhuma frase trava?
-- [ ] **Zero clichês** — Ctrl+F por: "no mundo atual", "cada vez mais", "nesse contexto", "é fundamental", "vale ressaltar", "transformação digital", "novo normal"
-- [ ] **Zero preenchimento** — Cada parágrafo carrega informação ou argumento novo?
-- [ ] **Dados específicos** — Números, exemplos e referências são concretos, não genéricos?
-- [ ] **Parágrafos ≤ 5 linhas** — Nenhum bloco de texto denso demais?
-- [ ] **Ritmo variado** — Alterna entre frases curtas (impacto) e longas (explicação)?
-- [ ] **Voz ativa dominante** — Menos de 10% das frases em voz passiva?
-- [ ] **Tom consistente** — Mesmo registro do início ao fim (executivo, provocativo, didático)?
-- [ ] **Ensina algo novo** — O leitor sai com um framework, modelo mental ou perspectiva que não tinha?
+Falha aqui = o material não pode ser publicado.
 
-**Red flag**: Se substituir o nome da empresa/tema por outro e o texto ainda funcionar igual, o conteúdo é genérico demais.
+- [ ] Screenshot do hero pareceria slide de keynote de palco
+- [ ] Paleta tem identidade própria (não é cyan-indigo genérico)
+- [ ] Existe contraste de ritmo entre seções (densas vs. respiro)
+- [ ] Cards têm pelo menos 2 tratamentos visuais diferentes
+- [ ] Tipografia display (Instrument Serif) usada com impacto, não como "título grande"
+- [ ] Espaçamento generoso (não parece apertado ou denso demais)
+- [ ] Em mobile, a experiência é nativa (não "desktop comprimido")
 
----
-
-## 3. Design Visual (peso: alto)
-
-- [ ] **Hierarquia em 4 níveis** — Título → subtítulo → corpo → detalhe são visualmente distintos?
-- [ ] **Paleta ≤ 4 cores** — Cada cor tem papel definido? (bg, text, primary, accent)
-- [ ] **Contraste WCAG AA** — Texto principal tem ratio ≥ 4.5:1 sobre background?
-- [ ] **Tipografia legível** — Corpo ≥ 16px, line-height ≥ 1.6, max-width ≤ 75ch?
-- [ ] **Espaçamento generoso** — Seções com ≥ 80px de padding? Elementos com respiro?
-- [ ] **Grid consistente** — Alinhamentos coerentes, sem elementos "soltos"?
-- [ ] **Hero com impacto** — A primeira tela (above the fold) prende atenção?
-- [ ] **Sem decoração vazia** — Todo elemento visual tem função (informar, organizar, destacar)?
-- [ ] **Atmosfera coerente** — Paleta + tipografia + espaçamento criam uma identidade?
-- [ ] **Não parece template** — Alguém reconheceria isso como Bootstrap, Tailwind UI ou template genérico?
-
-**Red flag**: Se um screenshot da página for indistinguível de um template gratuito, o design falhou.
+**Teste**: Tire um screenshot de qualquer ponto do scroll. Parece premium?
 
 ---
 
-## 4. Interatividade (peso: alto)
+## Gate 3: Motion (Diferenciador)
 
-- [ ] **Teste de remoção** — Para cada interação: se remover e mostrar estático, perde valor pedagógico?
-- [ ] **Propósito documentado** — Cada interação tem uma razão cognitiva (comparar, revelar, aprofundar)?
-- [ ] **Feedback imediato** — Hover, click e estados ativos respondem em < 200ms?
-- [ ] **Transições suaves** — Mudanças de conteúdo entre 200-400ms com easing?
-- [ ] **Touch-friendly** — Alvos de toque ≥ 44px? Funciona sem hover (mobile)?
-- [ ] **Sem autoplay** — Nenhum carrossel automático, vídeo autoplay ou animação loop infinito?
-- [ ] **Scroll natural** — Sem scroll hijacking? O usuário controla a velocidade?
-- [ ] **Quantidade razoável** — ≤ 5 tipos diferentes de interação no material?
-- [ ] **Estado padrão informativo** — O conteúdo é útil mesmo sem interagir (tab ativa, accordion aberto)?
+Não bloqueia publicação, mas diferencia qualidade A de qualidade S.
 
-**Red flag**: Se uma interação apenas esconde texto que deveria estar visível, é accordionite — remova.
+- [ ] Elementos entram com stagger (nunca todos de uma vez)
+- [ ] Pelo menos uma animação scroll-triggered (scroll reveal)
+- [ ] Counter animations nos stats/números
+- [ ] Transições suaves entre estados interativos (tabs, accordions)
+- [ ] Pelo menos um momento de "wow visual" na experiência
+- [ ] Motion respeita `prefers-reduced-motion`
 
----
-
-## 5. Técnico (peso: obrigatório)
-
-- [ ] **HTML semântico** — Usa header, main, section, article, footer? (não só divs?)
-- [ ] **Meta tags completas** — charset, viewport, title, description, og:title, og:description?
-- [ ] **Responsivo** — Testado em 375px (mobile), 768px (tablet), 1440px (desktop)?
-- [ ] **prefers-reduced-motion** — Animações desabilitam com media query?
-- [ ] **Console limpo** — Zero erros, zero warnings no console do navegador?
-- [ ] **Sem overflow** — Nenhum scroll horizontal em nenhum breakpoint?
-- [ ] **Fontes com fallback** — Google Fonts carrega? Se falhar, o fallback é aceitável?
-- [ ] **ARIA em interativos** — Tabs com role="tablist/tab/tabpanel"? Accordions com aria-expanded?
-- [ ] **Keyboard navegável** — Todos os interativos funcionam com Tab + Enter?
-- [ ] **Performance** — Scroll suave, sem jank, sem layout shifts?
-- [ ] **Código organizado** — CSS em ordem (tokens → reset → components → responsive → a11y)?
-
-**Red flag**: Se o console mostra erros, o material não está pronto. Ponto.
+**Teste**: Desative as animações. A experiência ainda funciona? (Deve funcionar, mas perder impacto.)
 
 ---
 
-## 6. Experiência Integrada (peso: decisivo)
+## Gate 4: Interatividade (Diferenciador)
 
-- [ ] **Coerência total** — Design, narrativa e interação contam a mesma história?
-- [ ] **Descoberta progressiva** — O material recompensa o leitor que vai mais fundo?
-- [ ] **Modelo mental novo** — O leitor sai com um framework que não tinha antes?
-- [ ] **Impacto emocional** — O material provoca alguma reação (curiosidade, urgência, inspiração)?
-- [ ] **Auto-suficiente** — Funciona sem contexto externo? Não depende de explicação prévia?
-- [ ] **Compartilhável** — Tem pelo menos 1 trecho ou visual que alguém compartilharia?
-- [ ] **Revisitável** — Tem profundidade suficiente para uma segunda leitura render valor?
+- [ ] Cada interação passa no "teste de remoção" (removida = perde valor pedagógico)
+- [ ] Pelo menos uma interação que revela insight (não apenas esconde texto)
+- [ ] Feedback visual imediato em todo elemento interativo (hover, active, focus)
+- [ ] Todos os elementos interativos são keyboard-accessible
+- [ ] Touch targets mínimo 44px em mobile
 
----
-
-## 7. Testes de Estresse
-
-Responda com honestidade brutal:
-
-| Teste | Pergunta | ✅/❌ |
-|-------|----------|------|
-| **Screenshot** | Se alguém vir só um screenshot, vai querer abrir? | |
-| **Scroll** | Se o leitor parar na metade, o que já leu valeu a pena? | |
-| **Comparação** | Colocado ao lado de um material da McKinsey ou Stripe, segura? | |
-| **Amnésia** | Se o leitor esquecer a fonte, vai lembrar da ideia? | |
-| **Palco** | Você projetaria isso em um telão em uma conferência? | |
-| **Concorrência** | Isso se destaca de 95% do conteúdo existente sobre o tema? | |
-| **Tempo** | Daqui a 6 meses, este material ainda será relevante? | |
+**Teste**: Use a experiência inteira só com teclado. Funciona?
 
 ---
 
-## Classificação Final
+## Gate 5: Workshop/Presentation (Obrigatório)
 
-Conte os resultados:
+- [ ] Chapter navigation funcional (nav superior com progresso)
+- [ ] Headlines são "tweetáveis" (sintetizam a seção em uma frase)
+- [ ] Pelo menos 1 `<DiscussionPrompt>` para workshop
+- [ ] Keyboard navigation funcional (arrows para navegar)
+- [ ] Texto legível em projeção (nenhum texto abaixo de 14px em desktop)
 
-| Classificação | Critério | Ação |
-|---------------|----------|------|
-| **A+** | Zero falhas + Testes de estresse 7/7 | Entregar |
-| **A** | ≤ 2 falhas menores (não em seções críticas) + Estresse ≥ 5/7 | Entregar |
-| **B** | 3-5 falhas OU 1 falha em seção crítica | Refinar e re-auditar |
-| **C** | > 5 falhas OU red flag identificado | Repensar e reconstruir |
+**Teste**: Projete em sala. É legível a 3 metros de distância?
 
-### Regras:
-- **Seções críticas** (Tese/Narrativa e Conteúdo/Escrita): qualquer falha aqui impede classificação A
-- **Red flags**: qualquer red flag identificado = classificação C automática
-- **Só entregue A ou A+**
-- Se em dúvida entre A e B, é B
+---
+
+## Gate 6: Anti-IA (Eliminatório)
+
+Falha aqui = o material não pode ser publicado.
+
+- [ ] Paleta não é "cyan-indigo em dark mode" (o padrão mais comum de IA)
+- [ ] Cards não são todos glass morphism uniformes com backdrop-blur
+- [ ] Estrutura não é "hero → 3 seções iguais → conclusão"
+- [ ] Existe pelo menos 1 elemento visual inesperado/autoral
+- [ ] Layout não é reconhecível como "template de IA"
+- [ ] Copy não tem frases que "qualquer modelo escreveria"
+- [ ] Gradient text não é usado em excesso (máximo 1-2 instâncias)
+
+**Teste**: Mostre para alguém sem contexto. A pessoa diria "isso parece feito por IA"?
+
+---
+
+## Testes de Estresse
+
+### Screenshot Test
+Tire 3 screenshots (hero, meio, fechamento). Cada um individualmente parece premium e autoral?
+
+### Scroll Test
+Pause em qualquer ponto do scroll. Há valor visível? (Não pode ser "entre seções" sem conteúdo.)
+
+### Competition Test
+Compare com o melhor material similar que você conhece. Este é melhor?
+
+### Amnesia Test
+Após 24h sem ver, o que você lembra? Se não lembra nada, falta memorabilidade.
+
+### Projection Test
+Projete numa tela de 55"+. Tudo é legível? As cores funcionam? O contraste é suficiente?
+
+### Template Test
+Isso se parece com algo que um modelo de IA geraria sozinho? Se sim, falhou.
+
+---
+
+## Classificação
+
+### S — Extraordinário
+Passa todos os 6 gates + todos os testes de estresse + surpreende positivamente. Referência de qualidade.
+
+### A — Excelente
+Passa todos os gates eliminatórios + 80%+ dos diferenciadores. Pronto para publicação.
+
+### B — Aceitável com Ressalvas
+Passa gates eliminatórios mas falta diferenciação em motion ou interatividade. **Requer revisão** antes de publicar.
+
+### C — Insuficiente
+Falha em pelo menos 1 gate eliminatório. **Requer refação** desde a fase de design/narrativa.
+
+---
+
+## Processo de Review
+
+1. **Auto-avaliação** — O criador passa por todos os gates marcando checkbox
+2. **Review visual** — Screenshots em 3 breakpoints (375, 768, 1440px)
+3. **Review funcional** — Testar keyboard nav, reduced motion, mobile touch
+4. **Review de copy** — Ler todo texto em voz alta, verificar lista de proibições
+5. **Classificação** — Atribuir S/A/B/C com justificativa
+6. **Decisão** — S/A = publicar, B = revisar, C = refazer
