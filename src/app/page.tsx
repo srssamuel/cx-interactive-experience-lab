@@ -204,8 +204,6 @@ function ExperienceBlock({
   });
   const y = useTransform(scrollYProgress, [0, 1], [40, -40]);
 
-  const isEven = index % 0 === 0;
-
   return (
     <Link href={`/experiencias/${experience.slug}`} className="group block">
       <div
