@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { SmoothScrollProvider } from "@/lib/providers/smooth-scroll-provider";
+import { ExperienceModeProvider } from "@/lib/hooks/use-experience-mode";
 
 export const metadata: Metadata = {
   title: "CX Experience Lab",
@@ -26,7 +28,11 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <SmoothScrollProvider>
+          <ExperienceModeProvider>{children}</ExperienceModeProvider>
+        </SmoothScrollProvider>
+      </body>
     </html>
   );
 }
