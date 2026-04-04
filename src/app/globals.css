@@ -143,12 +143,12 @@ body {
   background-size: 60px 60px;
   background-image: linear-gradient(
       to right,
-      rgba(14, 165, 233, 0.04) 1px,
+      rgba(var(--accent-primary-rgb), 0.03) 1px,
       transparent 1px
     ),
     linear-gradient(
       to bottom,
-      rgba(14, 165, 233, 0.04) 1px,
+      rgba(var(--accent-primary-rgb), 0.03) 1px,
       transparent 1px
     );
   mask-image: radial-gradient(
