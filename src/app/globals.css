@@ -53,6 +53,42 @@ body {
   scrollbar-color: var(--text-muted) var(--bg);
 }
 
+/* ─── Presentation mode ─── */
+.presentation-mode {
+  font-size: 110%;
+}
+
+.presentation-mode section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.presentation-mode h1 {
+  font-size: clamp(3rem, 8vw, 7rem);
+}
+
+.presentation-mode h2 {
+  font-size: clamp(2.2rem, 6vw, 5rem);
+}
+
+.presentation-mode p {
+  font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+}
+
+.presentation-mode blockquote {
+  font-size: clamp(2rem, 4vw, 4rem);
+}
+
+/* ─── Hide scrollbar in presentation ─── */
+.presentation-mode::-webkit-scrollbar {
+  display: none;
+}
+
+.presentation-mode {
+  scrollbar-width: none;
+}
+
 /* ─── Reduced motion ─── */
 @media (prefers-reduced-motion: reduce) {
   *,

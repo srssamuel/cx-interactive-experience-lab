@@ -4,6 +4,15 @@ import { cn } from "@/lib/cn";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+
+const ParticleField = dynamic(
+  () =>
+    import("@/components/cinematic/particle-field").then(
+      (mod) => mod.ParticleField
+    ),
+  { ssr: false }
+);
 
 const experiences = [
   {
@@ -12,10 +21,11 @@ const experiences = [
     subtitle: "Customer Experience Reimaginado",
     description:
       "Resultado esperado + Experiência apropriada = Sucesso do cliente. A equação que separa retenção de abandono silencioso.",
-    chapters: 7,
-    readTime: "12 min",
-    tags: ["CX", "Experiência", "Retenção"],
+    chapters: 9,
+    readTime: "15 min",
+    tags: ["CX", "Experiência", "Retenção", "Workshop"],
     accent: "#F59E0B",
+    status: "live" as const,
   },
 ];
 
@@ -23,14 +33,30 @@ export default function Portal() {
   return (
     <main className="min-h-screen bg-[var(--bg)]">
       {/* Hero */}
-      <section className="relative flex min-h-[70vh] flex-col items-center justify-center overflow-hidden px-6 text-center">
-        {/* Ambient gradient */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,var(--accent-primary)/0.04,transparent_60%)]" />
+      <section className="relative flex min-h-[80vh] flex-col items-center justify-center overflow-hidden px-6 text-center">
+        {/* Particle background */}
+        <div className="absolute inset-0 opacity-20">
+          <ParticleField count={300} color="#F59E0B" />
+        </div>
+
+        {/* Layered ambient gradients */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(245,158,11,0.05)_0%,transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,rgba(13,148,136,0.03)_0%,transparent_50%)]" />
+
+        {/* Subtle grid texture */}
+        <div
+          className="absolute inset-0 opacity-[0.015]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(232,236,244,1) 1px, transparent 1px), linear-gradient(90deg, rgba(232,236,244,1) 1px, transparent 1px)",
+            backgroundSize: "80px 80px",
+          }}
+        />
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           className="relative z-10"
         >
           <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.15em] text-[var(--accent-primary)]">
@@ -39,28 +65,49 @@ export default function Portal() {
             <span className="h-px w-8 bg-current opacity-40" />
           </span>
 
-          <h1 className="mx-auto mt-6 max-w-[20ch] font-display text-[clamp(2.5rem,6vw,5rem)] leading-[0.95] tracking-[-0.04em] text-[var(--text)]">
+          <h1 className="mx-auto mt-8 max-w-[20ch] font-display text-[clamp(2.5rem,6vw,5rem)] leading-[0.95] tracking-[-0.04em] text-[var(--text)]">
             Experiências digitais que{" "}
             <span className="text-[var(--accent-primary)]">
               transformam como você vê o problema
             </span>
           </h1>
 
-          <p className="mx-auto mt-6 max-w-[50ch] text-lg leading-relaxed text-[var(--text-secondary)]">
+          <p className="mx-auto mt-8 max-w-[50ch] text-lg leading-relaxed text-[var(--text-secondary)]">
             Artefatos interativos de alto impacto para workshop, apresentação
             executiva e posicionamento estratégico.
           </p>
+
+          {/* Mode badges */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="mt-8 flex flex-wrap items-center justify-center gap-3"
+          >
+            {["Leitura", "Apresentação", "Workshop"].map((mode) => (
+              <span
+                key={mode}
+                className="rounded-full border border-[var(--border)] bg-[var(--surface)]/50 px-4 py-1.5 text-[0.65rem] font-medium uppercase tracking-[0.1em] text-[var(--text-muted)]"
+              >
+                {mode}
+              </span>
+            ))}
+          </motion.div>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.8, duration: 1 }}
+          transition={{ delay: 1.2, duration: 1 }}
           className="absolute bottom-12 text-[var(--text-muted)]"
         >
-          <span className="text-xs uppercase tracking-[0.15em]">
+          <motion.span
+            animate={{ y: [0, 6, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="inline-block text-xs uppercase tracking-[0.15em]"
+          >
             Explorar ↓
-          </span>
+          </motion.span>
         </motion.div>
       </section>
 
@@ -81,13 +128,35 @@ export default function Portal() {
             <ExperienceCard key={exp.slug} experience={exp} index={i} />
           ))}
         </div>
+
+        {/* Coming soon teaser */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="mt-6 rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface)]/30 p-8 text-center md:p-12"
+        >
+          <span className="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--text-muted)]/60">
+            Em breve
+          </span>
+          <p className="mt-2 font-display text-xl text-[var(--text-muted)]">
+            Novas experiências em desenvolvimento
+          </p>
+          <p className="mt-2 text-sm text-[var(--text-muted)]/60">
+            Customer Success, Data Intelligence, AI Strategy e mais
+          </p>
+        </motion.div>
       </section>
 
       {/* Footer */}
       <footer className="border-t border-[var(--border)] py-8">
-        <div className="mx-auto max-w-6xl px-6 text-center md:px-12">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 md:px-12">
           <p className="text-xs text-[var(--text-muted)]">
             Diretoria de Qualidade e Dados — AeC
+          </p>
+          <p className="text-xs text-[var(--text-muted)]/40">
+            Plataforma de Experiências Interativas
           </p>
         </div>
       </footer>
@@ -126,7 +195,11 @@ function ExperienceCard({
         >
           {/* Accent glow */}
           <div
-            className="absolute -right-20 -top-20 h-40 w-40 rounded-full opacity-[0.04] blur-3xl transition-opacity duration-500 group-hover:opacity-[0.08]"
+            className="absolute -right-20 -top-20 h-60 w-60 rounded-full opacity-[0.03] blur-3xl transition-opacity duration-500 group-hover:opacity-[0.07]"
+            style={{ background: experience.accent }}
+          />
+          <div
+            className="absolute -left-10 -bottom-10 h-32 w-32 rounded-full opacity-[0.02] blur-2xl"
             style={{ background: experience.accent }}
           />
 
@@ -140,6 +213,11 @@ function ExperienceCard({
                 <span className="text-xs font-medium uppercase tracking-[0.12em] text-[var(--text-muted)]">
                   {experience.subtitle}
                 </span>
+                {experience.status === "live" && (
+                  <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[0.6rem] font-semibold uppercase tracking-[0.1em] text-emerald-400">
+                    Live
+                  </span>
+                )}
               </div>
 
               <h3 className="mt-3 font-display text-[clamp(1.5rem,3vw,2.5rem)] tracking-tight text-[var(--text)] transition-colors duration-300 group-hover:text-[var(--accent-primary)]">

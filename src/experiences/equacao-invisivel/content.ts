@@ -5,6 +5,7 @@ export const chapters = [
   { id: "resultado", label: "Resultado", number: "03" },
   { id: "experiencia", label: "Experiência", number: "04" },
   { id: "caso", label: "Na Prática", number: "05" },
+  { id: "evolucao", label: "Maturidade", number: "06" },
   { id: "discussao", label: "Discussão", number: "" },
   { id: "fechamento", label: "Fechamento", number: "" },
 ];
@@ -171,6 +172,54 @@ export const discussion = {
     "Pense nos últimos 3 meses. Quantas reclamações vocês não receberam — porque o cliente simplesmente foi embora?",
   timerMinutes: 5,
 };
+
+export const evolucao = {
+  overline: "06 — A evolução da maturidade",
+  headline: "De reativo a orquestrado: onde sua operação está?",
+  stages: [
+    {
+      id: "reativo",
+      label: "Nível 1",
+      title: "Reativo",
+      description:
+        "Apaga incêndios. Resolve reclamações uma a uma. Sem métricas de experiência. O cliente reclama — a empresa reage.",
+    },
+    {
+      id: "estruturado",
+      label: "Nível 2",
+      title: "Estruturado",
+      description:
+        "Pesquisa de satisfação existe. NPS é acompanhado. Mas ações são pontuais. O mapa de jornada está no PowerPoint.",
+    },
+    {
+      id: "proativo",
+      label: "Nível 3",
+      title: "Proativo",
+      description:
+        "Sinais de atrito são detectados antes da reclamação. Dados alimentam decisões. Jornada é redesenhada com base em evidência.",
+    },
+    {
+      id: "orquestrado",
+      label: "Nível 4",
+      title: "Orquestrado",
+      description:
+        "CX é sistêmico. Cada área sabe seu impacto na jornada. Dados, IA e design de serviço operam juntos. A experiência é o produto.",
+    },
+  ],
+};
+
+export const workshopDiscussions = [
+  {
+    id: "disc-1",
+    question: "Quantos dos seus clientes estão no Cenário B?",
+    sectionId: "discussao",
+  },
+  {
+    id: "disc-2",
+    question: "Em qual nível de maturidade sua operação está?",
+    sectionId: "evolucao",
+  },
+];
 
 export const fechamento = {
   headline:
