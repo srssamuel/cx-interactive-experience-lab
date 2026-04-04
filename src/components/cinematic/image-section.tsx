@@ -17,7 +17,7 @@ interface ImageHeroProps {
   children: ReactNode;
   className?: string;
   id?: string;
-  overlay?: "dark" | "gradient" | "amber" | "none";
+  overlay?: "dark" | "gradient" | "amber" | "cyan" | "none";
   height?: "full" | "tall" | "medium";
   parallax?: boolean;
 }
@@ -66,6 +66,7 @@ export function ImageHero({
     dark: "bg-[var(--bg)]/70",
     gradient: "bg-gradient-to-t from-[var(--bg)] via-[var(--bg)]/50 to-[var(--bg)]/30",
     amber: "bg-gradient-to-t from-[var(--bg)] via-[var(--bg)]/40 to-[rgba(245,158,11,0.05)]",
+    cyan: "bg-gradient-to-t from-[var(--bg)] via-[var(--bg)]/50 to-[rgba(14,165,233,0.06)]",
     none: "",
   };
 

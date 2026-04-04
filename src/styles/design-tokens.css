@@ -4,25 +4,32 @@
   --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
 
-  /* ─── Colors ─── */
-  --bg: #08090E;
-  --surface: #0E1117;
-  --surface-elevated: #151922;
-  --text: #E8ECF4;
-  --text-secondary: #7A8399;
-  --text-muted: #4A5568;
-  --border: rgba(136, 153, 184, 0.08);
-  --border-hover: rgba(136, 153, 184, 0.15);
+  /* ─── Colors — Deep Tech Navy ─── */
+  --bg: #050a14;
+  --surface: #0a1628;
+  --surface-elevated: #0f1d35;
+  --text: #E4EAF5;
+  --text-secondary: #8295B8;
+  --text-muted: #4A5F82;
+  --border: rgba(100, 160, 255, 0.06);
+  --border-hover: rgba(100, 160, 255, 0.14);
 
-  /* ─── Accent colors ─── */
-  --accent-primary: #F59E0B;
-  --accent-primary-rgb: 245, 158, 11;
-  --accent-secondary: #0D9488;
-  --accent-secondary-rgb: 13, 148, 136;
+  /* ─── Accent colors — Tech Palette ─── */
+  --accent-primary: #0EA5E9;
+  --accent-primary-rgb: 14, 165, 233;
+  --accent-secondary: #06B6D4;
+  --accent-secondary-rgb: 6, 182, 212;
   --accent-tertiary: #8B5CF6;
   --accent-tertiary-rgb: 139, 92, 246;
-  --accent-danger: #F97316;
-  --accent-danger-rgb: 249, 115, 22;
+  --accent-warm: #F59E0B;
+  --accent-warm-rgb: 245, 158, 11;
+  --accent-danger: #EF4444;
+  --accent-danger-rgb: 239, 68, 68;
+
+  /* ─── Glow colors ─── */
+  --glow-primary: rgba(14, 165, 233, 0.15);
+  --glow-primary-strong: rgba(14, 165, 233, 0.25);
+  --glow-warm: rgba(245, 158, 11, 0.12);
 
   /* ─── Spacing scale ─── */
   --space-1: 4px;
@@ -68,21 +75,27 @@
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* ─── Shadows ─── */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.15);
-  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.35), 0 2px 4px rgba(0, 0, 0, 0.2);
-  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.4), 0 6px 10px rgba(0, 0, 0, 0.25);
-  --shadow-glow: 0 0 20px rgba(var(--accent-primary-rgb), 0.15), 0 0 60px rgba(var(--accent-primary-rgb), 0.05);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.45), 0 2px 4px rgba(0, 0, 0, 0.25);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5), 0 6px 10px rgba(0, 0, 0, 0.3);
+  --shadow-glow: 0 0 20px rgba(var(--accent-primary-rgb), 0.2), 0 0 60px rgba(var(--accent-primary-rgb), 0.08);
 }
 
 /* ─── Experience-specific accent themes ─── */
-.theme-amber {
-  --accent-primary: #F59E0B;
-  --accent-primary-rgb: 245, 158, 11;
-  --accent-secondary: #0D9488;
+.theme-cyan {
+  --accent-primary: #0EA5E9;
+  --accent-primary-rgb: 14, 165, 233;
+  --accent-secondary: #06B6D4;
 }
 
 .theme-teal {
   --accent-primary: #0D9488;
   --accent-primary-rgb: 13, 148, 136;
-  --accent-secondary: #F59E0B;
+  --accent-secondary: #0EA5E9;
+}
+
+.theme-amber {
+  --accent-primary: #F59E0B;
+  --accent-primary-rgb: 245, 158, 11;
+  --accent-secondary: #0EA5E9;
 }
