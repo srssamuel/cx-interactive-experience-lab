@@ -28,6 +28,7 @@ import {
 import { Tabs } from "@/components/interactive/tabs";
 import { Timeline } from "@/components/interactive/timeline";
 import { Accordion } from "@/components/interactive/accordion";
+import { ComparisonSlider } from "@/components/interactive/comparison-slider";
 import {
   DiscussionPrompt,
   PausePoint,
@@ -359,6 +360,60 @@ export default function ParadoxoDoSucesso() {
                       ),
                     },
                   ]}
+                />
+              </div>
+            </Container>
+          </Section>
+
+          {/* ═══════════════════════════════════════════════
+              COMPARAÇÃO — Slider: Operação sem CS vs com CS orquestrado
+              ═══════════════════════════════════════════════ */}
+          <Section variant="default" background="base">
+            <Container>
+              <ScrollReveal>
+                <Overline>A diferença na prática</Overline>
+              </ScrollReveal>
+              <ScrollReveal delay={0.1}>
+                <SectionHeading className="mt-4 max-w-[24ch]">
+                  Arraste para ver o contraste
+                </SectionHeading>
+              </ScrollReveal>
+              <div className="mt-12">
+                <ComparisonSlider
+                  before={{
+                    label: "Sem CS estruturado",
+                    content: (
+                      <div className="space-y-4">
+                        <p className="text-base font-semibold text-[var(--text)]">
+                          Operação reativa
+                        </p>
+                        <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
+                          <li>Churn descoberto na hora da renovação</li>
+                          <li>NPS como único indicador de saúde</li>
+                          <li>CSM resolve ticket, não gera valor</li>
+                          <li>Onboarding termina no go-live</li>
+                          <li>Expansão depende de desconto</li>
+                        </ul>
+                      </div>
+                    ),
+                  }}
+                  after={{
+                    label: "CS orquestrado",
+                    content: (
+                      <div className="space-y-4">
+                        <p className="text-base font-semibold text-[var(--text)]">
+                          Operação preditiva
+                        </p>
+                        <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
+                          <li>Risco identificado 90 dias antes</li>
+                          <li>Health score multidimensional</li>
+                          <li>CSM é consultor de resultado</li>
+                          <li>Jornada desenhada por segmento</li>
+                          <li>Expansão é consequência natural</li>
+                        </ul>
+                      </div>
+                    ),
+                  }}
                 />
               </div>
             </Container>

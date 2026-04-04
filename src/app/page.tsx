@@ -135,7 +135,7 @@ export default function Portal() {
           </span>
         </div>
 
-        <div className="grid gap-6">
+        <div className="grid gap-6 md:grid-cols-2">
           {experiences.map((exp, i) => (
             <ExperienceCard key={exp.slug} experience={exp} index={i} />
           ))}
@@ -215,8 +215,8 @@ function ExperienceCard({
             style={{ background: experience.accent }}
           />
 
-          <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-            <div className="max-w-2xl">
+          <div className="flex flex-col gap-6">
+            <div>
               <div className="flex items-center gap-3">
                 <span
                   className="h-2 w-2 rounded-full"
@@ -252,7 +252,7 @@ function ExperienceCard({
               </div>
             </div>
 
-            <div className="flex flex-shrink-0 items-center gap-6 text-xs text-[var(--text-muted)]">
+            <div className="flex items-center gap-6 text-xs text-[var(--text-muted)]">
               <div className="text-center">
                 <span className="block font-mono text-lg font-bold text-[var(--text-secondary)]">
                   {experience.chapters}
@@ -265,7 +265,7 @@ function ExperienceCard({
                 </span>
                 leitura
               </div>
-              <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border)] text-[var(--text-muted)] transition-all duration-200 group-hover:border-[var(--accent-primary)]/30 group-hover:text-[var(--accent-primary)]">
+              <div className="ml-auto flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border)] text-[var(--text-muted)] transition-all duration-200 group-hover:border-[var(--accent-primary)]/30 group-hover:text-[var(--accent-primary)]">
                 →
               </div>
             </div>

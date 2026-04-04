@@ -20,7 +20,7 @@ import { ChapterNav } from "@/components/navigation/chapter-nav";
 import { ModeIndicator } from "@/components/navigation/mode-indicator";
 import { PresentationShell } from "@/components/navigation/presentation-shell";
 import { WorkshopLayout } from "@/components/workshop/workshop-layout";
-import { ScrollReveal, StaggerGroup } from "@/components/motion/scroll-reveal";
+import { ScrollReveal, ParallaxLayer } from "@/components/motion/scroll-reveal";
 import { GSAPReveal, GSAPStaggerReveal, GSAPParallax, GSAPCounter } from "@/components/motion/gsap-reveal";
 import { Tabs } from "@/components/interactive/tabs";
 import { Timeline } from "@/components/interactive/timeline";
@@ -468,11 +468,13 @@ export default function EquacaoInvisivel() {
             ═══════════════════════════════════════════════ */}
         <Section id="fechamento" background="surface" variant="default">
           <Container size="narrow" className="text-center">
-            <GSAPReveal from={{ opacity: 0, y: 40 }} to={{ opacity: 1, y: 0, duration: 1.2, ease: "power3.out" }}>
-              <Provocation className="mx-auto text-center">
-                {fechamento.headline}
-              </Provocation>
-            </GSAPReveal>
+            <ParallaxLayer speed={0.3}>
+              <GSAPReveal from={{ opacity: 0, y: 40 }} to={{ opacity: 1, y: 0, duration: 1.2, ease: "power3.out" }}>
+                <Provocation className="mx-auto text-center">
+                  {fechamento.headline}
+                </Provocation>
+              </GSAPReveal>
+            </ParallaxLayer>
 
             <div className="mx-auto mt-16 max-w-2xl text-left">
               <GSAPStaggerReveal staggerAmount={0.1}>
