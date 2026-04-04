@@ -56,12 +56,20 @@ body {
 /* ─── Presentation mode ─── */
 .presentation-mode {
   font-size: 110%;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
 }
 
-.presentation-mode section {
+.presentation-mode::-webkit-scrollbar {
+  display: none;
+}
+
+.presentation-mode > section,
+.presentation-mode section[id] {
   min-height: 100vh;
   display: flex;
   align-items: center;
+  scroll-snap-align: start;
 }
 
 .presentation-mode h1 {
@@ -69,24 +77,24 @@ body {
 }
 
 .presentation-mode h2 {
-  font-size: clamp(2.2rem, 6vw, 5rem);
+  font-size: clamp(2rem, 5vw, 4.5rem);
+}
+
+.presentation-mode h3 {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
 }
 
 .presentation-mode p {
-  font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+  font-size: clamp(1rem, 1.6vw, 1.4rem);
 }
 
 .presentation-mode blockquote {
-  font-size: clamp(2rem, 4vw, 4rem);
+  font-size: clamp(1.8rem, 4vw, 3.5rem);
 }
 
-/* ─── Hide scrollbar in presentation ─── */
-.presentation-mode::-webkit-scrollbar {
-  display: none;
-}
-
-.presentation-mode {
-  scrollbar-width: none;
+/* Hide workshop blocks in presentation mode */
+.presentation-mode [data-workshop-block] {
+  display: none !important;
 }
 
 /* ─── Workshop-only blocks visibility ─── */
