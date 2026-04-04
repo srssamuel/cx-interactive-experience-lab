@@ -59,6 +59,7 @@ export function useAntigravity(
   const floatingRef = useRef<FloatingElement[]>([]);
   const mouseRef = useRef({ x: -9999, y: -9999 });
   const rafRef = useRef<number>(0);
+  const mouseCleanupRef = useRef<(() => void) | null>(null);
 
   const animate = useCallback(() => {
     const items = floatingRef.current;
@@ -158,8 +159,7 @@ export function useAntigravity(
     };
     window.addEventListener("mousemove", handleMouse);
 
-    // Store cleanup ref
-    (container as any).__antigravityCleanup = () => {
+    mouseCleanupRef.current = () => {
       window.removeEventListener("mousemove", handleMouse);
     };
   }, [containerRef, isActive, selector, maxRotation, animate]);
@@ -191,9 +191,8 @@ export function useAntigravity(
       });
     }
 
-    // Cleanup mouse listener
-    const cleanup = (container as any).__antigravityCleanup;
-    if (cleanup) cleanup();
+    mouseCleanupRef.current?.();
+    mouseCleanupRef.current = null;
 
     floatingRef.current = [];
     setIsActive(false);
@@ -203,13 +202,18 @@ export function useAntigravity(
   useEffect(() => {
     return () => {
       cancelAnimationFrame(rafRef.current);
-      const container = containerRef.current;
-      if (container) {
-        const cleanup = (container as any).__antigravityCleanup;
-        if (cleanup) cleanup();
-      }
+      mouseCleanupRef.current?.();
+      mouseCleanupRef.current = null;
     };
-  }, [containerRef]);
+  }, []);
 
-  return { activate, deactivate, isActive, toggle: isActive ? deactivate : activate };
+  const toggle = useCallback(() => {
+    if (isActive) {
+      deactivate();
+    } else {
+      activate();
+    }
+  }, [isActive, activate, deactivate]);
+
+  return { activate, deactivate, isActive, toggle };
 }

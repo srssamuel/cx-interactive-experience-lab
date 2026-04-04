@@ -53,9 +53,9 @@ body {
   scrollbar-color: var(--text-muted) var(--bg);
 }
 
-/* ─── Presentation mode ─── */
+/* ─── Presentation mode — optimized for 3m legibility ─── */
 .presentation-mode {
-  font-size: 110%;
+  font-size: 115%;
   scroll-snap-type: y mandatory;
   scrollbar-width: none;
 }
@@ -85,7 +85,7 @@ body {
 }
 
 .presentation-mode p {
-  font-size: clamp(1rem, 1.6vw, 1.4rem);
+  font-size: clamp(1.1rem, 1.8vw, 1.5rem);
 }
 
 .presentation-mode blockquote {
@@ -156,6 +156,18 @@ body {
     black 20%,
     transparent 70%
   );
+}
+
+/* ─── Keyboard focus rings ─── */
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Suppress focus ring on mouse click */
+:focus:not(:focus-visible) {
+  outline: none;
 }
 
 /* ─── Reduced motion ─── */

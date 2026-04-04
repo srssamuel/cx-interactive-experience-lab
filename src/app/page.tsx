@@ -103,6 +103,7 @@ export default function Portal() {
           animate={{ opacity: 0.3 }}
           transition={{ delay: 2.4, duration: 0.8 }}
           className="absolute bottom-6 left-1/2 -translate-x-1/2"
+          aria-hidden="true"
         >
           <motion.div
             animate={{ y: [0, 6, 0] }}
@@ -172,8 +173,8 @@ export default function Portal() {
 
                 <GSAPReveal from={{ opacity: 0, x: -10 }} to={{ opacity: 1, x: 0, duration: 0.5, delay: 0.45, ease: "power3.out" }}>
                   <div className="mt-8 flex items-center gap-3">
-                    <span className="h-px w-8 bg-[var(--accent-primary)]/40 transition-all duration-500 group-hover:w-16" />
-                    <span className="text-[0.6rem] font-medium uppercase tracking-[0.15em] text-[var(--accent-primary)] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                    <span className="h-px w-8 bg-[var(--accent-primary)]/40 transition-all duration-500 group-hover:w-16 group-focus-within:w-16" />
+                    <span className="text-[0.6rem] font-medium uppercase tracking-[0.15em] text-[var(--accent-primary)] opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-within:opacity-100">
                       Explorar
                     </span>
                   </div>
@@ -240,8 +241,8 @@ export default function Portal() {
 
                 <GSAPReveal from={{ opacity: 0, x: -10 }} to={{ opacity: 1, x: 0, duration: 0.5, delay: 0.4, ease: "power3.out" }}>
                   <div className="mt-8 flex items-center gap-3">
-                    <span className="h-px w-8 bg-[var(--accent-primary)]/40 transition-all duration-500 group-hover:w-16" />
-                    <span className="text-[0.6rem] font-medium uppercase tracking-[0.15em] text-[var(--accent-primary)] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                    <span className="h-px w-8 bg-[var(--accent-primary)]/40 transition-all duration-500 group-hover:w-16 group-focus-within:w-16" />
+                    <span className="text-[0.6rem] font-medium uppercase tracking-[0.15em] text-[var(--accent-primary)] opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-within:opacity-100">
                       Explorar
                     </span>
                   </div>
