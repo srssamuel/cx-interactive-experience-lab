@@ -1,97 +1,12 @@
 "use client";
 
 import { cn } from "@/lib/cn";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import dynamic from "next/dynamic";
-import { SpotlightCard } from "@/components/interactive/spotlight-card";
-import { MagneticElement } from "@/components/interactive/magnetic-element";
+import { experiences, upcomingExperiences } from "@/lib/registry";
 import { TextReveal } from "@/components/motion/text-reveal";
-
-const GlowingOrb = dynamic(
-  () =>
-    import("@/components/cinematic/glowing-orb").then(
-      (mod) => mod.GlowingOrb
-    ),
-  { ssr: false }
-);
-
-const ParticleField = dynamic(
-  () =>
-    import("@/components/cinematic/particle-field").then(
-      (mod) => mod.ParticleField
-    ),
-  { ssr: false }
-);
-
-const experiences = [
-  {
-    slug: "equacao-invisivel",
-    title: "A Equação Invisível",
-    subtitle: "Customer Experience",
-    description:
-      "A equação que separa retenção real de abandono silencioso. Por que resultado certo com experiência errada destrói valor.",
-    chapters: 11,
-    readTime: "15 min",
-    workshopTime: "1h30",
-    tags: ["CX", "Experiência", "Retenção"],
-    accent: "#0EA5E9",
-    image:
-      "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200&q=85",
-    status: "live" as const,
-  },
-  {
-    slug: "paradoxo-do-sucesso",
-    title: "O Paradoxo do Sucesso",
-    subtitle: "Customer Success",
-    description:
-      "Renovação não é lealdade. Cliente ativo não é cliente saudável. O que sua operação não está medindo.",
-    chapters: 8,
-    readTime: "12 min",
-    workshopTime: "1h",
-    tags: ["CS", "Retenção", "Churn"],
-    accent: "#06B6D4",
-    image:
-      "https://images.unsplash.com/photo-1552664730-d307ca884978?w=1200&q=85",
-    status: "live" as const,
-  },
-];
-
-const upcomingExperiences = [
-  { title: "Data Intelligence", status: "Em desenvolvimento" },
-  { title: "AI Strategy", status: "Em desenvolvimento" },
-  { title: "Eficiência Operacional", status: "Em desenvolvimento" },
-];
-
-/* ─── Animated counter ─── */
-function AnimatedNumber({ value, suffix = "" }: { value: number; suffix?: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true });
-  const [display, setDisplay] = useState(0);
-
-  useEffect(() => {
-    if (!isInView) return;
-    let frame: number;
-    const start = performance.now();
-    const duration = 1800;
-    const animate = (now: number) => {
-      const progress = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setDisplay(Math.round(eased * value));
-      if (progress < 1) frame = requestAnimationFrame(animate);
-    };
-    frame = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(frame);
-  }, [isInView, value]);
-
-  return (
-    <span ref={ref} className="font-mono font-bold tabular-nums">
-      {display}{suffix}
-    </span>
-  );
-}
+import { GSAPReveal } from "@/components/motion/gsap-reveal";
 
 export default function Portal() {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -99,256 +14,183 @@ export default function Portal() {
     target: heroRef,
     offset: ["start start", "end start"],
   });
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-  const heroScale = useTransform(scrollYProgress, [0, 0.8], [1, 0.95]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   return (
-    <main className="min-h-screen bg-[var(--bg)] overflow-x-hidden">
+    <main className="min-h-screen bg-[var(--bg)]">
       {/* ═══════════════════════════════════════════
-          HERO — Premium Tech Lab Entry
+          HERO — Pure editorial typography. No gimmicks.
           ═══════════════════════════════════════════ */}
       <motion.section
         ref={heroRef}
-        style={{ opacity: heroOpacity, scale: heroScale }}
-        className="relative flex min-h-screen items-center justify-center overflow-hidden"
+        style={{ opacity: heroOpacity }}
+        className="relative flex min-h-screen flex-col justify-end pb-16 md:pb-24"
       >
-        {/* Background grid */}
-        <div className="pointer-events-none absolute inset-0 animated-grid" />
+        {/* Subtle warm gradient — not radial AI glow */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)] via-[var(--bg)] to-[var(--surface)]/30" />
 
-        {/* Radial glow */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_50%,rgba(14,165,233,0.08)_0%,transparent_70%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_40%_40%_at_50%_45%,rgba(6,182,212,0.05)_0%,transparent_60%)]" />
-
-        {/* Particles behind orb */}
-        <div className="absolute inset-0 opacity-[0.06]">
-          <ParticleField count={200} color="#0EA5E9" />
-        </div>
-
-        {/* 3D Orb — center focal point */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="h-[500px] w-[500px] md:h-[600px] md:w-[600px] lg:h-[700px] lg:w-[700px]">
-            <GlowingOrb />
-          </div>
-        </div>
-
-        {/* Gradient fades */}
-        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[var(--bg)] to-transparent" />
-        <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-[var(--bg)]/50 to-transparent" />
-
-        {/* Grain */}
-        <div
-          className="pointer-events-none absolute inset-0 z-[2] opacity-[0.02] mix-blend-overlay"
-          style={{
-            backgroundImage:
-              "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")",
-          }}
-        />
-
-        {/* Content overlay */}
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12">
-          <div className="flex flex-col items-center text-center">
+        {/* Horizontal rules as visual rhythm */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          {[20, 40, 60, 80].map((top) => (
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <span className="inline-flex items-center gap-3 text-[0.6rem] font-semibold uppercase tracking-[0.2em] text-[var(--accent-primary)]">
-                <span className="h-px w-6 bg-current opacity-40" />
-                CX Experience Lab
-                <span className="h-px w-6 bg-current opacity-40" />
-              </span>
-            </motion.div>
-
-            <div className="mt-8">
-              <TextReveal
-                text="Palco digital executivo"
-                tag="h1"
-                trigger="mount"
-                delay={0.3}
-                stagger={0.04}
-                className="max-w-[16ch] font-display text-[clamp(2.5rem,7vw,5.5rem)] font-light leading-[0.92] tracking-[-0.04em] text-[var(--text)]"
-              />
-            </div>
-
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.6 }}
-              className="mt-6 max-w-[38ch] text-[0.95rem] leading-relaxed text-[var(--text-secondary)]"
-            >
-              Experiências interativas premium para keynote, workshop e
-              posicionamento estratégico.
-            </motion.p>
-
-            {/* Mode badges */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9, duration: 0.8 }}
-              className="mt-8 flex items-center gap-3"
-            >
-              {[
-                { label: "Leitura", icon: "◉" },
-                { label: "Apresentação", icon: "▶" },
-                { label: "Workshop", icon: "◫" },
-              ].map((mode) => (
-                <MagneticElement key={mode.label} strength={0.2}>
-                  <span className="flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-[var(--surface)]/40 px-3.5 py-1.5 text-[0.6rem] font-medium uppercase tracking-[0.1em] text-[var(--text-muted)] backdrop-blur-sm transition-colors duration-300 hover:border-[var(--accent-primary)]/20 hover:text-[var(--text-secondary)]">
-                    <span className="text-[0.5rem] text-[var(--accent-primary)]">
-                      {mode.icon}
-                    </span>
-                    {mode.label}
-                  </span>
-                </MagneticElement>
-              ))}
-            </motion.div>
-          </div>
+              key={top}
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 1.6, delay: 0.3 + top * 0.008, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute left-0 right-0 h-px origin-left bg-[var(--border)]"
+              style={{ top: `${top}%` }}
+            />
+          ))}
         </div>
 
-        {/* Scroll indicator */}
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 md:px-12">
+          {/* Institutional mark */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="mb-16 md:mb-24"
+          >
+            <span className="text-[0.6rem] font-medium uppercase tracking-[0.25em] text-[var(--text-muted)]">
+              Diretoria de Qualidade e Dados
+            </span>
+          </motion.div>
+
+          {/* Main headline — editorial, not descriptive */}
+          <div className="max-w-[900px]">
+            <TextReveal
+              text="Onde executivos param de ouvir"
+              tag="h1"
+              trigger="mount"
+              delay={0.4}
+              stagger={0.035}
+              className="font-display text-[clamp(2.8rem,7.5vw,6.5rem)] font-light leading-[0.88] tracking-[-0.04em] text-[var(--text)]"
+            />
+            <TextReveal
+              text="e comecam a decidir."
+              tag="span"
+              trigger="mount"
+              delay={0.9}
+              stagger={0.035}
+              className="mt-2 block font-display text-[clamp(2.8rem,7.5vw,6.5rem)] font-light leading-[0.88] tracking-[-0.04em] text-[var(--text-muted)]"
+            />
+          </div>
+
+          {/* Subtext */}
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 1.4 }}
+            className="mt-10 max-w-[44ch] text-[0.95rem] leading-[1.75] text-[var(--text-secondary)]"
+          >
+            Experiencias interativas de alto impacto para keynote, workshop executivo
+            e posicionamento estrategico. Cada material defende uma tese.
+            Nenhum e neutro.
+          </motion.p>
+
+          {/* Mode line */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 1.8 }}
+            className="mt-8 flex items-center gap-6 text-[0.6rem] uppercase tracking-[0.15em] text-[var(--text-muted)]"
+          >
+            <span className="flex items-center gap-2">
+              <span className="inline-block h-1 w-1 rounded-full bg-[var(--text-muted)]" />
+              Leitura
+            </span>
+            <span className="flex items-center gap-2">
+              <span className="inline-block h-1 w-1 rounded-full bg-[var(--text-muted)]" />
+              Apresentacao
+            </span>
+            <span className="flex items-center gap-2">
+              <span className="inline-block h-1 w-1 rounded-full bg-[var(--text-muted)]" />
+              Workshop
+            </span>
+          </motion.div>
+        </div>
+
+        {/* Scroll line */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 1 }}
-          className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2"
+          transition={{ delay: 2.2, duration: 0.8 }}
+          className="absolute bottom-6 right-6 md:right-12"
         >
           <motion.div
-            animate={{ y: [0, 6, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
             className="flex flex-col items-center gap-2"
           >
-            <span className="text-[0.5rem] uppercase tracking-[0.15em] text-[var(--text-muted)]/40">
-              Explorar
+            <span className="text-[0.5rem] uppercase tracking-[0.2em] text-[var(--text-muted)]/40 [writing-mode:vertical-lr]">
+              scroll
             </span>
-            <div className="h-8 w-px bg-gradient-to-b from-[var(--accent-primary)]/30 to-transparent" />
+            <div className="h-12 w-px bg-gradient-to-b from-[var(--text-muted)]/20 to-transparent" />
           </motion.div>
         </motion.div>
       </motion.section>
 
       {/* ═══════════════════════════════════════════
-          STATS BAR — Impact numbers
+          EXPERIENCES — Each one is a full editorial block
           ═══════════════════════════════════════════ */}
-      <section className="relative border-y border-[var(--border)] bg-[var(--surface)]/30">
-        <div className="mx-auto max-w-7xl px-6 md:px-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-[var(--border)]">
-            {[
-              { value: 2, suffix: "", label: "Experiências live" },
-              { value: 19, suffix: "", label: "Capítulos interativos" },
-              { value: 3, suffix: "", label: "Modos de uso" },
-              { value: 150, suffix: "+", label: "Minutos de workshop" },
-            ].map((stat, i) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.6 }}
-                className="flex flex-col items-center py-8 md:py-10"
-              >
-                <span className="text-[clamp(1.5rem,3vw,2.25rem)] text-[var(--accent-primary)]">
-                  <AnimatedNumber value={stat.value} suffix={stat.suffix} />
-                </span>
-                <span className="mt-1 text-[0.6rem] uppercase tracking-[0.12em] text-[var(--text-muted)]">
-                  {stat.label}
-                </span>
-              </motion.div>
-            ))}
-          </div>
-        </div>
+      <section className="relative">
+        {experiences.map((exp, i) => (
+          <ExperienceBlock key={exp.slug} experience={exp} index={i} />
+        ))}
       </section>
 
       {/* ═══════════════════════════════════════════
-          EXPERIENCES — Premium Cards with Depth
+          UPCOMING — Minimal, typographic
           ═══════════════════════════════════════════ */}
-      <section className="relative py-24 md:py-32">
-        {/* Section ambient glow */}
-        <div className="absolute right-0 top-1/4 h-[500px] w-[500px] bg-[radial-gradient(circle,rgba(14,165,233,0.04)_0%,transparent_70%)]" />
-
+      <section className="border-t border-[var(--border)] py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-6 md:px-12">
-          {/* Section header */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="mb-16"
-          >
-            <span className="inline-flex items-center gap-3 text-[0.55rem] font-semibold uppercase tracking-[0.16em] text-[var(--accent-primary)]">
-              <span className="h-px w-8 bg-current opacity-40" />
-              Experiências disponíveis
-            </span>
-          </motion.div>
-
-          <div className="space-y-16 md:space-y-24">
-            {experiences.map((exp, i) => (
-              <ExperienceCard key={exp.slug} experience={exp} index={i} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════
-          UPCOMING — Coming soon
-          ═══════════════════════════════════════════ */}
-      <section className="relative border-t border-[var(--border)] py-20">
-        <div className="mx-auto max-w-7xl px-6 md:px-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <span className="inline-flex items-center gap-3 text-[0.55rem] font-semibold uppercase tracking-[0.16em] text-[var(--text-muted)]/60">
-              <span className="h-px w-6 bg-current opacity-30" />
+          <GSAPReveal>
+            <span className="text-[0.6rem] font-medium uppercase tracking-[0.2em] text-[var(--text-muted)]">
               Em desenvolvimento
             </span>
+          </GSAPReveal>
 
-            <div className="mt-8 grid gap-4 md:grid-cols-3">
-              {upcomingExperiences.map((exp, i) => (
-                <motion.div
-                  key={exp.title}
-                  initial={{ opacity: 0, y: 15 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.5 }}
-                  className="group rounded-xl border border-[var(--border)] bg-[var(--surface)]/20 p-6 transition-all duration-300 hover:border-[var(--accent-primary)]/10 hover:bg-[var(--surface)]/40"
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-display text-lg text-[var(--text)]/60">
+          <div className="mt-10 space-y-0 divide-y divide-[var(--border)]">
+            {upcomingExperiences.map((exp, i) => (
+              <GSAPReveal key={exp.slug} from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0, duration: 0.6, delay: i * 0.1, ease: "power3.out" }}>
+                <div className="flex items-center justify-between py-6">
+                  <div className="flex items-baseline gap-4">
+                    <span className="font-mono text-[0.65rem] text-[var(--text-muted)]">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className={cn("font-display text-xl tracking-tight text-[var(--text)]/40", `theme-${exp.theme}`)}>
                       {exp.title}
                     </span>
-                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--accent-primary)]/30 animate-pulse" />
                   </div>
-                  <p className="mt-2 text-[0.65rem] uppercase tracking-[0.1em] text-[var(--text-muted)]/40">
-                    {exp.status}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
+                  <span className="text-[0.55rem] uppercase tracking-[0.12em] text-[var(--text-muted)]/40">
+                    {exp.subtitle}
+                  </span>
+                </div>
+              </GSAPReveal>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* ═══════════════════════════════════════════
-          FOOTER
+          FOOTER — Institutional, sparse
           ═══════════════════════════════════════════ */}
-      <footer className="border-t border-[var(--border)] py-10">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 md:flex-row md:px-12">
-          <div className="flex items-center gap-3">
-            <div className="h-2 w-2 rounded-full bg-[var(--accent-primary)]/40" />
-            <p className="text-xs font-medium text-[var(--text-muted)]">
-              CX Experience Lab
-            </p>
-          </div>
-          <p className="text-[0.65rem] tracking-wider text-[var(--text-muted)]/30">
-            Diretoria de Qualidade e Dados — AeC
-          </p>
+      <footer className="border-t border-[var(--border)] py-8">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 md:px-12">
+          <span className="text-[0.6rem] font-medium uppercase tracking-[0.15em] text-[var(--text-muted)]/40">
+            CX Experience Lab
+          </span>
+          <span className="text-[0.55rem] tracking-[0.1em] text-[var(--text-muted)]/25">
+            AeC 2024
+          </span>
         </div>
       </footer>
     </main>
   );
 }
 
-/* ─── Experience Card — Premium with depth ─── */
-function ExperienceCard({
+/* ─── Experience Block — Full-width editorial entry ─── */
+function ExperienceBlock({
   experience,
   index,
 }: {
@@ -356,143 +198,103 @@ function ExperienceCard({
   index: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-10% 0px" });
-  const isEven = index % 2 === 0;
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const y = useTransform(scrollYProgress, [0, 1], [40, -40]);
+
+  const isEven = index % 0 === 0;
 
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{
-        duration: 0.8,
-        delay: index * 0.15,
-        ease: [0.22, 1, 0.36, 1],
-      }}
-    >
-      <Link href={`/experiencias/${experience.slug}`} className="group block">
-        <SpotlightCard
-          className={cn(
-            "rounded-2xl",
-            "transition-all duration-500"
-          )}
-          spotlightColor={`${experience.accent}14`}
-          spotlightSize={450}
-        >
-          <div
-            className={cn(
-              "grid overflow-hidden",
-              isEven
-                ? "md:grid-cols-[1.3fr_1fr]"
-                : "md:grid-cols-[1fr_1.3fr]"
-            )}
-            style={
-              {
-                "--card-accent": experience.accent,
-                "--card-accent-rgb": experience.accent === "#0EA5E9" ? "14,165,233" : "6,182,212",
-              } as React.CSSProperties
-            }
-          >
-
-          {/* Image — with depth layers */}
-          {isEven && (
-            <CardImage experience={experience} gradientDir="to-r" />
-          )}
-
-          {/* Content */}
-          <div className="relative flex flex-col justify-center px-8 py-10 md:px-12 md:py-14">
-            <div className="flex items-center gap-3">
-              <span
-                className="h-1.5 w-1.5 rounded-full"
-                style={{ background: experience.accent }}
-              />
-              <span className="text-[0.55rem] font-semibold uppercase tracking-[0.16em] text-[var(--text-muted)]">
-                {experience.subtitle}
-              </span>
-              {experience.status === "live" && (
-                <span className="flex items-center gap-1 rounded-full border border-emerald-500/20 bg-emerald-500/5 px-2 py-0.5 text-[0.5rem] font-semibold uppercase tracking-[0.1em] text-emerald-400">
-                  <span className="h-1 w-1 rounded-full bg-emerald-400 animate-pulse" />
-                  Live
-                </span>
-              )}
-            </div>
-
-            <h2 className="mt-4 font-display text-[clamp(1.8rem,3.5vw,2.8rem)] font-light tracking-[-0.03em] text-[var(--text)] transition-colors duration-300 group-hover:text-[var(--card-accent)]">
-              {experience.title}
-            </h2>
-
-            <p className="mt-3 max-w-[44ch] text-[0.9rem] leading-relaxed text-[var(--text-secondary)]">
-              {experience.description}
-            </p>
-
-            {/* Meta */}
-            <div className="mt-8 flex items-center gap-6 text-[0.6rem] uppercase tracking-[0.1em] text-[var(--text-muted)]">
-              <span className="flex items-center gap-1.5">
-                <span className="font-mono text-base font-bold text-[var(--text-secondary)]">
-                  {experience.chapters}
-                </span>
-                capítulos
-              </span>
-              <span className="h-3 w-px bg-[var(--border)]" />
-              <span>{experience.readTime} leitura</span>
-              <span className="h-3 w-px bg-[var(--border)]" />
-              <span>{experience.workshopTime} workshop</span>
-            </div>
-
-            {/* Tags + Arrow */}
-            <div className="mt-5 flex items-center gap-2">
-              {experience.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-md border border-[var(--border)] bg-[var(--bg)]/50 px-2.5 py-1 text-[0.55rem] font-medium text-[var(--text-muted)]/70"
-                >
-                  {tag}
-                </span>
-              ))}
-              <span className="ml-auto flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] text-sm text-[var(--text-muted)] transition-all duration-300 group-hover:border-[var(--card-accent)]/30 group-hover:text-[var(--card-accent)] group-hover:shadow-[0_0_15px_rgba(var(--card-accent-rgb),0.15)]">
-                →
-              </span>
-            </div>
-          </div>
-
-          {/* Image for odd cards (right side) */}
-          {!isEven && (
-            <CardImage experience={experience} gradientDir="to-l" />
-          )}
-          </div>
-        </SpotlightCard>
-      </Link>
-    </motion.div>
-  );
-}
-
-function CardImage({
-  experience,
-  gradientDir,
-}: {
-  experience: (typeof experiences)[0];
-  gradientDir: string;
-}) {
-  return (
-    <div className="relative hidden min-h-[420px] overflow-hidden md:block">
-      <Image
-        src={experience.image}
-        alt={experience.title}
-        fill
-        className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-        sizes="60vw"
-      />
-      {/* Dark overlay */}
+    <Link href={`/experiencias/${experience.slug}`} className="group block">
       <div
-        className={`absolute inset-0 bg-gradient-${gradientDir === "to-r" ? "to-r" : "to-l"} from-transparent via-[var(--bg)]/30 to-[var(--bg)]/70`}
-      />
-      {/* Accent overlay */}
-      <div
-        className="absolute inset-0 mix-blend-overlay opacity-[0.06] transition-opacity duration-500 group-hover:opacity-[0.12]"
-        style={{ background: experience.accent }}
-      />
-      {/* Bottom fade */}
-      <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[var(--surface)]/50 to-transparent" />
-    </div>
+        ref={ref}
+        className={cn(
+          "relative border-t border-[var(--border)]",
+          "transition-colors duration-500",
+          "hover:bg-[var(--surface)]/30"
+        )}
+      >
+        <div className="mx-auto max-w-7xl px-6 md:px-12">
+          <div className="grid items-center gap-8 py-16 md:grid-cols-[1fr_auto] md:py-24 lg:py-32">
+            {/* Left: Content */}
+            <div>
+              {/* Meta line */}
+              <GSAPReveal>
+                <div className="flex items-center gap-4">
+                  <span className="font-mono text-[0.65rem] text-[var(--text-muted)]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span className="h-px w-8 bg-[var(--border)]" />
+                  <span className="text-[0.6rem] font-medium uppercase tracking-[0.15em] text-[var(--text-muted)]">
+                    {experience.subtitle}
+                  </span>
+                  {experience.status === "live" && (
+                    <span className="ml-2 flex items-center gap-1.5 text-[0.5rem] uppercase tracking-[0.1em] text-[var(--text-muted)]">
+                      <span className="h-1 w-1 rounded-full bg-emerald-500" />
+                      Disponivel
+                    </span>
+                  )}
+                </div>
+              </GSAPReveal>
+
+              {/* Title */}
+              <GSAPReveal from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0, duration: 0.8, delay: 0.1, ease: "power3.out" }}>
+                <h2 className="mt-5 font-display text-[clamp(2rem,5vw,4rem)] font-light leading-[0.95] tracking-[-0.035em] text-[var(--text)] transition-all duration-500 group-hover:tracking-[-0.02em]">
+                  {experience.title}
+                </h2>
+              </GSAPReveal>
+
+              {/* Thesis — the actual provocative statement */}
+              <GSAPReveal from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0, duration: 0.7, delay: 0.15, ease: "power3.out" }}>
+                <p className="mt-4 max-w-[52ch] text-base leading-[1.7] text-[var(--text-secondary)]">
+                  {experience.thesis}
+                </p>
+              </GSAPReveal>
+
+              {/* Stats */}
+              <GSAPReveal from={{ opacity: 0, y: 15 }} to={{ opacity: 1, y: 0, duration: 0.6, delay: 0.2, ease: "power3.out" }}>
+                <div className="mt-8 flex items-center gap-6 text-[0.6rem] uppercase tracking-[0.1em] text-[var(--text-muted)]">
+                  <span>
+                    <span className="mr-1.5 font-mono text-sm font-medium text-[var(--text-secondary)]">
+                      {experience.chapters.length}
+                    </span>
+                    capitulos
+                  </span>
+                  <span className="h-3 w-px bg-[var(--border)]" />
+                  <span>{experience.readTime} leitura</span>
+                  <span className="h-3 w-px bg-[var(--border)]" />
+                  <span>{experience.workshopTime} workshop</span>
+                </div>
+              </GSAPReveal>
+
+              {/* Tags */}
+              <GSAPReveal from={{ opacity: 0, y: 10 }} to={{ opacity: 1, y: 0, duration: 0.5, delay: 0.25, ease: "power3.out" }}>
+                <div className="mt-4 flex items-center gap-2">
+                  {experience.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-md border border-[var(--border)] px-2.5 py-1 text-[0.55rem] font-medium text-[var(--text-muted)]/60"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </GSAPReveal>
+            </div>
+
+            {/* Right: Arrow + visual hint */}
+            <motion.div style={{ y }} className="hidden md:block">
+              <div className="flex h-20 w-20 items-center justify-center rounded-full border border-[var(--border)] transition-all duration-500 group-hover:border-[var(--text-muted)]/20 group-hover:shadow-[0_0_40px_rgba(var(--accent-primary-rgb),0.04)]">
+                <span className="text-lg text-[var(--text-muted)] transition-all duration-500 group-hover:translate-x-1 group-hover:text-[var(--text)]">
+                  &rarr;
+                </span>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </Link>
   );
 }

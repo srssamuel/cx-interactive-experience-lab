@@ -12,18 +12,22 @@ export type ExperienceMode = "reading" | "presentation" | "workshop";
 export interface WorkshopDiscussion {
   id: string;
   question: string;
+  context?: string;
+  timerMinutes?: number;
   sectionId: string;
 }
 
-/** Experience metadata for the portal */
+/** Experience metadata for the registry */
 export interface ExperienceMeta {
   slug: string;
   title: string;
   subtitle: string;
   description: string;
-  chapters: number;
+  thesis: string;
+  chapters: Chapter[];
   readTime: string;
+  workshopTime: string;
   tags: string[];
-  accent: string;
+  theme: string;
   status: "live" | "draft" | "coming-soon";
 }

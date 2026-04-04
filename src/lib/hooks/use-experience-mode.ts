@@ -4,7 +4,6 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useState,
   type ReactNode,
 } from "react";
@@ -34,32 +33,8 @@ export function ExperienceModeProvider({
 }: ExperienceModeProviderProps) {
   const [mode, setMode] = useState<ExperienceMode>(defaultMode);
 
-  const handleKeyDown = useCallback(
-    (event: KeyboardEvent) => {
-      if (event.ctrlKey && event.shiftKey && event.key === "P") {
-        event.preventDefault();
-        setMode((prev) =>
-          prev === "presentation" ? "reading" : "presentation"
-        );
-      }
-
-      if (event.ctrlKey && event.shiftKey && event.key === "W") {
-        event.preventDefault();
-        setMode((prev) => (prev === "workshop" ? "reading" : "workshop"));
-      }
-
-      if (event.key === "Escape" && mode !== "reading") {
-        event.preventDefault();
-        setMode("reading");
-      }
-    },
-    [mode]
-  );
-
-  useEffect(() => {
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [handleKeyDown]);
+  // Keyboard shortcuts are now handled by KeyboardHUD component
+  // This provider is purely state management
 
   const value: ExperienceModeContextValue = {
     mode,
