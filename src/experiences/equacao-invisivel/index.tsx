@@ -15,7 +15,6 @@ import {
   Section,
   Container,
   HeroSection,
-  ComparisonCard,
   Card,
 } from "@/components/design-system";
 import { ChapterNav } from "@/components/navigation/chapter-nav";
@@ -23,14 +22,21 @@ import { ModeIndicator } from "@/components/navigation/mode-indicator";
 import { PresentationShell } from "@/components/navigation/presentation-shell";
 import { WorkshopLayout } from "@/components/workshop/workshop-layout";
 import { WorkshopBlock } from "@/components/workshop/workshop-block";
-import { ScrollReveal, ParallaxLayer } from "@/components/motion/scroll-reveal";
-import { GSAPReveal, GSAPStaggerReveal, GSAPCounter } from "@/components/motion/gsap-reveal";
+import { ScrollReveal } from "@/components/motion/scroll-reveal";
+import {
+  GSAPReveal,
+  GSAPStaggerReveal,
+  GSAPCounter,
+} from "@/components/motion/gsap-reveal";
 import { Tabs } from "@/components/interactive/tabs";
-import { Timeline } from "@/components/interactive/timeline";
-import { ComparisonSlider } from "@/components/interactive/comparison-slider";
-import { PausePoint } from "@/components/workshop/discussion-prompt";
-import { ImageHero, ImageSplit, FloatingImage } from "@/components/cinematic/image-section";
-import { HeadlineSlide, DataSpectacle, ChapterTransition, GrainOverlay } from "@/components/cinematic/headline-slide";
+// import { ComparisonSlider } from "@/components/interactive/comparison-slider";
+import { ImageHero, ImageSplit } from "@/components/cinematic/image-section";
+import {
+  HeadlineSlide,
+  DataSpectacle,
+  ChapterTransition,
+  GrainOverlay,
+} from "@/components/cinematic/headline-slide";
 import {
   chapters,
   hero,
@@ -52,7 +58,18 @@ import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 
 const ParticleField = dynamic(
-  () => import("@/components/cinematic/particle-field").then((mod) => mod.ParticleField),
+  () =>
+    import("@/components/cinematic/particle-field").then(
+      (mod) => mod.ParticleField
+    ),
+  { ssr: false }
+);
+
+const GlowingOrb = dynamic(
+  () =>
+    import("@/components/cinematic/glowing-orb").then(
+      (mod) => mod.GlowingOrb
+    ),
   { ssr: false }
 );
 
@@ -63,13 +80,13 @@ export default function EquacaoInvisivel() {
         <ChapterNav chapters={chapters} />
         <ModeIndicator />
 
-        {/* ═══════════════════════════════════════════════════
-            HERO — Cinematic image + particles + left-aligned
-            ═══════════════════════════════════════════════════ */}
+        {/* ═══════════════════════════════════════════
+            HERO — Cinematic entry
+            ═══════════════════════════════════════════ */}
         <ImageHero
           src={hero.heroImage}
           alt="Jornada do cliente"
-          overlay="amber"
+          overlay="cyan"
           height="full"
         >
           <div id="hero">
@@ -87,7 +104,9 @@ export default function EquacaoInvisivel() {
                 </ScrollReveal>
 
                 <ScrollReveal direction="left" delay={0.7}>
-                  <BodyText className="mt-5 max-w-[36ch]">{hero.subtext}</BodyText>
+                  <BodyText className="mt-5 max-w-[34ch]">
+                    {hero.subtext}
+                  </BodyText>
                 </ScrollReveal>
 
                 <ScrollReveal delay={0.9}>
@@ -102,107 +121,168 @@ export default function EquacaoInvisivel() {
                     ))}
                   </div>
                 </ScrollReveal>
-
-                <ScrollReveal delay={1.1}>
-                  <motion.button
-                    whileHover={{ y: -2 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={() => document.getElementById("abertura")?.scrollIntoView({ behavior: "smooth" })}
-                    className="mt-10 rounded-full border border-[var(--accent-primary)]/30 bg-[var(--accent-primary)]/[0.08] px-8 py-4 text-xs font-bold uppercase tracking-[0.12em] text-[var(--accent-primary)] transition-all duration-200 hover:bg-[var(--accent-primary)]/15"
-                  >
-                    {hero.cta} ↓
-                  </motion.button>
-                </ScrollReveal>
               </div>
             </Container>
           </div>
         </ImageHero>
 
-        {/* ═══════════════════════════════════════════════════
-            ABERTURA — Princípios como telas de palco
-            ═══════════════════════════════════════════════════ */}
-        <HeadlineSlide id="abertura" background="surface">
-          <GSAPStaggerReveal staggerAmount={0.15}>
-            {abertura.principios.map((p) => (
-              <div key={p.number} className="mb-10 last:mb-0">
-                <span className="font-mono text-xs font-bold text-[var(--accent-primary)]/30">{p.number}</span>
-                <h2 className="mt-2 font-display text-[clamp(1.5rem,4vw,3rem)] font-light leading-[1.05] tracking-[-0.03em] text-[var(--text)]">
+        {/* ═══════════════════════════════════════════
+            ABERTURA — Three principles, one per screen
+            ═══════════════════════════════════════════ */}
+        <div id="abertura">
+          {abertura.principios.map((p, i) => (
+            <HeadlineSlide
+              key={p.number}
+              align="center"
+              background={i === 1 ? "surface" : "base"}
+            >
+              <GSAPReveal>
+                <span className="font-mono text-[clamp(3rem,8vw,6rem)] font-bold leading-none text-[var(--accent-primary)]/[0.08]">
+                  {p.number}
+                </span>
+                <h2 className="mt-4 font-display text-[clamp(1.8rem,4.5vw,3.5rem)] font-light tracking-[-0.03em] text-[var(--text)]">
                   {p.statement}
                 </h2>
-                <p className="mt-2 max-w-[50ch] text-sm text-[var(--text-secondary)]">{p.detail}</p>
-              </div>
-            ))}
-          </GSAPStaggerReveal>
-        </HeadlineSlide>
+              </GSAPReveal>
+            </HeadlineSlide>
+          ))}
+        </div>
 
-        {/* ═══════════════════════════════════════════════════
-            CAP 1 — A EQUAÇÃO
-            ═══════════════════════════════════════════════════ */}
-        <ChapterTransition id="equacao" number="01" title="A Equação" subtitle="A ideia que muda tudo" />
+        {/* ═══════════════════════════════════════════
+            CAP 01 — A EQUAÇÃO
+            ═══════════════════════════════════════════ */}
+        <ChapterTransition
+          id="equacao"
+          number="01"
+          title={equation.headline}
+        />
 
-        {/* 1.1 — Tese principal com equação visual */}
-        <Section background="surface" variant="default">
-          <Container size="wide">
-            <SplitContent
-              ratio="wide-left"
-              left={
-                <>
-                  <GSAPReveal from={{ opacity: 0, x: -25 }} to={{ opacity: 1, x: 0, duration: 0.7 }}>
-                    <Overline>{equation.overline}</Overline>
-                  </GSAPReveal>
-                  <GSAPReveal from={{ opacity: 0, y: 25 }} to={{ opacity: 1, y: 0, duration: 0.9 }} start="top 80%">
-                    <SectionHeading className="mt-4 max-w-[16ch]">{equation.headline}</SectionHeading>
-                  </GSAPReveal>
-                  <GSAPReveal from={{ opacity: 0 }} to={{ opacity: 1, duration: 0.7 }} start="top 75%">
-                    <BodyText className="mt-4 max-w-[40ch]">{equation.subtext}</BodyText>
-                  </GSAPReveal>
-                </>
-              }
-              right={
-                <div className="flex flex-col items-center gap-4 pt-4">
-                  <GSAPReveal from={{ opacity: 0, scale: 0.9 }} to={{ opacity: 1, scale: 1, duration: 0.7, ease: "back.out(1.7)" }} start="top 75%">
-                    <Card className="w-full text-center">
-                      <SubHeading>{equation.parts[0].title}</SubHeading>
-                      <p className="mt-1 text-sm text-[var(--text-muted)]">{equation.parts[0].description}</p>
-                    </Card>
-                  </GSAPReveal>
-                  <GSAPReveal from={{ opacity: 0, scale: 0 }} to={{ opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2)" }} start="top 70%">
-                    <span className="font-display text-3xl text-[var(--accent-primary)]/50">+</span>
-                  </GSAPReveal>
-                  <GSAPReveal from={{ opacity: 0, scale: 0.9 }} to={{ opacity: 1, scale: 1, duration: 0.7, ease: "back.out(1.7)" }} start="top 70%">
-                    <Card className="w-full text-center">
-                      <SubHeading>{equation.parts[1].title}</SubHeading>
-                      <p className="mt-1 text-sm text-[var(--text-muted)]">{equation.parts[1].description}</p>
-                    </Card>
-                  </GSAPReveal>
-                  <GSAPReveal from={{ opacity: 0, scale: 0 }} to={{ opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2)" }} start="top 65%">
-                    <span className="font-display text-3xl text-[var(--accent-primary)]/50">=</span>
-                  </GSAPReveal>
-                  <GSAPReveal from={{ opacity: 0, x: 30 }} to={{ opacity: 1, x: 0, duration: 0.7 }} start="top 65%">
-                    <span className="font-display text-2xl tracking-tight text-[var(--accent-primary)]">{equation.conclusion}</span>
-                  </GSAPReveal>
+        {/* The equation visual */}
+        <Section variant="breathing" className="relative">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(var(--accent-primary-rgb),0.03)_0%,transparent_60%)]" />
+          <Container size="default">
+            <GSAPReveal>
+              <div className="flex flex-col items-center text-center">
+                <div className="flex flex-col items-center gap-4 md:flex-row md:gap-8">
+                  {equation.parts.map((part, i) => (
+                    <div key={part.title} className="flex items-center gap-4 md:gap-8">
+                      {i > 0 && (
+                        <span className="font-mono text-3xl font-bold text-[var(--accent-primary)]">
+                          +
+                        </span>
+                      )}
+                      <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)]/40 px-8 py-6 backdrop-blur-sm">
+                        <span className="text-[0.6rem] font-semibold uppercase tracking-[0.15em] text-[var(--accent-primary)]">
+                          {part.title}
+                        </span>
+                        <p className="mt-1 text-sm text-[var(--text-secondary)]">
+                          {part.short}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                  <span className="font-mono text-3xl font-bold text-[var(--accent-primary)]">
+                    =
+                  </span>
+                  <div className="rounded-xl border border-[var(--accent-primary)]/20 bg-[var(--accent-primary)]/[0.04] px-8 py-6 shadow-[0_0_30px_rgba(var(--accent-primary-rgb),0.08)]">
+                    <span className="font-display text-xl font-light text-[var(--text)]">
+                      {equation.conclusion}
+                    </span>
+                  </div>
                 </div>
-              }
-            />
+              </div>
+            </GSAPReveal>
           </Container>
         </Section>
 
-        {/* 1.2 — Deep dive */}
-        <Section variant="asymmetric" background="base">
-          <Container>
-            <GSAPReveal from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0, duration: 0.8 }}>
-              <SubHeading className="max-w-[28ch]">{equation.deepDive.headline}</SubHeading>
-            </GSAPReveal>
-            <div className="mt-8 grid gap-6 md:grid-cols-3">
-              {equation.deepDive.points.map((point, i) => (
-                <GSAPReveal
+        {/* Equation insight */}
+        <HeadlineSlide background="surface">
+          <GSAPReveal>
+            <Provocation>{equation.insight}</Provocation>
+            <GSAPStaggerReveal className="mt-8 space-y-4 max-w-[52ch]">
+              {equation.deepPoints.map((point, i) => (
+                <p
                   key={i}
-                  from={{ opacity: 0, y: 20 }}
-                  to={{ opacity: 1, y: 0, duration: 0.5, delay: i * 0.08 }}
-                  start="top 80%"
+                  className="text-[0.95rem] leading-relaxed text-[var(--text-secondary)]"
                 >
-                  <div className="border-t border-[var(--accent-primary)]/15 pt-4">
-                    <p className="text-sm leading-relaxed text-[var(--text-secondary)]">{point}</p>
+                  {point}
+                </p>
+              ))}
+            </GSAPStaggerReveal>
+          </GSAPReveal>
+        </HeadlineSlide>
+
+        <WorkshopBlock {...equation.workshop} />
+
+        {/* ═══════════════════════════════════════════
+            CAP 02 — DESCONSTRUÇÃO
+            ═══════════════════════════════════════════ */}
+        <ChapterTransition
+          id="mitos"
+          number="02"
+          title={myths.headline}
+        />
+
+        {/* Each myth as an image split — alternating */}
+        {myths.items.map((item, i) => (
+          <section
+            key={item.myth}
+            className={i % 2 === 0 ? "bg-[var(--bg)]" : "bg-[var(--surface)]"}
+          >
+            <ImageSplit
+              src={item.image}
+              alt={item.myth}
+              imagePosition={i % 2 === 0 ? "left" : "right"}
+              imageRatio="wide"
+            >
+              <GSAPReveal>
+                <span className="text-[0.55rem] font-semibold uppercase tracking-[0.15em] text-[var(--accent-primary)]/60">
+                  Mito {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="mt-2 font-display text-[clamp(1.3rem,3vw,2rem)] font-light tracking-[-0.02em] text-[var(--text)]">
+                  &ldquo;{item.myth}&rdquo;
+                </h3>
+                <div className="mt-4 border-l-2 border-[var(--accent-primary)]/30 pl-4">
+                  <p className="font-medium text-[var(--text)]">
+                    {item.truth}
+                  </p>
+                </div>
+                <p className="mt-4 text-sm text-[var(--text-muted)]">
+                  {item.evidence}
+                </p>
+              </GSAPReveal>
+            </ImageSplit>
+          </section>
+        ))}
+
+        {/* ═══════════════════════════════════════════
+            CAP 03 — AS 4 DIMENSÕES
+            ═══════════════════════════════════════════ */}
+        <ChapterTransition
+          id="dimensoes"
+          number="03"
+          title={dimensoes.headline}
+        />
+
+        {/* Dimension cards — 2x2 grid */}
+        <Section variant="default">
+          <Container>
+            <div className="grid gap-6 md:grid-cols-2">
+              {dimensoes.items.map((dim, i) => (
+                <GSAPReveal key={dim.title}>
+                  <div className="group relative overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]/30 p-8 transition-all duration-300 hover:border-[var(--accent-primary)]/15 hover:bg-[var(--surface)]/50">
+                    <div className="absolute -right-4 -top-4 font-mono text-[5rem] font-bold leading-none text-[var(--accent-primary)]/[0.04]">
+                      {dim.number}
+                    </div>
+                    <span className="text-[0.55rem] font-semibold uppercase tracking-[0.15em] text-[var(--accent-primary)]">
+                      {dim.short}
+                    </span>
+                    <h3 className="mt-2 font-display text-2xl font-light text-[var(--text)]">
+                      {dim.title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)]">
+                      {dim.description}
+                    </p>
                   </div>
                 </GSAPReveal>
               ))}
@@ -210,462 +290,248 @@ export default function EquacaoInvisivel() {
           </Container>
         </Section>
 
-        {/* 1.3 — Insight */}
-        <Section variant="breathing" background="accent-muted">
-          <Container size="default" align="left" className="md:pl-[12%]">
-            <GSAPReveal from={{ opacity: 0, x: -40 }} to={{ opacity: 1, x: 0, duration: 1.4, ease: "power3.out" }}>
-              <Provocation>{equation.insight}</Provocation>
-            </GSAPReveal>
-          </Container>
-        </Section>
+        <WorkshopBlock {...dimensoes.workshop} />
 
-        {/* 1.4 — Workshop */}
-        <Section variant="compact" background="base">
-          <Container size="narrow">
-            <WorkshopBlock
-              type={equation.workshop.type}
-              question={equation.workshop.question}
-              context={equation.workshop.context}
+        {/* ═══════════════════════════════════════════
+            CAP 04 — A FORMA
+            ═══════════════════════════════════════════ */}
+        <ChapterTransition
+          id="forma"
+          number="04"
+          title={forma.headline}
+          subtitle={forma.subtitle}
+        />
+
+        {/* 6 vectors as tabs */}
+        <Section background="surface">
+          <Container>
+            <Tabs
+              variant="underline"
+              tabs={forma.dimensions.map((d, i) => ({
+                id: `forma-${i}`,
+                label: d.title,
+                content: (
+                  <div className="py-6">
+                    <h3 className="font-display text-xl font-light text-[var(--accent-primary)]">
+                      {d.question}
+                    </h3>
+                    <p className="mt-3 max-w-[48ch] text-[0.95rem] leading-relaxed text-[var(--text-secondary)]">
+                      {d.answer}
+                    </p>
+                  </div>
+                ),
+              }))}
             />
           </Container>
         </Section>
 
-        {/* ═══════════════════════════════════════════════════
-            CAP 2 — DESCONSTRUÇÃO (MITOS)
-            ═══════════════════════════════════════════════════ */}
-        <ChapterTransition number="02" title="Desconstrução" subtitle="O que quase todo mundo entende errado" />
-
-        {/* 2.0 — Section intro */}
-        <Section id="mitos" variant="asymmetric">
-          <Container>
-            <div className="max-w-[500px]">
-              <GSAPReveal from={{ opacity: 0, x: -20 }} to={{ opacity: 1, x: 0, duration: 0.6 }}>
-                <Overline>{myths.overline}</Overline>
-              </GSAPReveal>
-              <GSAPReveal from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0, duration: 0.8 }} start="top 82%">
-                <SectionHeading className="mt-3">{myths.headline}</SectionHeading>
-              </GSAPReveal>
-              <GSAPReveal from={{ opacity: 0 }} to={{ opacity: 1, duration: 0.6 }} start="top 78%">
-                <BodyText className="mt-3">{myths.subtext}</BodyText>
-              </GSAPReveal>
-            </div>
-          </Container>
-        </Section>
-
-        {/* 2.1-2.5 — Each myth as split image section */}
-        {myths.items.map((item, i) => (
-          <ImageSplit
-            key={i}
-            src={item.image}
-            alt={item.myth}
-            imagePosition={i % 2 === 0 ? "right" : "left"}
-            imageRatio="equal"
-            className={i % 2 === 0 ? "bg-[var(--surface)]" : "bg-[var(--bg)]"}
-          >
-            <GSAPReveal from={{ opacity: 0, y: 25 }} to={{ opacity: 1, y: 0, duration: 0.7 }}>
-              <span className="text-[0.6rem] font-bold uppercase tracking-[0.14em] text-rose-400">
-                Crença {String(i + 1).padStart(2, "0")}
-              </span>
-              <SectionHeading className="mt-3 max-w-[18ch]">&ldquo;{item.myth}&rdquo;</SectionHeading>
-              <div className="mt-6 border-l-2 border-emerald-500/30 pl-5">
-                <span className="text-[0.6rem] font-bold uppercase tracking-[0.14em] text-emerald-400">Verdade</span>
-                <p className="mt-1 text-base font-medium text-[var(--text)]">{item.truth}</p>
-              </div>
-              <p className="mt-4 text-sm leading-relaxed text-[var(--text-secondary)]">{item.detail}</p>
-              <EvidenceBlock stat="" context={item.evidence} className="mt-4 border-l-[var(--accent-primary)]/20" />
-            </GSAPReveal>
-          </ImageSplit>
-        ))}
-
-        {/* ═══════════════════════════════════════════════════
-            CAP 3 — AS 4 DIMENSÕES DO RESULTADO
-            ═══════════════════════════════════════════════════ */}
-        <ChapterTransition id="dimensoes" number="03" title="As 4 Dimensões" subtitle="O resultado que o cliente realmente busca" />
-
-        {/* 3.0 — Intro */}
-        <HeadlineSlide background="surface">
-          <GSAPReveal from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0, duration: 1 }}>
-            <FullBleedText className="max-w-[18ch]">{dimensoes.headline}</FullBleedText>
-            <BodyText className="mt-4 max-w-[44ch]">{dimensoes.subtext}</BodyText>
+        {/* Insight */}
+        <HeadlineSlide align="center">
+          <GSAPReveal>
+            <Provocation>{forma.insight}</Provocation>
           </GSAPReveal>
         </HeadlineSlide>
 
-        {/* 3.1-3.4 — Each dimension as a slide */}
-        {dimensoes.items.map((dim, i) => (
-          <ImageSplit
-            key={dim.number}
-            src={dim.image}
-            alt={dim.title}
-            imagePosition={i % 2 === 0 ? "left" : "right"}
-            imageRatio="wide"
-            className={i % 2 === 0 ? "bg-[var(--bg)]" : "bg-[var(--surface)]"}
-          >
-            <GSAPReveal from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0, duration: 0.7 }}>
-              <span className="font-mono text-[0.65rem] font-bold tracking-[0.1em] text-[var(--accent-primary)]/50">{dim.number}</span>
-              <SectionHeading className="mt-2">{dim.title}</SectionHeading>
-              <p className="mt-2 text-base font-medium italic text-[var(--accent-primary)]">{dim.question}</p>
-              <p className="mt-3 text-sm text-[var(--text-secondary)]">{dim.description}</p>
-              <p className="mt-4 text-sm leading-relaxed text-[var(--text-secondary)]">{dim.detail}</p>
-            </GSAPReveal>
-          </ImageSplit>
-        ))}
+        {/* ═══════════════════════════════════════════
+            CAP 05 — O CUSTO DO SILÊNCIO
+            ═══════════════════════════════════════════ */}
+        <ChapterTransition
+          id="custosilencio"
+          number="05"
+          title={custoSilencio.headline}
+        />
 
-        {/* 3.5 — Workshop */}
-        <Section variant="compact" background="base">
-          <Container size="narrow">
-            <WorkshopBlock
-              type={dimensoes.workshop.type}
-              question={dimensoes.workshop.question}
-              instructions={dimensoes.workshop.instructions}
-              timerMinutes={dimensoes.workshop.timerMinutes}
-            />
-          </Container>
-        </Section>
-
-        {/* ═══════════════════════════════════════════════════
-            CAP 4 — A FORMA (EXPERIÊNCIA APROPRIADA)
-            ═══════════════════════════════════════════════════ */}
-        <ChapterTransition id="forma" number="04" title="A Forma" subtitle="Você resolve o problema. Mas da forma errada." />
-
-        <Section background="surface" variant="default">
-          <Container>
-            <GSAPReveal from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0, duration: 0.8 }}>
-              <Overline>{forma.overline}</Overline>
-              <SectionHeading className="mt-3 max-w-[24ch]">{forma.headline}</SectionHeading>
-              <BodyText className="mt-3 max-w-[48ch]">{forma.subtext}</BodyText>
-            </GSAPReveal>
-
-            <div className="mt-12">
-              <Tabs
-                variant="underline"
-                tabs={forma.dimensions.map((dim, i) => ({
-                  id: `forma-${i}`,
-                  label: dim.title,
-                  content: (
-                    <div className="max-w-2xl py-2">
-                      <p className="text-lg font-medium text-[var(--text)]">{dim.question}</p>
-                      <p className="mt-3 leading-relaxed text-[var(--text-secondary)]">{dim.answer}</p>
-                    </div>
-                  ),
-                }))}
-              />
-            </div>
-
-            <GSAPReveal from={{ opacity: 0, y: 15 }} to={{ opacity: 1, y: 0, duration: 0.6 }} start="top 72%">
-              <PullQuote className="mt-10 max-w-3xl">{forma.insight}</PullQuote>
-            </GSAPReveal>
-          </Container>
-        </Section>
-
-        {/* ═══════════════════════════════════════════════════
-            CAP 5 — O CUSTO DO SILÊNCIO
-            ═══════════════════════════════════════════════════ */}
-        <ChapterTransition id="custosilencio" number="05" title="O Custo do Silêncio" subtitle="O cliente que não reclama é o mais perigoso" />
-
-        {/* 5.1 — Big number moment */}
+        {/* Big number moment */}
         <DataSpectacle accent>
-          <div className="md:ml-[10%]">
-            <GSAPReveal from={{ opacity: 0, y: 40 }} to={{ opacity: 1, y: 0, duration: 1.2, ease: "power3.out" }}>
-              <GSAPCounter
-                value={custoSilencio.bigNumber.value}
-                suffix={custoSilencio.bigNumber.suffix}
-                className="block font-mono text-[clamp(5rem,15vw,12rem)] font-bold leading-none tracking-tight text-[var(--accent-primary)]"
-              />
-              <p className="mt-4 max-w-[30ch] text-xl text-[var(--text-secondary)]">
+          <div className="flex flex-col items-center text-center">
+            <GSAPReveal>
+              <div className="relative">
+                <span className="font-mono text-[clamp(4rem,12vw,10rem)] font-bold leading-none text-[var(--accent-primary)]">
+                  <GSAPCounter value={custoSilencio.bigNumber.value} />
+                  {custoSilencio.bigNumber.suffix}
+                </span>
+                {/* Glow behind number */}
+                <div className="absolute inset-0 -z-10 blur-3xl bg-[var(--accent-primary)]/10 rounded-full scale-150" />
+              </div>
+              <p className="mt-4 text-lg text-[var(--text-secondary)]">
                 {custoSilencio.bigNumber.label}
               </p>
             </GSAPReveal>
           </div>
         </DataSpectacle>
 
-        {/* 5.2 — Stats trio */}
-        <Section variant="asymmetric" background="surface">
-          <Container size="wide">
-            <SectionHeading className="max-w-[22ch]">{custoSilencio.headline}</SectionHeading>
-            <div className="mt-12 grid gap-8 md:grid-cols-3">
-              {custoSilencio.stats.map((stat, i) => (
-                <GSAPReveal
-                  key={i}
-                  from={{ opacity: 0, y: 30 }}
-                  to={{ opacity: 1, y: 0, duration: 0.6, delay: i * 0.1 }}
-                  start="top 78%"
-                >
-                  <EvidenceBlock
-                    stat={`${stat.value}${stat.suffix}`}
-                    context={stat.label}
-                    source={stat.context}
-                  />
-                </GSAPReveal>
-              ))}
-            </div>
-          </Container>
-        </Section>
-
-        {/* 5.3 — Insight */}
-        <Section variant="breathing" background="accent-muted">
-          <Container size="default" align="left" className="md:pl-[15%]">
-            <GSAPReveal from={{ opacity: 0, x: -30 }} to={{ opacity: 1, x: 0, duration: 1.2 }}>
-              <Provocation>{custoSilencio.pullQuote}</Provocation>
-            </GSAPReveal>
-          </Container>
-        </Section>
-
-        {/* 5.4 — Detail + Workshop */}
-        <Section variant="compact" background="base">
+        {/* Supporting stats */}
+        <Section background="surface">
           <Container>
-            <SplitContent
-              ratio="wide-left"
-              left={
-                <GSAPReveal from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0, duration: 0.7 }}>
-                  <BodyText>{custoSilencio.insight}</BodyText>
-                </GSAPReveal>
-              }
-              right={
-                <WorkshopBlock
-                  type={custoSilencio.workshop.type}
-                  question={custoSilencio.workshop.question}
-                  context={custoSilencio.workshop.context}
-                  timerMinutes={custoSilencio.workshop.timerMinutes}
-                />
-              }
-            />
-          </Container>
-        </Section>
-
-        {/* ═══════════════════════════════════════════════════
-            CAP 6 — O MAPA DE CX
-            ═══════════════════════════════════════════════════ */}
-        <ChapterTransition id="mapa" number="06" title="O Mapa" subtitle="CX não é departamento. É arquitetura." />
-
-        <Section background="surface" variant="default">
-          <Container size="wide">
-            <GSAPReveal from={{ opacity: 0, y: 25 }} to={{ opacity: 1, y: 0, duration: 0.8 }}>
-              <Overline>{mapa.overline}</Overline>
-              <SectionHeading className="mt-3 max-w-[22ch]">{mapa.headline}</SectionHeading>
-              <BodyText className="mt-3 max-w-[48ch]">{mapa.subtext}</BodyText>
-            </GSAPReveal>
-
-            {/* Concentric layers visualization */}
-            <div className="mt-14 grid gap-3 md:grid-cols-3">
-              {mapa.layers.map((layer, i) => (
-                <GSAPReveal
-                  key={i}
-                  from={{ opacity: 0, y: 20 }}
-                  to={{ opacity: 1, y: 0, duration: 0.5, delay: i * 0.06 }}
-                  start="top 78%"
-                >
-                  <div className={`border-t-2 pt-4 ${
-                    layer.position === "core" ? "border-[var(--accent-primary)]/40" :
-                    layer.position === "outer" ? "border-[var(--accent-primary)]/30" :
-                    "border-[var(--border)]"
-                  }`}>
-                    <span className="text-[0.6rem] font-bold uppercase tracking-[0.12em] text-[var(--text-muted)]">
-                      {layer.position === "core" ? "Fundação" : layer.position === "outer" ? "Resultado" : "Camada"}
+            <div className="grid gap-8 md:grid-cols-3">
+              {custoSilencio.stats.map((stat, i) => (
+                <GSAPReveal key={stat.label}>
+                  <div className="text-center">
+                    <span className="font-mono text-[clamp(2rem,4vw,3rem)] font-bold text-[var(--accent-primary)]">
+                      <GSAPCounter
+                        value={stat.value}
+                      />
+                      {stat.suffix}
                     </span>
-                    <h3 className="mt-1 text-base font-semibold text-[var(--text)]">{layer.title}</h3>
-                    <p className="mt-1 text-sm text-[var(--text-secondary)]">{layer.description}</p>
+                    <p className="mt-1 text-sm font-medium text-[var(--text)]">
+                      {stat.label}
+                    </p>
+                    <p className="mt-2 text-xs text-[var(--text-muted)]">
+                      {stat.context}
+                    </p>
                   </div>
                 </GSAPReveal>
               ))}
             </div>
-
-            <GSAPReveal from={{ opacity: 0, y: 15 }} to={{ opacity: 1, y: 0, duration: 0.6 }} start="top 70%">
-              <PullQuote className="mt-12 max-w-3xl">{mapa.insight}</PullQuote>
-            </GSAPReveal>
           </Container>
         </Section>
 
-        {/* Provocação */}
-        <HeadlineSlide background="accent-muted">
-          <GSAPReveal from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0, duration: 1.2 }}>
-            <FullBleedText className="max-w-[16ch]">{mapa.provocacao}</FullBleedText>
+        {/* Pull quote */}
+        <HeadlineSlide align="center" background="base">
+          <GSAPReveal>
+            <FullBleedText>
+              {custoSilencio.pullQuote}
+            </FullBleedText>
           </GSAPReveal>
         </HeadlineSlide>
 
-        {/* ═══════════════════════════════════════════════════
-            CAP 7 — NA PRÁTICA
-            ═══════════════════════════════════════════════════ */}
-        <ChapterTransition id="pratica" number="07" title="Na Prática" subtitle="A equação aplicada a cenários reais" />
+        <WorkshopBlock {...custoSilencio.workshop} />
 
-        {/* 7.1 — Scenario contrast */}
-        <Section background="surface" variant="default">
+        {/* ═══════════════════════════════════════════
+            CAP 06 — O MAPA
+            ═══════════════════════════════════════════ */}
+        <ChapterTransition
+          id="mapa"
+          number="06"
+          title={mapa.headline}
+        />
+
+        {/* Concentric layers visualization */}
+        <Section variant="default" className="relative">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(var(--accent-primary-rgb),0.04)_0%,transparent_50%)]" />
           <Container>
-            <GSAPReveal from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0, duration: 0.8 }}>
-              <Overline>{pratica.overline}</Overline>
-              <SectionHeading className="mt-3 max-w-[24ch]">{pratica.headline}</SectionHeading>
-            </GSAPReveal>
-
-            <div className="mt-12 grid gap-6 md:grid-cols-2">
-              <GSAPReveal from={{ opacity: 0, x: -25 }} to={{ opacity: 1, x: 0, duration: 0.7 }} start="top 78%">
-                <ComparisonCard
-                  label={pratica.scenarios.positive.label}
-                  title={pratica.scenarios.positive.title}
-                  description={pratica.scenarios.positive.description}
-                  accent="positive"
-                />
-              </GSAPReveal>
-              <GSAPReveal from={{ opacity: 0, x: 25 }} to={{ opacity: 1, x: 0, duration: 0.7 }} start="top 78%">
-                <ComparisonCard
-                  label={pratica.scenarios.negative.label}
-                  title={pratica.scenarios.negative.title}
-                  description={pratica.scenarios.negative.description}
-                  accent="negative"
-                />
-              </GSAPReveal>
-            </div>
-
-            <GSAPReveal from={{ opacity: 0, y: 15 }} to={{ opacity: 1, y: 0, duration: 0.6 }} start="top 72%">
-              <PullQuote className="mx-auto mt-10 max-w-3xl">{pratica.insight}</PullQuote>
-            </GSAPReveal>
+            <GSAPStaggerReveal className="space-y-3">
+              {mapa.layers.map((layer, i) => {
+                const widths = ["max-w-xs", "max-w-sm", "max-w-md", "max-w-lg", "max-w-xl", "max-w-2xl"];
+                const isCore = layer.position === "core";
+                const isOuter = layer.position === "outer";
+                return (
+                  <div
+                    key={layer.title}
+                    className={`mx-auto rounded-lg border px-6 py-4 text-center transition-all duration-300 ${widths[i]} ${
+                      isCore
+                        ? "border-[var(--accent-primary)]/30 bg-[var(--accent-primary)]/[0.06]"
+                        : isOuter
+                        ? "border-[var(--accent-primary)]/10 bg-[var(--surface)]/20"
+                        : "border-[var(--border)] bg-[var(--surface)]/30"
+                    }`}
+                  >
+                    <span className="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--accent-primary)]">
+                      {layer.title}
+                    </span>
+                    <p className="mt-1 text-sm text-[var(--text-secondary)]">
+                      {layer.description}
+                    </p>
+                  </div>
+                );
+              })}
+            </GSAPStaggerReveal>
           </Container>
         </Section>
 
-        {/* 7.2 — Analogias */}
-        <Section variant="compact" background="base">
+        {/* Insight + provocação */}
+        <HeadlineSlide background="surface">
+          <GSAPReveal>
+            <Provocation>{mapa.insight}</Provocation>
+            <p className="mt-6 font-display text-xl font-light text-[var(--accent-primary)]">
+              {mapa.provocacao}
+            </p>
+          </GSAPReveal>
+        </HeadlineSlide>
+
+        {/* ═══════════════════════════════════════════
+            CAP 07 — NA PRÁTICA
+            ═══════════════════════════════════════════ */}
+        <ChapterTransition
+          id="pratica"
+          number="07"
+          title={pratica.headline}
+        />
+
+        {/* Scenario comparison */}
+        <Section>
           <Container>
-            <GSAPReveal from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0, duration: 0.7 }}>
-              <SubHeading className="max-w-[30ch]">A equação se repete em qualquer contexto</SubHeading>
-            </GSAPReveal>
-            <div className="mt-8 grid gap-4 md:grid-cols-2">
+            <div className="grid gap-6 md:grid-cols-2">
+              <GSAPReveal>
+                <div className="h-full rounded-xl border border-emerald-500/20 bg-emerald-500/[0.03] p-8">
+                  <span className="text-[0.6rem] font-semibold uppercase tracking-[0.15em] text-emerald-400">
+                    {pratica.scenarios.positive.label}
+                  </span>
+                  <h3 className="mt-3 font-display text-xl font-light text-[var(--text)]">
+                    {pratica.scenarios.positive.title}
+                  </h3>
+                  <p className="mt-4 text-sm leading-relaxed text-[var(--text-secondary)]">
+                    {pratica.scenarios.positive.description}
+                  </p>
+                </div>
+              </GSAPReveal>
+              <GSAPReveal>
+                <div className="h-full rounded-xl border border-red-500/20 bg-red-500/[0.03] p-8">
+                  <span className="text-[0.6rem] font-semibold uppercase tracking-[0.15em] text-red-400">
+                    {pratica.scenarios.negative.label}
+                  </span>
+                  <h3 className="mt-3 font-display text-xl font-light text-[var(--text)]">
+                    {pratica.scenarios.negative.title}
+                  </h3>
+                  <p className="mt-4 text-sm leading-relaxed text-[var(--text-secondary)]">
+                    {pratica.scenarios.negative.description}
+                  </p>
+                </div>
+              </GSAPReveal>
+            </div>
+          </Container>
+        </Section>
+
+        {/* Insight */}
+        <HeadlineSlide align="center" background="surface">
+          <GSAPReveal>
+            <SectionHeading>
+              {pratica.insight}
+            </SectionHeading>
+          </GSAPReveal>
+        </HeadlineSlide>
+
+        {/* Analogies */}
+        <Section variant="default">
+          <Container>
+            <div className="grid gap-8 md:grid-cols-2">
               {pratica.analogias.map((a, i) => (
-                <GSAPReveal
-                  key={i}
-                  from={{ opacity: 0, y: 15 }}
-                  to={{ opacity: 1, y: 0, duration: 0.5, delay: i * 0.1 }}
-                  start="top 80%"
-                >
-                  <ComparisonSlider
-                    before={{
-                      label: "Experiência inapropriada",
-                      content: (
-                        <div className="space-y-2">
-                          <p className="text-sm font-semibold text-[var(--text)]">{a.contexto}</p>
-                          <p className="text-xs text-[var(--text-muted)]">{a.resultado}</p>
-                          <p className="text-sm text-[var(--text-secondary)]">{a.experienciaB}</p>
-                        </div>
-                      ),
-                    }}
-                    after={{
-                      label: "Experiência apropriada",
-                      content: (
-                        <div className="space-y-2">
-                          <p className="text-sm font-semibold text-[var(--text)]">{a.contexto}</p>
-                          <p className="text-xs text-[var(--text-muted)]">{a.resultado}</p>
-                          <p className="text-sm text-[var(--text-secondary)]">{a.experienciaA}</p>
-                        </div>
-                      ),
-                    }}
-                  />
-                </GSAPReveal>
-              ))}
-            </div>
-          </Container>
-        </Section>
-
-        {/* 7.3 — Workshop */}
-        <Section variant="compact" background="surface">
-          <Container size="narrow">
-            <WorkshopBlock
-              type={pratica.workshop.type}
-              question={pratica.workshop.question}
-              context={pratica.workshop.context}
-              timerMinutes={pratica.workshop.timerMinutes}
-            />
-          </Container>
-        </Section>
-
-        {/* ═══════════════════════════════════════════════════
-            CAP 8 — MATURIDADE
-            ═══════════════════════════════════════════════════ */}
-        <ChapterTransition id="maturidade" number="08" title="Maturidade" subtitle="De reativo a orquestrado" />
-
-        <Section background="base" variant="default">
-          <Container>
-            <GSAPReveal from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0, duration: 0.8 }}>
-              <Overline>{maturidade.overline}</Overline>
-              <SectionHeading className="mt-3 max-w-[22ch]">{maturidade.headline}</SectionHeading>
-            </GSAPReveal>
-
-            <div className="mt-14">
-              <Timeline
-                items={maturidade.stages.map((s) => ({
-                  id: s.id,
-                  label: s.label,
-                  title: s.title,
-                  description: s.description,
-                }))}
-              />
-            </div>
-          </Container>
-        </Section>
-
-        {/* 8.2 — Detail per level */}
-        {maturidade.stages.map((stage, i) => (
-          <ImageSplit
-            key={stage.id}
-            src={stage.image}
-            alt={stage.title}
-            imagePosition={i % 2 === 0 ? "right" : "left"}
-            imageRatio="narrow"
-            className={i % 2 === 0 ? "bg-[var(--surface)]" : "bg-[var(--bg)]"}
-          >
-            <GSAPReveal from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0, duration: 0.7 }}>
-              <span className="text-[0.6rem] font-bold uppercase tracking-[0.14em] text-[var(--accent-primary)]">{stage.label}</span>
-              <SubHeading className="mt-2">{stage.title}</SubHeading>
-              <p className="mt-3 text-sm text-[var(--text-secondary)]">{stage.description}</p>
-              <ul className="mt-4 space-y-2">
-                {stage.characteristics.map((c, j) => (
-                  <li key={j} className="flex items-start gap-2 text-sm text-[var(--text-secondary)]">
-                    <span className="mt-1 h-1 w-1 flex-shrink-0 rounded-full bg-[var(--accent-primary)]/40" />
-                    {c}
-                  </li>
-                ))}
-              </ul>
-            </GSAPReveal>
-          </ImageSplit>
-        ))}
-
-        {/* 8.3 — Workshop */}
-        <Section variant="compact" background="base">
-          <Container size="narrow">
-            <WorkshopBlock
-              type={maturidade.workshop.type}
-              question={maturidade.workshop.question}
-              instructions={maturidade.workshop.instructions}
-              timerMinutes={maturidade.workshop.timerMinutes}
-            />
-          </Container>
-        </Section>
-
-        {/* ═══════════════════════════════════════════════════
-            CAP 9 — REFERÊNCIAS
-            ═══════════════════════════════════════════════════ */}
-        <ChapterTransition id="referencias" number="09" title="Referências" subtitle="Quem está fazendo diferente" />
-
-        <Section background="surface" variant="default">
-          <Container>
-            <GSAPReveal from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0, duration: 0.8 }}>
-              <Overline>{referencias.overline}</Overline>
-              <SectionHeading className="mt-3 max-w-[22ch]">{referencias.headline}</SectionHeading>
-            </GSAPReveal>
-
-            <div className="mt-12 grid gap-8 md:grid-cols-3">
-              {referencias.cases.map((c, i) => (
-                <GSAPReveal
-                  key={i}
-                  from={{ opacity: 0, y: 25 }}
-                  to={{ opacity: 1, y: 0, duration: 0.6, delay: i * 0.1 }}
-                  start="top 78%"
-                >
-                  <div className="flex h-full flex-col">
-                    <span className="text-[0.6rem] font-bold uppercase tracking-[0.14em] text-[var(--text-muted)]">{c.sector}</span>
-                    <h3 className="mt-2 text-base font-semibold text-[var(--text)]">{c.title}</h3>
-                    <p className="mt-2 flex-1 text-sm leading-relaxed text-[var(--text-secondary)]">{c.insight}</p>
-                    <EvidenceBlock
-                      stat={`${c.metric.value}${c.metric.suffix}`}
-                      context={c.metric.label}
-                      className="mt-4"
-                    />
+                <GSAPReveal key={a.contexto}>
+                  <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)]/20 p-8">
+                    <span className="text-[0.6rem] font-semibold uppercase tracking-[0.12em] text-[var(--accent-primary)]">
+                      {a.contexto}
+                    </span>
+                    <p className="mt-2 text-sm text-[var(--text-muted)]">
+                      {a.resultado}
+                    </p>
+                    <div className="mt-4 grid grid-cols-2 gap-4">
+                      <div className="border-l-2 border-emerald-500/30 pl-3">
+                        <span className="text-[0.5rem] uppercase tracking-wider text-emerald-400">
+                          Volta
+                        </span>
+                        <p className="mt-1 text-sm text-[var(--text-secondary)]">
+                          {a.experienciaA}
+                        </p>
+                      </div>
+                      <div className="border-l-2 border-red-500/30 pl-3">
+                        <span className="text-[0.5rem] uppercase tracking-wider text-red-400">
+                          Nunca mais
+                        </span>
+                        <p className="mt-1 text-sm text-[var(--text-secondary)]">
+                          {a.experienciaB}
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </GSAPReveal>
               ))}
@@ -673,90 +539,171 @@ export default function EquacaoInvisivel() {
           </Container>
         </Section>
 
-        {/* ═══════════════════════════════════════════════════
-            WORKSHOP FINAL
-            ═══════════════════════════════════════════════════ */}
-        <PausePoint message="Workshop — Síntese e Compromissos" />
+        <WorkshopBlock {...pratica.workshop} />
 
-        <Section id="workshop" variant="default" background="base">
-          <Container size="narrow">
-            <GSAPReveal from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0, duration: 0.8 }}>
-              <FullBleedText className="text-[clamp(1.8rem,4vw,3rem)]">{workshopFinal.synthesis.headline}</FullBleedText>
-            </GSAPReveal>
+        {/* ═══════════════════════════════════════════
+            CAP 08 — MATURIDADE
+            ═══════════════════════════════════════════ */}
+        <ChapterTransition
+          id="maturidade"
+          number="08"
+          title={maturidade.headline}
+        />
 
-            <div className="mt-10 space-y-6">
-              {workshopFinal.synthesis.questions.map((q, i) => (
-                <GSAPReveal
-                  key={i}
-                  from={{ opacity: 0, y: 15 }}
-                  to={{ opacity: 1, y: 0, duration: 0.5, delay: i * 0.08 }}
-                  start="top 82%"
-                >
-                  <WorkshopBlock
-                    type={q.type}
-                    question={q.question}
-                    context={q.context}
-                    instructions={"instructions" in q ? q.instructions : undefined}
-                    timerMinutes={q.timerMinutes}
-                  />
+        {/* Maturity levels as progressive reveal */}
+        <Section variant="default">
+          <Container>
+            <div className="space-y-6">
+              {maturidade.stages.map((stage, i) => (
+                <GSAPReveal key={stage.id}>
+                  <div
+                    className={`group relative overflow-hidden rounded-xl border p-8 transition-all duration-300 ${
+                      i === maturidade.stages.length - 1
+                        ? "border-[var(--accent-primary)]/20 bg-[var(--accent-primary)]/[0.03]"
+                        : "border-[var(--border)] bg-[var(--surface)]/20 hover:bg-[var(--surface)]/40"
+                    }`}
+                  >
+                    <div className="flex items-start gap-6">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-[var(--accent-primary)]/20 bg-[var(--accent-primary)]/[0.05]">
+                        <span className="font-mono text-lg font-bold text-[var(--accent-primary)]">
+                          {i + 1}
+                        </span>
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3">
+                          <h3 className="font-display text-xl font-light text-[var(--text)]">
+                            {stage.title}
+                          </h3>
+                          <span className="text-[0.5rem] uppercase tracking-wider text-[var(--text-muted)]">
+                            {stage.label}
+                          </span>
+                        </div>
+                        <p className="mt-1 text-sm text-[var(--text-secondary)]">
+                          {stage.short}
+                        </p>
+                        <div className="mt-4 flex flex-wrap gap-2">
+                          {stage.characteristics.map((c) => (
+                            <span
+                              key={c}
+                              className="rounded-md bg-[var(--bg)]/50 px-2.5 py-1 text-[0.65rem] text-[var(--text-muted)]"
+                            >
+                              {c}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    {/* Progress line */}
+                    {i < maturidade.stages.length - 1 && (
+                      <div className="absolute bottom-0 left-[3.25rem] h-6 w-px -mb-6 bg-[var(--border)]" />
+                    )}
+                  </div>
                 </GSAPReveal>
               ))}
             </div>
           </Container>
         </Section>
 
-        {/* ═══════════════════════════════════════════════════
+        <WorkshopBlock {...maturidade.workshop} />
+
+        {/* ═══════════════════════════════════════════
+            CAP 09 — REFERÊNCIAS
+            ═══════════════════════════════════════════ */}
+        <ChapterTransition
+          id="referencias"
+          number="09"
+          title={referencias.headline}
+        />
+
+        <Section background="surface">
+          <Container>
+            <div className="grid gap-8 md:grid-cols-3">
+              {referencias.cases.map((c, i) => (
+                <GSAPReveal key={c.title}>
+                  <div className="flex h-full flex-col rounded-xl border border-[var(--border)] bg-[var(--bg)]/40 p-8">
+                    <span className="text-[0.55rem] font-semibold uppercase tracking-[0.12em] text-[var(--accent-primary)]/60">
+                      {c.sector}
+                    </span>
+                    <h3 className="mt-2 font-display text-lg font-light text-[var(--text)]">
+                      {c.title}
+                    </h3>
+                    <p className="mt-3 flex-1 text-sm leading-relaxed text-[var(--text-secondary)]">
+                      {c.insight}
+                    </p>
+                    <div className="mt-6 border-t border-[var(--border)] pt-4">
+                      <span className="font-mono text-2xl font-bold text-[var(--accent-primary)]">
+                        {c.metric.value}
+                        {c.metric.suffix}
+                      </span>
+                      <p className="mt-1 text-xs text-[var(--text-muted)]">
+                        {c.metric.label}
+                      </p>
+                    </div>
+                  </div>
+                </GSAPReveal>
+              ))}
+            </div>
+          </Container>
+        </Section>
+
+        {/* ═══════════════════════════════════════════
+            WORKSHOP FINAL
+            ═══════════════════════════════════════════ */}
+        <div id="workshop">
+          <HeadlineSlide align="center" background="surface">
+            <GSAPReveal>
+              <SectionHeading>
+                {workshopFinal.synthesis.headline}
+              </SectionHeading>
+            </GSAPReveal>
+          </HeadlineSlide>
+
+          {workshopFinal.synthesis.questions.map((q, i) => (
+            <WorkshopBlock
+              key={i}
+              type={q.type}
+              question={q.question}
+              context={q.context}
+              instructions={"instructions" in q ? q.instructions : undefined}
+              timerMinutes={q.timerMinutes}
+            />
+          ))}
+        </div>
+
+        {/* ═══════════════════════════════════════════
             FECHAMENTO — Cinematic close
-            ═══════════════════════════════════════════════════ */}
+            ═══════════════════════════════════════════ */}
         <ImageHero
           id="fechamento"
           src={fechamento.closingImage}
-          alt="Reflexão final"
-          overlay="dark"
-          height="tall"
+          alt="Fechamento"
+          overlay="cyan"
+          height="full"
         >
           <Container size="wide">
-            <ParallaxLayer speed={0.2}>
-              <GSAPReveal from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0, duration: 1.2 }}>
-                <FullBleedText className="max-w-[18ch]">{fechamento.headline}</FullBleedText>
-              </GSAPReveal>
-            </ParallaxLayer>
+            <div className="max-w-[700px]">
+              <ScrollReveal direction="left" delay={0.3}>
+                <DisplayHeading>
+                  {fechamento.headline}{" "}
+                  <AccentText>{fechamento.headlineAccent}</AccentText>
+                </DisplayHeading>
+              </ScrollReveal>
+
+              <ScrollReveal delay={0.7}>
+                <p className="mt-8 max-w-[44ch] font-display text-xl font-light leading-relaxed text-[var(--text-secondary)]">
+                  {fechamento.provocation}
+                </p>
+              </ScrollReveal>
+
+              <ScrollReveal delay={1}>
+                <div className="mt-12 h-px w-32 bg-gradient-to-r from-[var(--accent-primary)] to-transparent" />
+                <p className="mt-4 text-[0.6rem] uppercase tracking-[0.15em] text-[var(--text-muted)]">
+                  CX Experience Lab — Diretoria de Qualidade e Dados
+                </p>
+              </ScrollReveal>
+            </div>
           </Container>
         </ImageHero>
-
-        <Section variant="default" background="surface">
-          <Container size="wide">
-            <SplitContent
-              ratio="wide-left"
-              left={
-                <GSAPStaggerReveal staggerAmount={0.07}>
-                  {fechamento.insights.map((insight, i) => (
-                    <div key={i} className="flex gap-4 border-b border-[var(--border)] py-4 last:border-0">
-                      <span className="font-mono text-xs font-bold text-[var(--accent-primary)]/25">{String(i + 1).padStart(2, "0")}</span>
-                      <p className="text-sm leading-relaxed text-[var(--text-secondary)]">{insight}</p>
-                    </div>
-                  ))}
-                </GSAPStaggerReveal>
-              }
-              right={
-                <GSAPReveal from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0, duration: 0.8 }} start="top 72%">
-                  <div className="border-l-2 border-[var(--accent-primary)]/15 pl-6">
-                    <BodyText className="font-display text-lg text-[var(--text)]">{fechamento.provocation}</BodyText>
-                  </div>
-                </GSAPReveal>
-              }
-            />
-          </Container>
-        </Section>
-
-        {/* Footer */}
-        <footer className="border-t border-[var(--border)] bg-[var(--bg)] py-8">
-          <Container className="text-center">
-            <p className="text-xs text-[var(--text-muted)]">
-              CX Experience Lab — Diretoria de Qualidade e Dados — AeC
-            </p>
-          </Container>
-        </footer>
       </PresentationShell>
     </WorkshopLayout>
   );
