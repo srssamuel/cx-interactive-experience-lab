@@ -122,13 +122,13 @@ export function ComparisonCard({
 }: ComparisonCardProps) {
   const accentStyles = {
     positive: {
-      border: "border-l-emerald-500",
-      label: "text-emerald-400",
+      border: "border-l-[var(--success)]",
+      label: "text-[var(--success)]",
       icon: "✓",
     },
     negative: {
-      border: "border-l-rose-500",
-      label: "text-rose-400",
+      border: "border-l-[var(--danger)]",
+      label: "text-[var(--danger)]",
       icon: "✗",
     },
     neutral: {

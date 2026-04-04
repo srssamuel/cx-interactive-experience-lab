@@ -225,7 +225,7 @@ export function KeyboardHUD({ chapters, title, className }: KeyboardHUDProps) {
         <span className={cn(
           "text-[0.5rem] font-semibold uppercase tracking-[0.2em]",
           mode === "presentation" ? "text-[var(--accent-warm)]" :
-          mode === "workshop" ? "text-emerald-500" :
+          mode === "workshop" ? "text-[var(--success)]" :
           "text-[var(--text-muted)]/30"
         )}>
           {mode === "presentation" ? "Palco" : mode === "workshop" ? "Workshop" : "Leitura"}

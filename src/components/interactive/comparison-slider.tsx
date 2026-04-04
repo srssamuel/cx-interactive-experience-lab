@@ -77,7 +77,7 @@ export function ComparisonSlider({
       {/* Before side (full width, clipped) */}
       <div className="relative min-h-[300px] w-full bg-[var(--surface)]">
         <div className="absolute inset-0 p-8">
-          <span className="inline-block rounded-md bg-rose-500/10 px-3 py-1 text-[0.65rem] font-bold uppercase tracking-[0.12em] text-rose-400">
+          <span className="inline-block rounded-md bg-[var(--danger)]/10 px-3 py-1 text-[0.65rem] font-bold uppercase tracking-[0.12em] text-[var(--danger)]">
             {before.label}
           </span>
           <div className="mt-4">{before.content}</div>
@@ -90,7 +90,7 @@ export function ComparisonSlider({
         style={{ clipPath: `inset(0 0 0 ${position}%)` }}
       >
         <div className="p-8">
-          <span className="inline-block rounded-md bg-emerald-500/10 px-3 py-1 text-[0.65rem] font-bold uppercase tracking-[0.12em] text-emerald-400">
+          <span className="inline-block rounded-md bg-[var(--success)]/10 px-3 py-1 text-[0.65rem] font-bold uppercase tracking-[0.12em] text-[var(--success)]">
             {after.label}
           </span>
           <div className="mt-4">{after.content}</div>

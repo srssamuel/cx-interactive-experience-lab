@@ -23,10 +23,10 @@ interface WorkshopBlockProps {
 
 const typeConfig: Record<WorkshopBlockType, { label: string; icon: string; color: string }> = {
   reflection: { label: "Reflexão Individual", icon: "◉", color: "text-[var(--accent-primary)]" },
-  discussion: { label: "Discussão em Grupo", icon: "◎", color: "text-emerald-400" },
-  application: { label: "Aplicação ao Time", icon: "▸", color: "text-sky-400" },
-  executive: { label: "Pergunta Executiva", icon: "◆", color: "text-amber-400" },
-  practice: { label: "Exercício Prático", icon: "⬡", color: "text-violet-400" },
+  discussion: { label: "Discussão em Grupo", icon: "◎", color: "text-[var(--success)]" },
+  application: { label: "Aplicação ao Time", icon: "▸", color: "text-[var(--accent-secondary)]" },
+  executive: { label: "Pergunta Executiva", icon: "◆", color: "text-[var(--warning)]" },
+  practice: { label: "Exercício Prático", icon: "⬡", color: "text-[var(--accent-primary)]" },
 };
 
 export function WorkshopBlock({
@@ -135,7 +135,7 @@ function InlineTimer({ minutes }: { minutes: number }) {
     <div className="flex items-center gap-3">
       <span className={cn(
         "font-mono text-lg tabular-nums",
-        isLow ? "text-rose-400" : "text-[var(--text)]"
+        isLow ? "text-[var(--danger)]" : "text-[var(--text)]"
       )}>
         {String(mins).padStart(2, "0")}:{String(secs).padStart(2, "0")}
       </span>
