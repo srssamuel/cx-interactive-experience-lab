@@ -33,7 +33,7 @@ export function CapParadoxo() {
                   from={{ opacity: 0, x: isFirst ? -30 : 30 }}
                   to={{ opacity: 1, x: 0, duration: 0.8, delay: i * 0.15, ease: "power3.out" }}
                 >
-                  <div className={`h-full rounded-xl border p-8 md:p-10 ${
+                  <div data-float className={`h-full rounded-xl border p-8 md:p-10 ${
                     isFirst
                       ? "border-[var(--danger)]/15 bg-[var(--danger)]/[0.03]"
                       : "border-[var(--success)]/15 bg-[var(--success)]/[0.03]"

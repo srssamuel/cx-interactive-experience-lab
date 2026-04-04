@@ -164,6 +164,13 @@ export function KeyboardHUD({ chapters, title, className }: KeyboardHUDProps) {
           setTimerActive((v) => !v);
           break;
         }
+        case "z":
+        case "Z": {
+          if (e.ctrlKey || e.metaKey) return;
+          e.preventDefault();
+          window.dispatchEvent(new CustomEvent("antigravity:toggle"));
+          break;
+        }
         case "Escape": {
           if (showGrid) { setShowGrid(false); break; }
           if (showHelp) { setShowHelp(false); break; }
@@ -370,6 +377,7 @@ export function KeyboardHUD({ chapters, title, className }: KeyboardHUDProps) {
                   ["R", "Modo leitura"],
                   ["F", "Tela cheia"],
                   ["T", "Timer (workshop)"],
+                  ["Z", "Antigravidade"],
                   ["Esc", "Fechar / voltar"],
                   ["?", "Atalhos"],
                 ].map(([key, label]) => (

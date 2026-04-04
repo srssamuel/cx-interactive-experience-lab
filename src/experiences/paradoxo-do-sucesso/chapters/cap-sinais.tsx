@@ -41,7 +41,7 @@ export function CapSinais() {
                     style={{ borderLeft: `${borderWidth} solid ${color}` }}
                   >
                     <div className="flex items-center gap-3">
-                      <h3 className="font-display text-lg font-light text-[var(--text)]">
+                      <h3 data-float className="font-display text-lg font-light text-[var(--text)]">
                         {item.signal}
                       </h3>
                       <span

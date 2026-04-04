@@ -1,6 +1,7 @@
 "use client";
 
-import { Section, Container, FullBleedText } from "@/components/design-system";
+import dynamic from "next/dynamic";
+import { Section, Container, FullBleedText, StatNumber, StatLabel } from "@/components/design-system";
 import { WorkshopBlock } from "@/components/workshop/workshop-block";
 import { GSAPReveal, GSAPCounter } from "@/components/motion/gsap-reveal";
 import { BlurReveal } from "@/components/motion/text-reveal";
@@ -10,6 +11,11 @@ import {
 } from "@/components/cinematic/headline-slide";
 import { motion } from "framer-motion";
 import { custoSilencio } from "../content";
+
+const GlowingOrb = dynamic(
+  () => import("@/components/cinematic/glowing-orb").then((m) => m.GlowingOrb),
+  { ssr: false }
+);
 
 /**
  * O CUSTO DO SILÊNCIO — The emotional peak.
@@ -24,6 +30,12 @@ export function CapCustoSilencio() {
 
       <DataSpectacle accent>
         <div className="relative flex flex-col items-center text-center">
+          {/* 3D orb — ambient depth behind the big number */}
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-40">
+            <div className="h-[320px] w-[320px]">
+              <GlowingOrb />
+            </div>
+          </div>
           {/* Pulsing concentric rings — bespoke visual ornament */}
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
             {[1, 2, 3].map((ring) => (
@@ -67,11 +79,11 @@ export function CapCustoSilencio() {
             {custoSilencio.stats.map((stat, i) => (
               <GSAPReveal key={stat.label} from={{ opacity: 0, y: 25 }} to={{ opacity: 1, y: 0, duration: 0.7, delay: i * 0.12, ease: "power3.out" }}>
                 <div className="text-center">
-                  <span className="font-mono text-[clamp(2rem,4vw,3rem)] font-bold text-[var(--accent-primary)]">
+                  <StatNumber>
                     <GSAPCounter value={stat.value} />
                     {stat.suffix}
-                  </span>
-                  <p className="mt-1 text-sm font-medium text-[var(--text)]">{stat.label}</p>
+                  </StatNumber>
+                  <StatLabel className="mt-1 block">{stat.label}</StatLabel>
                   <p className="mt-2 text-xs text-[var(--text-muted)]">{stat.context}</p>
                 </div>
               </GSAPReveal>

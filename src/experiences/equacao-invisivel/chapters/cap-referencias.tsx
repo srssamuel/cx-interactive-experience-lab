@@ -1,6 +1,6 @@
 "use client";
 
-import { Section, Container, NumberedCard } from "@/components/design-system";
+import { Section, Container, ExpandableCard } from "@/components/design-system";
 import { GSAPReveal, GSAPCounter } from "@/components/motion/gsap-reveal";
 import { ChapterTransition } from "@/components/cinematic/headline-slide";
 import { referencias } from "../content";
@@ -49,25 +49,26 @@ export function CapReferencias() {
           <div className="grid gap-8 md:grid-cols-2">
             {restCases.map((c, i) => (
               <GSAPReveal key={c.title} from={{ opacity: 0, y: 25 }} to={{ opacity: 1, y: 0, duration: 0.7, delay: i * 0.1, ease: "power3.out" }}>
-                <div className="flex h-full flex-col justify-between">
-                  <div>
-                    <span className="text-[0.55rem] font-semibold uppercase tracking-[0.12em] text-[var(--text-muted)]">
-                      {c.sector}
-                    </span>
-                    <h3 className="mt-2 font-display text-lg font-light text-[var(--text)]">
-                      {c.title}
-                    </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)]">
-                      {c.insight}
-                    </p>
-                  </div>
-                  <div className="mt-6 border-t border-[var(--border)] pt-4">
-                    <span className="font-mono text-2xl font-bold text-[var(--accent-primary)]">
-                      {c.metric.value}{c.metric.suffix}
-                    </span>
-                    <p className="mt-1 text-xs text-[var(--text-muted)]">{c.metric.label}</p>
-                  </div>
-                </div>
+                <ExpandableCard
+                  expandedContent={
+                    <div className="mt-2">
+                      <span className="font-mono text-2xl font-bold text-[var(--accent-primary)]">
+                        {c.metric.value}{c.metric.suffix}
+                      </span>
+                      <p className="mt-1 text-xs text-[var(--text-muted)]">{c.metric.label}</p>
+                    </div>
+                  }
+                >
+                  <span className="text-[0.55rem] font-semibold uppercase tracking-[0.12em] text-[var(--text-muted)]">
+                    {c.sector}
+                  </span>
+                  <h3 className="mt-2 font-display text-lg font-light text-[var(--text)]">
+                    {c.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)]">
+                    {c.insight}
+                  </p>
+                </ExpandableCard>
               </GSAPReveal>
             ))}
           </div>

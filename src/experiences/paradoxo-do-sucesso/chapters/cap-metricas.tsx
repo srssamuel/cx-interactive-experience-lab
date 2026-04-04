@@ -1,6 +1,6 @@
 "use client";
 
-import { Section, Container } from "@/components/design-system";
+import { Section, Container, SubHeading } from "@/components/design-system";
 import { GSAPReveal } from "@/components/motion/gsap-reveal";
 import { BlurReveal } from "@/components/motion/text-reveal";
 import {
@@ -67,9 +67,9 @@ export function CapMetricas() {
             {metricas.real.map((r, i) => (
               <GSAPReveal key={r.metric} from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0, duration: 0.7, delay: i * 0.12, ease: "power3.out" }}>
                 <div className="border-l-3 border-[var(--accent-primary)]/30 pl-6" style={{ borderLeftWidth: "3px" }}>
-                  <h4 className="font-display text-xl font-light text-[var(--accent-primary)]">
+                  <SubHeading className="text-[var(--accent-primary)]">
                     {r.metric}
-                  </h4>
+                  </SubHeading>
                   <p className="mt-2 text-[0.95rem] leading-relaxed text-[var(--text-secondary)]">
                     {r.insight}
                   </p>

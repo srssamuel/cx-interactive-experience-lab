@@ -1,7 +1,7 @@
 "use client";
 
 import { Container } from "@/components/design-system";
-import { GSAPReveal } from "@/components/motion/gsap-reveal";
+import { GSAPReveal, GSAPParallax } from "@/components/motion/gsap-reveal";
 import { BlurReveal } from "@/components/motion/text-reveal";
 import { GrainOverlay } from "@/components/cinematic/headline-slide";
 import { fechamento } from "../content";
@@ -19,7 +19,9 @@ export function FechamentoChapter() {
       className="relative flex min-h-screen items-center justify-center overflow-hidden"
     >
       <div className="absolute inset-0 bg-[var(--bg)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(var(--accent-primary-rgb),0.03)_0%,transparent_60%)]" />
+      <GSAPParallax speed={-30}>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(var(--accent-primary-rgb),0.03)_0%,transparent_60%)]" />
+      </GSAPParallax>
       <GrainOverlay opacity={0.02} />
 
       <Container size="narrow">

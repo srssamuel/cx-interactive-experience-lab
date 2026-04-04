@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import {
   DisplayHeading,
   BodyText,
@@ -14,6 +15,11 @@ import { TextReveal } from "@/components/motion/text-reveal";
 import { GrainOverlay } from "@/components/cinematic/headline-slide";
 import { hero } from "../content";
 
+const ParticleField = dynamic(
+  () => import("@/components/cinematic/particle-field").then((m) => m.ParticleField),
+  { ssr: false }
+);
+
 export function HeroChapter() {
   return (
     <HeroSection
@@ -23,6 +29,9 @@ export function HeroChapter() {
       backgroundElement={
         <>
           <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg)] via-[var(--bg)] to-[var(--surface)]/40" />
+          <div className="absolute inset-0 opacity-30">
+            <ParticleField color="var(--accent-primary)" count={300} />
+          </div>
           <GrainOverlay opacity={0.02} />
         </>
       }

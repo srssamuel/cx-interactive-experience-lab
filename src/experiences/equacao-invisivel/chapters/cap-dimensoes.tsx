@@ -28,7 +28,7 @@ export function CapDimensoes() {
               >
                 <GSAPReveal from={{ opacity: 0, y: 25 }} to={{ opacity: 1, y: 0, duration: 0.7, delay: i * 0.08, ease: "power3.out" }}>
                   <TiltCard maxTilt={6} glare className="h-full">
-                    <div className={`relative h-full overflow-hidden rounded-xl border border-[var(--border)] p-8 ${
+                    <div data-float className={`relative h-full overflow-hidden rounded-xl border border-[var(--border)] p-8 ${
                       i === 0
                         ? "bg-[var(--accent-primary)]/[0.03] md:p-10"
                         : "bg-[var(--surface)]/20"

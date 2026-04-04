@@ -1,6 +1,6 @@
 "use client";
 
-import { SectionHeading, Section, Container } from "@/components/design-system";
+import { SectionHeading, Section, Container, PullQuote } from "@/components/design-system";
 import { WorkshopBlock } from "@/components/workshop/workshop-block";
 import { GSAPReveal } from "@/components/motion/gsap-reveal";
 import { ComparisonSlider } from "@/components/interactive/comparison-slider";
@@ -57,13 +57,11 @@ export function CapPratica() {
             />
           </GSAPReveal>
 
-          {/* Insight inline — accent border quote */}
+          {/* Insight inline — PullQuote component */}
           <GSAPReveal from={{ opacity: 0, y: 15 }} to={{ opacity: 1, y: 0, duration: 0.7, delay: 0.15, ease: "power3.out" }}>
-            <div className="mt-12 border-l-2 border-[var(--accent-primary)]/30 pl-6">
-              <p className="font-display text-lg font-light italic leading-[1.5] text-[var(--text)]">
-                {pratica.insight}
-              </p>
-            </div>
+            <PullQuote className="mt-12 py-6">
+              {pratica.insight}
+            </PullQuote>
           </GSAPReveal>
         </Container>
       </Section>

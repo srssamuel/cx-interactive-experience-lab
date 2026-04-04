@@ -2,7 +2,7 @@
 
 import { Section, Container } from "@/components/design-system";
 import { GSAPReveal } from "@/components/motion/gsap-reveal";
-import { ScrollReveal } from "@/components/motion/scroll-reveal";
+import { ScrollReveal, ParallaxLayer } from "@/components/motion/scroll-reveal";
 import { ChapterTransition } from "@/components/cinematic/headline-slide";
 import { mapa } from "../content";
 
@@ -16,7 +16,9 @@ export function CapMapa() {
       <ChapterTransition id="mapa" number="06" title={mapa.headline} />
 
       <Section variant="immersive" className="relative">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(var(--accent-primary-rgb),0.04)_0%,transparent_55%)]" />
+        <ParallaxLayer speed={0.3} className="absolute inset-0">
+          <div className="h-full w-full bg-[radial-gradient(ellipse_at_center,rgba(var(--accent-primary-rgb),0.04)_0%,transparent_55%)]" />
+        </ParallaxLayer>
         <Container size="narrow">
           <div className="flex flex-col items-center gap-3 py-12">
             {mapa.layers.map((layer, i) => {

@@ -29,7 +29,7 @@ export function CapMitos() {
                       <span className="font-mono text-[0.6rem] text-[var(--text-muted)]">
                         {String(i + 1).padStart(2, "0")} / {String(myths.items.length).padStart(2, "0")}
                       </span>
-                      <h3 className="mt-3 font-display text-[clamp(1.6rem,3.5vw,2.8rem)] font-light leading-[1.05] tracking-[-0.03em] text-[var(--text)]">
+                      <h3 data-float className="mt-3 font-display text-[clamp(1.6rem,3.5vw,2.8rem)] font-light leading-[1.05] tracking-[-0.03em] text-[var(--text)]">
                         &ldquo;{item.myth}&rdquo;
                       </h3>
                     </div>

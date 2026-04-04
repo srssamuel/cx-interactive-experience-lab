@@ -2,6 +2,7 @@
 
 import { Section, Container } from "@/components/design-system";
 import { GSAPReveal } from "@/components/motion/gsap-reveal";
+import { StaggerGroup } from "@/components/motion/scroll-reveal";
 import { Tabs } from "@/components/interactive/tabs";
 import { ChapterTransition } from "@/components/cinematic/headline-slide";
 import { forma } from "../content";
@@ -28,14 +29,14 @@ export function CapForma() {
               id: `forma-${i}`,
               label: d.title,
               content: (
-                <div className="py-6">
+                <StaggerGroup staggerDelay={0.06} className="py-6">
                   <h3 className="font-display text-xl font-light text-[var(--accent-primary)]">
                     {d.question}
                   </h3>
                   <p className="mt-3 max-w-[48ch] text-[0.95rem] leading-relaxed text-[var(--text-secondary)]">
                     {d.answer}
                   </p>
-                </div>
+                </StaggerGroup>
               ),
             }))}
           />

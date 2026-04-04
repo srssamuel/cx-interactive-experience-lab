@@ -4,6 +4,7 @@ import { useRef, useEffect, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -33,13 +34,13 @@ export function GSAPReveal({
 }: GSAPRevealProps) {
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  useGSAP(() => {
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
     if (prefersReducedMotion || !ref.current) return;
 
-    const tween = gsap.fromTo(ref.current, from, {
+    gsap.fromTo(ref.current, from, {
       ...to,
       scrollTrigger: {
         trigger: ref.current,
@@ -50,12 +51,7 @@ export function GSAPReveal({
         toggleActions: scrub ? undefined : "play none none none",
       },
     });
-
-    return () => {
-      tween.scrollTrigger?.kill();
-      tween.kill();
-    };
-  }, [from, to, scrub, pin, start, end]);
+  }, { scope: ref, dependencies: [from, to, scrub, pin, start, end] });
 
   return (
     <div ref={ref} className={cn(className)}>
