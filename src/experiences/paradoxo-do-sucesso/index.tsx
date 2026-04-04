@@ -13,7 +13,6 @@ import {
   ChapterDivider,
   Card,
   ComparisonCard,
-  NumberedCard,
 } from "@/components/design-system";
 import { ChapterNav } from "@/components/navigation/chapter-nav";
 import { ModeIndicator } from "@/components/navigation/mode-indicator";

@@ -21,7 +21,7 @@ import { ModeIndicator } from "@/components/navigation/mode-indicator";
 import { PresentationShell } from "@/components/navigation/presentation-shell";
 import { WorkshopLayout } from "@/components/workshop/workshop-layout";
 import { ScrollReveal, ParallaxLayer } from "@/components/motion/scroll-reveal";
-import { GSAPReveal, GSAPStaggerReveal, GSAPParallax, GSAPCounter } from "@/components/motion/gsap-reveal";
+import { GSAPReveal, GSAPStaggerReveal, GSAPCounter } from "@/components/motion/gsap-reveal";
 import { Tabs } from "@/components/interactive/tabs";
 import { Timeline } from "@/components/interactive/timeline";
 import { DiscussionPrompt, PausePoint } from "@/components/workshop/discussion-prompt";
