@@ -27,6 +27,10 @@ const experiences: Record<string, { component: React.ComponentType; title: strin
   },
 };
 
+export async function generateStaticParams() {
+  return Object.keys(experiences).map((slug) => ({ slug }));
+}
+
 interface PageProps {
   params: Promise<{ slug: string }>;
 }

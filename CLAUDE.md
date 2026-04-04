@@ -103,9 +103,9 @@ Cada arquivo em `/skills` é um modo especialista. Ative os relevantes conforme 
 | `content-curator` | Na fase de pesquisa e seleção de conteúdo |
 | `copy-polish-ptbr` | Na fase final de refinamento do texto |
 | `future-trends` | Quando o material precisa de visão de futuro |
-| `quality-gates` | Última etapa antes de entregar |
+| `final-quality-review` | Última etapa antes de entregar |
 
-**Fluxo típico**: `content-curator` → `executive-storytelling` → skill de domínio → `interactive-learning-design` → `cinematic-motion` → `premium-design-system` → `experience-builder` → `asset-direction` → `microinteraction-designer` → `copy-polish-ptbr` → `quality-gates`
+**Fluxo típico**: `content-curator` → `executive-storytelling` → skill de domínio → `interactive-learning-design` → `cinematic-motion` → `premium-design-system` → `experience-builder` → `asset-direction` → `microinteraction-designer` → `copy-polish-ptbr` → `final-quality-review`
 
 ---
 
