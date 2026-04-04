@@ -55,7 +55,7 @@ export function CapEquacao() {
                 <span className="font-mono text-4xl font-bold text-[var(--accent-primary)]/40 md:text-5xl">
                   =
                 </span>
-                <div className="rounded-lg border border-[var(--accent-primary)]/25 bg-[var(--accent-primary)]/[0.06] px-8 py-5 shadow-[0_0_40px_rgba(var(--accent-primary-rgb),0.06)]">
+                <div data-float className="rounded-lg border border-[var(--accent-primary)]/25 bg-[var(--accent-primary)]/[0.06] px-8 py-5 shadow-[0_0_40px_rgba(var(--accent-primary-rgb),0.06)]">
                   <TextReveal
                     text={equation.conclusion}
                     tag="span"

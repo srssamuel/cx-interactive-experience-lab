@@ -1,6 +1,6 @@
 "use client";
 
-import { SectionHeading, Section, Container, PullQuote } from "@/components/design-system";
+import { Section, Container, PullQuote } from "@/components/design-system";
 import { WorkshopBlock } from "@/components/workshop/workshop-block";
 import { GSAPReveal } from "@/components/motion/gsap-reveal";
 import { ComparisonSlider } from "@/components/interactive/comparison-slider";
@@ -72,7 +72,7 @@ export function CapPratica() {
           <div className="space-y-16 md:space-y-20">
             {pratica.analogias.map((a, i) => (
               <GSAPReveal key={a.contexto} from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0, duration: 0.7, delay: 0.05, ease: "power3.out" }}>
-                <div className="grid items-start gap-8 md:grid-cols-[180px_1fr_1fr]">
+                <div data-float className="grid items-start gap-8 md:grid-cols-[180px_1fr_1fr]">
                   <div>
                     <span className="text-[0.6rem] font-semibold uppercase tracking-[0.12em] text-[var(--accent-primary)]">
                       {a.contexto}

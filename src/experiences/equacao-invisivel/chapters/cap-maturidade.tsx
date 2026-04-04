@@ -33,6 +33,7 @@ export function CapMaturidade() {
                   to={{ opacity: 1, y: 0, scale: 1, duration: 0.7, delay: i * 0.1, ease: "power3.out" }}
                 >
                   <div
+                    data-float
                     className={`group relative h-full overflow-hidden rounded-xl border transition-all duration-300 ${
                       isLast
                         ? "border-[var(--accent-primary)]/25 bg-[var(--accent-primary)]/[0.05] shadow-[0_0_40px_rgba(var(--accent-primary-rgb),0.05)]"

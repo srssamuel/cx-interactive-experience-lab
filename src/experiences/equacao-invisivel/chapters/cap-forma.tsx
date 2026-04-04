@@ -23,6 +23,7 @@ export function CapForma() {
 
       <Section background="surface">
         <Container>
+          <div data-float>
           <Tabs
             variant="underline"
             tabs={forma.dimensions.map((d, i) => ({
@@ -40,6 +41,7 @@ export function CapForma() {
               ),
             }))}
           />
+          </div>
 
           {/* Insight as inline accent — not a full-viewport HeadlineSlide */}
           <GSAPReveal from={{ opacity: 0, y: 15 }} to={{ opacity: 1, y: 0, duration: 0.7, delay: 0.1, ease: "power3.out" }}>

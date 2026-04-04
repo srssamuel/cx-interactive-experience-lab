@@ -39,7 +39,7 @@ export function CapJornada() {
                       <div className="absolute left-6 top-6 hidden h-3 w-3 -translate-x-1/2 rounded-full border-2 border-[var(--accent-primary)]/30 bg-[var(--bg)] md:left-1/2 md:block" />
 
                       {/* Content side */}
-                      <div className={`${isEven ? "md:pr-16 md:text-right" : "md:pl-16"}`} style={{ direction: "ltr" }}>
+                      <div data-float className={`${isEven ? "md:pr-16 md:text-right" : "md:pl-16"}`} style={{ direction: "ltr" }}>
                         <span className="font-mono text-[0.6rem] font-medium text-[var(--text-muted)]">
                           Fase {String(i + 1).padStart(2, "0")}
                         </span>

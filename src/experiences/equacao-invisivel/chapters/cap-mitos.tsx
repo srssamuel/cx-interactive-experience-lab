@@ -2,7 +2,6 @@
 
 import { Section, Container } from "@/components/design-system";
 import { GSAPReveal } from "@/components/motion/gsap-reveal";
-import { BlurReveal } from "@/components/motion/text-reveal";
 import { ChapterTransition } from "@/components/cinematic/headline-slide";
 import { myths } from "../content";
 

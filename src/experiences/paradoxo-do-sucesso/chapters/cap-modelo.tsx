@@ -54,7 +54,7 @@ export function CapModelo() {
                       </MagneticElement>
 
                       {/* Content — alternates sides */}
-                      <div className={`pl-12 md:pl-0 ${isEven ? "md:pr-16 md:text-right" : "md:col-start-2 md:pl-16"}`}>
+                      <div data-float className={`pl-12 md:pl-0 ${isEven ? "md:pr-16 md:text-right" : "md:col-start-2 md:pl-16"}`}>
                         <span className={`text-[0.5rem] uppercase tracking-wider ${
                           isLast ? "text-[var(--accent-primary)]" : "text-[var(--text-muted)]"
                         }`}>

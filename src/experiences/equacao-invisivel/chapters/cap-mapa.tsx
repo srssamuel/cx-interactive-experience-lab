@@ -30,6 +30,7 @@ export function CapMapa() {
               return (
                 <ScrollReveal key={layer.title} delay={i * 0.12} direction="up">
                   <div
+                    data-float
                     className={`rounded-lg border px-6 py-5 text-center transition-all duration-500 hover:scale-[1.02] ${
                       isCore
                         ? "border-[var(--accent-primary)]/30 bg-[var(--accent-primary)]/[0.08] shadow-[0_0_40px_rgba(var(--accent-primary-rgb),0.06)]"
