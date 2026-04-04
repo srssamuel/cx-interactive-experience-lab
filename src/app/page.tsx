@@ -4,90 +4,153 @@ import { cn } from "@/lib/cn";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import dynamic from "next/dynamic";
+
+const ParticleField = dynamic(
+  () =>
+    import("@/components/cinematic/particle-field").then(
+      (mod) => mod.ParticleField
+    ),
+  { ssr: false }
+);
 
 const experiences = [
   {
     slug: "equacao-invisivel",
     title: "A Equação Invisível",
-    subtitle: "Customer Experience Reimaginado",
+    subtitle: "Customer Experience",
     description:
       "Resultado esperado + Experiência apropriada = Sucesso do cliente. A equação que separa retenção de abandono silencioso.",
-    chapters: 7,
-    readTime: "12 min",
-    tags: ["CX", "Experiência", "Retenção"],
+    chapters: 11,
+    readTime: "15 min",
+    workshopTime: "1h30",
+    tags: ["CX", "Experiência", "Retenção", "Workshop"],
     accent: "#F59E0B",
+    image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&q=80",
+    status: "live" as const,
+  },
+  {
+    slug: "paradoxo-do-sucesso",
+    title: "O Paradoxo do Sucesso",
+    subtitle: "Customer Success",
+    description:
+      "Renovação não é lealdade. Cliente ativo não é cliente saudável. O paradoxo que separa retenção real de inércia disfarçada.",
+    chapters: 8,
+    readTime: "12 min",
+    workshopTime: "1h",
+    tags: ["CS", "Retenção", "Churn", "Workshop"],
+    accent: "#0D9488",
+    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80",
+    status: "live" as const,
   },
 ];
 
 export default function Portal() {
   return (
     <main className="min-h-screen bg-[var(--bg)]">
-      {/* Hero */}
-      <section className="relative flex min-h-[70vh] flex-col items-center justify-center overflow-hidden px-6 text-center">
-        {/* Ambient gradient */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,var(--accent-primary)/0.04,transparent_60%)]" />
+      {/* ─── HERO ─── */}
+      <section className="relative flex min-h-screen items-end overflow-hidden pb-20 md:pb-28">
+        {/* Background layers */}
+        <div className="absolute inset-0 opacity-10">
+          <ParticleField count={250} color="#F59E0B" />
+        </div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(245,158,11,0.04)_0%,transparent_50%)]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-[var(--bg)]/30 to-transparent" />
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="relative z-10"
-        >
-          <span className="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.15em] text-[var(--accent-primary)]">
-            <span className="h-px w-8 bg-current opacity-40" />
-            CX Experience Lab
-            <span className="h-px w-8 bg-current opacity-40" />
-          </span>
+        {/* Grain */}
+        <div
+          className="pointer-events-none absolute inset-0 z-[2] opacity-[0.025] mix-blend-overlay"
+          style={{
+            backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")",
+          }}
+        />
 
-          <h1 className="mx-auto mt-6 max-w-[20ch] font-display text-[clamp(2.5rem,6vw,5rem)] leading-[0.95] tracking-[-0.04em] text-[var(--text)]">
-            Experiências digitais que{" "}
-            <span className="text-[var(--accent-primary)]">
-              transformam como você vê o problema
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <span className="inline-flex items-center gap-3 text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-[var(--accent-primary)]">
+              <span className="h-px w-8 bg-current opacity-40" />
+              CX Experience Lab
             </span>
-          </h1>
 
-          <p className="mx-auto mt-6 max-w-[50ch] text-lg leading-relaxed text-[var(--text-secondary)]">
-            Artefatos interativos de alto impacto para workshop, apresentação
-            executiva e posicionamento estratégico.
-          </p>
-        </motion.div>
+            <h1 className="mt-6 max-w-[14ch] font-display text-[clamp(2.8rem,8vw,6.5rem)] font-light leading-[0.88] tracking-[-0.05em] text-[var(--text)]">
+              Experiências digitais{" "}
+              <span className="text-[var(--accent-primary)]">premium</span>
+            </h1>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8, duration: 1 }}
-          className="absolute bottom-12 text-[var(--text-muted)]"
-        >
-          <span className="text-xs uppercase tracking-[0.15em]">
-            Explorar ↓
-          </span>
-        </motion.div>
+            <p className="mt-6 max-w-[42ch] text-base leading-relaxed text-[var(--text-secondary)]">
+              Artefatos interativos de alto impacto para workshop, apresentação
+              executiva e posicionamento estratégico.
+            </p>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6, duration: 0.8 }}
+              className="mt-6 flex items-center gap-3"
+            >
+              {["Leitura", "Apresentação", "Workshop"].map((mode) => (
+                <span
+                  key={mode}
+                  className="rounded-full border border-[var(--border)] bg-[var(--surface)]/20 px-3 py-1 text-[0.55rem] font-medium uppercase tracking-[0.1em] text-[var(--text-muted)]"
+                >
+                  {mode}
+                </span>
+              ))}
+            </motion.div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2, duration: 0.8 }}
+            className="mt-12 flex items-center gap-4"
+          >
+            <div className="h-px flex-1 bg-gradient-to-r from-[var(--accent-primary)]/20 to-transparent" />
+            <span className="text-[0.55rem] uppercase tracking-[0.15em] text-[var(--text-muted)]/50">
+              {experiences.length} experiências disponíveis
+            </span>
+          </motion.div>
+        </div>
       </section>
 
-      {/* Experience grid */}
-      <section className="mx-auto max-w-6xl px-6 pb-24 md:px-12">
-        <div className="mb-12 flex items-center gap-4">
-          <h2 className="text-sm font-semibold uppercase tracking-[0.12em] text-[var(--text-muted)]">
-            Experiências
-          </h2>
-          <div className="h-px flex-1 bg-[var(--border)]" />
-          <span className="font-mono text-xs text-[var(--text-muted)]">
-            {experiences.length} disponível{experiences.length !== 1 ? "is" : ""}
-          </span>
-        </div>
-
-        <div className="grid gap-6">
+      {/* ─── EXPERIENCES ─── */}
+      <section className="mx-auto max-w-7xl px-6 pb-24 md:px-12">
+        <div className="space-y-0">
           {experiences.map((exp, i) => (
             <ExperienceCard key={exp.slug} experience={exp} index={i} />
           ))}
         </div>
+
+        {/* Coming soon */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="mt-12 border-t border-[var(--border)] pt-8"
+        >
+          <p className="text-[0.6rem] font-semibold uppercase tracking-[0.14em] text-[var(--text-muted)]/40">
+            Em desenvolvimento
+          </p>
+          <p className="mt-2 text-sm text-[var(--text-muted)]/50">
+            Data Intelligence · AI Strategy · Eficiência Operacional
+          </p>
+        </motion.div>
       </section>
 
       {/* Footer */}
       <footer className="border-t border-[var(--border)] py-8">
-        <div className="mx-auto max-w-6xl px-6 text-center md:px-12">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 md:px-12">
           <p className="text-xs text-[var(--text-muted)]">
             Diretoria de Qualidade e Dados — AeC
+          </p>
+          <p className="text-xs text-[var(--text-muted)]/30">
+            CX Experience Lab
           </p>
         </div>
       </footer>
@@ -104,82 +167,115 @@ function ExperienceCard({
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-5% 0px" });
+  const isFirst = index === 0;
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{
-        duration: 0.6,
-        delay: index * 0.1,
+        duration: 0.7,
+        delay: index * 0.15,
         ease: [0.22, 1, 0.36, 1],
       }}
     >
       <Link href={`/experiencias/${experience.slug}`} className="group block">
-        <div
-          className={cn(
-            "relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-8 md:p-12",
-            "transition-all duration-300 ease-out",
-            "hover:-translate-y-1 hover:border-[var(--border-hover)] hover:shadow-2xl hover:shadow-black/30"
+        <div className={cn(
+          "relative grid overflow-hidden border-b border-[var(--border)]",
+          "transition-colors duration-300 hover:bg-[var(--surface)]/30",
+          isFirst ? "md:grid-cols-[1.2fr_1fr]" : "md:grid-cols-[1fr_1.2fr]",
+          "py-10 md:py-0"
+        )}>
+          {/* Image — alternating position */}
+          {isFirst && (
+            <div className="relative hidden md:block min-h-[400px] overflow-hidden">
+              <Image
+                src={experience.image}
+                alt={experience.title}
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                sizes="60vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[var(--bg)]/60" />
+              {/* Accent overlay */}
+              <div
+                className="absolute inset-0 mix-blend-overlay opacity-[0.08] transition-opacity duration-500 group-hover:opacity-[0.15]"
+                style={{ background: experience.accent }}
+              />
+            </div>
           )}
-        >
-          {/* Accent glow */}
-          <div
-            className="absolute -right-20 -top-20 h-40 w-40 rounded-full opacity-[0.04] blur-3xl transition-opacity duration-500 group-hover:opacity-[0.08]"
-            style={{ background: experience.accent }}
-          />
 
-          <div className="flex flex-col gap-6 md:flex-row md:items-start md:justify-between">
-            <div className="max-w-2xl">
-              <div className="flex items-center gap-3">
-                <span
-                  className="h-2 w-2 rounded-full"
-                  style={{ background: experience.accent }}
-                />
-                <span className="text-xs font-medium uppercase tracking-[0.12em] text-[var(--text-muted)]">
-                  {experience.subtitle}
+          {/* Content */}
+          <div className={cn(
+            "flex flex-col justify-center",
+            isFirst ? "px-6 md:px-14 md:py-16" : "px-6 md:px-14 md:py-16"
+          )}>
+            <div className="flex items-center gap-3">
+              <span className="h-1.5 w-1.5 rounded-full" style={{ background: experience.accent }} />
+              <span className="text-[0.55rem] font-semibold uppercase tracking-[0.16em] text-[var(--text-muted)]">
+                {experience.subtitle}
+              </span>
+              {experience.status === "live" && (
+                <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[0.5rem] font-semibold uppercase tracking-[0.1em] text-emerald-400">
+                  Live
                 </span>
-              </div>
-
-              <h3 className="mt-3 font-display text-[clamp(1.5rem,3vw,2.5rem)] tracking-tight text-[var(--text)] transition-colors duration-300 group-hover:text-[var(--accent-primary)]">
-                {experience.title}
-              </h3>
-
-              <p className="mt-3 leading-relaxed text-[var(--text-secondary)]">
-                {experience.description}
-              </p>
-
-              <div className="mt-4 flex flex-wrap gap-2">
-                {experience.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-md bg-[var(--surface-elevated)] px-2.5 py-1 text-xs text-[var(--text-muted)]"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
+              )}
             </div>
 
-            <div className="flex flex-shrink-0 items-center gap-6 text-xs text-[var(--text-muted)]">
-              <div className="text-center">
-                <span className="block font-mono text-lg font-bold text-[var(--text-secondary)]">
-                  {experience.chapters}
+            <h2
+              className="mt-3 font-display text-[clamp(1.6rem,3.5vw,2.5rem)] font-light tracking-[-0.03em] text-[var(--text)] transition-colors duration-300"
+              style={{ "--card-accent": experience.accent } as React.CSSProperties}
+            >
+              <span className="group-hover:text-[var(--card-accent)]">{experience.title}</span>
+            </h2>
+
+            <p className="mt-3 max-w-[48ch] text-sm leading-relaxed text-[var(--text-secondary)]">
+              {experience.description}
+            </p>
+
+            {/* Meta */}
+            <div className="mt-6 flex items-center gap-6 text-[0.6rem] uppercase tracking-[0.1em] text-[var(--text-muted)]">
+              <span><span className="font-mono text-sm font-bold text-[var(--text-secondary)]">{experience.chapters}</span> capítulos</span>
+              <span>{experience.readTime} leitura</span>
+              <span>{experience.workshopTime} workshop</span>
+            </div>
+
+            <div className="mt-4 flex items-center gap-2">
+              {experience.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded border border-[var(--border)] px-2 py-0.5 text-[0.55rem] text-[var(--text-muted)]/70"
+                >
+                  {tag}
                 </span>
-                capítulos
-              </div>
-              <div className="text-center">
-                <span className="block font-mono text-lg font-bold text-[var(--text-secondary)]">
-                  {experience.readTime}
-                </span>
-                leitura
-              </div>
-              <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border)] text-[var(--text-muted)] transition-all duration-200 group-hover:border-[var(--accent-primary)]/30 group-hover:text-[var(--accent-primary)]">
-                →
-              </div>
+              ))}
+              <span
+                className="ml-auto flex h-8 w-8 items-center justify-center rounded-full border border-[var(--border)] text-sm text-[var(--text-muted)] transition-all duration-200"
+                style={{ "--arrow-accent": experience.accent } as React.CSSProperties}
+              >
+                <span className="transition-colors duration-200 group-hover:text-[var(--arrow-accent)]">→</span>
+              </span>
             </div>
           </div>
+
+          {/* Image for second card (right side) */}
+          {!isFirst && (
+            <div className="relative hidden md:block min-h-[400px] overflow-hidden">
+              <Image
+                src={experience.image}
+                alt={experience.title}
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+                sizes="60vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-l from-transparent to-[var(--bg)]/60" />
+              <div
+                className="absolute inset-0 mix-blend-overlay opacity-[0.08] transition-opacity duration-500 group-hover:opacity-[0.15]"
+                style={{ background: experience.accent }}
+              />
+            </div>
+          )}
         </div>
       </Link>
     </motion.div>

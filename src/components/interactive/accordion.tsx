@@ -6,7 +6,7 @@ import { useState, type ReactNode } from "react";
 
 interface AccordionItem {
   id: string;
-  trigger: string;
+  trigger: ReactNode;
   content: ReactNode;
 }
 
