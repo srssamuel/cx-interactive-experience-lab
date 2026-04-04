@@ -10,39 +10,45 @@ Referência rápida de todos os componentes disponíveis no design system.
 
 | Componente | Uso | Quando usar |
 |---|---|---|
-| `DisplayHeading` | Título principal do hero | Uma vez por experiência, no topo |
-| `SectionHeading` | Título de seção/capítulo | Início de cada seção nova |
-| `SubHeading` | Subtítulo dentro de seção | Quando há hierarquia dentro de seção |
+| `DisplayHeading` | Título principal do hero (font-light, tight leading) | Uma vez por experiência, no topo |
+| `SectionHeading` | Título de seção/capítulo (font-normal) | Início de cada seção nova |
+| `SubHeading` | Subtítulo dentro de seção (font-medium) | Quando há hierarquia dentro de seção |
 | `BodyText` | Parágrafo de corpo | Texto descritivo, explicações |
 | `Overline` | Label acima de títulos | "01 — Nome do capítulo", labels de seção |
 | `StatNumber` | Número grande de destaque | Stats no hero, métricas-chave |
 | `StatLabel` | Label abaixo de número | Sempre acompanha StatNumber |
-| `Provocation` | Frase de impacto grande | Momentos de silêncio visual, fechamento |
+| `Provocation` | Frase de impacto (italic, font-light, accent border-left) | Momentos de respiração, provocação |
 | `AccentText` | Texto com cor accent | Destacar palavras-chave em headlines |
+| `PullQuote` | Citação editorial com aspas decorativas | Após dados ou argumentos, para reforçar insight |
+| `SplitContent` | Grid assimétrico 2 colunas | Texto + visual, heading + interação |
+| `FullBleedText` | Tipografia oversized (font-light, tight tracking) | Momentos de impacto visual no fechamento |
+| `EvidenceBlock` | Dado + contexto com borda accent | Stats com explicação, evidência empírica |
 
-**Anti-padrão**: Usar AccentText em mais de 2-3 instâncias por experiência. O destaque perde força.
+**Anti-padrão**: Usar AccentText em mais de 2-3 instâncias por experiência.
 
 ### Section
 
 | Componente | Uso | Variantes |
 |---|---|---|
-| `HeroSection` | Seção hero fullscreen | Com `backgroundElement` para 3D/vídeo |
-| `Section` | Container de seção | `default`, `fullbleed`, `editorial`, `immersive`, `breathing` |
-| `Container` | Wrapper de conteúdo | `narrow` (3xl), `default` (6xl), `wide` (7xl), `full` |
+| `HeroSection` | Seção hero fullscreen | `align="center"` (padrão) ou `align="left"` |
+| `Section` | Container de seção | `default`, `fullbleed`, `editorial`, `immersive`, `breathing`, `asymmetric`, `compact` |
+| `Container` | Wrapper de conteúdo | Sizes: `narrow`, `default`, `wide`, `full`. Align: `center`, `left`, `right` |
 | `ChapterDivider` | Divisor entre capítulos | Com número grande e título |
 
-**Anti-padrão**: Usar mesma variante de Section em toda a experiência. Alternar ritmo.
+**Regra**: Alternar variantes de Section entre seções. Nunca usar a mesma variante consecutivamente.
+
+**Regra**: Usar `align="left"` ou `align="right"` em Container para quebrar o padrão centered-everything.
 
 ### Card
 
 | Componente | Uso | Quando usar |
 |---|---|---|
-| `Card` | Card base | Blocos de conteúdo com borda. Variantes: `default`, `insight`, `highlighted`, `numbered`, `comparative` |
-| `ExpandableCard` | Card com expand/collapse | Quando há conteúdo que revela (mitos, detalhes). Usa Framer Motion AnimatePresence |
-| `ComparisonCard` | Card comparativo | Antes/depois, positivo/negativo. Accents: `positive`, `negative`, `neutral` |
-| `NumberedCard` | Card com número | Sequências ordenadas (dimensões, etapas) |
+| `Card` | Card base | Variantes: `default`, `insight`, `highlighted`, `numbered`, `comparative` |
+| `ExpandableCard` | Card com expand/collapse | Conteúdo que revela (mitos, detalhes) |
+| `ComparisonCard` | Card comparativo | Antes/depois. Accents: `positive`, `negative`, `neutral` |
+| `NumberedCard` | Card com número | Sequências ordenadas |
 
-**Anti-padrão**: Usar mesmo tipo de Card em toda experiência. Misturar tipos.
+**Anti-padrão**: Usar Cards para tudo. Alternar com: border-top items, PullQuote, EvidenceBlock, border-left blocks.
 
 ---
 
@@ -57,12 +63,6 @@ Referência rápida de todos os componentes disponíveis no design system.
 
 **Variantes de Tabs**: `default` (bg), `pills` (rounded), `underline` (minimal)
 
-**Accordion**: Aceita `trigger` como ReactNode (não apenas string), suporta `allowMultiple`.
-
-**Timeline**: Layout alternado esquerda/direita em desktop, vertical em mobile. Staggered scroll reveal.
-
-**ComparisonSlider**: Drag, touch e keyboard (setas). clipPath-based reveal.
-
 ---
 
 ## Navigation (`@/components/navigation`)
@@ -70,8 +70,8 @@ Referência rápida de todos os componentes disponíveis no design system.
 | Componente | Uso |
 |---|---|
 | `ChapterNav` | Navegação por capítulos com progress bar, IntersectionObserver tracking, keyboard (setas) |
-| `ModeIndicator` | UI com 3 botões para alternar entre modos (leitura/apresentação/workshop) |
-| `PresentationShell` | Wrapper que aplica CSS de modo apresentação (tipografia ampliada, seções fullscreen) |
+| `ModeIndicator` | UI para alternar entre modos (leitura/apresentação/workshop) |
+| `PresentationShell` | Wrapper que aplica CSS de modo apresentação |
 
 ---
 
@@ -81,7 +81,7 @@ Referência rápida de todos os componentes disponíveis no design system.
 
 | Componente | Uso | Props-chave |
 |---|---|---|
-| `ScrollReveal` | Revelar elemento ao scroll (IntersectionObserver) | `direction`, `delay`, `duration`, `distance` |
+| `ScrollReveal` | Revelar elemento ao scroll | `direction` (`up`/`down`/`left`/`right`/`none`), `delay`, `duration`, `distance` |
 | `StaggerGroup` | Revelar filhos em sequência | `staggerDelay`, `baseDelay` |
 | `ParallaxLayer` | Efeito parallax sutil | `speed` (default: 0.5) |
 
@@ -96,7 +96,7 @@ Referência rápida de todos os componentes disponíveis no design system.
 
 **Regra**: Usar GSAP para scroll-driven effects. Usar Framer Motion para transições de estado e mount/unmount.
 
-**Todos respeitam** `prefers-reduced-motion`.
+**Regra**: Variar direção de entrada por seção. Não usar sempre `y: 30` para tudo. Usar `x: -30` para entradas laterais, `scale: 0.95` para elementos de destaque.
 
 ---
 
@@ -104,11 +104,9 @@ Referência rápida de todos os componentes disponíveis no design system.
 
 | Componente | Uso | Quando usar |
 |---|---|---|
-| `DiscussionPrompt` | Pergunta para discussão em grupo | Após seção densa, antes de fechamento. Aceita `timerMinutes` |
+| `DiscussionPrompt` | Pergunta para discussão em grupo | Após seção densa. Aceita `timerMinutes` |
 | `PausePoint` | Divisor de pausa visual | Entre capítulos, momento de respiração |
-| `WorkshopLayout` | Sidebar de facilitação | Envolve a experiência inteira. Mostra timer global, índice de discussões, ações rápidas |
-
-**WorkshopLayout** aceita `discussions` array com `{ id, question, sectionId }` para o índice lateral.
+| `WorkshopLayout` | Sidebar de facilitação | Envolve a experiência inteira |
 
 ---
 
@@ -118,88 +116,94 @@ Referência rápida de todos os componentes disponíveis no design system.
 |---|---|---|
 | `ParticleField` | Campo de partículas 3D (Three.js) | Background do hero (via `next/dynamic`, `ssr: false`) |
 
-**Regra**: Sempre lazy-load com `dynamic(() => import(...), { ssr: false })`.
+---
+
+## Theming
+
+CSS classes para accent por experiência (em `design-tokens.css`):
+
+| Classe | Accent | Uso |
+|---|---|---|
+| `.theme-amber` | `#F59E0B` | Equação Invisível (CX) — padrão |
+| `.theme-teal` | `#0D9488` | Paradoxo do Sucesso (CS) |
+
+Aplicar na div wrapper da experiência: `<div className="theme-teal">`.
 
 ---
 
 ## Combinações Recomendadas
 
-### Hero com partículas
+### Hero left-aligned com partículas
 ```tsx
-<HeroSection backgroundElement={<ParticleField count={500} color="#F59E0B" />}>
-  <Container>
-    <ScrollReveal><Overline>...</Overline></ScrollReveal>
-    <ScrollReveal delay={0.2}><DisplayHeading>... <AccentText>...</AccentText></DisplayHeading></ScrollReveal>
-    <ScrollReveal delay={0.4}>
-      <GSAPCounter value={96} suffix="%" />
-    </ScrollReveal>
+<HeroSection align="left" backgroundElement={<ParticleField count={500} color="#F59E0B" />}>
+  <Container size="wide">
+    <div className="max-w-[640px]">
+      <ScrollReveal direction="left"><Overline>...</Overline></ScrollReveal>
+      <ScrollReveal direction="left" delay={0.2}><DisplayHeading>...</DisplayHeading></ScrollReveal>
+      <EvidenceBlock stat="96%" context="..." />
+    </div>
   </Container>
 </HeroSection>
 ```
 
-### Seção com GSAP stagger
+### Seção com SplitContent
 ```tsx
 <Section background="surface">
-  <Container>
-    <GSAPReveal from={{ opacity: 0, x: -40 }} to={{ opacity: 1, x: 0 }}>
-      <Overline>...</Overline>
-    </GSAPReveal>
-    <GSAPStaggerReveal className="grid md:grid-cols-2 gap-4" staggerAmount={0.15}>
-      <NumberedCard ... />
-      <NumberedCard ... />
-    </GSAPStaggerReveal>
+  <Container size="wide">
+    <SplitContent
+      ratio="wide-left"
+      left={<><Overline>...</Overline><SectionHeading>...</SectionHeading><BodyText>...</BodyText></>}
+      right={<Tabs variant="pills" tabs={[...]} />}
+    />
   </Container>
 </Section>
 ```
 
-### Seção de provocação (breathing)
+### Provocação left-aligned (não centered)
 ```tsx
 <Section variant="breathing" background="accent-muted">
-  <Container size="narrow" className="text-center">
-    <GSAPReveal from={{ opacity: 0, scale: 0.95 }} to={{ opacity: 1, scale: 1, duration: 1.2 }}>
+  <Container size="default" align="left" className="md:pl-[15%]">
+    <GSAPReveal from={{ opacity: 0, x: -40 }} to={{ opacity: 1, x: 0, duration: 1.4 }}>
       <Provocation>Uma frase que muda tudo.</Provocation>
     </GSAPReveal>
   </Container>
 </Section>
 ```
 
-### Experiência completa (wrapper)
+### Fechamento com FullBleedText + insights
 ```tsx
-<WorkshopLayout discussions={workshopDiscussions}>
-  <PresentationShell>
-    <ChapterNav chapters={chapters} />
-    <ModeIndicator />
-    {/* ... seções ... */}
-  </PresentationShell>
-</WorkshopLayout>
-```
-
-### Bloco de workshop
-```tsx
-<PausePoint />
-<Section variant="breathing">
-  <Container size="narrow">
-    <DiscussionPrompt
-      question="Pergunta provocativa aqui?"
-      context="Contexto para guiar a discussão."
-      timerMinutes={5}
+<Section background="surface">
+  <Container size="wide">
+    <SplitContent
+      ratio="wide-left"
+      left={<FullBleedText>Headline de impacto aqui.</FullBleedText>}
+      right={<GSAPStaggerReveal>...insights list...</GSAPStaggerReveal>}
     />
   </Container>
 </Section>
 ```
 
-### Comparação com slider
+### Stat moment assimétrico
 ```tsx
-<ComparisonSlider
-  before={{ label: "Antes", content: <div>...</div> }}
-  after={{ label: "Depois", content: <div>...</div> }}
-/>
+<Section variant="compact">
+  <Container size="wide">
+    <div className="md:ml-[20%]">
+      <GSAPCounter value={96} suffix="%" className="..." />
+      <p>Contexto do dado.</p>
+    </div>
+  </Container>
+</Section>
 ```
 
-### Maturidade com timeline
+### Items com border-top (alternativa a Cards)
 ```tsx
-<Timeline items={[
-  { id: "1", label: "Nível 1", title: "Reativo", description: "..." },
-  { id: "2", label: "Nível 2", title: "Proativo", description: "..." },
-]} />
+<div className="grid gap-5 md:grid-cols-4">
+  {items.map((item, i) => (
+    <div className="border-t border-[var(--accent-primary)]/20 pt-5">
+      <span className="font-mono text-xs text-[var(--accent-primary)]/50">{item.number}</span>
+      <h3 className="mt-2 text-base font-semibold">{item.title}</h3>
+      <p className="mt-2 text-sm text-[var(--text-secondary)]">{item.description}</p>
+    </div>
+  ))}
+</div>
 ```
