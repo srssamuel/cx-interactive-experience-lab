@@ -4,16 +4,12 @@ import { SectionHeading, Section, Container } from "@/components/design-system";
 import { WorkshopBlock } from "@/components/workshop/workshop-block";
 import { GSAPReveal } from "@/components/motion/gsap-reveal";
 import { ComparisonSlider } from "@/components/interactive/comparison-slider";
-import {
-  HeadlineSlide,
-  ChapterTransition,
-} from "@/components/cinematic/headline-slide";
+import { ChapterTransition } from "@/components/cinematic/headline-slide";
 import { pratica } from "../content";
 
 /**
  * NA PRÁTICA — ComparisonSlider for the core metaphor.
- * "Same destination, different experiences."
- * Then analogias as an editorial split, not cards.
+ * Insight integrated inline. No HeadlineSlide filler.
  */
 export function CapPratica() {
   return (
@@ -60,14 +56,17 @@ export function CapPratica() {
               className="min-h-[320px] overflow-hidden rounded-xl border border-[var(--border)]"
             />
           </GSAPReveal>
+
+          {/* Insight inline — accent border quote */}
+          <GSAPReveal from={{ opacity: 0, y: 15 }} to={{ opacity: 1, y: 0, duration: 0.7, delay: 0.15, ease: "power3.out" }}>
+            <div className="mt-12 border-l-2 border-[var(--accent-primary)]/30 pl-6">
+              <p className="font-display text-lg font-light italic leading-[1.5] text-[var(--text)]">
+                {pratica.insight}
+              </p>
+            </div>
+          </GSAPReveal>
         </Container>
       </Section>
-
-      <HeadlineSlide align="center" background="surface">
-        <GSAPReveal>
-          <SectionHeading>{pratica.insight}</SectionHeading>
-        </GSAPReveal>
-      </HeadlineSlide>
 
       {/* Analogias — editorial, no cards */}
       <Section variant="default">
@@ -76,21 +75,18 @@ export function CapPratica() {
             {pratica.analogias.map((a, i) => (
               <GSAPReveal key={a.contexto} from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0, duration: 0.7, delay: 0.05, ease: "power3.out" }}>
                 <div className="grid items-start gap-8 md:grid-cols-[180px_1fr_1fr]">
-                  {/* Label */}
                   <div>
                     <span className="text-[0.6rem] font-semibold uppercase tracking-[0.12em] text-[var(--accent-primary)]">
                       {a.contexto}
                     </span>
                     <p className="mt-1 text-sm text-[var(--text-muted)]">{a.resultado}</p>
                   </div>
-                  {/* Positive */}
                   <div className="border-l-2 border-[var(--success)]/30 pl-5">
                     <span className="text-[0.5rem] uppercase tracking-wider text-[var(--success)]">
                       Volta
                     </span>
                     <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">{a.experienciaA}</p>
                   </div>
-                  {/* Negative */}
                   <div className="border-l-2 border-[var(--danger)]/30 pl-5">
                     <span className="text-[0.5rem] uppercase tracking-wider text-[var(--danger)]">
                       Nunca mais

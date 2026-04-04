@@ -1,17 +1,13 @@
 "use client";
 
-import { BodyText, Provocation, Section, Container } from "@/components/design-system";
+import { BodyText, Section, Container } from "@/components/design-system";
 import { GSAPReveal } from "@/components/motion/gsap-reveal";
-import {
-  HeadlineSlide,
-  ChapterTransition,
-} from "@/components/cinematic/headline-slide";
+import { ChapterTransition } from "@/components/cinematic/headline-slide";
 import { paradoxo } from "../content";
 
 /**
  * O PARADOXO — Active ≠ Healthy shown as stark CONTRAST.
- * Two visually opposed blocks — not identical cards.
- * Left enters from left, right enters from right.
+ * Insight integrated as closing accent, not HeadlineSlide.
  */
 export function CapParadoxo() {
   return (
@@ -58,14 +54,17 @@ export function CapParadoxo() {
               );
             })}
           </div>
+
+          {/* Insight as inline accent — no HeadlineSlide */}
+          <GSAPReveal from={{ opacity: 0, y: 15 }} to={{ opacity: 1, y: 0, duration: 0.8, delay: 0.3, ease: "power3.out" }}>
+            <div className="mx-auto mt-16 max-w-[56ch] border-l-2 border-[var(--accent-primary)]/30 pl-6">
+              <p className="font-display text-[clamp(1.1rem,2vw,1.5rem)] font-light italic leading-[1.5] text-[var(--text)]">
+                {paradoxo.insight}
+              </p>
+            </div>
+          </GSAPReveal>
         </Container>
       </Section>
-
-      <HeadlineSlide background="surface">
-        <GSAPReveal>
-          <Provocation>{paradoxo.insight}</Provocation>
-        </GSAPReveal>
-      </HeadlineSlide>
     </>
   );
 }

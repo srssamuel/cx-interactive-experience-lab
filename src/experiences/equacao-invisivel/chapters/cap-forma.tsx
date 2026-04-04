@@ -1,14 +1,15 @@
 "use client";
 
-import { Provocation, Section, Container } from "@/components/design-system";
+import { Section, Container } from "@/components/design-system";
 import { GSAPReveal } from "@/components/motion/gsap-reveal";
 import { Tabs } from "@/components/interactive/tabs";
-import {
-  HeadlineSlide,
-  ChapterTransition,
-} from "@/components/cinematic/headline-slide";
+import { ChapterTransition } from "@/components/cinematic/headline-slide";
 import { forma } from "../content";
 
+/**
+ * A FORMA — 6 vectors as Tabs.
+ * Insight is integrated as a closing accent quote, not a full-viewport HeadlineSlide.
+ */
 export function CapForma() {
   return (
     <>
@@ -38,14 +39,17 @@ export function CapForma() {
               ),
             }))}
           />
+
+          {/* Insight as inline accent — not a full-viewport HeadlineSlide */}
+          <GSAPReveal from={{ opacity: 0, y: 15 }} to={{ opacity: 1, y: 0, duration: 0.7, delay: 0.1, ease: "power3.out" }}>
+            <div className="mt-16 border-t border-[var(--border)] pt-10">
+              <p className="mx-auto max-w-[48ch] text-center font-display text-[clamp(1.2rem,2.5vw,1.8rem)] font-light italic leading-[1.4] text-[var(--text)]">
+                {forma.insight}
+              </p>
+            </div>
+          </GSAPReveal>
         </Container>
       </Section>
-
-      <HeadlineSlide align="center">
-        <GSAPReveal>
-          <Provocation>{forma.insight}</Provocation>
-        </GSAPReveal>
-      </HeadlineSlide>
     </>
   );
 }

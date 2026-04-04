@@ -1,18 +1,14 @@
 "use client";
 
-import { Provocation, Section, Container } from "@/components/design-system";
+import { Section, Container } from "@/components/design-system";
 import { GSAPReveal } from "@/components/motion/gsap-reveal";
 import { ScrollReveal } from "@/components/motion/scroll-reveal";
-import {
-  HeadlineSlide,
-  ChapterTransition,
-} from "@/components/cinematic/headline-slide";
+import { ChapterTransition } from "@/components/cinematic/headline-slide";
 import { mapa } from "../content";
 
 /**
  * O MAPA — Concentric architecture visualization.
- * Layers build outward from core, each entering with scroll.
- * Immersive section with radial gradient and depth.
+ * Insight integrated at the bottom, not a separate HeadlineSlide.
  */
 export function CapMapa() {
   return (
@@ -27,7 +23,6 @@ export function CapMapa() {
               const totalLayers = mapa.layers.length;
               const isCore = layer.position === "core";
               const isOuter = layer.position === "outer";
-              // Layers get progressively wider
               const widthPercent = 40 + (i / (totalLayers - 1)) * 60;
 
               return (
@@ -53,17 +48,20 @@ export function CapMapa() {
               );
             })}
           </div>
+
+          {/* Insight integrated — compact, not full-viewport */}
+          <GSAPReveal from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0, duration: 0.8, delay: 0.2, ease: "power3.out" }}>
+            <div className="mx-auto mt-10 max-w-[48ch] text-center">
+              <p className="font-display text-[clamp(1.2rem,2.5vw,1.8rem)] font-light italic leading-[1.4] text-[var(--text)]">
+                {mapa.insight}
+              </p>
+              <p className="mt-4 font-display text-lg font-light text-[var(--accent-primary)]">
+                {mapa.provocacao}
+              </p>
+            </div>
+          </GSAPReveal>
         </Container>
       </Section>
-
-      <HeadlineSlide background="surface">
-        <GSAPReveal>
-          <Provocation>{mapa.insight}</Provocation>
-          <p className="mt-6 font-display text-xl font-light text-[var(--accent-primary)]">
-            {mapa.provocacao}
-          </p>
-        </GSAPReveal>
-      </HeadlineSlide>
     </>
   );
 }
