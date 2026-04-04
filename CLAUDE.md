@@ -97,6 +97,11 @@ Cada arquivo em `/skills` é um modo especialista. Ative os relevantes conforme 
 | `premium-design-system` | Ao definir paleta, tipografia, atmosfera visual, componentes |
 | `experience-builder` | Na hora de construir a experiência (componentes, estrutura, código) |
 | `cinematic-motion` | Ao planejar animações, scroll effects, 3D, partículas |
+| `advanced-motion-effects` | Ao implementar efeitos avançados: TextReveal, BlurReveal, SpotlightCard, TiltCard, MagneticElement, GlowBorder |
+| `spatial-design-3d` | Ao criar profundidade visual: 3D, parallax, glow, partículas, light cones |
+| `tech-premium-aesthetic` | Ao validar identidade visual: paleta navy/cyan, anti-template, referências Linear/Vercel/Stripe |
+| `component-architecture` | Ao criar/refatorar componentes: composição, tipagem, barrel exports, lazy loading |
+| `stage-experience-design` | Ao projetar pacing de palco: 3 modos, densidade por tela, passagens cinematográficas |
 | `workshop-presentation` | Ao projetar modos de uso ao vivo |
 | `asset-direction` | Na fase de seleção e direção de arte visual |
 | `microinteraction-designer` | Ao refinar hover states, transições, feedback |

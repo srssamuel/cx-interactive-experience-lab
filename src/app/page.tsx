@@ -6,6 +6,9 @@ import { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { SpotlightCard } from "@/components/interactive/spotlight-card";
+import { MagneticElement } from "@/components/interactive/magnetic-element";
+import { TextReveal } from "@/components/motion/text-reveal";
 
 const GlowingOrb = dynamic(
   () =>
@@ -110,14 +113,7 @@ export default function Portal() {
         className="relative flex min-h-screen items-center justify-center overflow-hidden"
       >
         {/* Background grid */}
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(14,165,233,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(14,165,233,0.3) 1px, transparent 1px)",
-            backgroundSize: "80px 80px",
-          }}
-        />
+        <div className="pointer-events-none absolute inset-0 animated-grid" />
 
         {/* Radial glow */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_50%,rgba(14,165,233,0.08)_0%,transparent_70%)]" />
@@ -163,20 +159,16 @@ export default function Portal() {
               </span>
             </motion.div>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 1.2,
-                delay: 0.2,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className="mt-8 max-w-[16ch] font-display text-[clamp(2.5rem,7vw,5.5rem)] font-light leading-[0.92] tracking-[-0.04em] text-[var(--text)]"
-            >
-              Palco digital
-              <br />
-              <span className="text-[var(--accent-primary)]">executivo</span>
-            </motion.h1>
+            <div className="mt-8">
+              <TextReveal
+                text="Palco digital executivo"
+                tag="h1"
+                trigger="mount"
+                delay={0.3}
+                stagger={0.04}
+                className="max-w-[16ch] font-display text-[clamp(2.5rem,7vw,5.5rem)] font-light leading-[0.92] tracking-[-0.04em] text-[var(--text)]"
+              />
+            </div>
 
             <motion.p
               initial={{ opacity: 0 }}
@@ -200,15 +192,14 @@ export default function Portal() {
                 { label: "Apresentação", icon: "▶" },
                 { label: "Workshop", icon: "◫" },
               ].map((mode) => (
-                <span
-                  key={mode.label}
-                  className="flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-[var(--surface)]/40 px-3.5 py-1.5 text-[0.6rem] font-medium uppercase tracking-[0.1em] text-[var(--text-muted)] backdrop-blur-sm transition-colors duration-300 hover:border-[var(--accent-primary)]/20 hover:text-[var(--text-secondary)]"
-                >
-                  <span className="text-[0.5rem] text-[var(--accent-primary)]">
-                    {mode.icon}
+                <MagneticElement key={mode.label} strength={0.2}>
+                  <span className="flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-[var(--surface)]/40 px-3.5 py-1.5 text-[0.6rem] font-medium uppercase tracking-[0.1em] text-[var(--text-muted)] backdrop-blur-sm transition-colors duration-300 hover:border-[var(--accent-primary)]/20 hover:text-[var(--text-secondary)]">
+                    <span className="text-[0.5rem] text-[var(--accent-primary)]">
+                      {mode.icon}
+                    </span>
+                    {mode.label}
                   </span>
-                  {mode.label}
-                </span>
+                </MagneticElement>
               ))}
             </motion.div>
           </div>
@@ -380,25 +371,28 @@ function ExperienceCard({
       }}
     >
       <Link href={`/experiencias/${experience.slug}`} className="group block">
-        <div
+        <SpotlightCard
           className={cn(
-            "relative grid overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)]/20 backdrop-blur-sm",
-            "transition-all duration-500 hover:border-[var(--accent-primary)]/15 hover:bg-[var(--surface)]/40",
-            isEven
-              ? "md:grid-cols-[1.3fr_1fr]"
-              : "md:grid-cols-[1fr_1.3fr]"
+            "rounded-2xl",
+            "transition-all duration-500"
           )}
-          style={
-            {
-              "--card-accent": experience.accent,
-              "--card-accent-rgb": experience.accent === "#0EA5E9" ? "14,165,233" : "6,182,212",
-            } as React.CSSProperties
-          }
+          spotlightColor={`${experience.accent}14`}
+          spotlightSize={450}
         >
-          {/* Glow on hover */}
-          <div className="pointer-events-none absolute -inset-px rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-            <div className="absolute inset-0 rounded-2xl bg-[radial-gradient(600px_circle_at_var(--mouse-x,50%)_var(--mouse-y,50%),rgba(var(--card-accent-rgb),0.06),transparent_40%)]" />
-          </div>
+          <div
+            className={cn(
+              "grid overflow-hidden",
+              isEven
+                ? "md:grid-cols-[1.3fr_1fr]"
+                : "md:grid-cols-[1fr_1.3fr]"
+            )}
+            style={
+              {
+                "--card-accent": experience.accent,
+                "--card-accent-rgb": experience.accent === "#0EA5E9" ? "14,165,233" : "6,182,212",
+              } as React.CSSProperties
+            }
+          >
 
           {/* Image — with depth layers */}
           {isEven && (
@@ -465,7 +459,8 @@ function ExperienceCard({
           {!isEven && (
             <CardImage experience={experience} gradientDir="to-l" />
           )}
-        </div>
+          </div>
+        </SpotlightCard>
       </Link>
     </motion.div>
   );

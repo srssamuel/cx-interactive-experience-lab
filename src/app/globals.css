@@ -122,6 +122,42 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
 }
 
+/* ─── Animated glow border rotation ─── */
+@property --glow-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes glowRotate {
+  from {
+    --glow-angle: 0deg;
+  }
+  to {
+    --glow-angle: 360deg;
+  }
+}
+
+/* ─── Animated grid background ─── */
+.animated-grid {
+  background-size: 60px 60px;
+  background-image: linear-gradient(
+      to right,
+      rgba(14, 165, 233, 0.04) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(14, 165, 233, 0.04) 1px,
+      transparent 1px
+    );
+  mask-image: radial-gradient(
+    ellipse 60% 50% at 50% 50%,
+    black 20%,
+    transparent 70%
+  );
+}
+
 /* ─── Reduced motion ─── */
 @media (prefers-reduced-motion: reduce) {
   *,
