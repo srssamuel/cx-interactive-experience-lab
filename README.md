@@ -85,12 +85,12 @@ src/
 │   ├── page.tsx            # Portal de experiências
 │   └── experiencias/       # Rota dinâmica por experiência
 ├── components/             # Design system e componentes
-│   ├── design-system/      # Primitivos (Typography, Section, Card)
-│   ├── interactive/        # Tabs, Accordion, Timeline, Reveal
-│   ├── navigation/         # ChapterNav, ProgressBar
-│   ├── motion/             # ScrollReveal, StaggerGroup, Counter
-│   ├── workshop/           # DiscussionPrompt, PausePoint, Timer
-│   └── cinematic/          # ParticleField, HeroCinematic
+│   ├── design-system/      # Typography, Section, Card (5 variantes cada)
+│   ├── interactive/        # Tabs, Accordion, Timeline, ComparisonSlider
+│   ├── navigation/         # ChapterNav, ModeIndicator, PresentationShell
+│   ├── motion/             # ScrollReveal, ParallaxLayer, GSAP ScrollTrigger
+│   ├── workshop/           # DiscussionPrompt, PausePoint, WorkshopLayout
+│   └── cinematic/          # ParticleField (Three.js)
 ├── experiences/            # Conteúdo de cada experiência
 ├── lib/                    # Hooks, providers, utilidades
 └── styles/                 # Design tokens CSS
@@ -115,6 +115,15 @@ Cada experiência passa por 6 quality gates antes de ser publicada:
 
 ---
 
+## Experiências Live
+
+| Experiência | Tema | Paleta |
+|-------------|------|--------|
+| **A Equação Invisível** | Customer Experience | Amber (#F59E0B) |
+| **O Paradoxo do Sucesso** | Customer Success | Teal (#0D9488) |
+
+---
+
 ## Desenvolvimento
 
 ```bash
@@ -123,6 +132,15 @@ npm run dev
 ```
 
 Deploy automático via Vercel em cada push.
+
+---
+
+## SEO & PWA
+
+- `sitemap.xml` — Auto-gerado com todas as rotas
+- `robots.txt` — Permite crawlers
+- `manifest.webmanifest` — Suporte a "Add to Home Screen" / modo standalone
+- Favicon e Apple Icon gerados dinamicamente via Route Handlers
 
 ---
 
