@@ -6,7 +6,7 @@ import { useRef } from "react";
 import Link from "next/link";
 import { experiences, upcomingExperiences } from "@/lib/registry";
 import { TextReveal } from "@/components/motion/text-reveal";
-import { GSAPReveal } from "@/components/motion/gsap-reveal";
+import { GSAPReveal, GSAPCounter } from "@/components/motion/gsap-reveal";
 import { GrainOverlay } from "@/components/cinematic/headline-slide";
 
 export default function Portal() {
@@ -16,128 +16,272 @@ export default function Portal() {
     offset: ["start start", "end start"],
   });
   const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.7], [1, 0.97]);
+
+  const equacao = experiences[0];
+  const paradoxo = experiences[1];
 
   return (
     <main className="min-h-screen bg-[var(--bg)]">
       {/* ═══════════════════════════════════════════
-          HERO — Editorial typography with atmospheric depth
+          HERO — Asymmetric editorial opening
           ═══════════════════════════════════════════ */}
       <motion.section
         ref={heroRef}
-        style={{ opacity: heroOpacity }}
+        style={{ opacity: heroOpacity, scale: heroScale }}
         className="relative flex min-h-screen flex-col justify-end pb-16 md:pb-24"
       >
-        {/* Atmospheric layers */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)] via-[var(--bg)] to-[var(--surface)]/40" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_70%_60%,rgba(245,158,11,0.03)_0%,transparent_60%)]" />
-        <GrainOverlay opacity={0.025} />
+        <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)] via-[var(--bg)] to-[var(--surface)]/30" />
+        <GrainOverlay opacity={0.02} />
 
-        {/* Horizontal rules as visual rhythm */}
+        {/* Single diagonal rule — not 4 horizontal lines */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          {[20, 40, 60, 80].map((top) => (
-            <motion.div
-              key={top}
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 1.6, delay: 0.3 + top * 0.008, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute left-0 right-0 h-px origin-left bg-[var(--border)]"
-              style={{ top: `${top}%` }}
-            />
-          ))}
+          <motion.div
+            initial={{ scaleX: 0, rotate: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 2, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute left-0 right-0 top-[55%] h-px origin-left bg-[var(--border)]"
+          />
         </div>
 
         <div className="relative z-10 mx-auto w-full max-w-7xl px-6 md:px-12">
-          {/* Institutional mark */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="mb-16 md:mb-24"
+            className="mb-20 md:mb-32"
           >
             <span className="text-[0.6rem] font-medium uppercase tracking-[0.25em] text-[var(--text-muted)]">
               Diretoria de Qualidade e Dados
             </span>
           </motion.div>
 
-          {/* Main headline */}
-          <div className="max-w-[900px]">
-            <TextReveal
-              text="Onde executivos param de ouvir"
-              tag="h1"
-              trigger="mount"
-              delay={0.4}
-              stagger={0.035}
-              className="font-display text-[clamp(2.8rem,7.5vw,6.5rem)] font-light leading-[0.88] tracking-[-0.04em] text-[var(--text)]"
-            />
-            <TextReveal
-              text="e começam a decidir."
-              tag="span"
-              trigger="mount"
-              delay={0.9}
-              stagger={0.035}
-              className="mt-2 block font-display text-[clamp(2.8rem,7.5vw,6.5rem)] font-light leading-[0.88] tracking-[-0.04em] text-[var(--text-secondary)]"
-            />
+          <div className="grid md:grid-cols-[1fr_280px] md:items-end md:gap-16">
+            {/* Left — massive headline */}
+            <div className="max-w-[800px]">
+              <TextReveal
+                text="Onde executivos param de ouvir"
+                tag="h1"
+                trigger="mount"
+                delay={0.4}
+                stagger={0.035}
+                className="font-display text-[clamp(2.8rem,7.5vw,6.5rem)] font-light leading-[0.88] tracking-[-0.04em] text-[var(--text)]"
+              />
+              <TextReveal
+                text="e começam a decidir."
+                tag="span"
+                trigger="mount"
+                delay={0.9}
+                stagger={0.035}
+                className="mt-2 block font-display text-[clamp(2.8rem,7.5vw,6.5rem)] font-light leading-[0.88] tracking-[-0.04em] text-[var(--text-secondary)]"
+              />
+            </div>
+
+            {/* Right — vertical context block (only on desktop) */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.6 }}
+              className="hidden border-l border-[var(--border)] pl-6 md:block"
+            >
+              <p className="text-[0.8rem] leading-[1.8] text-[var(--text-secondary)]">
+                Cada material defende uma tese. Nenhum é neutro. Cada
+                interação ensina algo. Nenhuma é decorativa.
+              </p>
+              <div className="mt-6 flex items-center gap-4 text-[0.55rem] uppercase tracking-[0.15em] text-[var(--text-muted)]">
+                {["Leitura", "Palco", "Workshop"].map((mode) => (
+                  <span key={mode}>{mode}</span>
+                ))}
+              </div>
+            </motion.div>
           </div>
-
-          {/* Subtext */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1.4 }}
-            className="mt-10 max-w-[44ch] text-[0.95rem] leading-[1.75] text-[var(--text-secondary)]"
-          >
-            Experiências interativas de alto impacto para keynote, workshop executivo
-            e posicionamento estratégico. Cada material defende uma tese.
-            Nenhum é neutro.
-          </motion.p>
-
-          {/* Mode line */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1.8 }}
-            className="mt-8 flex items-center gap-6 text-[0.6rem] uppercase tracking-[0.15em] text-[var(--text-muted)]"
-          >
-            {["Leitura", "Apresentação", "Workshop"].map((mode) => (
-              <span key={mode} className="flex items-center gap-2">
-                <span className="inline-block h-1 w-1 rounded-full bg-[var(--text-muted)]" />
-                {mode}
-              </span>
-            ))}
-          </motion.div>
         </div>
 
-        {/* Scroll line */}
+        {/* Scroll indicator — minimal */}
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2.2, duration: 0.8 }}
-          className="absolute bottom-6 right-6 md:right-12"
+          animate={{ opacity: 0.3 }}
+          transition={{ delay: 2.4, duration: 0.8 }}
+          className="absolute bottom-6 left-1/2 -translate-x-1/2"
         >
           <motion.div
-            animate={{ y: [0, 8, 0] }}
+            animate={{ y: [0, 6, 0] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-            className="flex flex-col items-center gap-2"
-          >
-            <span className="text-[0.5rem] uppercase tracking-[0.2em] text-[var(--text-muted)]/40 [writing-mode:vertical-lr]">
-              scroll
-            </span>
-            <div className="h-12 w-px bg-gradient-to-b from-[var(--text-muted)]/20 to-transparent" />
-          </motion.div>
+            className="h-8 w-px bg-gradient-to-b from-[var(--text-muted)]/30 to-transparent"
+          />
         </motion.div>
       </motion.section>
 
       {/* ═══════════════════════════════════════════
-          EXPERIENCES — Editorial blocks with theme accents
+          EXP 01 — A EQUAÇÃO INVISÍVEL
+          Asymmetric: oversized number left, content right
           ═══════════════════════════════════════════ */}
-      <section className="relative">
-        {experiences.map((exp, i) => (
-          <ExperienceBlock key={exp.slug} experience={exp} index={i} />
-        ))}
+      <Link href={`/experiencias/${equacao.slug}`} className="group block">
+        <section className={cn("theme-cx", "relative overflow-hidden")}>
+          <div className="absolute inset-0 bg-gradient-to-r from-[var(--accent-primary)]/[0.02] to-transparent" />
+
+          <div className="mx-auto max-w-7xl px-6 md:px-12">
+            <div className="grid min-h-[80vh] items-center gap-0 md:grid-cols-[1fr_1fr] lg:grid-cols-[45%_55%]">
+              {/* Left — oversized typographic number */}
+              <div className="relative flex items-center justify-center py-20 md:py-0">
+                <GSAPReveal from={{ opacity: 0, scale: 0.9 }} to={{ opacity: 1, scale: 1, duration: 1.2, ease: "power3.out" }}>
+                  <span className="select-none font-mono text-[clamp(8rem,22vw,18rem)] font-bold leading-none text-[var(--accent-primary)]/[0.06] transition-all duration-700 group-hover:text-[var(--accent-primary)]/[0.12]">
+                    01
+                  </span>
+                </GSAPReveal>
+                {/* Vertical accent line */}
+                <div className="absolute right-0 top-1/2 hidden h-2/3 w-px -translate-y-1/2 bg-gradient-to-b from-transparent via-[var(--accent-primary)]/20 to-transparent md:block" />
+              </div>
+
+              {/* Right — content */}
+              <div className="pb-20 md:py-32 md:pl-12 lg:pl-20">
+                <GSAPReveal>
+                  <span className="text-[0.55rem] font-semibold uppercase tracking-[0.2em] text-[var(--accent-primary)]">
+                    {equacao.subtitle}
+                  </span>
+                </GSAPReveal>
+
+                <GSAPReveal from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0, duration: 0.9, delay: 0.1, ease: "power3.out" }}>
+                  <h2 className="mt-4 font-display text-[clamp(2.2rem,5vw,4.5rem)] font-light leading-[0.92] tracking-[-0.04em] text-[var(--text)] transition-colors duration-500 group-hover:text-[var(--accent-primary)]">
+                    {equacao.title}
+                  </h2>
+                </GSAPReveal>
+
+                <GSAPReveal from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0, duration: 0.7, delay: 0.2, ease: "power3.out" }}>
+                  <p className="mt-6 max-w-[40ch] font-display text-lg font-light italic leading-[1.6] text-[var(--text-secondary)]">
+                    &ldquo;{equacao.thesis}&rdquo;
+                  </p>
+                </GSAPReveal>
+
+                <GSAPReveal from={{ opacity: 0 }} to={{ opacity: 1, duration: 0.6, delay: 0.35, ease: "power3.out" }}>
+                  <div className="mt-10 flex items-center gap-8">
+                    <div>
+                      <span className="font-mono text-3xl font-bold text-[var(--accent-primary)]">
+                        <GSAPCounter value={equacao.chapters.length} />
+                      </span>
+                      <span className="ml-1.5 text-[0.55rem] uppercase tracking-[0.1em] text-[var(--text-muted)]">
+                        capítulos
+                      </span>
+                    </div>
+                    <div className="h-6 w-px bg-[var(--border)]" />
+                    <div className="text-[0.65rem] tracking-[0.08em] text-[var(--text-muted)]">
+                      {equacao.readTime} leitura · {equacao.workshopTime} workshop
+                    </div>
+                  </div>
+                </GSAPReveal>
+
+                <GSAPReveal from={{ opacity: 0, x: -10 }} to={{ opacity: 1, x: 0, duration: 0.5, delay: 0.45, ease: "power3.out" }}>
+                  <div className="mt-8 flex items-center gap-3">
+                    <span className="h-px w-8 bg-[var(--accent-primary)]/40 transition-all duration-500 group-hover:w-16" />
+                    <span className="text-[0.6rem] font-medium uppercase tracking-[0.15em] text-[var(--accent-primary)] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                      Explorar
+                    </span>
+                  </div>
+                </GSAPReveal>
+              </div>
+            </div>
+          </div>
+        </section>
+      </Link>
+
+      {/* ═══════════════════════════════════════════
+          BREATHING MOMENT — Full-bleed provocation
+          ═══════════════════════════════════════════ */}
+      <section className="relative flex min-h-[50vh] items-center justify-center overflow-hidden py-24 md:py-32">
+        <div className="absolute inset-0 bg-[var(--surface)]/30" />
+        <GrainOverlay opacity={0.015} />
+        <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
+          <GSAPReveal from={{ opacity: 0, y: 40 }} to={{ opacity: 1, y: 0, duration: 1, ease: "power3.out" }}>
+            <p className="font-display text-[clamp(1.5rem,4vw,3rem)] font-light leading-[1.15] tracking-[-0.03em] text-[var(--text)]">
+              Duas experiências. Duas teses.
+            </p>
+            <p className="mt-3 font-display text-[clamp(1.5rem,4vw,3rem)] font-light leading-[1.15] tracking-[-0.03em] text-[var(--text-muted)]">
+              A mesma convicção: neutralidade é mediocridade.
+            </p>
+          </GSAPReveal>
+        </div>
       </section>
 
       {/* ═══════════════════════════════════════════
-          UPCOMING — Minimal, typographic
+          EXP 02 — O PARADOXO DO SUCESSO
+          Inverted: content left (narrow), data right (wide)
+          ═══════════════════════════════════════════ */}
+      <Link href={`/experiencias/${paradoxo.slug}`} className="group block">
+        <section className={cn("theme-cs", "relative overflow-hidden")}>
+          <div className="absolute inset-0 bg-gradient-to-l from-[var(--accent-primary)]/[0.02] to-transparent" />
+
+          <div className="mx-auto max-w-7xl px-6 md:px-12">
+            <div className="grid min-h-[80vh] items-center gap-8 md:grid-cols-[55%_45%]">
+              {/* Left — content, aligned right for asymmetry */}
+              <div className="order-2 py-20 md:order-1 md:py-32 md:pr-12 lg:pr-20">
+                <GSAPReveal>
+                  <span className="text-[0.55rem] font-semibold uppercase tracking-[0.2em] text-[var(--accent-primary)]">
+                    {paradoxo.subtitle}
+                  </span>
+                </GSAPReveal>
+
+                <GSAPReveal from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0, duration: 0.9, delay: 0.1, ease: "power3.out" }}>
+                  <h2 className="mt-4 font-display text-[clamp(2.2rem,5vw,4.5rem)] font-light leading-[0.92] tracking-[-0.04em] text-[var(--text)] transition-colors duration-500 group-hover:text-[var(--accent-primary)]">
+                    {paradoxo.title}
+                  </h2>
+                </GSAPReveal>
+
+                <GSAPReveal from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0, duration: 0.7, delay: 0.2, ease: "power3.out" }}>
+                  <p className="mt-6 max-w-[38ch] text-[0.95rem] leading-[1.75] text-[var(--text-secondary)]">
+                    {paradoxo.thesis}
+                  </p>
+                </GSAPReveal>
+
+                <GSAPReveal from={{ opacity: 0 }} to={{ opacity: 1, duration: 0.6, delay: 0.3, ease: "power3.out" }}>
+                  <div className="mt-10 text-[0.65rem] tracking-[0.08em] text-[var(--text-muted)]">
+                    {paradoxo.readTime} leitura · {paradoxo.workshopTime} workshop · {paradoxo.chapters.length} capítulos
+                  </div>
+                </GSAPReveal>
+
+                <GSAPReveal from={{ opacity: 0, x: -10 }} to={{ opacity: 1, x: 0, duration: 0.5, delay: 0.4, ease: "power3.out" }}>
+                  <div className="mt-8 flex items-center gap-3">
+                    <span className="h-px w-8 bg-[var(--accent-primary)]/40 transition-all duration-500 group-hover:w-16" />
+                    <span className="text-[0.6rem] font-medium uppercase tracking-[0.15em] text-[var(--accent-primary)] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                      Explorar
+                    </span>
+                  </div>
+                </GSAPReveal>
+              </div>
+
+              {/* Right — data-forward: prominent stats stacked */}
+              <div className="relative order-1 flex flex-col items-end justify-center py-20 md:order-2 md:py-32">
+                {/* Vertical accent line — left side */}
+                <div className="absolute left-0 top-1/2 hidden h-2/3 w-px -translate-y-1/2 bg-gradient-to-b from-transparent via-[var(--accent-primary)]/20 to-transparent md:block" />
+
+                <GSAPReveal from={{ opacity: 0, x: 30 }} to={{ opacity: 1, x: 0, duration: 1, delay: 0.15, ease: "power3.out" }}>
+                  <div className="text-right">
+                    <span className="font-mono text-[clamp(4rem,10vw,8rem)] font-bold leading-none text-[var(--accent-primary)]/[0.15] transition-all duration-700 group-hover:text-[var(--accent-primary)]/[0.3]">
+                      44<span className="text-[0.6em]">%</span>
+                    </span>
+                    <p className="mt-1 text-[0.65rem] uppercase tracking-[0.12em] text-[var(--text-muted)]">
+                      renovam sem adotar o produto
+                    </p>
+                  </div>
+                </GSAPReveal>
+
+                <GSAPReveal from={{ opacity: 0, x: 30 }} to={{ opacity: 1, x: 0, duration: 1, delay: 0.3, ease: "power3.out" }}>
+                  <div className="mt-8 text-right">
+                    <span className="font-mono text-[clamp(4rem,10vw,8rem)] font-bold leading-none text-[var(--accent-primary)]/[0.10] transition-all duration-700 group-hover:text-[var(--accent-primary)]/[0.2]">
+                      67<span className="text-[0.6em]">%</span>
+                    </span>
+                    <p className="mt-1 text-[0.65rem] uppercase tracking-[0.12em] text-[var(--text-muted)]">
+                      do churn começa no onboarding
+                    </p>
+                  </div>
+                </GSAPReveal>
+              </div>
+            </div>
+          </div>
+        </section>
+      </Link>
+
+      {/* ═══════════════════════════════════════════
+          UPCOMING — Understated, just text
           ═══════════════════════════════════════════ */}
       <section className="border-t border-[var(--border)] py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-6 md:px-12">
@@ -170,122 +314,25 @@ export default function Portal() {
       </section>
 
       {/* ═══════════════════════════════════════════
-          FOOTER
+          CLOSE — Provocation, not footer
           ═══════════════════════════════════════════ */}
-      <footer className="border-t border-[var(--border)] py-8">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 md:px-12">
-          <span className="text-[0.6rem] font-medium uppercase tracking-[0.15em] text-[var(--text-muted)]/40">
-            CX Experience Lab
-          </span>
-          <span className="text-[0.55rem] tracking-[0.1em] text-[var(--text-muted)]/25">
-            Diretoria de Qualidade e Dados — AeC
-          </span>
+      <footer className="border-t border-[var(--border)] py-12 md:py-16">
+        <div className="mx-auto max-w-7xl px-6 md:px-12">
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div>
+              <span className="text-[0.6rem] font-medium uppercase tracking-[0.15em] text-[var(--text-muted)]/40">
+                CX Experience Lab
+              </span>
+              <p className="mt-2 max-w-[36ch] font-display text-sm font-light italic text-[var(--text-muted)]">
+                O objetivo não é informar. É provocar a decisão que já deveria ter sido tomada.
+              </p>
+            </div>
+            <span className="text-[0.55rem] tracking-[0.1em] text-[var(--text-muted)]/25">
+              Diretoria de Qualidade e Dados — AeC
+            </span>
+          </div>
         </div>
       </footer>
     </main>
-  );
-}
-
-/* ─── Experience Block — Full-width editorial entry with theme color ─── */
-function ExperienceBlock({
-  experience,
-  index,
-}: {
-  experience: (typeof experiences)[0];
-  index: number;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-  const y = useTransform(scrollYProgress, [0, 1], [40, -40]);
-
-  return (
-    <Link href={`/experiencias/${experience.slug}`} className="group block">
-      <div
-        ref={ref}
-        className={cn(
-          `theme-${experience.theme}`,
-          "relative border-t border-[var(--border)]",
-          "transition-colors duration-500",
-          "hover:bg-[var(--surface)]/30"
-        )}
-      >
-        <div className="mx-auto max-w-7xl px-6 md:px-12">
-          <div className="grid items-center gap-8 py-16 md:grid-cols-[1fr_auto] md:py-24 lg:py-32">
-            {/* Left: Content */}
-            <div>
-              <GSAPReveal>
-                <div className="flex items-center gap-4">
-                  <span className="font-mono text-[0.65rem] text-[var(--text-muted)]">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span className="h-px w-8 bg-[var(--border)]" />
-                  <span className="text-[0.6rem] font-medium uppercase tracking-[0.15em] text-[var(--text-muted)]">
-                    {experience.subtitle}
-                  </span>
-                  {experience.status === "live" && (
-                    <span className="ml-2 flex items-center gap-1.5 text-[0.5rem] uppercase tracking-[0.1em] text-[var(--text-muted)]">
-                      <span className="h-1 w-1 rounded-full bg-[var(--success)]" />
-                      Disponível
-                    </span>
-                  )}
-                </div>
-              </GSAPReveal>
-
-              <GSAPReveal from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0, duration: 0.8, delay: 0.1, ease: "power3.out" }}>
-                <h2 className="mt-5 font-display text-[clamp(2rem,5vw,4rem)] font-light leading-[0.95] tracking-[-0.035em] text-[var(--text)] transition-all duration-500 group-hover:text-[var(--accent-primary)]">
-                  {experience.title}
-                </h2>
-              </GSAPReveal>
-
-              <GSAPReveal from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0, duration: 0.7, delay: 0.15, ease: "power3.out" }}>
-                <p className="mt-4 max-w-[52ch] text-base leading-[1.7] text-[var(--text-secondary)]">
-                  {experience.thesis}
-                </p>
-              </GSAPReveal>
-
-              <GSAPReveal from={{ opacity: 0, y: 15 }} to={{ opacity: 1, y: 0, duration: 0.6, delay: 0.2, ease: "power3.out" }}>
-                <div className="mt-8 flex items-center gap-6 text-[0.6rem] uppercase tracking-[0.1em] text-[var(--text-muted)]">
-                  <span>
-                    <span className="mr-1.5 font-mono text-sm font-medium text-[var(--text-secondary)]">
-                      {experience.chapters.length}
-                    </span>
-                    capítulos
-                  </span>
-                  <span className="h-3 w-px bg-[var(--border)]" />
-                  <span>{experience.readTime} leitura</span>
-                  <span className="h-3 w-px bg-[var(--border)]" />
-                  <span>{experience.workshopTime} workshop</span>
-                </div>
-              </GSAPReveal>
-
-              <GSAPReveal from={{ opacity: 0, y: 10 }} to={{ opacity: 1, y: 0, duration: 0.5, delay: 0.25, ease: "power3.out" }}>
-                <div className="mt-4 flex items-center gap-2">
-                  {experience.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="rounded-md border border-[var(--border)] px-2.5 py-1 text-[0.55rem] font-medium text-[var(--text-muted)]/60"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </GSAPReveal>
-            </div>
-
-            {/* Right: Arrow */}
-            <motion.div style={{ y }} className="hidden md:block">
-              <div className="flex h-20 w-20 items-center justify-center rounded-full border border-[var(--border)] transition-all duration-500 group-hover:border-[var(--accent-primary)]/30 group-hover:shadow-[0_0_30px_rgba(var(--accent-primary-rgb),0.06)]">
-                <span className="text-lg text-[var(--text-muted)] transition-all duration-500 group-hover:translate-x-1 group-hover:text-[var(--accent-primary)]">
-                  &rarr;
-                </span>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-    </Link>
   );
 }
