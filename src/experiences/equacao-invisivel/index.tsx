@@ -28,8 +28,9 @@ import {
   GSAPStaggerReveal,
   GSAPCounter,
 } from "@/components/motion/gsap-reveal";
+import { TextReveal, BlurReveal } from "@/components/motion/text-reveal";
 import { Tabs } from "@/components/interactive/tabs";
-// import { ComparisonSlider } from "@/components/interactive/comparison-slider";
+import { SpotlightCard } from "@/components/interactive/spotlight-card";
 import { ImageHero, ImageSplit } from "@/components/cinematic/image-section";
 import {
   HeadlineSlide,
@@ -136,14 +137,16 @@ export default function EquacaoInvisivel() {
               align="center"
               background={i === 1 ? "surface" : "base"}
             >
-              <GSAPReveal>
-                <span className="font-mono text-[clamp(3rem,8vw,6rem)] font-bold leading-none text-[var(--accent-primary)]/[0.08]">
-                  {p.number}
-                </span>
-                <h2 className="mt-4 font-display text-[clamp(1.8rem,4.5vw,3.5rem)] font-light tracking-[-0.03em] text-[var(--text)]">
-                  {p.statement}
-                </h2>
-              </GSAPReveal>
+              <span className="font-mono text-[clamp(3rem,8vw,6rem)] font-bold leading-none text-[var(--accent-primary)]/[0.08]">
+                {p.number}
+              </span>
+              <div className="mt-4">
+                <TextReveal
+                  text={p.statement}
+                  tag="h2"
+                  className="font-display text-[clamp(1.8rem,4.5vw,3.5rem)] font-light tracking-[-0.03em] text-[var(--text)]"
+                />
+              </div>
             </HeadlineSlide>
           ))}
         </div>
@@ -268,22 +271,24 @@ export default function EquacaoInvisivel() {
         <Section variant="default">
           <Container>
             <div className="grid gap-6 md:grid-cols-2">
-              {dimensoes.items.map((dim, i) => (
+              {dimensoes.items.map((dim) => (
                 <GSAPReveal key={dim.title}>
-                  <div className="group relative overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)]/30 p-8 transition-all duration-300 hover:border-[var(--accent-primary)]/15 hover:bg-[var(--surface)]/50">
-                    <div className="absolute -right-4 -top-4 font-mono text-[5rem] font-bold leading-none text-[var(--accent-primary)]/[0.04]">
-                      {dim.number}
+                  <SpotlightCard className="h-full">
+                    <div className="relative p-8">
+                      <div className="absolute -right-4 -top-4 font-mono text-[5rem] font-bold leading-none text-[var(--accent-primary)]/[0.04]">
+                        {dim.number}
+                      </div>
+                      <span className="text-[0.55rem] font-semibold uppercase tracking-[0.15em] text-[var(--accent-primary)]">
+                        {dim.short}
+                      </span>
+                      <h3 className="mt-2 font-display text-2xl font-light text-[var(--text)]">
+                        {dim.title}
+                      </h3>
+                      <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)]">
+                        {dim.description}
+                      </p>
                     </div>
-                    <span className="text-[0.55rem] font-semibold uppercase tracking-[0.15em] text-[var(--accent-primary)]">
-                      {dim.short}
-                    </span>
-                    <h3 className="mt-2 font-display text-2xl font-light text-[var(--text)]">
-                      {dim.title}
-                    </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)]">
-                      {dim.description}
-                    </p>
-                  </div>
+                  </SpotlightCard>
                 </GSAPReveal>
               ))}
             </div>
@@ -388,11 +393,11 @@ export default function EquacaoInvisivel() {
 
         {/* Pull quote */}
         <HeadlineSlide align="center" background="base">
-          <GSAPReveal>
+          <BlurReveal>
             <FullBleedText>
               {custoSilencio.pullQuote}
             </FullBleedText>
-          </GSAPReveal>
+          </BlurReveal>
         </HeadlineSlide>
 
         <WorkshopBlock {...custoSilencio.workshop} />

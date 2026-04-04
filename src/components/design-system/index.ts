@@ -27,3 +27,5 @@ export {
   ComparisonCard,
   NumberedCard,
 } from "./card";
+
+export { BentoGrid, BentoItem } from "./bento-grid";
