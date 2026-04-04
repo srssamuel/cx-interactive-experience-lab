@@ -4,33 +4,31 @@
   --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
 
-  /* ─── Colors — Warm Obsidian (anti-cyan, anti-AI) ─── */
-  --bg: #09090b;
-  --bg-warm: #0c0a09;
-  --surface: #18181b;
-  --surface-elevated: #27272a;
-  --text: #fafaf9;
-  --text-secondary: #a8a29e;
-  --text-muted: #57534e;
-  --border: rgba(168, 162, 158, 0.08);
-  --border-hover: rgba(168, 162, 158, 0.16);
+  /* ─── Colors — "Midnight Authority" (from premium-design-system skill) ─── */
+  --bg: #08090E;
+  --bg-warm: #0A0B10;
+  --surface: #0E1117;
+  --surface-elevated: #151922;
+  --text: #E8ECF4;
+  --text-secondary: #7A8399;
+  --text-muted: #4A5268;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.15);
 
-  /* ─── Accent colors — Refined Palette (no cyan default) ─── */
-  --accent-primary: #e7e5e4;
-  --accent-primary-rgb: 231, 229, 228;
-  --accent-secondary: #a8a29e;
-  --accent-secondary-rgb: 168, 162, 158;
-  --accent-tertiary: #78716c;
-  --accent-tertiary-rgb: 120, 113, 108;
-  --accent-warm: #d97706;
-  --accent-warm-rgb: 217, 119, 6;
-  --accent-danger: #dc2626;
-  --accent-danger-rgb: 220, 38, 38;
+  /* ─── Default accent: none — each experience sets its own ─── */
+  --accent-primary: #7A8399;
+  --accent-primary-rgb: 122, 131, 153;
+  --accent-secondary: #4A5268;
+  --accent-secondary-rgb: 74, 82, 104;
+
+  /* ─── Semantic colors ─── */
+  --success: #34D399;
+  --danger: #F87171;
+  --warning: #F59E0B;
 
   /* ─── Glow colors ─── */
-  --glow-primary: rgba(231, 229, 228, 0.06);
-  --glow-primary-strong: rgba(231, 229, 228, 0.12);
-  --glow-warm: rgba(217, 119, 6, 0.08);
+  --glow-primary: rgba(var(--accent-primary-rgb), 0.12);
+  --glow-primary-strong: rgba(var(--accent-primary-rgb), 0.2);
 
   /* ─── Spacing scale ─── */
   --space-1: 4px;
@@ -47,7 +45,7 @@
   --space-12: 192px;
   --space-13: 256px;
 
-  /* ─── Typography scale ─── */
+  /* ─── Typography scale (fluid clamp) ─── */
   --text-xs: clamp(0.6875rem, 0.65rem + 0.1vw, 0.75rem);
   --text-sm: clamp(0.8125rem, 0.78rem + 0.15vw, 0.875rem);
   --text-base: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
@@ -79,47 +77,50 @@
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3);
   --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.55), 0 6px 10px rgba(0, 0, 0, 0.35);
-  --shadow-glow: 0 0 20px rgba(var(--accent-primary-rgb), 0.08), 0 0 60px rgba(var(--accent-primary-rgb), 0.03);
+  --shadow-glow: 0 0 20px rgba(var(--accent-primary-rgb), 0.1), 0 0 60px rgba(var(--accent-primary-rgb), 0.04);
 }
 
-/* ─── Experience-specific accent themes ─── */
+/* ═══════════════════════════════════════════
+   Experience-specific accent themes
+   (from premium-design-system skill)
+   ═══════════════════════════════════════════ */
 
-/* CX Experience: Deep amber / warm cognac */
+/* CX / Experiência: Amber + Teal */
 .theme-cx {
-  --accent-primary: #d97706;
-  --accent-primary-rgb: 217, 119, 6;
-  --accent-secondary: #b45309;
-  --accent-secondary-rgb: 180, 83, 9;
+  --accent-primary: #F59E0B;
+  --accent-primary-rgb: 245, 158, 11;
+  --accent-secondary: #14B8A6;
+  --accent-secondary-rgb: 20, 184, 166;
 }
 
-/* CS Experience: Forest / deep emerald */
+/* Atendimento / CS: Coral + Emerald */
 .theme-cs {
-  --accent-primary: #059669;
-  --accent-primary-rgb: 5, 150, 105;
-  --accent-secondary: #047857;
-  --accent-secondary-rgb: 4, 120, 87;
+  --accent-primary: #F87171;
+  --accent-primary-rgb: 248, 113, 113;
+  --accent-secondary: #34D399;
+  --accent-secondary-rgb: 52, 211, 153;
 }
 
-/* Data Intelligence: Electric violet */
+/* Data / AI: Violet + Blue */
 .theme-data {
-  --accent-primary: #7c3aed;
-  --accent-primary-rgb: 124, 58, 237;
-  --accent-secondary: #6d28d9;
-  --accent-secondary-rgb: 109, 40, 217;
+  --accent-primary: #8B5CF6;
+  --accent-primary-rgb: 139, 92, 246;
+  --accent-secondary: #3B82F6;
+  --accent-secondary-rgb: 59, 130, 246;
 }
 
-/* AI Strategy: Rose / warm crimson */
-.theme-ai {
-  --accent-primary: #e11d48;
-  --accent-primary-rgb: 225, 29, 72;
-  --accent-secondary: #be123c;
-  --accent-secondary-rgb: 190, 18, 60;
+/* Gestão / Liderança: Gold + Slate */
+.theme-leadership {
+  --accent-primary: #D4A853;
+  --accent-primary-rgb: 212, 168, 83;
+  --accent-secondary: #64748B;
+  --accent-secondary-rgb: 100, 116, 139;
 }
 
-/* Efficiency: Steel blue */
+/* Eficiência: Steel + Cyan */
 .theme-efficiency {
-  --accent-primary: #0284c7;
+  --accent-primary: #0284C7;
   --accent-primary-rgb: 2, 132, 199;
-  --accent-secondary: #0369a1;
-  --accent-secondary-rgb: 3, 105, 161;
+  --accent-secondary: #06B6D4;
+  --accent-secondary-rgb: 6, 182, 212;
 }
