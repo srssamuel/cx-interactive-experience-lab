@@ -27,6 +27,18 @@ const experiences = [
     accent: "#F59E0B",
     status: "live" as const,
   },
+  {
+    slug: "paradoxo-do-sucesso",
+    title: "O Paradoxo do Sucesso",
+    subtitle: "Customer Success Redefinido",
+    description:
+      "Renovação não é lealdade. Cliente ativo não é cliente saudável. O paradoxo que separa retenção real de inércia disfarçada.",
+    chapters: 8,
+    readTime: "12 min",
+    tags: ["CS", "Retenção", "Churn", "Workshop"],
+    accent: "#0D9488",
+    status: "live" as const,
+  },
 ];
 
 export default function Portal() {
