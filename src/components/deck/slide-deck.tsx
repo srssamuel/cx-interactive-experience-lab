@@ -6,6 +6,7 @@ import { cn } from "@/lib/cn";
 import { useSlideNavigation } from "@/lib/hooks/use-slide-navigation";
 import { ProgressBar } from "./progress-bar";
 import { SlideCounter } from "./slide-counter";
+import { CursorSpotlight } from "@/components/fx";
 
 interface SlideDeckProps {
   children: ReactNode[];
@@ -74,8 +75,8 @@ export function SlideDeck({ children, className }: SlideDeckProps) {
         </motion.div>
       </AnimatePresence>
 
-      {/* Progress bar — now color-aware */}
-      <ProgressBar progress={nav.progress} />
+      {/* Progress bar — section color-aware */}
+      <ProgressBar progress={nav.progress} color={section.color} />
 
       {/* Section indicator (top-left) */}
       <AnimatePresence mode="wait">
@@ -124,7 +125,7 @@ export function SlideDeck({ children, className }: SlideDeckProps) {
       </div>
 
       {/* Slide counter */}
-      <SlideCounter current={nav.current + 1} total={nav.totalSlides} />
+      <SlideCounter current={nav.current + 1} total={nav.totalSlides} color={section.color} />
 
       {/* Navigation arrows (desktop) */}
       <div className="pointer-events-none absolute inset-0 z-40 hidden items-center justify-between px-4 md:flex">
@@ -152,6 +153,9 @@ export function SlideDeck({ children, className }: SlideDeckProps) {
           </button>
         )}
       </div>
+
+      {/* Cursor spotlight */}
+      <CursorSpotlight color={section.color.replace("#", "").match(/.{2}/g)?.map((h) => parseInt(h, 16)).join(", ") || "0, 229, 195"} />
 
       {/* Keyboard hint */}
       <motion.div

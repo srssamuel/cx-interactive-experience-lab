@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/cn";
 import { useCursorParallax } from "@/lib/hooks/use-cursor-parallax";
 import { useCountUp, parseStat } from "@/lib/hooks/use-count-up";
+import { ParticleCanvas } from "@/components/fx";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
@@ -136,6 +137,7 @@ export function TitleSlide({ overline, title, subtitle, accent, theme, className
       <Grain />
       <Aurora theme={theme} />
       <DotGrid />
+      <ParticleCanvas count={40} color={THEMES[theme || "default"].rgb} className="pointer-events-none absolute inset-0 z-[1] opacity-25" />
 
       {/* Accent line */}
       <div className="absolute left-8 top-[15%] h-[30%] w-[2px] md:left-16" style={{ background: `linear-gradient(to bottom, transparent, rgba(var(--accent-rgb), 0.3), transparent)` }} />
@@ -722,6 +724,7 @@ export function SectionDivider({ number, title, subtitle, theme, className }: Se
       <Grain opacity={0.03} />
       <Aurora theme={theme} />
       <DotGrid />
+      <ParticleCanvas count={30} color={THEMES[theme || "default"].rgb} className="pointer-events-none absolute inset-0 z-[1] opacity-20" />
 
       {/* Large blurred number background */}
       <motion.span
@@ -758,8 +761,14 @@ export function SectionDivider({ number, title, subtitle, theme, className }: Se
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.7 }}
-          className="font-[var(--font-display)] text-[clamp(2.5rem,6vw,5rem)] font-normal tracking-[-0.03em] text-[var(--text)]"
-          style={{ textShadow: "var(--text-shadow-cinematic)" }}
+          className="font-[var(--font-display)] text-[clamp(2.5rem,6vw,5rem)] font-normal tracking-[-0.03em]"
+          style={{
+            background: THEMES[theme || "default"].gradient,
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+            filter: "drop-shadow(0 4px 20px rgba(var(--accent-rgb), 0.15))",
+          }}
         >
           {title}
         </motion.h2>
@@ -770,7 +779,7 @@ export function SectionDivider({ number, title, subtitle, theme, className }: Se
           animate={{ scaleX: 1 }}
           transition={{ delay: 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="mx-auto mt-4 h-[2px] w-24 origin-center"
-          style={{ background: `var(--accent)` }}
+          style={{ background: THEMES[theme || "default"].gradient }}
         />
 
         {subtitle && (
