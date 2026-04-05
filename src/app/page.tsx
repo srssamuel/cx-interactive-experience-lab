@@ -1,415 +1,351 @@
 "use client";
 
-import { SlideDeck } from "@/components/deck";
-import {
-  TitleSlide,
-  StatementSlide,
-  DataSlide,
-  ListSlide,
-  SplitSlide,
-  ComparisonSlide,
-  SectionDivider,
-} from "@/components/slides";
+import { cn } from "@/lib/cn";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
+import Link from "next/link";
+import { experiences, upcomingExperiences } from "@/lib/registry";
+import { TextReveal } from "@/components/motion/text-reveal";
+import { GSAPReveal, GSAPCounter } from "@/components/motion/gsap-reveal";
+import { CursorParallaxContainer } from "@/components/motion/cursor-parallax-container";
+import { SkewTransition } from "@/components/motion/skew-transition";
+import { GrainOverlay } from "@/components/cinematic/headline-slide";
+import { AmbientBackground } from "@/components/cinematic/ambient-background";
+import { HolographicBadge } from "@/components/cinematic/holographic-card";
+import { useMagneticCursor } from "@/lib/hooks/use-magnetic-cursor";
 
-export default function Keynote() {
+export default function Portal() {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const heroScale = useTransform(scrollYProgress, [0, 0.7], [1, 0.97]);
+
+  const equacao = experiences[0];
+  const paradoxo = experiences[1];
+
   return (
-    <SlideDeck>
-      {/* ═══════════════════════════════════════════════
-          ABERTURA — 3 slides
-          ═══════════════════════════════════════════════ */}
+    <main className="min-h-screen bg-[var(--bg)]">
+      {/* ═══════════════════════════════════════════
+          HERO — Asymmetric editorial opening
+          ═══════════════════════════════════════════ */}
+      <motion.section
+        ref={heroRef}
+        style={{ opacity: heroOpacity, scale: heroScale }}
+        className="relative flex min-h-screen flex-col justify-end pb-16 md:pb-24"
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)] via-[var(--bg)] to-[var(--surface)]/30" />
+        <AmbientBackground variant="aurora" intensity={0.5} scrollAnimated={false} />
+        <GrainOverlay opacity={0.02} />
 
-      {/* 01 */}
-      <TitleSlide
-        overline="Diretoria de Qualidade e Dados"
-        title="O Futuro Já Chegou."
-        accent="Você está pronto?"
-        subtitle="Tendências de CX, Customer Success, Dados e IA que estão redefinindo quem lidera e quem assiste."
-      />
+        {/* Single diagonal rule — not 4 horizontal lines */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <motion.div
+            initial={{ scaleX: 0, rotate: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 2, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute left-0 right-0 top-[55%] h-px origin-left bg-[var(--border)]"
+          />
+        </div>
 
-      {/* 02 */}
-      <StatementSlide
-        statement="89% dos executivos dizem que CX é prioridade. Menos de 15% conseguem provar o impacto financeiro."
-        attribution="Forrester CX Index, 2024"
-      />
+        <CursorParallaxContainer className="relative z-10 mx-auto w-full max-w-7xl px-6 md:px-12" strength={0.8}>
+          <motion.div
+            data-depth="3"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="mb-20 md:mb-32"
+          >
+            <span className="text-[0.6rem] font-medium uppercase tracking-[0.25em] text-[var(--text-muted)]">
+              Diretoria de Qualidade e Dados
+            </span>
+          </motion.div>
 
-      {/* 03 */}
-      <DataSlide
-        stat="$75B"
-        label="Custo anual do mau atendimento nos EUA"
-        context="E no Brasil, o cenário é proporcionalmente pior — com um agravante: o cliente brasileiro é 3x mais propenso a trocar de fornecedor após uma experiência ruim."
-        source="NewVoiceMedia / Salesforce Research"
-      />
+          <div className="grid md:grid-cols-[1fr_280px] md:items-end md:gap-16">
+            {/* Left — massive headline */}
+            <div data-depth="1" className="max-w-[800px]" style={{ textShadow: "var(--text-shadow-cinematic)" }}>
+              <TextReveal
+                text="Onde executivos param de ouvir"
+                tag="h1"
+                trigger="mount"
+                delay={0.4}
+                stagger={0.035}
+                className="font-display text-[clamp(2.8rem,7.5vw,6.5rem)] font-light leading-[0.88] tracking-[-0.04em] text-[var(--text)]"
+              />
+              <TextReveal
+                text="e começam a decidir."
+                tag="span"
+                trigger="mount"
+                delay={0.9}
+                stagger={0.035}
+                className="mt-2 block font-display text-[clamp(2.8rem,7.5vw,6.5rem)] font-light leading-[0.88] tracking-[-0.04em] text-[var(--text-secondary)]"
+              />
+            </div>
 
-      {/* ═══════════════════════════════════════════════
-          SEÇÃO 1 — CUSTOMER EXPERIENCE (slides 4-12)
-          ═══════════════════════════════════════════════ */}
+            {/* Right — vertical context block (only on desktop) */}
+            <motion.div
+              data-depth="2"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 1.6 }}
+              className="hidden border-l border-[var(--border)] pl-6 md:block"
+            >
+              <p className="text-[0.8rem] leading-[1.8] text-[var(--text-secondary)]">
+                Cada material defende uma tese. Nenhum é neutro. Cada
+                interação ensina algo. Nenhuma é decorativa.
+              </p>
+              <div className="mt-6 flex items-center gap-4">
+                {["Leitura", "Palco", "Workshop"].map((mode) => (
+                  <HolographicBadge key={mode}>{mode}</HolographicBadge>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </CursorParallaxContainer>
 
-      {/* 04 */}
-      <SectionDivider
-        number="01"
-        title="Customer Experience"
-        subtitle="Da satisfação à obsessão: por que CX deixou de ser departamento e virou estratégia de sobrevivência."
-        theme="cx"
-      />
+        {/* Scroll indicator — minimal */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.3 }}
+          transition={{ delay: 2.4, duration: 0.8 }}
+          className="absolute bottom-6 left-1/2 -translate-x-1/2"
+        >
+          <motion.div
+            animate={{ y: [0, 6, 0] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+            className="h-8 w-px bg-gradient-to-b from-[var(--text-muted)]/30 to-transparent"
+          />
+        </motion.div>
+      </motion.section>
 
-      {/* 05 */}
-      <SplitSlide
-        title="CX não é mais diferencial. É pré-requisito."
-        accent="A nova realidade"
-        content="O cliente de 2025 não compara você com seu concorrente direto. Ele compara com a melhor experiência que já teve — seja um app de banco, uma entrega da Amazon ou uma consulta no iFood. O benchmark é universal."
-        visualType="network"
-        theme="cx"
-      />
+      {/* ═══════════════════════════════════════════
+          EXP 01 — A EQUAÇÃO INVISÍVEL
+          Asymmetric: oversized number left, content right
+          ═══════════════════════════════════════════ */}
+      <Link href={`/experiencias/${equacao.slug}`} className="group block">
+        <section className={cn("theme-cx", "section-bg-warm relative overflow-hidden")}>
+          <div className="absolute inset-0 bg-gradient-to-r from-[var(--accent-primary)]/[0.02] to-transparent" />
+          <AmbientBackground variant="mesh-warm" intensity={0.7} />
 
-      {/* 06 */}
-      <DataSlide
-        stat="73%"
-        label="dos clientes abandonam após 2 experiências ruins"
-        context="Não importa quanto tempo foram fiéis. Duas falhas bastam para zerar anos de relacionamento."
-        source="PwC Future of CX Report"
-        theme="cx"
-      />
+          <div className="mx-auto max-w-7xl px-6 md:px-12">
+            <div className="grid min-h-[80vh] items-center gap-0 md:grid-cols-[1fr_1fr] lg:grid-cols-[45%_55%]">
+              {/* Left — oversized typographic number */}
+              <div className="relative flex items-center justify-center py-20 md:py-0">
+                <GSAPReveal from={{ opacity: 0, scale: 0.9 }} to={{ opacity: 1, scale: 1, duration: 1.2, ease: "power3.out" }}>
+                  <span className="select-none font-mono text-[clamp(8rem,22vw,18rem)] font-bold leading-none text-[var(--accent-primary)]/[0.06] transition-all duration-700 group-hover:text-[var(--accent-primary)]/[0.12]">
+                    01
+                  </span>
+                </GSAPReveal>
+                {/* Vertical accent line */}
+                <div className="absolute right-0 top-1/2 hidden h-2/3 w-px -translate-y-1/2 bg-gradient-to-b from-transparent via-[var(--accent-primary)]/20 to-transparent md:block" />
+              </div>
 
-      {/* 07 */}
-      <ListSlide
-        title="5 Tendências que Redefinem CX em 2025"
-        items={[
-          { title: "Hiperpersonalização preditiva", description: "IA antecipa necessidades antes do cliente perceber que as tem. Do reativo para o profético." },
-          { title: "CX em tempo real", description: "Latência zero entre a frustração e a resolução. Quem demora 24h para responder já perdeu." },
-          { title: "Experiência omnicanal sem costura", description: "O cliente não pensa em canais. Ele pensa em resolver. A jornada é uma só." },
-          { title: "Emoção como métrica", description: "Sentiment analysis em voz, texto e comportamento. O NPS está morrendo — o que vem depois é mais preciso." },
-          { title: "CX como P&L", description: "Conectar cada ponto de contato a receita, churn e LTV. Se não mede, não gerencia. Se não gerencia, não lidera." },
-        ]}
-        theme="cx"
-      />
+              {/* Right — content */}
+              <div className="pb-20 md:py-32 md:pl-12 lg:pl-20">
+                <GSAPReveal>
+                  <span className="text-[0.55rem] font-semibold uppercase tracking-[0.2em] text-[var(--accent-primary)]">
+                    {equacao.subtitle}
+                  </span>
+                </GSAPReveal>
 
-      {/* 08 */}
-      <ComparisonSlide
-        title="CX Tradicional vs. CX Inteligente"
-        left={{
-          label: "Modelo tradicional",
-          items: [
-            "Pesquisa de satisfação pós-atendimento",
-            "NPS como métrica principal",
-            "Canais operando em silos",
-            "Decisões baseadas em intuição",
-            "Reação a reclamações",
-          ],
-        }}
-        right={{
-          label: "Modelo inteligente",
-          items: [
-            "Análise de sentimento em tempo real",
-            "Customer Effort Score + análise preditiva",
-            "Jornada unificada com contexto persistente",
-            "Decisões orientadas por dados comportamentais",
-            "Antecipação de problemas antes que aconteçam",
-          ],
-        }}
-        theme="cx"
-      />
+                <GSAPReveal from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0, duration: 0.9, delay: 0.1, ease: "power3.out" }} skewEntry>
+                  <h2 className="mt-4 font-display text-[clamp(2.2rem,5vw,4.5rem)] font-light leading-[0.92] tracking-[-0.04em] text-[var(--text)] transition-colors duration-500 group-hover:text-[var(--accent-primary)]" style={{ textShadow: "var(--text-shadow-subtle)" }}>
+                    {equacao.title}
+                  </h2>
+                </GSAPReveal>
 
-      {/* 09 */}
-      <StatementSlide
-        statement="O melhor atendimento é aquele que nunca precisou acontecer."
-        theme="cx"
-      />
+                <GSAPReveal from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0, duration: 0.7, delay: 0.2, ease: "power3.out" }}>
+                  <p className="mt-6 max-w-[40ch] font-display text-lg font-light italic leading-[1.6] text-[var(--text-secondary)]">
+                    &ldquo;{equacao.thesis}&rdquo;
+                  </p>
+                </GSAPReveal>
 
-      {/* 10 */}
-      <SplitSlide
-        title="O paradoxo da eficiência"
-        accent="Reflexão provocativa"
-        content="Call centers investem milhões para reduzir o TMA. Mas o cliente não quer uma ligação curta — ele quer não precisar ligar. A métrica errada produz a otimização errada."
-        visualType="bars"
-        theme="cx"
-      />
+                <GSAPReveal from={{ opacity: 0 }} to={{ opacity: 1, duration: 0.6, delay: 0.35, ease: "power3.out" }}>
+                  <div className="mt-10 flex items-center gap-8">
+                    <div>
+                      <span className="font-mono text-3xl font-bold text-[var(--accent-primary)]">
+                        <GSAPCounter value={equacao.chapters.length} />
+                      </span>
+                      <span className="ml-1.5 text-[0.55rem] uppercase tracking-[0.1em] text-[var(--text-muted)]">
+                        capítulos
+                      </span>
+                    </div>
+                    <div className="h-6 w-px bg-[var(--border)]" />
+                    <div className="text-[0.65rem] tracking-[0.08em] text-[var(--text-muted)]">
+                      {equacao.readTime} leitura · {equacao.workshopTime} workshop
+                    </div>
+                  </div>
+                </GSAPReveal>
 
-      {/* 11 */}
-      <DataSlide
-        stat="4.7x"
-        label="mais receita gerada por empresas líderes em CX"
-        context="Em comparação com retardatárias. CX não é custo. É o maior multiplicador de receita disponível."
-        source="Watermark Consulting / S&P 500 Analysis"
-        theme="cx"
-      />
+                <GSAPReveal from={{ opacity: 0, x: -10 }} to={{ opacity: 1, x: 0, duration: 0.5, delay: 0.45, ease: "power3.out" }}>
+                  <div className="mt-8 flex items-center gap-3">
+                    <span className="h-px w-8 bg-[var(--accent-primary)]/40 transition-all duration-500 group-hover:w-16" />
+                    <span className="text-[0.6rem] font-medium uppercase tracking-[0.15em] text-[var(--accent-primary)] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                      Explorar
+                    </span>
+                  </div>
+                </GSAPReveal>
+              </div>
+            </div>
+          </div>
+        </section>
+      </Link>
 
-      {/* 12 */}
-      <ListSlide
-        title="Ações Imediatas para Líderes de CX"
-        items={[
-          { title: "Mapear momentos de verdade", description: "Identifique os 3-5 momentos que definem se o cliente fica ou vai embora." },
-          { title: "Unificar dados de jornada", description: "Destrua os silos. CDP (Customer Data Platform) não é luxo — é infraestrutura." },
-          { title: "Medir esforço, não satisfação", description: "CES (Customer Effort Score) prediz churn melhor que NPS. Comece a medir." },
-          { title: "Criar closed-loop em 24h", description: "Cada detrator precisa ser recuperado em no máximo um dia. Automatize." },
-        ]}
-        theme="cx"
-      />
+      {/* ═══════════════════════════════════════════
+          BREATHING MOMENT — Full-bleed provocation
+          ═══════════════════════════════════════════ */}
+      <SkewTransition direction="up" intensity="subtle">
+        <section className="relative flex min-h-[50vh] items-center justify-center overflow-hidden py-24 md:py-32">
+          <div className="absolute inset-0 bg-[var(--surface)]/30" />
+          <GrainOverlay opacity={0.015} />
+          <div className="relative z-10 mx-auto max-w-4xl px-6 text-center" style={{ textShadow: "var(--text-shadow-subtle)" }}>
+            <GSAPReveal from={{ opacity: 0, y: 40 }} to={{ opacity: 1, y: 0, duration: 1, ease: "power3.out" }} skewEntry>
+              <p className="font-display text-[clamp(1.5rem,4vw,3rem)] font-light leading-[1.15] tracking-[-0.03em] text-[var(--text)]">
+                Duas experiências. Duas teses.
+              </p>
+              <p className="mt-3 font-display text-[clamp(1.5rem,4vw,3rem)] font-light leading-[1.15] tracking-[-0.03em] text-[var(--text-muted)]">
+                A mesma convicção: neutralidade é mediocridade.
+              </p>
+            </GSAPReveal>
+          </div>
+        </section>
+      </SkewTransition>
 
-      {/* ═══════════════════════════════════════════════
-          SEÇÃO 2 — CUSTOMER SUCCESS (slides 13-20)
-          ═══════════════════════════════════════════════ */}
+      {/* ═══════════════════════════════════════════
+          EXP 02 — O PARADOXO DO SUCESSO
+          Inverted: content left (narrow), data right (wide)
+          ═══════════════════════════════════════════ */}
+      <Link href={`/experiencias/${paradoxo.slug}`} className="group block">
+        <section className={cn("theme-cs", "section-bg-cool relative overflow-hidden")}>
+          <div className="absolute inset-0 bg-gradient-to-l from-[var(--accent-primary)]/[0.02] to-transparent" />
+          <AmbientBackground variant="mesh-cool" intensity={0.7} />
 
-      {/* 13 */}
-      <SectionDivider
-        number="02"
-        title="Customer Success"
-        subtitle="De apagar incêndios a construir valor: CS como motor de crescimento, não centro de custo."
-        theme="cs"
-      />
+          <div className="mx-auto max-w-7xl px-6 md:px-12">
+            <div className="grid min-h-[80vh] items-center gap-8 md:grid-cols-[55%_45%]">
+              {/* Left — content, aligned right for asymmetry */}
+              <div className="order-2 py-20 md:order-1 md:py-32 md:pr-12 lg:pr-20">
+                <GSAPReveal>
+                  <span className="text-[0.55rem] font-semibold uppercase tracking-[0.2em] text-[var(--accent-primary)]">
+                    {paradoxo.subtitle}
+                  </span>
+                </GSAPReveal>
 
-      {/* 14 */}
-      <SplitSlide
-        title="44% dos clientes renovam sem nunca ter adotado o produto."
-        accent="O dado que ninguém quer ouvir"
-        content="Renovação sem adoção é uma bomba-relógio. O churn não começa na reclamação — ele começa no silêncio do cliente que paga mas não usa."
-        visualType="pulse"
-        theme="cs"
-      />
+                <GSAPReveal from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0, duration: 0.9, delay: 0.1, ease: "power3.out" }} skewEntry>
+                  <h2 className="mt-4 font-display text-[clamp(2.2rem,5vw,4.5rem)] font-light leading-[0.92] tracking-[-0.04em] text-[var(--text)] transition-colors duration-500 group-hover:text-[var(--accent-primary)]" style={{ textShadow: "var(--text-shadow-subtle)" }}>
+                    {paradoxo.title}
+                  </h2>
+                </GSAPReveal>
 
-      {/* 15 */}
-      <DataSlide
-        stat="67%"
-        label="do churn começa no onboarding"
-        context="Os primeiros 90 dias decidem tudo. Se o cliente não enxerga valor nesse período, o restante do contrato é gestão de risco."
-        source="Gainsight Customer Success Report"
-        theme="cs"
-      />
+                <GSAPReveal from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0, duration: 0.7, delay: 0.2, ease: "power3.out" }}>
+                  <p className="mt-6 max-w-[38ch] text-[0.95rem] leading-[1.75] text-[var(--text-secondary)]">
+                    {paradoxo.thesis}
+                  </p>
+                </GSAPReveal>
 
-      {/* 16 */}
-      <ListSlide
-        title="Os 5 Sinais Silenciosos do Churn"
-        items={[
-          { title: "Queda no login sem reclamação", description: "O cliente que para de usar sem avisar já decidiu sair. O silêncio é o sinal mais perigoso." },
-          { title: "Perguntas que param de chegar", description: "Curiosidade zero = investimento emocional zero. Preocupe-se quando param de perguntar." },
-          { title: "Expansão travada", description: "Se o cliente não quer crescer com você, ele já está avaliando alternativas." },
-          { title: "Contato apenas em crises", description: "Quando o único gatilho de interação é o problema, o relacionamento já morreu." },
-          { title: "NPS passivo (7-8) persistente", description: "Nem detrator, nem promotor. O passivo é o churn mais caro porque não grita antes de sair." },
-        ]}
-        theme="cs"
-      />
+                <GSAPReveal from={{ opacity: 0 }} to={{ opacity: 1, duration: 0.6, delay: 0.3, ease: "power3.out" }}>
+                  <div className="mt-10 text-[0.65rem] tracking-[0.08em] text-[var(--text-muted)]">
+                    {paradoxo.readTime} leitura · {paradoxo.workshopTime} workshop · {paradoxo.chapters.length} capítulos
+                  </div>
+                </GSAPReveal>
 
-      {/* 17 */}
-      <ComparisonSlide
-        title="CS Reativo vs. CS Proativo"
-        left={{
-          label: "Reativo (apagando incêndio)",
-          items: [
-            "CSM acionado pelo ticket",
-            "Health Score baseado em pesquisa",
-            "QBR como apresentação de dados",
-            "Expansão oportunista",
-            "Renovação negociada no último mês",
-          ],
-        }}
-        right={{
-          label: "Proativo (construindo valor)",
-          items: [
-            "CSM antecipa risco por sinais digitais",
-            "Health Score com dados de uso reais",
-            "QBR como sessão de planejamento estratégico",
-            "Expansão como consequência natural de sucesso",
-            "Renovação como formalidade — valor já provado",
-          ],
-        }}
-        theme="cs"
-      />
+                <GSAPReveal from={{ opacity: 0, x: -10 }} to={{ opacity: 1, x: 0, duration: 0.5, delay: 0.4, ease: "power3.out" }}>
+                  <div className="mt-8 flex items-center gap-3">
+                    <span className="h-px w-8 bg-[var(--accent-primary)]/40 transition-all duration-500 group-hover:w-16" />
+                    <span className="text-[0.6rem] font-medium uppercase tracking-[0.15em] text-[var(--accent-primary)] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+                      Explorar
+                    </span>
+                  </div>
+                </GSAPReveal>
+              </div>
 
-      {/* 18 */}
-      <StatementSlide
-        statement="Customer Success não é um departamento. É a forma como a empresa inteira pensa sobre receita recorrente."
-        theme="cs"
-      />
+              {/* Right — data-forward: prominent stats stacked */}
+              <div className="relative order-1 flex flex-col items-end justify-center py-20 md:order-2 md:py-32">
+                {/* Vertical accent line — left side */}
+                <div className="absolute left-0 top-1/2 hidden h-2/3 w-px -translate-y-1/2 bg-gradient-to-b from-transparent via-[var(--accent-primary)]/20 to-transparent md:block" />
 
-      {/* 19 */}
-      <DataSlide
-        stat="5-25x"
-        label="mais caro adquirir do que reter"
-        context="Essa estatística tem 30 anos. Todo mundo sabe. Quase ninguém age com a urgência que ela exige."
-        source="Harvard Business Review"
-        theme="cs"
-      />
+                <GSAPReveal from={{ opacity: 0, x: 30 }} to={{ opacity: 1, x: 0, duration: 1, delay: 0.15, ease: "power3.out" }}>
+                  <div className="text-right">
+                    <span className="font-mono text-[clamp(4rem,10vw,8rem)] font-bold leading-none text-[var(--accent-primary)]/[0.15] transition-all duration-700 group-hover:text-[var(--accent-primary)]/[0.3]">
+                      40<span className="text-[0.6em]">%</span>
+                    </span>
+                    <p className="mt-1 text-[0.65rem] uppercase tracking-[0.12em] text-[var(--text-muted)]">
+                      do ARR vem de expansão — top quartil
+                    </p>
+                  </div>
+                </GSAPReveal>
 
-      {/* 20 */}
-      <SplitSlide
-        title="O framework que muda o jogo"
-        accent="Modelo de maturidade"
-        content="Nível 1: Suporte disfarçado de CS. Nível 2: CS como retenção. Nível 3: CS como motor de expansão. Nível 4: CS como estratégia de crescimento. A maioria das empresas está entre 1 e 2. Os líderes estão no 4."
-        visualType="pyramid"
-        theme="cs"
-      />
+                <GSAPReveal from={{ opacity: 0, x: 30 }} to={{ opacity: 1, x: 0, duration: 1, delay: 0.3, ease: "power3.out" }}>
+                  <div className="mt-8 text-right">
+                    <span className="font-mono text-[clamp(4rem,10vw,8rem)] font-bold leading-none text-[var(--accent-primary)]/[0.10] transition-all duration-700 group-hover:text-[var(--accent-primary)]/[0.2]">
+                      67<span className="text-[0.6em]">%</span>
+                    </span>
+                    <p className="mt-1 text-[0.65rem] uppercase tracking-[0.12em] text-[var(--text-muted)]">
+                      do churn começa no onboarding
+                    </p>
+                  </div>
+                </GSAPReveal>
+              </div>
+            </div>
+          </div>
+        </section>
+      </Link>
 
-      {/* ═══════════════════════════════════════════════
-          SEÇÃO 3 — DADOS (slides 21-27)
-          ═══════════════════════════════════════════════ */}
+      {/* ═══════════════════════════════════════════
+          UPCOMING — Understated, just text
+          ═══════════════════════════════════════════ */}
+      <section className="section-bg-neutral relative border-t border-[var(--border)] py-20 md:py-28">
+        <AmbientBackground variant="topography" intensity={0.8} />
+        <div className="mx-auto max-w-7xl px-6 md:px-12">
+          <GSAPReveal>
+            <span className="text-[0.6rem] font-medium uppercase tracking-[0.2em] text-[var(--text-muted)]">
+              Em desenvolvimento
+            </span>
+          </GSAPReveal>
 
-      {/* 21 */}
-      <SectionDivider
-        number="03"
-        title="Dados & Analytics"
-        subtitle="De dashboards bonitos a decisões inteligentes: o dado como infraestrutura de competitividade."
-        theme="data"
-      />
+          <div className="mt-10 space-y-0 divide-y divide-[var(--border)]">
+            {upcomingExperiences.map((exp, i) => (
+              <GSAPReveal key={exp.slug} from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0, duration: 0.6, delay: i * 0.1, ease: "power3.out" }}>
+                <div className="flex items-center justify-between py-6">
+                  <div className="flex items-baseline gap-4">
+                    <span className="font-mono text-[0.65rem] text-[var(--text-muted)]">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span className="font-display text-xl tracking-tight text-[var(--text)]/40">
+                      {exp.title}
+                    </span>
+                  </div>
+                  <span className="text-[0.55rem] uppercase tracking-[0.12em] text-[var(--text-muted)]/40">
+                    {exp.subtitle}
+                  </span>
+                </div>
+              </GSAPReveal>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      {/* 22 */}
-      <StatementSlide
-        statement="Ter dados não é ter inteligência. 87% das empresas acumulam dados que nunca viram uma decisão."
-        attribution="NewVantage Partners Survey"
-        theme="data"
-      />
-
-      {/* 23 */}
-      <ListSlide
-        title="A Pirâmide de Maturidade Analítica"
-        items={[
-          { title: "Descritivo — O que aconteceu?", description: "Dashboards e relatórios. Olhar para trás. Necessário, mas insuficiente." },
-          { title: "Diagnóstico — Por que aconteceu?", description: "Root cause analysis. Correlações e padrões. Onde a maioria para." },
-          { title: "Preditivo — O que vai acontecer?", description: "Machine Learning, modelos de propensão, forecast. Onde poucos chegam." },
-          { title: "Prescritivo — O que devemos fazer?", description: "Recomendações automatizadas, next-best-action. O verdadeiro ROI dos dados." },
-        ]}
-        theme="data"
-      />
-
-      {/* 24 */}
-      <DataSlide
-        stat="91%"
-        label="das empresas investem em dados. 24% consideram data-driven."
-        context="O gap entre investir e ser não é tecnológico. É cultural. Cultura come estratégia no café da manhã — e come dados no almoço."
-        source="Gartner CDO Survey"
-        theme="data"
-      />
-
-      {/* 25 */}
-      <SplitSlide
-        title="O dado de voz: a mina de ouro ignorada"
-        accent="No seu call center"
-        content="Cada ligação tem 4 a 8 minutos de dados brutos. Sentimento, intenção, esforço, satisfação, oportunidade de venda. 97% dessas informações morrem no pós-atendimento porque ninguém as captura de forma estruturada."
-        visualType="bars"
-        theme="data"
-      />
-
-      {/* 26 */}
-      <ComparisonSlide
-        title="Dados como Custo vs. Dados como Ativo"
-        left={{
-          label: "Dados como custo",
-          items: [
-            "Relatórios mensais que ninguém lê",
-            "BI desconectado da operação",
-            "Data lake que virou data swamp",
-            "KPIs definidos pela área de TI",
-          ],
-        }}
-        right={{
-          label: "Dados como ativo",
-          items: [
-            "Insights em tempo real integrados ao workflow",
-            "Modelos preditivos que previnem problemas",
-            "Data mesh com ownership nas áreas de negócio",
-            "KPIs co-criados entre dados e operação",
-          ],
-        }}
-        theme="data"
-      />
-
-      {/* 27 */}
-      <DataSlide
-        stat="23x"
-        label="mais chances de adquirir clientes"
-        context="Empresas data-driven têm 23x mais chances de adquirir clientes, 6x de retê-los e 19x mais de ser lucrativas."
-        source="McKinsey Global Institute"
-        theme="data"
-      />
-
-      {/* ═══════════════════════════════════════════════
-          SEÇÃO 4 — INTELIGÊNCIA ARTIFICIAL (slides 28-33)
-          ═══════════════════════════════════════════════ */}
-
-      {/* 28 */}
-      <SectionDivider
-        number="04"
-        title="Inteligência Artificial"
-        subtitle="Não é sobre substituir pessoas. É sobre dar superpoderes a quem já é bom."
-        theme="ai"
-      />
-
-      {/* 29 */}
-      <StatementSlide
-        statement="IA não vai substituir o atendente. Mas o atendente que usa IA vai substituir o que não usa."
-        theme="ai"
-      />
-
-      {/* 30 */}
-      <ListSlide
-        title="IA no CX: O Que Já é Real em 2025"
-        items={[
-          { title: "Agent Assist em tempo real", description: "IA ouve a ligação e sugere respostas, artigos e ações enquanto o agente atende. Reduz TMA em 30%+." },
-          { title: "Quality Assurance automatizado", description: "100% das interações avaliadas — não mais amostras de 2%. Feedback em tempo real, não mensal." },
-          { title: "Speech Analytics + Sentimento", description: "Detectar frustração, urgência e oportunidade de upsell na voz do cliente. Em tempo real." },
-          { title: "Bots que resolvem, não que frustram", description: "LLMs mudaram o jogo. Bots que entendem contexto, não menus de opções. Resolução real, não deflexão." },
-          { title: "Predição de churn e next-best-action", description: "Modelos que identificam quem vai sair 60 dias antes e recomendam ações específicas de retenção." },
-          { title: "Workforce Management inteligente", description: "Forecast de volume com precisão de 95%+. Escalas que consideram skill, humor e complexidade." },
-        ]}
-        theme="ai"
-      />
-
-      {/* 31 */}
-      <DataSlide
-        stat="40%"
-        label="de redução de custo operacional com IA aplicada"
-        context="Mas o número que importa não é o custo. É o que você faz com o tempo liberado. IA barata é commodity. IA que gera valor é estratégia."
-        source="Deloitte AI in Contact Centers"
-        theme="ai"
-      />
-
-      {/* 32 */}
-      <SplitSlide
-        title="O risco de implementar IA sem estratégia"
-        accent="Atenção"
-        content="83% dos projetos de IA falham. Não por tecnologia — por falta de clareza no problema a resolver. IA sem caso de uso é brinquedo. IA sem dados é alucinação. IA sem governança é risco. Comece pelo problema, não pela ferramenta."
-        visualType="orbit"
-        theme="ai"
-      />
-
-      {/* 33 */}
-      <ComparisonSlide
-        title="IA Cosmética vs. IA Estratégica"
-        left={{
-          label: "IA cosmética",
-          items: [
-            "Chatbot que escala tudo para humano",
-            "IA no pitch deck, não na operação",
-            "POC eterna que nunca vira produção",
-            "Automação que apenas desloca o problema",
-          ],
-        }}
-        right={{
-          label: "IA estratégica",
-          items: [
-            "IA integrada ao workflow do agente",
-            "Métricas de impacto medidas semanalmente",
-            "Deploy contínuo com feedback loop",
-            "IA que amplifica a capacidade humana",
-          ],
-        }}
-        theme="ai"
-      />
-
-      {/* ═══════════════════════════════════════════════
-          FECHAMENTO (slides 34-35)
-          ═══════════════════════════════════════════════ */}
-
-      {/* 34 */}
-      <StatementSlide
-        statement="A pergunta não é se CX, Dados e IA vão transformar seu negócio. A pergunta é se você vai liderar essa transformação — ou apenas assistir."
-      />
-
-      {/* 35 */}
-      <TitleSlide
-        overline="Diretoria de Qualidade e Dados"
-        title="Obrigado."
-        accent="Vamos conversar."
-        subtitle="O futuro não espera quem ainda está discutindo se deve começar."
-      />
-    </SlideDeck>
+      {/* ═══════════════════════════════════════════
+          CLOSE — Provocation, not footer
+          ═══════════════════════════════════════════ */}
+      <footer className="border-t border-[var(--border)] py-12 md:py-16">
+        <div className="mx-auto max-w-7xl px-6 md:px-12">
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div>
+              <span className="text-[0.6rem] font-medium uppercase tracking-[0.15em] text-[var(--text-muted)]/40">
+                CX Experience Lab
+              </span>
+              <p className="mt-2 max-w-[36ch] font-display text-sm font-light italic text-[var(--text-muted)]">
+                O objetivo não é informar. É provocar a decisão que já deveria ter sido tomada.
+              </p>
+            </div>
+            <span className="text-[0.55rem] tracking-[0.1em] text-[var(--text-muted)]/25">
+              Diretoria de Qualidade e Dados — AeC
+            </span>
+          </div>
+        </div>
+      </footer>
+    </main>
   );
 }
