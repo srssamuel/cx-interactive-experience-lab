@@ -57,6 +57,7 @@ export default function Keynote() {
         title="CX não é mais diferencial. É pré-requisito."
         accent="A nova realidade"
         content="O cliente de 2025 não compara você com seu concorrente direto. Ele compara com a melhor experiência que já teve — seja um app de banco, uma entrega da Amazon ou uma consulta no iFood. O benchmark é universal."
+        visualType="network"
         theme="cx"
       />
 
@@ -119,6 +120,7 @@ export default function Keynote() {
         title="O paradoxo da eficiência"
         accent="Reflexão provocativa"
         content="Call centers investem milhões para reduzir o TMA. Mas o cliente não quer uma ligação curta — ele quer não precisar ligar. A métrica errada produz a otimização errada."
+        visualType="bars"
         theme="cx"
       />
 
@@ -160,6 +162,7 @@ export default function Keynote() {
         title="44% dos clientes renovam sem nunca ter adotado o produto."
         accent="O dado que ninguém quer ouvir"
         content="Renovação sem adoção é uma bomba-relógio. O churn não começa na reclamação — ele começa no silêncio do cliente que paga mas não usa."
+        visualType="pulse"
         theme="cs"
       />
 
@@ -231,6 +234,7 @@ export default function Keynote() {
         title="O framework que muda o jogo"
         accent="Modelo de maturidade"
         content="Nível 1: Suporte disfarçado de CS. Nível 2: CS como retenção. Nível 3: CS como motor de expansão. Nível 4: CS como estratégia de crescimento. A maioria das empresas está entre 1 e 2. Os líderes estão no 4."
+        visualType="pyramid"
         theme="cs"
       />
 
@@ -279,6 +283,7 @@ export default function Keynote() {
         title="O dado de voz: a mina de ouro ignorada"
         accent="No seu call center"
         content="Cada ligação tem 4 a 8 minutos de dados brutos. Sentimento, intenção, esforço, satisfação, oportunidade de venda. 97% dessas informações morrem no pós-atendimento porque ninguém as captura de forma estruturada."
+        visualType="bars"
         theme="data"
       />
 
@@ -361,6 +366,7 @@ export default function Keynote() {
         title="O risco de implementar IA sem estratégia"
         accent="Atenção"
         content="83% dos projetos de IA falham. Não por tecnologia — por falta de clareza no problema a resolver. IA sem caso de uso é brinquedo. IA sem dados é alucinação. IA sem governança é risco. Comece pelo problema, não pela ferramenta."
+        visualType="orbit"
         theme="ai"
       />
 

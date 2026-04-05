@@ -534,60 +534,148 @@ export function ListSlide({ title, items, theme, className }: ListSlideProps) {
    SPLIT SLIDE — Text + generated abstract visual
    ═══════════════════════════════════════════════════ */
 
+type VisualType = "rings" | "network" | "bars" | "pulse" | "pyramid" | "orbit";
+
 interface SplitSlideProps {
   title: string;
   content: string;
   visual?: ReactNode;
+  visualType?: VisualType;
   accent?: string;
   theme?: SlideTheme;
   className?: string;
 }
 
-function AbstractVisual() {
+/* Visual: Concentric rings */
+function VisualRings() {
   return (
     <div className="relative flex aspect-square items-center justify-center">
-      {/* Concentric rings */}
       {[1, 2, 3, 4].map((ring) => (
-        <div
-          key={ring}
-          className="absolute rounded-full border"
+        <div key={ring} className="absolute rounded-full border" style={{ width: `${ring * 25}%`, height: `${ring * 25}%`, borderColor: `rgba(var(--accent-rgb), ${0.25 - ring * 0.05})`, animation: `float-y ${3 + ring * 0.5}s ease-in-out ${ring * 0.3}s infinite` }} />
+      ))}
+      <div className="h-16 w-16 rounded-full" style={{ background: `radial-gradient(circle, rgba(var(--accent-rgb), 0.3) 0%, transparent 70%)`, boxShadow: `0 0 60px rgba(var(--accent-rgb), 0.2)`, animation: "glow-pulse 3s ease-in-out infinite" }} />
+    </div>
+  );
+}
+
+/* Visual: Network graph nodes */
+function VisualNetwork() {
+  const nodes = [
+    { x: 50, y: 20, r: 6 }, { x: 20, y: 45, r: 5 }, { x: 80, y: 40, r: 7 },
+    { x: 35, y: 75, r: 4 }, { x: 65, y: 70, r: 5 }, { x: 50, y: 50, r: 8 },
+  ];
+  const links = [[0, 5], [1, 5], [2, 5], [3, 5], [4, 5], [0, 2], [1, 3], [3, 4]];
+  return (
+    <div className="relative flex aspect-square items-center justify-center">
+      <svg viewBox="0 0 100 100" className="h-full w-full">
+        {links.map(([a, b], i) => (
+          <motion.line key={i} x1={nodes[a].x} y1={nodes[a].y} x2={nodes[b].x} y2={nodes[b].y} stroke={`rgba(var(--accent-rgb), 0.15)`} strokeWidth="0.5" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ delay: 0.5 + i * 0.1, duration: 0.8 }} />
+        ))}
+        {nodes.map((n, i) => (
+          <motion.circle key={i} cx={n.x} cy={n.y} r={n.r} fill={`rgba(var(--accent-rgb), ${0.15 + (i === 5 ? 0.2 : 0)})`} stroke={`rgba(var(--accent-rgb), 0.3)`} strokeWidth="0.5" initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.3 + i * 0.1, duration: 0.6 }} style={{ animation: `float-y ${3 + i * 0.5}s ease-in-out ${i * 0.3}s infinite` }} />
+        ))}
+      </svg>
+    </div>
+  );
+}
+
+/* Visual: Bar chart / equalizer */
+function VisualBars() {
+  const bars = [40, 65, 55, 80, 45, 70, 90, 60];
+  return (
+    <div className="relative flex aspect-square items-end justify-center gap-2 px-4 pb-8">
+      {bars.map((h, i) => (
+        <motion.div
+          key={i}
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: `${h}%`, opacity: 1 }}
+          transition={{ delay: 0.4 + i * 0.08, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="flex-1 rounded-t-md"
           style={{
-            width: `${ring * 25}%`,
-            height: `${ring * 25}%`,
-            borderColor: `rgba(var(--accent-rgb), ${0.25 - ring * 0.05})`,
-            animation: `float-y ${3 + ring * 0.5}s ease-in-out ${ring * 0.3}s infinite`,
+            background: `linear-gradient(to top, rgba(var(--accent-rgb), 0.08), rgba(var(--accent-rgb), ${0.15 + (i === 6 ? 0.15 : 0)}))`,
+            border: `1px solid rgba(var(--accent-rgb), 0.1)`,
+            borderBottom: "none",
           }}
         />
       ))}
-      {/* Center glow */}
-      <div
-        className="h-16 w-16 rounded-full"
-        style={{
-          background: `radial-gradient(circle, rgba(var(--accent-rgb), 0.3) 0%, transparent 70%)`,
-          boxShadow: `0 0 60px rgba(var(--accent-rgb), 0.2)`,
-          animation: "glow-pulse 3s ease-in-out infinite",
-        }}
-      />
-      {/* Floating dots */}
-      {[0, 1, 2, 3, 4, 5].map((d) => (
-        <div
-          key={d}
-          className="absolute rounded-full"
+      <div className="absolute bottom-7 left-4 right-4 h-[1px]" style={{ background: `rgba(var(--accent-rgb), 0.1)` }} />
+    </div>
+  );
+}
+
+/* Visual: Pulsing heartbeat */
+function VisualPulse() {
+  return (
+    <div className="relative flex aspect-square items-center justify-center">
+      {[1, 2, 3].map((i) => (
+        <div key={i} className="absolute rounded-full" style={{ width: `${i * 30}%`, height: `${i * 30}%`, border: `1px solid rgba(var(--accent-rgb), ${0.3 - i * 0.08})`, animation: `glow-pulse ${2 + i * 0.5}s ease-in-out ${i * 0.3}s infinite` }} />
+      ))}
+      <div className="relative h-20 w-20 rounded-full" style={{ background: `radial-gradient(circle, rgba(var(--accent-rgb), 0.25) 0%, transparent 70%)`, animation: "glow-pulse 2s ease-in-out infinite" }}>
+        <svg viewBox="0 0 80 80" className="absolute inset-0 h-full w-full">
+          <motion.path d="M10 40 Q20 40 25 30 Q30 20 35 40 Q37 50 40 40 Q45 10 50 40 Q55 55 60 40 L70 40" fill="none" stroke={`rgba(var(--accent-rgb), 0.6)`} strokeWidth="2" strokeLinecap="round" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1.5, delay: 0.5, ease: [0.16, 1, 0.3, 1] }} />
+        </svg>
+      </div>
+    </div>
+  );
+}
+
+/* Visual: Ascending pyramid / levels */
+function VisualPyramid() {
+  const levels = [
+    { width: 30, label: "4" },
+    { width: 50, label: "3" },
+    { width: 70, label: "2" },
+    { width: 90, label: "1" },
+  ];
+  return (
+    <div className="relative flex aspect-square flex-col items-center justify-center gap-2 px-4">
+      {levels.map((lvl, i) => (
+        <motion.div
+          key={i}
+          initial={{ scaleX: 0, opacity: 0 }}
+          animate={{ scaleX: 1, opacity: 1 }}
+          transition={{ delay: 0.4 + i * 0.15, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="flex items-center justify-center rounded-md py-2 text-[0.6rem] font-bold tracking-wider"
           style={{
-            width: 3 + (d % 3),
-            height: 3 + (d % 3),
-            background: `rgba(var(--accent-rgb), ${0.3 + (d % 3) * 0.15})`,
-            top: `${20 + d * 12}%`,
-            left: `${15 + ((d * 13) % 70)}%`,
-            animation: `float-y ${2 + d * 0.7}s ease-in-out ${d * 0.4}s infinite`,
+            width: `${lvl.width}%`,
+            background: `rgba(var(--accent-rgb), ${0.2 - i * 0.04})`,
+            border: `1px solid rgba(var(--accent-rgb), ${0.2 - i * 0.04})`,
+            color: `rgba(var(--accent-rgb), ${0.8 - i * 0.1})`,
           }}
-        />
+        >
+          Nível {lvl.label}
+        </motion.div>
       ))}
     </div>
   );
 }
 
-export function SplitSlide({ title, content, visual, accent, theme, className }: SplitSlideProps) {
+/* Visual: Orbiting system */
+function VisualOrbit() {
+  return (
+    <div className="relative flex aspect-square items-center justify-center">
+      {[1, 2, 3].map((ring) => (
+        <div key={ring} className="absolute rounded-full border border-dashed" style={{ width: `${ring * 30}%`, height: `${ring * 30}%`, borderColor: `rgba(var(--accent-rgb), ${0.12 - ring * 0.03})` }} />
+      ))}
+      <OrbitDot radius={45} duration={6} size={5} delay={0} />
+      <OrbitDot radius={70} duration={10} size={4} delay={1} />
+      <OrbitDot radius={95} duration={15} size={3} delay={2} />
+      <div className="h-10 w-10 rounded-full" style={{ background: `rgba(var(--accent-rgb), 0.2)`, boxShadow: `0 0 30px rgba(var(--accent-rgb), 0.15)` }} />
+    </div>
+  );
+}
+
+const VISUALS: Record<VisualType, () => ReactNode> = {
+  rings: VisualRings,
+  network: VisualNetwork,
+  bars: VisualBars,
+  pulse: VisualPulse,
+  pyramid: VisualPyramid,
+  orbit: VisualOrbit,
+};
+
+export function SplitSlide({ title, content, visual, visualType, accent, theme, className }: SplitSlideProps) {
+  const VisualComponent = visualType ? VISUALS[visualType] : null;
   return (
     <div className={cn("slide relative bg-[var(--bg)]", className)} style={themeVars(theme)}>
       <Grain />
@@ -640,7 +728,7 @@ export function SplitSlide({ title, content, visual, accent, theme, className }:
           animate={{ opacity: 1, scale: 1, x: 0 }}
           transition={{ delay: 0.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
         >
-          {visual || <AbstractVisual />}
+          {visual || (VisualComponent ? <VisualComponent /> : <VisualRings />)}
         </motion.div>
       </div>
     </div>
