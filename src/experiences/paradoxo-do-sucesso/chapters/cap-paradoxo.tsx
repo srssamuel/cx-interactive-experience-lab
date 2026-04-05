@@ -12,7 +12,7 @@ import { paradoxo } from "../content";
 export function CapParadoxo() {
   return (
     <>
-      <ChapterTransition id="paradoxo" number="01" title={paradoxo.headline} />
+      <ChapterTransition textShadow="subtle" id="paradoxo" number="01" title={paradoxo.headline} />
 
       <Section variant="default">
         <Container size="narrow">

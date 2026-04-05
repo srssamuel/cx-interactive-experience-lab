@@ -17,7 +17,16 @@ interface HeadlineSlideProps {
   background?: "base" | "surface" | "accent-muted";
   align?: "left" | "center";
   grain?: boolean;
+  /** Text shadow depth for cinematic presence */
+  textShadow?: "none" | "subtle" | "cinematic" | "deep";
 }
+
+const textShadowMap = {
+  none: undefined,
+  subtle: "var(--text-shadow-subtle)",
+  cinematic: "var(--text-shadow-cinematic)",
+  deep: "var(--text-shadow-deep)",
+} as const;
 
 export function HeadlineSlide({
   children,
@@ -26,6 +35,7 @@ export function HeadlineSlide({
   background = "base",
   align = "left",
   grain = true,
+  textShadow = "none",
 }: HeadlineSlideProps) {
   const bgStyles = {
     base: "bg-[var(--bg)]",
@@ -44,10 +54,13 @@ export function HeadlineSlide({
       )}
     >
       {grain && <GrainOverlay />}
-      <div className={cn(
-        "relative z-10 w-full px-6 md:px-12",
-        align === "center" ? "max-w-5xl mx-auto" : "max-w-7xl mx-auto"
-      )}>
+      <div
+        className={cn(
+          "relative z-10 w-full px-6 md:px-12",
+          align === "center" ? "max-w-5xl mx-auto" : "max-w-7xl mx-auto"
+        )}
+        style={textShadowMap[textShadow] ? { textShadow: textShadowMap[textShadow] } : undefined}
+      >
         {children}
       </div>
     </section>
@@ -97,7 +110,11 @@ interface ChapterTransitionProps {
   subtitle?: string;
   className?: string;
   id?: string;
+  /** Text shadow depth for cinematic presence */
+  textShadow?: "none" | "subtle" | "cinematic" | "deep";
 }
+
+const cascadeEasings = ["power3.out", "sine.inOut", "expo.out", "power2.out", "circ.out"];
 
 export function ChapterTransition({
   number,
@@ -105,6 +122,7 @@ export function ChapterTransition({
   subtitle,
   className,
   id,
+  textShadow = "none",
 }: ChapterTransitionProps) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -114,24 +132,32 @@ export function ChapterTransition({
     if (prefersReducedMotion) return;
 
     const els = ref.current.querySelectorAll("[data-reveal]");
-    gsap.set(els, { opacity: 0, y: 30 });
+    gsap.set(els, { opacity: 0, y: 30, skewY: 1.5 });
 
-    const tween = gsap.to(els, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      stagger: 0.12,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: ref.current,
-        start: "top 75%",
-        toggleActions: "play none none none",
-      },
+    // Cascade: each element gets its own easing
+    const tweens: gsap.core.Tween[] = [];
+    els.forEach((el, i) => {
+      const tween = gsap.to(el, {
+        opacity: 1,
+        y: 0,
+        skewY: 0,
+        duration: 0.8 + (i % 3) * 0.1,
+        delay: i * 0.12,
+        ease: cascadeEasings[i % cascadeEasings.length],
+        scrollTrigger: {
+          trigger: ref.current,
+          start: "top 75%",
+          toggleActions: "play none none none",
+        },
+      });
+      tweens.push(tween);
     });
 
     return () => {
-      tween.scrollTrigger?.kill();
-      tween.kill();
+      tweens.forEach((t) => {
+        t.scrollTrigger?.kill();
+        t.kill();
+      });
     };
   }, []);
 
@@ -145,7 +171,10 @@ export function ChapterTransition({
       )}
     >
       <GrainOverlay />
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12">
+      <div
+        className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12"
+        style={textShadowMap[textShadow] ? { textShadow: textShadowMap[textShadow] } : undefined}
+      >
         <div className="flex items-end gap-6 md:gap-10">
           <span
             data-reveal

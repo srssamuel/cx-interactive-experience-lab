@@ -13,7 +13,7 @@ import { mapa } from "../content";
 export function CapMapa() {
   return (
     <>
-      <ChapterTransition id="mapa" number="06" title={mapa.headline} />
+      <ChapterTransition textShadow="subtle" id="mapa" number="06" title={mapa.headline} />
 
       <Section variant="immersive" className="relative">
         <ParallaxLayer speed={0.3} className="absolute inset-0">

@@ -21,7 +21,7 @@ import { equation } from "../content";
 export function CapEquacao() {
   return (
     <>
-      <ChapterTransition id="equacao" number="01" title={equation.headline} />
+      <ChapterTransition textShadow="subtle" id="equacao" number="01" title={equation.headline} />
 
       {/* The Formula — immersive, typographic */}
       <Section variant="immersive" className="relative">

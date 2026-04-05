@@ -7,7 +7,10 @@ import Link from "next/link";
 import { experiences, upcomingExperiences } from "@/lib/registry";
 import { TextReveal } from "@/components/motion/text-reveal";
 import { GSAPReveal, GSAPCounter } from "@/components/motion/gsap-reveal";
+import { CursorParallaxContainer } from "@/components/motion/cursor-parallax-container";
+import { SkewTransition } from "@/components/motion/skew-transition";
 import { GrainOverlay } from "@/components/cinematic/headline-slide";
+import { useMagneticCursor } from "@/lib/hooks/use-magnetic-cursor";
 
 export default function Portal() {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -44,8 +47,9 @@ export default function Portal() {
           />
         </div>
 
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 md:px-12">
+        <CursorParallaxContainer className="relative z-10 mx-auto w-full max-w-7xl px-6 md:px-12" strength={0.8}>
           <motion.div
+            data-depth="3"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.2 }}
@@ -58,7 +62,7 @@ export default function Portal() {
 
           <div className="grid md:grid-cols-[1fr_280px] md:items-end md:gap-16">
             {/* Left — massive headline */}
-            <div className="max-w-[800px]">
+            <div data-depth="1" className="max-w-[800px]" style={{ textShadow: "var(--text-shadow-cinematic)" }}>
               <TextReveal
                 text="Onde executivos param de ouvir"
                 tag="h1"
@@ -79,6 +83,7 @@ export default function Portal() {
 
             {/* Right — vertical context block (only on desktop) */}
             <motion.div
+              data-depth="2"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 1.6 }}
@@ -95,7 +100,7 @@ export default function Portal() {
               </div>
             </motion.div>
           </div>
-        </div>
+        </CursorParallaxContainer>
 
         {/* Scroll indicator — minimal */}
         <motion.div
@@ -141,8 +146,8 @@ export default function Portal() {
                   </span>
                 </GSAPReveal>
 
-                <GSAPReveal from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0, duration: 0.9, delay: 0.1, ease: "power3.out" }}>
-                  <h2 className="mt-4 font-display text-[clamp(2.2rem,5vw,4.5rem)] font-light leading-[0.92] tracking-[-0.04em] text-[var(--text)] transition-colors duration-500 group-hover:text-[var(--accent-primary)]">
+                <GSAPReveal from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0, duration: 0.9, delay: 0.1, ease: "power3.out" }} skewEntry>
+                  <h2 className="mt-4 font-display text-[clamp(2.2rem,5vw,4.5rem)] font-light leading-[0.92] tracking-[-0.04em] text-[var(--text)] transition-colors duration-500 group-hover:text-[var(--accent-primary)]" style={{ textShadow: "var(--text-shadow-subtle)" }}>
                     {equacao.title}
                   </h2>
                 </GSAPReveal>
@@ -187,20 +192,22 @@ export default function Portal() {
       {/* ═══════════════════════════════════════════
           BREATHING MOMENT — Full-bleed provocation
           ═══════════════════════════════════════════ */}
-      <section className="relative flex min-h-[50vh] items-center justify-center overflow-hidden py-24 md:py-32">
-        <div className="absolute inset-0 bg-[var(--surface)]/30" />
-        <GrainOverlay opacity={0.015} />
-        <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-          <GSAPReveal from={{ opacity: 0, y: 40 }} to={{ opacity: 1, y: 0, duration: 1, ease: "power3.out" }}>
-            <p className="font-display text-[clamp(1.5rem,4vw,3rem)] font-light leading-[1.15] tracking-[-0.03em] text-[var(--text)]">
-              Duas experiências. Duas teses.
-            </p>
-            <p className="mt-3 font-display text-[clamp(1.5rem,4vw,3rem)] font-light leading-[1.15] tracking-[-0.03em] text-[var(--text-muted)]">
-              A mesma convicção: neutralidade é mediocridade.
-            </p>
-          </GSAPReveal>
-        </div>
-      </section>
+      <SkewTransition direction="up" intensity="subtle">
+        <section className="relative flex min-h-[50vh] items-center justify-center overflow-hidden py-24 md:py-32">
+          <div className="absolute inset-0 bg-[var(--surface)]/30" />
+          <GrainOverlay opacity={0.015} />
+          <div className="relative z-10 mx-auto max-w-4xl px-6 text-center" style={{ textShadow: "var(--text-shadow-subtle)" }}>
+            <GSAPReveal from={{ opacity: 0, y: 40 }} to={{ opacity: 1, y: 0, duration: 1, ease: "power3.out" }} skewEntry>
+              <p className="font-display text-[clamp(1.5rem,4vw,3rem)] font-light leading-[1.15] tracking-[-0.03em] text-[var(--text)]">
+                Duas experiências. Duas teses.
+              </p>
+              <p className="mt-3 font-display text-[clamp(1.5rem,4vw,3rem)] font-light leading-[1.15] tracking-[-0.03em] text-[var(--text-muted)]">
+                A mesma convicção: neutralidade é mediocridade.
+              </p>
+            </GSAPReveal>
+          </div>
+        </section>
+      </SkewTransition>
 
       {/* ═══════════════════════════════════════════
           EXP 02 — O PARADOXO DO SUCESSO
@@ -220,8 +227,8 @@ export default function Portal() {
                   </span>
                 </GSAPReveal>
 
-                <GSAPReveal from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0, duration: 0.9, delay: 0.1, ease: "power3.out" }}>
-                  <h2 className="mt-4 font-display text-[clamp(2.2rem,5vw,4.5rem)] font-light leading-[0.92] tracking-[-0.04em] text-[var(--text)] transition-colors duration-500 group-hover:text-[var(--accent-primary)]">
+                <GSAPReveal from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0, duration: 0.9, delay: 0.1, ease: "power3.out" }} skewEntry>
+                  <h2 className="mt-4 font-display text-[clamp(2.2rem,5vw,4.5rem)] font-light leading-[0.92] tracking-[-0.04em] text-[var(--text)] transition-colors duration-500 group-hover:text-[var(--accent-primary)]" style={{ textShadow: "var(--text-shadow-subtle)" }}>
                     {paradoxo.title}
                   </h2>
                 </GSAPReveal>

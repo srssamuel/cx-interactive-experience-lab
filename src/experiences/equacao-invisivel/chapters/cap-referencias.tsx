@@ -15,7 +15,7 @@ export function CapReferencias() {
 
   return (
     <>
-      <ChapterTransition id="referencias" number="09" title={referencias.headline} />
+      <ChapterTransition textShadow="subtle" id="referencias" number="09" title={referencias.headline} />
 
       {/* First case — full-width, editorial prominence */}
       <Section background="surface">

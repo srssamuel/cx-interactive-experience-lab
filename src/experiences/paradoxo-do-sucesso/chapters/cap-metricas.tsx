@@ -18,7 +18,7 @@ import { metricas } from "../content";
 export function CapMetricas() {
   return (
     <>
-      <ChapterTransition id="metricas" number="03" title={metricas.headline} />
+      <ChapterTransition textShadow="subtle" id="metricas" number="03" title={metricas.headline} />
 
       {/* Vanity — shown as things to discard */}
       <Section variant="default">

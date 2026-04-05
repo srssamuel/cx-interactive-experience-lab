@@ -15,6 +15,10 @@ interface GSAPRevealProps {
   className?: string;
   from?: gsap.TweenVars;
   to?: gsap.TweenVars;
+  /** Convenience ease override (overrides to.ease) */
+  ease?: string;
+  /** Add a subtle skewY entry animation (wearebrand.io-inspired) */
+  skewEntry?: boolean;
   scrub?: boolean | number;
   pin?: boolean;
   start?: string;
@@ -27,6 +31,8 @@ export function GSAPReveal({
   className,
   from = { opacity: 0, y: 60 },
   to = { opacity: 1, y: 0, duration: 1, ease: "power3.out" },
+  ease,
+  skewEntry = false,
   scrub = false,
   pin = false,
   start = "top 85%",
@@ -40,8 +46,15 @@ export function GSAPReveal({
     ).matches;
     if (prefersReducedMotion || !ref.current) return;
 
-    gsap.fromTo(ref.current, from, {
+    const fromVars = skewEntry ? { ...from, skewY: 2 } : from;
+    const toVars = {
       ...to,
+      ...(ease ? { ease } : {}),
+      ...(skewEntry ? { skewY: 0 } : {}),
+    };
+
+    gsap.fromTo(ref.current, fromVars, {
+      ...toVars,
       scrollTrigger: {
         trigger: ref.current,
         start,

@@ -16,7 +16,7 @@ export function CapMaturidade() {
 
   return (
     <>
-      <ChapterTransition id="maturidade" number="08" title={maturidade.headline} />
+      <ChapterTransition textShadow="subtle" id="maturidade" number="08" title={maturidade.headline} />
 
       <Section variant="breathing">
         <Container size="wide">

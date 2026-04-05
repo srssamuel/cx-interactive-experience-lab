@@ -26,7 +26,7 @@ const GlowingOrb = dynamic(
 export function CapCustoSilencio() {
   return (
     <>
-      <ChapterTransition id="custosilencio" number="05" title={custoSilencio.headline} />
+      <ChapterTransition textShadow="subtle" id="custosilencio" number="05" title={custoSilencio.headline} />
 
       <DataSpectacle accent>
         <div className="relative flex flex-col items-center text-center">

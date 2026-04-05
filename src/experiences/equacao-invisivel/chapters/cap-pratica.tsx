@@ -14,7 +14,7 @@ import { pratica } from "../content";
 export function CapPratica() {
   return (
     <>
-      <ChapterTransition id="pratica" number="07" title={pratica.headline} />
+      <ChapterTransition textShadow="subtle" id="pratica" number="07" title={pratica.headline} />
 
       {/* Core comparison — interactive slider */}
       <Section variant="breathing">

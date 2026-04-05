@@ -7,7 +7,7 @@ interface SectionProps {
   children: ReactNode;
   className?: string;
   id?: string;
-  variant?: "default" | "fullbleed" | "editorial" | "immersive" | "breathing" | "asymmetric" | "compact";
+  variant?: "default" | "fullbleed" | "editorial" | "immersive" | "breathing" | "asymmetric" | "compact" | "perspective";
   background?: "base" | "surface" | "elevated" | "accent-muted";
 }
 
@@ -28,6 +28,7 @@ export const Section = forwardRef<HTMLElement, SectionProps>(
       breathing: "py-24 md:py-32 lg:py-44",
       asymmetric: "py-16 md:py-24 lg:py-32",
       compact: "py-12 md:py-16 lg:py-20",
+      perspective: "py-20 md:py-28 lg:py-36",
     };
 
     return (
@@ -40,6 +41,7 @@ export const Section = forwardRef<HTMLElement, SectionProps>(
           variantStyles[variant],
           className
         )}
+        style={variant === "perspective" ? { perspective: "var(--perspective-normal)" } : undefined}
       >
         {children}
       </section>

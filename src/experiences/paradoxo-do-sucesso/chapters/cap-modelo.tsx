@@ -15,7 +15,7 @@ import { modelo } from "../content";
 export function CapModelo() {
   return (
     <>
-      <ChapterTransition id="modelo" number="04" title={modelo.headline} />
+      <ChapterTransition textShadow="subtle" id="modelo" number="04" title={modelo.headline} />
 
       <Section variant="breathing">
         <Container size="narrow">

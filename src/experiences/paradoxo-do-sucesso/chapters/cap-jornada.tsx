@@ -14,7 +14,7 @@ import { jornada } from "../content";
 export function CapJornada() {
   return (
     <>
-      <ChapterTransition id="jornada" number="05" title={jornada.headline} />
+      <ChapterTransition textShadow="subtle" id="jornada" number="05" title={jornada.headline} />
 
       <Section variant="breathing" background="surface">
         <Container>
@@ -31,6 +31,7 @@ export function CapJornada() {
                     key={phase.title}
                     from={{ opacity: 0, x: isEven ? -30 : 30 }}
                     to={{ opacity: 1, x: 0, duration: 0.7, delay: i * 0.1, ease: "power3.out" }}
+                    skewEntry
                   >
                     <div className={`relative grid items-center gap-6 md:grid-cols-2 ${
                       isEven ? "" : "md:[direction:rtl]"

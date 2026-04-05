@@ -15,7 +15,7 @@ import { dimensoes } from "../content";
 export function CapDimensoes() {
   return (
     <>
-      <ChapterTransition id="dimensoes" number="03" title={dimensoes.headline} />
+      <ChapterTransition textShadow="subtle" id="dimensoes" number="03" title={dimensoes.headline} />
 
       <Section variant="breathing">
         <Container>
