@@ -1,88 +1,199 @@
 "use client";
 
-import { type ReactNode, useRef } from "react";
+import { type ReactNode, type CSSProperties, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/cn";
 import { useCursorParallax } from "@/lib/hooks/use-cursor-parallax";
+import { useCountUp, parseStat } from "@/lib/hooks/use-count-up";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
 /* ═══════════════════════════════════════════════════
-   SLIDE LAYOUTS — Each is a full-viewport slide type
+   THEME SYSTEM — Section-specific color identity
    ═══════════════════════════════════════════════════ */
 
-// Grain overlay for texture
+export type SlideTheme = "default" | "cx" | "cs" | "data" | "ai";
+
+const THEMES: Record<SlideTheme, { accent: string; rgb: string; gradient: string }> = {
+  default: { accent: "#00E5C3", rgb: "0, 229, 195", gradient: "linear-gradient(135deg, #00E5C3, #0891B2)" },
+  cx: { accent: "#00E5C3", rgb: "0, 229, 195", gradient: "linear-gradient(135deg, #00E5C3, #0891B2)" },
+  cs: { accent: "#FF6B35", rgb: "255, 107, 53", gradient: "linear-gradient(135deg, #FF6B35, #F59E0B)" },
+  data: { accent: "#8B5CF6", rgb: "139, 92, 246", gradient: "linear-gradient(135deg, #8B5CF6, #6366F1)" },
+  ai: { accent: "#3B82F6", rgb: "59, 130, 246", gradient: "linear-gradient(135deg, #3B82F6, #06B6D4)" },
+};
+
+function themeVars(theme?: SlideTheme): CSSProperties {
+  if (!theme || theme === "default" || theme === "cx") return {};
+  const t = THEMES[theme];
+  return { "--accent": t.accent, "--accent-rgb": t.rgb } as CSSProperties;
+}
+
+/* ═══════════════════════════════════════════════════
+   SHARED FX COMPONENTS
+   ═══════════════════════════════════════════════════ */
+
 function Grain({ opacity = 0.025 }: { opacity?: number }) {
   return (
     <div
       className="pointer-events-none absolute inset-0 z-[2] mix-blend-overlay"
       style={{
         opacity,
-        backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")",
+        backgroundImage:
+          "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")",
       }}
     />
   );
 }
 
-/* ─── TITLE SLIDE ─── */
+function Aurora({ theme = "default" }: { theme?: SlideTheme }) {
+  const t = THEMES[theme || "default"];
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      <div
+        className="absolute -inset-[50%] opacity-[0.04]"
+        style={{
+          background: `radial-gradient(ellipse at 30% 40%, rgba(${t.rgb}, 0.4) 0%, transparent 50%)`,
+          animation: "aurora-drift 20s ease-in-out infinite",
+        }}
+      />
+      <div
+        className="absolute -inset-[50%] opacity-[0.03]"
+        style={{
+          background: `radial-gradient(ellipse at 70% 60%, rgba(${t.rgb}, 0.3) 0%, transparent 50%)`,
+          animation: "aurora-drift-2 25s ease-in-out infinite",
+        }}
+      />
+    </div>
+  );
+}
+
+function DotGrid() {
+  return (
+    <div
+      className="pointer-events-none absolute inset-0 opacity-[0.03]"
+      style={{
+        backgroundImage: "radial-gradient(circle, var(--text) 0.5px, transparent 0.5px)",
+        backgroundSize: "32px 32px",
+      }}
+    />
+  );
+}
+
+function GlowRing({ delay = 0, size = 200 }: { delay?: number; size?: number }) {
+  return (
+    <div
+      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[rgba(var(--accent-rgb),0.15)]"
+      style={{
+        width: size,
+        height: size,
+        animation: `ring-expand 3s ease-out ${delay}s infinite`,
+      }}
+    />
+  );
+}
+
+function OrbitDot({ radius = 80, duration = 8, size = 4, delay = 0 }: { radius?: number; duration?: number; size?: number; delay?: number }) {
+  return (
+    <div
+      className="absolute left-1/2 top-1/2"
+      style={{
+        width: size,
+        height: size,
+        marginLeft: -size / 2,
+        marginTop: -size / 2,
+        "--orbit-r": `${radius}px`,
+        animation: `orbit ${duration}s linear ${delay}s infinite`,
+      } as CSSProperties}
+    >
+      <div
+        className="h-full w-full rounded-full"
+        style={{ background: `rgba(var(--accent-rgb), 0.6)` }}
+      />
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════
+   TITLE SLIDE — Hero with aurora + cursor parallax + text reveal
+   ═══════════════════════════════════════════════════ */
+
 interface TitleSlideProps {
   overline?: string;
   title: string;
   subtitle?: string;
   accent?: string;
+  theme?: SlideTheme;
   className?: string;
   children?: ReactNode;
 }
 
-export function TitleSlide({
-  overline,
-  title,
-  subtitle,
-  accent,
-  className,
-  children,
-}: TitleSlideProps) {
+export function TitleSlide({ overline, title, subtitle, accent, theme, className, children }: TitleSlideProps) {
   const { containerRef, nx, ny } = useCursorParallax({ strength: 0.5 });
+  const words = title.split(" ");
 
   return (
-    <div ref={containerRef} className={cn("slide relative bg-[var(--bg)]", className)}>
+    <div ref={containerRef} className={cn("slide relative bg-[var(--bg)]", className)} style={themeVars(theme)}>
       <Grain />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_50%,rgba(var(--accent-rgb),0.04)_0%,transparent_60%)]" />
+      <Aurora theme={theme} />
+      <DotGrid />
+
+      {/* Accent line */}
+      <div className="absolute left-8 top-[15%] h-[30%] w-[2px] md:left-16" style={{ background: `linear-gradient(to bottom, transparent, rgba(var(--accent-rgb), 0.3), transparent)` }} />
 
       <div className="relative z-10 w-full max-w-6xl px-8 md:px-16">
         {overline && (
           <motion.span
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="mb-6 block text-[0.6rem] font-semibold uppercase tracking-[0.25em] text-[var(--accent)]"
+            className="mb-6 inline-flex items-center gap-3 text-[0.6rem] font-semibold uppercase tracking-[0.25em] text-[var(--accent)]"
             style={{ transform: `translate(${nx * -5}px, ${ny * -5}px)` }}
           >
+            <span className="h-[1px] w-8" style={{ background: "var(--accent)" }} />
             {overline}
           </motion.span>
         )}
 
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        <h1
           className="font-[var(--font-display)] text-[clamp(2.5rem,7vw,6rem)] font-normal leading-[0.9] tracking-[-0.04em] text-[var(--text)]"
           style={{
             textShadow: "var(--text-shadow-cinematic)",
             transform: `translate(${nx * 12}px, ${ny * 12}px)`,
           }}
         >
-          {title}
+          {words.map((word, i) => (
+            <motion.span
+              key={i}
+              initial={{ opacity: 0, y: 40, rotateX: -15 }}
+              animate={{ opacity: 1, y: 0, rotateX: 0 }}
+              transition={{
+                delay: 0.3 + i * 0.08,
+                duration: 0.8,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className="mr-[0.3em] inline-block"
+            >
+              {word}
+            </motion.span>
+          ))}
           {accent && (
-            <span className="block text-[var(--accent)]">{accent}</span>
+            <motion.span
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 + words.length * 0.08, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="block text-[var(--accent)]"
+            >
+              {accent}
+              <span className="ml-1 inline-block h-[0.8em] w-[3px] align-middle bg-[var(--accent)]" style={{ animation: "cursor-blink 1s step-end infinite" }} />
+            </motion.span>
           )}
-        </motion.h1>
+        </h1>
 
         {subtitle && (
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.6 }}
+            transition={{ delay: 0.8, duration: 0.6 }}
             className="mt-6 max-w-[42ch] text-lg leading-relaxed text-[var(--text-secondary)]"
             style={{ transform: `translate(${nx * -3}px, ${ny * -3}px)` }}
           >
@@ -91,12 +202,7 @@ export function TitleSlide({
         )}
 
         {children && (
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
-            className="mt-10"
-          >
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1, duration: 0.6 }} className="mt-10">
             {children}
           </motion.div>
         )}
@@ -105,97 +211,167 @@ export function TitleSlide({
   );
 }
 
-/* ─── STATEMENT SLIDE — One big provocation ─── */
+/* ═══════════════════════════════════════════════════
+   STATEMENT SLIDE — Full-viewport provocation with ornaments
+   ═══════════════════════════════════════════════════ */
+
 interface StatementSlideProps {
   statement: string;
   attribution?: string;
+  theme?: SlideTheme;
   className?: string;
 }
 
-export function StatementSlide({ statement, attribution, className }: StatementSlideProps) {
+export function StatementSlide({ statement, attribution, theme, className }: StatementSlideProps) {
+  const words = statement.split(" ");
+
   return (
-    <div className={cn("slide relative bg-[var(--bg)]", className)}>
+    <div className={cn("slide relative bg-[var(--bg)]", className)} style={themeVars(theme)}>
       <Grain />
+      <Aurora theme={theme} />
+
+      {/* Decorative quote mark */}
+      <motion.span
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+        className="pointer-events-none absolute left-1/2 top-[15%] -translate-x-1/2 select-none font-[var(--font-display)] text-[clamp(8rem,25vw,20rem)] leading-none text-[var(--accent)]"
+        style={{ opacity: 0.04 }}
+        aria-hidden="true"
+      >
+        &ldquo;
+      </motion.span>
+
       <div className="relative z-10 mx-auto max-w-5xl px-8 text-center md:px-16">
-        <motion.p
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="font-[var(--font-display)] text-[clamp(1.8rem,5vw,3.8rem)] font-normal leading-[1.15] tracking-[-0.02em] text-[var(--text)]"
-          style={{ textShadow: "var(--text-shadow-subtle)" }}
-        >
-          {statement}
-        </motion.p>
+        <p className="font-[var(--font-display)] text-[clamp(1.8rem,5vw,3.8rem)] font-normal leading-[1.15] tracking-[-0.02em] text-[var(--text)]" style={{ textShadow: "var(--text-shadow-subtle)" }}>
+          {words.map((word, i) => (
+            <motion.span
+              key={i}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                delay: 0.15 + i * 0.04,
+                duration: 0.5,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              className="mr-[0.25em] inline-block"
+            >
+              {word}
+            </motion.span>
+          ))}
+        </p>
+
         {attribution && (
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.6 }}
-            className="mt-8 block text-sm text-[var(--text-muted)]"
+          <motion.div
+            initial={{ opacity: 0, scaleX: 0 }}
+            animate={{ opacity: 1, scaleX: 1 }}
+            transition={{ delay: 0.5 + words.length * 0.03, duration: 0.8 }}
+            className="mx-auto mt-8 flex items-center justify-center gap-4"
           >
-            — {attribution}
-          </motion.span>
+            <span className="h-[1px] w-12" style={{ background: `rgba(var(--accent-rgb), 0.3)` }} />
+            <span className="text-sm text-[var(--text-muted)]">{attribution}</span>
+            <span className="h-[1px] w-12" style={{ background: `rgba(var(--accent-rgb), 0.3)` }} />
+          </motion.div>
         )}
       </div>
     </div>
   );
 }
 
-/* ─── DATA SLIDE — Big number + context ─── */
+/* ═══════════════════════════════════════════════════
+   DATA SLIDE — Animated counter + glow rings + orbit
+   ═══════════════════════════════════════════════════ */
+
 interface DataSlideProps {
   stat: string;
   label: string;
   context?: string;
   source?: string;
+  theme?: SlideTheme;
   className?: string;
 }
 
-export function DataSlide({ stat, label, context, source, className }: DataSlideProps) {
-  const ref = useRef<HTMLSpanElement>(null);
+export function DataSlide({ stat, label, context, source, theme, className }: DataSlideProps) {
+  const parsed = parseStat(stat);
+  const { value, scope } = useCountUp(parsed?.value ?? 0, {
+    decimals: parsed?.decimals ?? 0,
+    delay: 0.5,
+    duration: 2.5,
+  });
 
-  useGSAP(() => {
-    if (!ref.current) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    gsap.fromTo(ref.current, { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 1, ease: "power3.out" });
-  }, { scope: ref });
+  const displayStat = parsed
+    ? `${parsed.prefix}${parsed.decimals > 0 ? value.toFixed(parsed.decimals) : value}${parsed.suffix}`
+    : stat;
 
   return (
-    <div className={cn("slide relative bg-[var(--bg)]", className)}>
+    <div className={cn("slide relative bg-[var(--bg)]", className)} style={themeVars(theme)} ref={scope}>
       <Grain />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(var(--accent-rgb),0.05)_0%,transparent_50%)]" />
+      <Aurora theme={theme} />
+
+      {/* Radial glow behind number */}
+      <div
+        className="absolute left-1/2 top-[40%] -translate-x-1/2 -translate-y-1/2"
+        style={{
+          width: 400,
+          height: 400,
+          background: `radial-gradient(circle, rgba(var(--accent-rgb), 0.08) 0%, transparent 60%)`,
+          animation: "glow-pulse 4s ease-in-out infinite",
+        }}
+      />
+
+      {/* Concentric rings */}
+      <div className="pointer-events-none absolute inset-0">
+        <GlowRing delay={0} size={180} />
+        <GlowRing delay={1} size={180} />
+        <GlowRing delay={2} size={180} />
+      </div>
+
+      {/* Orbit dots */}
+      <div className="pointer-events-none absolute inset-0">
+        <OrbitDot radius={120} duration={12} size={3} delay={0} />
+        <OrbitDot radius={160} duration={18} size={2} delay={2} />
+        <OrbitDot radius={100} duration={10} size={4} delay={4} />
+      </div>
+
       <div className="relative z-10 mx-auto max-w-4xl px-8 text-center md:px-16">
-        <span
-          ref={ref}
+        <motion.span
+          initial={{ opacity: 0, scale: 0.7 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           className="block font-[var(--font-mono)] text-[clamp(4rem,15vw,12rem)] font-bold leading-none text-[var(--accent)]"
-          style={{ textShadow: "0 0 60px rgba(var(--accent-rgb), 0.3)" }}
+          style={{ textShadow: `0 0 80px rgba(var(--accent-rgb), 0.4), 0 0 160px rgba(var(--accent-rgb), 0.15)` }}
         >
-          {stat}
-        </span>
+          {displayStat}
+        </motion.span>
+
         <motion.p
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.6 }}
+          transition={{ delay: 0.8, duration: 0.6 }}
           className="mt-4 text-xl font-medium text-[var(--text)]"
         >
           {label}
         </motion.p>
+
         {context && (
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
-            className="mt-3 max-w-[48ch] mx-auto text-sm leading-relaxed text-[var(--text-secondary)]"
+            transition={{ delay: 1.2, duration: 0.6 }}
+            className="mx-auto mt-3 max-w-[48ch] text-sm leading-relaxed text-[var(--text-secondary)]"
           >
             {context}
           </motion.p>
         )}
+
         {source && (
           <motion.span
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 1, duration: 0.5 }}
-            className="mt-6 block text-[0.55rem] uppercase tracking-[0.15em] text-[var(--text-ghost)]"
+            transition={{ delay: 1.5, duration: 0.5 }}
+            className="mt-6 inline-flex items-center gap-2 text-[0.55rem] uppercase tracking-[0.15em] text-[var(--text-ghost)]"
           >
+            <span className="h-[1px] w-4" style={{ background: `rgba(var(--accent-rgb), 0.2)` }} />
             Fonte: {source}
           </motion.span>
         )}
@@ -204,17 +380,70 @@ export function DataSlide({ stat, label, context, source, className }: DataSlide
   );
 }
 
-/* ─── LIST SLIDE — Title + items (stagger) ─── */
+/* ═══════════════════════════════════════════════════
+   LIST SLIDE — Cards with 3D tilt + gradient border hover
+   ═══════════════════════════════════════════════════ */
+
 interface ListSlideProps {
   title: string;
   items: { title: string; description: string }[];
+  theme?: SlideTheme;
   className?: string;
 }
 
-export function ListSlide({ title, items, className }: ListSlideProps) {
+function TiltCard({ children, index }: { children: ReactNode; index: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+
+  const handleMove = (e: React.MouseEvent) => {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 8;
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * -8;
+    setTilt({ x, y });
+  };
+
+  const handleLeave = () => setTilt({ x: 0, y: 0 });
+
   return (
-    <div className={cn("slide relative bg-[var(--bg)]", className)}>
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30, skewY: 1.5 }}
+      animate={{ opacity: 1, y: 0, skewY: 0 }}
+      transition={{
+        delay: 0.3 + index * 0.1,
+        duration: 0.7,
+        ease: index % 3 === 0 ? [0.16, 1, 0.3, 1] : index % 3 === 1 ? [0.33, 1, 0.68, 1] : [0.22, 1, 0.36, 1],
+      }}
+      onMouseMove={handleMove}
+      onMouseLeave={handleLeave}
+      className="group relative overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 transition-all duration-300 hover:border-[rgba(var(--accent-rgb),0.25)]"
+      style={{
+        transform: `perspective(600px) rotateY(${tilt.x}deg) rotateX(${tilt.y}deg)`,
+        transition: "transform 0.15s ease-out",
+      }}
+    >
+      {/* Shimmer on hover */}
+      <div
+        className="pointer-events-none absolute inset-0 -translate-x-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        style={{
+          background: `linear-gradient(90deg, transparent, rgba(var(--accent-rgb), 0.04), transparent)`,
+          animation: "shimmer 2s ease-in-out infinite",
+        }}
+      />
+      {children}
+    </motion.div>
+  );
+}
+
+export function ListSlide({ title, items, theme, className }: ListSlideProps) {
+  return (
+    <div className={cn("slide relative bg-[var(--bg)]", className)} style={themeVars(theme)}>
       <Grain />
+      <Aurora theme={theme} />
+      <DotGrid />
+
       <div className="relative z-10 w-full max-w-5xl px-8 md:px-16">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -224,23 +453,26 @@ export function ListSlide({ title, items, className }: ListSlideProps) {
           style={{ textShadow: "var(--text-shadow-subtle)" }}
         >
           {title}
+          <motion.span
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ delay: 0.4, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-3 block h-[2px] w-16 origin-left"
+            style={{ background: `var(--accent)` }}
+          />
         </motion.h2>
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-4 md:grid-cols-2 lg:gap-5">
           {items.map((item, i) => (
-            <motion.div
-              key={item.title}
-              initial={{ opacity: 0, y: 25, skewY: 1.5 }}
-              animate={{ opacity: 1, y: 0, skewY: 0 }}
-              transition={{
-                delay: 0.3 + i * 0.1,
-                duration: 0.7,
-                ease: i % 2 === 0 ? [0.16, 1, 0.3, 1] : [0.33, 1, 0.68, 1],
-              }}
-              className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--border-hover)]"
-            >
+            <TiltCard key={item.title} index={i}>
               <div className="flex items-start gap-4">
-                <span className="mt-0.5 font-[var(--font-mono)] text-[0.6rem] font-bold text-[var(--accent)]">
+                <span
+                  className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md font-[var(--font-mono)] text-[0.55rem] font-bold"
+                  style={{
+                    background: `rgba(var(--accent-rgb), 0.1)`,
+                    color: "var(--accent)",
+                  }}
+                >
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div>
@@ -248,7 +480,7 @@ export function ListSlide({ title, items, className }: ListSlideProps) {
                   <p className="mt-1.5 text-sm leading-relaxed text-[var(--text-secondary)]">{item.description}</p>
                 </div>
               </div>
-            </motion.div>
+            </TiltCard>
           ))}
         </div>
       </div>
@@ -256,28 +488,79 @@ export function ListSlide({ title, items, className }: ListSlideProps) {
   );
 }
 
-/* ─── SPLIT SLIDE — Left text, right visual ─── */
+/* ═══════════════════════════════════════════════════
+   SPLIT SLIDE — Text + generated abstract visual
+   ═══════════════════════════════════════════════════ */
+
 interface SplitSlideProps {
   title: string;
   content: string;
   visual?: ReactNode;
   accent?: string;
+  theme?: SlideTheme;
   className?: string;
 }
 
-export function SplitSlide({ title, content, visual, accent, className }: SplitSlideProps) {
+function AbstractVisual() {
   return (
-    <div className={cn("slide relative bg-[var(--bg)]", className)}>
+    <div className="relative flex aspect-square items-center justify-center">
+      {/* Concentric rings */}
+      {[1, 2, 3, 4].map((ring) => (
+        <div
+          key={ring}
+          className="absolute rounded-full border"
+          style={{
+            width: `${ring * 25}%`,
+            height: `${ring * 25}%`,
+            borderColor: `rgba(var(--accent-rgb), ${0.25 - ring * 0.05})`,
+            animation: `float-y ${3 + ring * 0.5}s ease-in-out ${ring * 0.3}s infinite`,
+          }}
+        />
+      ))}
+      {/* Center glow */}
+      <div
+        className="h-16 w-16 rounded-full"
+        style={{
+          background: `radial-gradient(circle, rgba(var(--accent-rgb), 0.3) 0%, transparent 70%)`,
+          boxShadow: `0 0 60px rgba(var(--accent-rgb), 0.2)`,
+          animation: "glow-pulse 3s ease-in-out infinite",
+        }}
+      />
+      {/* Floating dots */}
+      {[0, 1, 2, 3, 4, 5].map((d) => (
+        <div
+          key={d}
+          className="absolute rounded-full"
+          style={{
+            width: 3 + (d % 3),
+            height: 3 + (d % 3),
+            background: `rgba(var(--accent-rgb), ${0.3 + (d % 3) * 0.15})`,
+            top: `${20 + d * 12}%`,
+            left: `${15 + ((d * 13) % 70)}%`,
+            animation: `float-y ${2 + d * 0.7}s ease-in-out ${d * 0.4}s infinite`,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+export function SplitSlide({ title, content, visual, accent, theme, className }: SplitSlideProps) {
+  return (
+    <div className={cn("slide relative bg-[var(--bg)]", className)} style={themeVars(theme)}>
       <Grain />
+      <Aurora theme={theme} />
+
       <div className="relative z-10 grid w-full max-w-6xl items-center gap-12 px-8 md:grid-cols-2 md:px-16">
         <div>
           {accent && (
             <motion.span
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              initial={{ opacity: 0, x: -15 }}
+              animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2, duration: 0.5 }}
-              className="mb-4 block text-[0.55rem] font-semibold uppercase tracking-[0.2em] text-[var(--accent)]"
+              className="mb-4 inline-flex items-center gap-3 text-[0.55rem] font-semibold uppercase tracking-[0.2em] text-[var(--accent)]"
             >
+              <span className="h-[1px] w-6" style={{ background: "var(--accent)" }} />
               {accent}
             </motion.span>
           )}
@@ -290,6 +573,16 @@ export function SplitSlide({ title, content, visual, accent, className }: SplitS
           >
             {title}
           </motion.h2>
+
+          {/* Accent underline */}
+          <motion.span
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ delay: 0.5, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-4 block h-[2px] w-12 origin-left"
+            style={{ background: `rgba(var(--accent-rgb), 0.4)` }}
+          />
+
           <motion.p
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
@@ -301,33 +594,35 @@ export function SplitSlide({ title, content, visual, accent, className }: SplitS
         </div>
 
         <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.4, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, scale: 0.9, x: 30 }}
+          animate={{ opacity: 1, scale: 1, x: 0 }}
+          transition={{ delay: 0.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
         >
-          {visual || (
-            <div className="flex aspect-square items-center justify-center rounded-2xl border border-[var(--border)] bg-[var(--surface)]">
-              <div className="h-32 w-32 rounded-full bg-[radial-gradient(circle,rgba(var(--accent-rgb),0.15)_0%,transparent_70%)]" />
-            </div>
-          )}
+          {visual || <AbstractVisual />}
         </motion.div>
       </div>
     </div>
   );
 }
 
-/* ─── COMPARISON SLIDE — Before/After or Two columns ─── */
+/* ═══════════════════════════════════════════════════
+   COMPARISON SLIDE — Before/After with icons + animated divider
+   ═══════════════════════════════════════════════════ */
+
 interface ComparisonSlideProps {
   title: string;
   left: { label: string; items: string[] };
   right: { label: string; items: string[] };
+  theme?: SlideTheme;
   className?: string;
 }
 
-export function ComparisonSlide({ title, left, right, className }: ComparisonSlideProps) {
+export function ComparisonSlide({ title, left, right, theme, className }: ComparisonSlideProps) {
   return (
-    <div className={cn("slide relative bg-[var(--bg)]", className)}>
+    <div className={cn("slide relative bg-[var(--bg)]", className)} style={themeVars(theme)}>
       <Grain />
+      <Aurora theme={theme} />
+
       <div className="relative z-10 w-full max-w-5xl px-8 md:px-16">
         <motion.h2
           initial={{ opacity: 0, y: 15 }}
@@ -338,12 +633,21 @@ export function ComparisonSlide({ title, left, right, className }: ComparisonSli
           {title}
         </motion.h2>
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="relative grid gap-6 md:grid-cols-2">
+          {/* Animated divider between columns */}
+          <motion.div
+            initial={{ scaleY: 0 }}
+            animate={{ scaleY: 1 }}
+            transition={{ delay: 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute left-1/2 top-0 hidden h-full w-[1px] origin-top -translate-x-1/2 md:block"
+            style={{ background: `linear-gradient(to bottom, transparent, rgba(var(--accent-rgb), 0.15), transparent)` }}
+          />
+
           {[left, right].map((col, ci) => (
             <motion.div
               key={col.label}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, x: ci === 0 ? -20 : 20 }}
+              animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 + ci * 0.15, duration: 0.6 }}
               className={cn(
                 "rounded-xl border p-6 md:p-8",
@@ -352,13 +656,26 @@ export function ComparisonSlide({ title, left, right, className }: ComparisonSli
                   : "border-[var(--accent)]/20 bg-[var(--accent-muted)]"
               )}
             >
-              <span className={cn(
-                "text-[0.6rem] font-bold uppercase tracking-[0.15em]",
-                ci === 0 ? "text-[var(--danger)]" : "text-[var(--accent)]"
-              )}>
-                {col.label}
-              </span>
-              <ul className="mt-4 space-y-3">
+              <div className="flex items-center gap-3">
+                <span
+                  className={cn(
+                    "flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold",
+                    ci === 0 ? "bg-[var(--danger)]/10 text-[var(--danger)]" : "bg-[var(--accent)]/10 text-[var(--accent)]"
+                  )}
+                >
+                  {ci === 0 ? "✕" : "✓"}
+                </span>
+                <span
+                  className={cn(
+                    "text-[0.6rem] font-bold uppercase tracking-[0.15em]",
+                    ci === 0 ? "text-[var(--danger)]" : "text-[var(--accent)]"
+                  )}
+                >
+                  {col.label}
+                </span>
+              </div>
+
+              <ul className="mt-5 space-y-3">
                 {col.items.map((item, ii) => (
                   <motion.li
                     key={ii}
@@ -367,10 +684,12 @@ export function ComparisonSlide({ title, left, right, className }: ComparisonSli
                     transition={{ delay: 0.5 + ii * 0.08, duration: 0.4 }}
                     className="flex items-start gap-2.5 text-sm leading-relaxed text-[var(--text-secondary)]"
                   >
-                    <span className={cn(
-                      "mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full",
-                      ci === 0 ? "bg-[var(--danger)]/40" : "bg-[var(--accent)]/40"
-                    )} />
+                    <span
+                      className={cn(
+                        "mt-2 h-1 w-1 shrink-0 rounded-full",
+                        ci === 0 ? "bg-[var(--danger)]/40" : "bg-[var(--accent)]/40"
+                      )}
+                    />
                     {item}
                   </motion.li>
                 ))}
@@ -383,43 +702,83 @@ export function ComparisonSlide({ title, left, right, className }: ComparisonSli
   );
 }
 
-/* ─── SECTION DIVIDER — Chapter break ─── */
+/* ═══════════════════════════════════════════════════
+   SECTION DIVIDER — Full aurora + animated line + section color
+   ═══════════════════════════════════════════════════ */
+
 interface SectionDividerProps {
   number: string;
   title: string;
   subtitle?: string;
+  theme?: SlideTheme;
   className?: string;
 }
 
-export function SectionDivider({ number, title, subtitle, className }: SectionDividerProps) {
+export function SectionDivider({ number, title, subtitle, theme, className }: SectionDividerProps) {
+  const { containerRef, nx, ny } = useCursorParallax({ strength: 0.3 });
+
   return (
-    <div className={cn("slide relative bg-[var(--bg-soft)]", className)}>
+    <div ref={containerRef} className={cn("slide relative bg-[var(--bg-soft)]", className)} style={themeVars(theme)}>
       <Grain opacity={0.03} />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_50%,rgba(var(--accent-rgb),0.03)_0%,transparent_50%)]" />
+      <Aurora theme={theme} />
+      <DotGrid />
+
+      {/* Large blurred number background */}
+      <motion.span
+        initial={{ opacity: 0, scale: 0.6 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none font-[var(--font-mono)] text-[clamp(8rem,30vw,20rem)] font-bold leading-none"
+        style={{
+          color: `rgba(var(--accent-rgb), 0.04)`,
+          textShadow: `0 0 100px rgba(var(--accent-rgb), 0.08)`,
+          transform: `translate(calc(-50% + ${nx * 15}px), calc(-50% + ${ny * 15}px))`,
+        }}
+        aria-hidden="true"
+      >
+        {number}
+      </motion.span>
+
       <div className="relative z-10 mx-auto max-w-4xl px-8 text-center md:px-16">
-        <motion.span
+        {/* Section number badge */}
+        <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-          className="block font-[var(--font-mono)] text-[clamp(6rem,20vw,14rem)] font-bold leading-none text-[var(--accent)]/[0.06]"
+          transition={{ duration: 0.6 }}
+          className="mb-6 inline-flex items-center gap-2"
         >
-          {number}
-        </motion.span>
+          <span className="h-[1px] w-8" style={{ background: `rgba(var(--accent-rgb), 0.3)` }} />
+          <span className="font-[var(--font-mono)] text-xs font-bold tracking-widest text-[var(--accent)]">
+            SEÇÃO {number}
+          </span>
+          <span className="h-[1px] w-8" style={{ background: `rgba(var(--accent-rgb), 0.3)` }} />
+        </motion.div>
+
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.7 }}
-          className="-mt-8 font-[var(--font-display)] text-[clamp(2rem,5vw,4rem)] font-normal tracking-[-0.03em] text-[var(--text)] md:-mt-12"
+          className="font-[var(--font-display)] text-[clamp(2.5rem,6vw,5rem)] font-normal tracking-[-0.03em] text-[var(--text)]"
           style={{ textShadow: "var(--text-shadow-cinematic)" }}
         >
           {title}
         </motion.h2>
+
+        {/* Animated underline */}
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ delay: 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="mx-auto mt-4 h-[2px] w-24 origin-center"
+          style={{ background: `var(--accent)` }}
+        />
+
         {subtitle && (
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.5 }}
-            className="mt-4 text-base text-[var(--text-secondary)]"
+            transition={{ delay: 0.8, duration: 0.5 }}
+            className="mt-6 text-base leading-relaxed text-[var(--text-secondary)]"
           >
             {subtitle}
           </motion.p>

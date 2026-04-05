@@ -49,6 +49,7 @@ export default function Keynote() {
         number="01"
         title="Customer Experience"
         subtitle="Da satisfação à obsessão: por que CX deixou de ser departamento e virou estratégia de sobrevivência."
+        theme="cx"
       />
 
       {/* 05 */}
@@ -56,6 +57,7 @@ export default function Keynote() {
         title="CX não é mais diferencial. É pré-requisito."
         accent="A nova realidade"
         content="O cliente de 2025 não compara você com seu concorrente direto. Ele compara com a melhor experiência que já teve — seja um app de banco, uma entrega da Amazon ou uma consulta no iFood. O benchmark é universal."
+        theme="cx"
       />
 
       {/* 06 */}
@@ -64,6 +66,7 @@ export default function Keynote() {
         label="dos clientes abandonam após 2 experiências ruins"
         context="Não importa quanto tempo foram fiéis. Duas falhas bastam para zerar anos de relacionamento."
         source="PwC Future of CX Report"
+        theme="cx"
       />
 
       {/* 07 */}
@@ -76,6 +79,7 @@ export default function Keynote() {
           { title: "Emoção como métrica", description: "Sentiment analysis em voz, texto e comportamento. O NPS está morrendo — o que vem depois é mais preciso." },
           { title: "CX como P&L", description: "Conectar cada ponto de contato a receita, churn e LTV. Se não mede, não gerencia. Se não gerencia, não lidera." },
         ]}
+        theme="cx"
       />
 
       {/* 08 */}
@@ -101,11 +105,13 @@ export default function Keynote() {
             "Antecipação de problemas antes que aconteçam",
           ],
         }}
+        theme="cx"
       />
 
       {/* 09 */}
       <StatementSlide
         statement="O melhor atendimento é aquele que nunca precisou acontecer."
+        theme="cx"
       />
 
       {/* 10 */}
@@ -113,6 +119,7 @@ export default function Keynote() {
         title="O paradoxo da eficiência"
         accent="Reflexão provocativa"
         content="Call centers investem milhões para reduzir o TMA. Mas o cliente não quer uma ligação curta — ele quer não precisar ligar. A métrica errada produz a otimização errada."
+        theme="cx"
       />
 
       {/* 11 */}
@@ -121,6 +128,7 @@ export default function Keynote() {
         label="mais receita gerada por empresas líderes em CX"
         context="Em comparação com retardatárias. CX não é custo. É o maior multiplicador de receita disponível."
         source="Watermark Consulting / S&P 500 Analysis"
+        theme="cx"
       />
 
       {/* 12 */}
@@ -132,6 +140,7 @@ export default function Keynote() {
           { title: "Medir esforço, não satisfação", description: "CES (Customer Effort Score) prediz churn melhor que NPS. Comece a medir." },
           { title: "Criar closed-loop em 24h", description: "Cada detrator precisa ser recuperado em no máximo um dia. Automatize." },
         ]}
+        theme="cx"
       />
 
       {/* ═══════════════════════════════════════════════
@@ -143,6 +152,7 @@ export default function Keynote() {
         number="02"
         title="Customer Success"
         subtitle="De apagar incêndios a construir valor: CS como motor de crescimento, não centro de custo."
+        theme="cs"
       />
 
       {/* 14 */}
@@ -150,6 +160,7 @@ export default function Keynote() {
         title="44% dos clientes renovam sem nunca ter adotado o produto."
         accent="O dado que ninguém quer ouvir"
         content="Renovação sem adoção é uma bomba-relógio. O churn não começa na reclamação — ele começa no silêncio do cliente que paga mas não usa."
+        theme="cs"
       />
 
       {/* 15 */}
@@ -158,6 +169,7 @@ export default function Keynote() {
         label="do churn começa no onboarding"
         context="Os primeiros 90 dias decidem tudo. Se o cliente não enxerga valor nesse período, o restante do contrato é gestão de risco."
         source="Gainsight Customer Success Report"
+        theme="cs"
       />
 
       {/* 16 */}
@@ -170,6 +182,7 @@ export default function Keynote() {
           { title: "Contato apenas em crises", description: "Quando o único gatilho de interação é o problema, o relacionamento já morreu." },
           { title: "NPS passivo (7-8) persistente", description: "Nem detrator, nem promotor. O passivo é o churn mais caro porque não grita antes de sair." },
         ]}
+        theme="cs"
       />
 
       {/* 17 */}
@@ -195,11 +208,13 @@ export default function Keynote() {
             "Renovação como formalidade — valor já provado",
           ],
         }}
+        theme="cs"
       />
 
       {/* 18 */}
       <StatementSlide
         statement="Customer Success não é um departamento. É a forma como a empresa inteira pensa sobre receita recorrente."
+        theme="cs"
       />
 
       {/* 19 */}
@@ -208,6 +223,7 @@ export default function Keynote() {
         label="mais caro adquirir do que reter"
         context="Essa estatística tem 30 anos. Todo mundo sabe. Quase ninguém age com a urgência que ela exige."
         source="Harvard Business Review"
+        theme="cs"
       />
 
       {/* 20 */}
@@ -215,6 +231,7 @@ export default function Keynote() {
         title="O framework que muda o jogo"
         accent="Modelo de maturidade"
         content="Nível 1: Suporte disfarçado de CS. Nível 2: CS como retenção. Nível 3: CS como motor de expansão. Nível 4: CS como estratégia de crescimento. A maioria das empresas está entre 1 e 2. Os líderes estão no 4."
+        theme="cs"
       />
 
       {/* ═══════════════════════════════════════════════
@@ -226,12 +243,14 @@ export default function Keynote() {
         number="03"
         title="Dados & Analytics"
         subtitle="De dashboards bonitos a decisões inteligentes: o dado como infraestrutura de competitividade."
+        theme="data"
       />
 
       {/* 22 */}
       <StatementSlide
         statement="Ter dados não é ter inteligência. 87% das empresas acumulam dados que nunca viram uma decisão."
         attribution="NewVantage Partners Survey"
+        theme="data"
       />
 
       {/* 23 */}
@@ -243,6 +262,7 @@ export default function Keynote() {
           { title: "Preditivo — O que vai acontecer?", description: "Machine Learning, modelos de propensão, forecast. Onde poucos chegam." },
           { title: "Prescritivo — O que devemos fazer?", description: "Recomendações automatizadas, next-best-action. O verdadeiro ROI dos dados." },
         ]}
+        theme="data"
       />
 
       {/* 24 */}
@@ -251,6 +271,7 @@ export default function Keynote() {
         label="das empresas investem em dados. 24% consideram data-driven."
         context="O gap entre investir e ser não é tecnológico. É cultural. Cultura come estratégia no café da manhã — e come dados no almoço."
         source="Gartner CDO Survey"
+        theme="data"
       />
 
       {/* 25 */}
@@ -258,6 +279,7 @@ export default function Keynote() {
         title="O dado de voz: a mina de ouro ignorada"
         accent="No seu call center"
         content="Cada ligação tem 4 a 8 minutos de dados brutos. Sentimento, intenção, esforço, satisfação, oportunidade de venda. 97% dessas informações morrem no pós-atendimento porque ninguém as captura de forma estruturada."
+        theme="data"
       />
 
       {/* 26 */}
@@ -281,6 +303,7 @@ export default function Keynote() {
             "KPIs co-criados entre dados e operação",
           ],
         }}
+        theme="data"
       />
 
       {/* 27 */}
@@ -289,6 +312,7 @@ export default function Keynote() {
         label="mais chances de adquirir clientes"
         context="Empresas data-driven têm 23x mais chances de adquirir clientes, 6x de retê-los e 19x mais de ser lucrativas."
         source="McKinsey Global Institute"
+        theme="data"
       />
 
       {/* ═══════════════════════════════════════════════
@@ -300,11 +324,13 @@ export default function Keynote() {
         number="04"
         title="Inteligência Artificial"
         subtitle="Não é sobre substituir pessoas. É sobre dar superpoderes a quem já é bom."
+        theme="ai"
       />
 
       {/* 29 */}
       <StatementSlide
         statement="IA não vai substituir o atendente. Mas o atendente que usa IA vai substituir o que não usa."
+        theme="ai"
       />
 
       {/* 30 */}
@@ -318,6 +344,7 @@ export default function Keynote() {
           { title: "Predição de churn e next-best-action", description: "Modelos que identificam quem vai sair 60 dias antes e recomendam ações específicas de retenção." },
           { title: "Workforce Management inteligente", description: "Forecast de volume com precisão de 95%+. Escalas que consideram skill, humor e complexidade." },
         ]}
+        theme="ai"
       />
 
       {/* 31 */}
@@ -326,6 +353,7 @@ export default function Keynote() {
         label="de redução de custo operacional com IA aplicada"
         context="Mas o número que importa não é o custo. É o que você faz com o tempo liberado. IA barata é commodity. IA que gera valor é estratégia."
         source="Deloitte AI in Contact Centers"
+        theme="ai"
       />
 
       {/* 32 */}
@@ -333,6 +361,7 @@ export default function Keynote() {
         title="O risco de implementar IA sem estratégia"
         accent="Atenção"
         content="83% dos projetos de IA falham. Não por tecnologia — por falta de clareza no problema a resolver. IA sem caso de uso é brinquedo. IA sem dados é alucinação. IA sem governança é risco. Comece pelo problema, não pela ferramenta."
+        theme="ai"
       />
 
       {/* 33 */}
@@ -356,6 +385,7 @@ export default function Keynote() {
             "IA que amplifica a capacidade humana",
           ],
         }}
+        theme="ai"
       />
 
       {/* ═══════════════════════════════════════════════

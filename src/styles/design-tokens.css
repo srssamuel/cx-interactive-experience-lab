@@ -84,4 +84,20 @@
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 24px;
+
+  /* ─── Section Accents ─── */
+  --cx-accent: #00E5C3;
+  --cx-rgb: 0, 229, 195;
+  --cs-accent: #FF6B35;
+  --cs-rgb: 255, 107, 53;
+  --data-accent: #8B5CF6;
+  --data-rgb: 139, 92, 246;
+  --ai-accent: #3B82F6;
+  --ai-rgb: 59, 130, 246;
+
+  /* ─── Gradients ─── */
+  --gradient-cx: linear-gradient(135deg, #00E5C3 0%, #0891B2 100%);
+  --gradient-cs: linear-gradient(135deg, #FF6B35 0%, #F59E0B 100%);
+  --gradient-data: linear-gradient(135deg, #8B5CF6 0%, #6366F1 100%);
+  --gradient-ai: linear-gradient(135deg, #3B82F6 0%, #06B6D4 100%);
 }
