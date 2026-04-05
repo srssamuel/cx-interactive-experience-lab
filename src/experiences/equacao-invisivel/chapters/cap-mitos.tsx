@@ -13,7 +13,7 @@ import { myths } from "../content";
 export function CapMitos() {
   return (
     <>
-      <ChapterTransition id="mitos" number="02" title={myths.headline} />
+      <ChapterTransition textShadow="subtle" id="mitos" number="02" title={myths.headline} />
 
       <Section variant="default">
         <Container size="wide">

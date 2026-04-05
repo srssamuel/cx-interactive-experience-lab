@@ -9,13 +9,23 @@ interface CardProps {
   className?: string;
   variant?: "default" | "insight" | "highlighted" | "numbered" | "comparative";
   accentColor?: string;
+  /** Shadow depth preset */
+  shadow?: "default" | "layered" | "cinematic" | "float";
 }
+
+const shadowStyles = {
+  default: "hover:shadow-lg hover:shadow-black/20",
+  layered: "hover:[box-shadow:var(--shadow-xl)]",
+  cinematic: "hover:[box-shadow:var(--shadow-cinematic)]",
+  float: "hover:[box-shadow:var(--shadow-float)]",
+} as const;
 
 export function Card({
   children,
   className,
   variant = "default",
   accentColor,
+  shadow = "default",
 }: CardProps) {
   const variants = {
     default: "bg-[var(--surface)] border-[var(--border)]",
@@ -30,7 +40,8 @@ export function Card({
       className={cn(
         "rounded-xl border p-6 md:p-8",
         "transition-all duration-300 ease-out",
-        "hover:-translate-y-1 hover:border-[var(--border-hover)] hover:shadow-lg hover:shadow-black/20",
+        "hover:-translate-y-1 hover:border-[var(--border-hover)]",
+        shadowStyles[shadow],
         variants[variant],
         className
       )}
