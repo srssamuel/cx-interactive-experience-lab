@@ -4,6 +4,8 @@ import { Section, Container } from "@/components/design-system";
 import { WorkshopBlock } from "@/components/workshop/workshop-block";
 import { GSAPReveal } from "@/components/motion/gsap-reveal";
 import { ChapterTransition } from "@/components/cinematic/headline-slide";
+import { AmbientBackground } from "@/components/cinematic/ambient-background";
+import { HolographicCard } from "@/components/cinematic/holographic-card";
 import { maturidade } from "../content";
 
 /**
@@ -18,7 +20,8 @@ export function CapMaturidade() {
     <>
       <ChapterTransition textShadow="subtle" id="maturidade" number="08" title={maturidade.headline} />
 
-      <Section variant="breathing">
+      <Section variant="breathing" className="relative section-bg-violet">
+        <AmbientBackground variant="mesh-violet" intensity={0.7} />
         <Container size="wide">
           <div className="grid gap-5 md:grid-cols-4">
             {maturidade.stages.map((stage, i) => {
@@ -26,12 +29,7 @@ export function CapMaturidade() {
               // Each level gets taller padding to show growth
               const verticalPad = `${32 + i * 12}px`;
 
-              return (
-                <GSAPReveal
-                  key={stage.id}
-                  from={{ opacity: 0, y: 30, scale: 0.95 }}
-                  to={{ opacity: 1, y: 0, scale: 1, duration: 0.7, delay: i * 0.1, ease: "power3.out" }}
-                >
+              const cardContent = (
                   <div
                     data-float
                     className={`group relative h-full overflow-hidden rounded-xl border transition-all duration-300 ${
@@ -74,6 +72,19 @@ export function CapMaturidade() {
                       </div>
                     </div>
                   </div>
+              );
+
+              return (
+                <GSAPReveal
+                  key={stage.id}
+                  from={{ opacity: 0, y: 30, scale: 0.95 }}
+                  to={{ opacity: 1, y: 0, scale: 1, duration: 0.7, delay: i * 0.1, ease: "power3.out" }}
+                >
+                  {isLast ? (
+                    <HolographicCard scheme="aurora">{cardContent}</HolographicCard>
+                  ) : (
+                    cardContent
+                  )}
                 </GSAPReveal>
               );
             })}

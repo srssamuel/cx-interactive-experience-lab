@@ -5,6 +5,7 @@ import { GSAPReveal } from "@/components/motion/gsap-reveal";
 import { StaggerGroup } from "@/components/motion/scroll-reveal";
 import { Tabs } from "@/components/interactive/tabs";
 import { ChapterTransition } from "@/components/cinematic/headline-slide";
+import { AmbientBackground } from "@/components/cinematic/ambient-background";
 import { forma } from "../content";
 
 /**
@@ -21,7 +22,8 @@ export function CapForma() {
         subtitle={forma.subtitle}
       />
 
-      <Section background="surface">
+      <Section background="surface" className="relative section-bg-violet">
+        <AmbientBackground variant="mesh-violet" />
         <Container>
           <div data-float>
           <Tabs

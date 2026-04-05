@@ -3,12 +3,14 @@
 import { Provocation } from "@/components/design-system";
 import { GSAPReveal } from "@/components/motion/gsap-reveal";
 import { HeadlineSlide } from "@/components/cinematic/headline-slide";
+import { AmbientBackground } from "@/components/cinematic/ambient-background";
 import { DiscussionPrompt } from "@/components/workshop/discussion-prompt";
 import { discussion } from "../content";
 
 export function DiscussaoChapter() {
   return (
-    <div id="discussao">
+    <div id="discussao" className="section-bg-elevated relative">
+      <AmbientBackground variant="radial-burst" intensity={0.5} />
       <HeadlineSlide align="center" background="surface">
         <GSAPReveal>
           <Provocation>{discussion.question}</Provocation>

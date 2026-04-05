@@ -3,6 +3,8 @@
 import { Section, Container } from "@/components/design-system";
 import { GSAPReveal } from "@/components/motion/gsap-reveal";
 import { ChapterTransition } from "@/components/cinematic/headline-slide";
+import { AmbientBackground } from "@/components/cinematic/ambient-background";
+import { HolographicCard } from "@/components/cinematic/holographic-card";
 import { PausePoint } from "@/components/workshop/discussion-prompt";
 import { MagneticElement } from "@/components/interactive/magnetic-element";
 import { modelo } from "../content";
@@ -17,7 +19,8 @@ export function CapModelo() {
     <>
       <ChapterTransition textShadow="subtle" id="modelo" number="04" title={modelo.headline} />
 
-      <Section variant="breathing">
+      <Section variant="breathing" className="section-bg-neutral relative">
+        <AmbientBackground variant="aurora" intensity={0.7} />
         <Container size="narrow">
           <div className="relative">
             {/* Vertical connecting line */}
@@ -54,21 +57,33 @@ export function CapModelo() {
                       </MagneticElement>
 
                       {/* Content — alternates sides */}
-                      <div data-float className={`pl-12 md:pl-0 ${isEven ? "md:pr-16 md:text-right" : "md:col-start-2 md:pl-16"}`}>
-                        <span className={`text-[0.5rem] uppercase tracking-wider ${
-                          isLast ? "text-[var(--accent-primary)]" : "text-[var(--text-muted)]"
-                        }`}>
-                          {stage.label}
-                        </span>
-                        <h3 className={`mt-1 font-display text-xl font-light ${
-                          isLast ? "text-[var(--accent-primary)]" : "text-[var(--text)]"
-                        }`}>
-                          {stage.title}
-                        </h3>
-                        <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
-                          {stage.description}
-                        </p>
-                      </div>
+                      {isLast ? (
+                        <HolographicCard scheme="aurora">
+                          <div data-float className={`pl-12 md:pl-0 ${isEven ? "md:pr-16 md:text-right" : "md:col-start-2 md:pl-16"}`}>
+                            <span className="text-[0.5rem] uppercase tracking-wider text-[var(--accent-primary)]">
+                              {stage.label}
+                            </span>
+                            <h3 className="mt-1 font-display text-xl font-light text-[var(--accent-primary)]">
+                              {stage.title}
+                            </h3>
+                            <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
+                              {stage.description}
+                            </p>
+                          </div>
+                        </HolographicCard>
+                      ) : (
+                        <div data-float className={`pl-12 md:pl-0 ${isEven ? "md:pr-16 md:text-right" : "md:col-start-2 md:pl-16"}`}>
+                          <span className="text-[0.5rem] uppercase tracking-wider text-[var(--text-muted)]">
+                            {stage.label}
+                          </span>
+                          <h3 className="mt-1 font-display text-xl font-light text-[var(--text)]">
+                            {stage.title}
+                          </h3>
+                          <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
+                            {stage.description}
+                          </p>
+                        </div>
+                      )}
                     </div>
                   </GSAPReveal>
                 );

@@ -9,6 +9,8 @@ import {
   DataSpectacle,
   ChapterTransition,
 } from "@/components/cinematic/headline-slide";
+import { AmbientBackground } from "@/components/cinematic/ambient-background";
+import { CinematicHeadline } from "@/components/cinematic/cinematic-headline";
 import { motion } from "framer-motion";
 import { custoSilencio } from "../content";
 
@@ -29,6 +31,7 @@ export function CapCustoSilencio() {
       <ChapterTransition textShadow="subtle" id="custosilencio" number="05" title={custoSilencio.headline} />
 
       <DataSpectacle accent>
+        <AmbientBackground variant="radial-burst" intensity={0.6} />
         <div className="relative flex flex-col items-center text-center">
           {/* 3D orb — ambient depth behind the big number */}
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-40">
@@ -73,7 +76,7 @@ export function CapCustoSilencio() {
         </div>
       </DataSpectacle>
 
-      <Section background="surface">
+      <Section background="surface" className="relative section-bg-warm">
         <Container>
           <div className="grid gap-8 md:grid-cols-3">
             {custoSilencio.stats.map((stat, i) => (
@@ -96,7 +99,7 @@ export function CapCustoSilencio() {
       <section className="relative flex min-h-[50vh] items-center justify-center py-20 md:py-28">
         <div className="absolute inset-0 bg-[var(--bg)]" />
         <BlurReveal>
-          <FullBleedText>{custoSilencio.pullQuote}</FullBleedText>
+          <CinematicHeadline shadow="deep" tag="h2">{custoSilencio.pullQuote}</CinematicHeadline>
         </BlurReveal>
       </section>
 

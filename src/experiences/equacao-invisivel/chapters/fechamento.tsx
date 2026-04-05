@@ -4,6 +4,8 @@ import { Container } from "@/components/design-system";
 import { GSAPReveal, GSAPParallax } from "@/components/motion/gsap-reveal";
 import { BlurReveal } from "@/components/motion/text-reveal";
 import { GrainOverlay } from "@/components/cinematic/headline-slide";
+import { AmbientBackground } from "@/components/cinematic/ambient-background";
+import { CinematicHeadline } from "@/components/cinematic/cinematic-headline";
 import { fechamento } from "../content";
 
 /**
@@ -16,8 +18,9 @@ export function FechamentoChapter() {
   return (
     <section
       id="fechamento"
-      className="relative flex min-h-screen items-center justify-center overflow-hidden"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden section-bg-cool"
     >
+      <AmbientBackground variant="aurora" intensity={0.6} />
       <div className="absolute inset-0 bg-[var(--bg)]" />
       <GSAPParallax speed={-30}>
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(var(--accent-primary-rgb),0.03)_0%,transparent_60%)]" />
@@ -27,9 +30,9 @@ export function FechamentoChapter() {
       <Container size="narrow">
         <div className="relative z-10 text-center">
           <BlurReveal>
-            <h2 className="font-display text-[clamp(1.8rem,4.5vw,3.5rem)] font-light leading-[1.1] tracking-[-0.03em] text-[var(--text)]">
+            <CinematicHeadline shadow="deep" tag="h2">
               {fechamento.headline}
-            </h2>
+            </CinematicHeadline>
           </BlurReveal>
 
           <GSAPReveal from={{ opacity: 0, y: 20 }} to={{ opacity: 1, y: 0, duration: 0.8, delay: 0.6, ease: "power3.out" }}>

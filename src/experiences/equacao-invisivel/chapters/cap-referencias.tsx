@@ -3,6 +3,8 @@
 import { Section, Container, ExpandableCard } from "@/components/design-system";
 import { GSAPReveal, GSAPCounter } from "@/components/motion/gsap-reveal";
 import { ChapterTransition } from "@/components/cinematic/headline-slide";
+import { AmbientBackground } from "@/components/cinematic/ambient-background";
+import { HolographicCard } from "@/components/cinematic/holographic-card";
 import { referencias } from "../content";
 
 /**
@@ -18,9 +20,11 @@ export function CapReferencias() {
       <ChapterTransition textShadow="subtle" id="referencias" number="09" title={referencias.headline} />
 
       {/* First case — full-width, editorial prominence */}
-      <Section background="surface">
+      <Section background="surface" className="relative section-bg-warm">
+        <AmbientBackground variant="mesh-warm" />
         <Container size="narrow">
           <GSAPReveal from={{ opacity: 0, y: 30 }} to={{ opacity: 1, y: 0, duration: 0.9, ease: "power3.out" }}>
+            <HolographicCard scheme="subtle">
             <div className="flex flex-col items-center text-center">
               <span className="text-[0.55rem] font-semibold uppercase tracking-[0.15em] text-[var(--accent-primary)]">
                 {firstCase.sector}
@@ -39,6 +43,7 @@ export function CapReferencias() {
                 <p className="mt-1 text-xs text-[var(--text-muted)]">{firstCase.metric.label}</p>
               </div>
             </div>
+            </HolographicCard>
           </GSAPReveal>
         </Container>
       </Section>

@@ -169,3 +169,102 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* ═══════════════════════════════════════════
+   Aurora Background Bands
+   ═══════════════════════════════════════════ */
+.aurora-band {
+  position: absolute;
+  width: 150%;
+  height: 40%;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.5;
+  mix-blend-mode: screen;
+}
+
+.aurora-band-1 {
+  top: -10%;
+  left: -25%;
+  background: radial-gradient(ellipse, rgba(var(--accent-primary-rgb), 0.08) 0%, transparent 70%);
+  animation: aurora-drift-1 12s ease-in-out infinite alternate;
+}
+
+.aurora-band-2 {
+  top: 30%;
+  right: -20%;
+  background: radial-gradient(ellipse, rgba(var(--accent-secondary-rgb), 0.06) 0%, transparent 70%);
+  animation: aurora-drift-2 15s ease-in-out infinite alternate;
+}
+
+.aurora-band-3 {
+  bottom: -5%;
+  left: 10%;
+  background: radial-gradient(ellipse, rgba(var(--accent-primary-rgb), 0.04) 0%, transparent 70%);
+  animation: aurora-drift-3 18s ease-in-out infinite alternate;
+}
+
+@keyframes aurora-drift-1 {
+  0% { transform: translateX(0%) translateY(0%) rotate(0deg); }
+  100% { transform: translateX(10%) translateY(5%) rotate(3deg); }
+}
+
+@keyframes aurora-drift-2 {
+  0% { transform: translateX(0%) translateY(0%) rotate(0deg); }
+  100% { transform: translateX(-8%) translateY(-3%) rotate(-2deg); }
+}
+
+@keyframes aurora-drift-3 {
+  0% { transform: translateX(0%) translateY(0%) rotate(0deg); }
+  100% { transform: translateX(5%) translateY(-5%) rotate(2deg); }
+}
+
+/* ═══════════════════════════════════════════
+   Holographic Shimmer Animation
+   ═══════════════════════════════════════════ */
+@property --shimmer-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.holographic-shimmer {
+  background-image: linear-gradient(
+    var(--shimmer-angle),
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.05) 45%,
+    rgba(255,255,255,0.12) 50%,
+    rgba(255,255,255,0.05) 55%,
+    rgba(255,255,255,0) 100%
+  );
+  background-size: 200% 200%;
+  animation: shimmer-sweep 4s ease-in-out infinite;
+}
+
+@keyframes shimmer-sweep {
+  0% { --shimmer-angle: 0deg; }
+  100% { --shimmer-angle: 360deg; }
+}
+
+/* ═══════════════════════════════════════════
+   Section background variation utilities
+   ═══════════════════════════════════════════ */
+.section-bg-warm {
+  background: linear-gradient(170deg, var(--bg) 0%, #0D0A08 40%, #0A0808 100%);
+}
+
+.section-bg-cool {
+  background: linear-gradient(170deg, var(--bg) 0%, #080A0E 40%, #06080D 100%);
+}
+
+.section-bg-violet {
+  background: linear-gradient(170deg, var(--bg) 0%, #0A080E 40%, #08060D 100%);
+}
+
+.section-bg-neutral {
+  background: linear-gradient(170deg, var(--bg) 0%, #0A0B0F 40%, var(--surface) 100%);
+}
+
+.section-bg-elevated {
+  background: var(--surface);
+}

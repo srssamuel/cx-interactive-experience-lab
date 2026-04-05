@@ -7,6 +7,7 @@ import {
   HeadlineSlide,
   ChapterTransition,
 } from "@/components/cinematic/headline-slide";
+import { AmbientBackground } from "@/components/cinematic/ambient-background";
 import { metricas } from "../content";
 
 /**
@@ -21,7 +22,8 @@ export function CapMetricas() {
       <ChapterTransition textShadow="subtle" id="metricas" number="03" title={metricas.headline} />
 
       {/* Vanity — shown as things to discard */}
-      <Section variant="default">
+      <Section variant="default" className="section-bg-violet relative">
+        <AmbientBackground variant="grid-data" />
         <Container size="narrow">
           <GSAPReveal>
             <span className="text-[0.6rem] font-semibold uppercase tracking-[0.2em] text-[var(--danger)]/60">

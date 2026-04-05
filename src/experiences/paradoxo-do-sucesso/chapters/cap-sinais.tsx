@@ -4,6 +4,7 @@ import { BodyText, Section, Container } from "@/components/design-system";
 import { GSAPReveal } from "@/components/motion/gsap-reveal";
 import { CascadeReveal } from "@/components/motion/cascade-reveal";
 import { ChapterTransition } from "@/components/cinematic/headline-slide";
+import { AmbientBackground } from "@/components/cinematic/ambient-background";
 import { sinais } from "../content";
 
 const severityColor: Record<string, string> = {
@@ -22,7 +23,8 @@ export function CapSinais() {
     <>
       <ChapterTransition textShadow="subtle" id="sinais" number="02" title={sinais.headline} />
 
-      <Section variant="default">
+      <Section variant="default" className="section-bg-cool relative">
+        <AmbientBackground variant="topography" />
         <Container size="narrow">
           <GSAPReveal>
             <BodyText className="mb-12">{sinais.subtext}</BodyText>

@@ -3,6 +3,7 @@
 import { Section, Container } from "@/components/design-system";
 import { GSAPReveal } from "@/components/motion/gsap-reveal";
 import { ChapterTransition } from "@/components/cinematic/headline-slide";
+import { AmbientBackground } from "@/components/cinematic/ambient-background";
 import { myths } from "../content";
 
 /**
@@ -15,7 +16,8 @@ export function CapMitos() {
     <>
       <ChapterTransition textShadow="subtle" id="mitos" number="02" title={myths.headline} />
 
-      <Section variant="default">
+      <Section variant="default" className="relative section-bg-cool">
+        <AmbientBackground variant="topography" />
         <Container size="wide">
           <div className="space-y-20 md:space-y-28">
             {myths.items.map((item, i) => {

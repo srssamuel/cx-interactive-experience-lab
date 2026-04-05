@@ -3,6 +3,8 @@
 import { BodyText, Section, Container } from "@/components/design-system";
 import { GSAPReveal } from "@/components/motion/gsap-reveal";
 import { ChapterTransition } from "@/components/cinematic/headline-slide";
+import { AmbientBackground } from "@/components/cinematic/ambient-background";
+import { HolographicCard } from "@/components/cinematic/holographic-card";
 import { paradoxo } from "../content";
 
 /**
@@ -14,7 +16,8 @@ export function CapParadoxo() {
     <>
       <ChapterTransition textShadow="subtle" id="paradoxo" number="01" title={paradoxo.headline} />
 
-      <Section variant="default">
+      <Section variant="default" className="section-bg-warm relative">
+        <AmbientBackground variant="mesh-warm" />
         <Container size="narrow">
           <GSAPReveal>
             <BodyText className="max-w-[52ch]">{paradoxo.subtext}</BodyText>
@@ -33,23 +36,25 @@ export function CapParadoxo() {
                   from={{ opacity: 0, x: isFirst ? -30 : 30 }}
                   to={{ opacity: 1, x: 0, duration: 0.8, delay: i * 0.15, ease: "power3.out" }}
                 >
-                  <div data-float className={`h-full rounded-xl border p-8 md:p-10 ${
-                    isFirst
-                      ? "border-[var(--danger)]/15 bg-[var(--danger)]/[0.03]"
-                      : "border-[var(--success)]/15 bg-[var(--success)]/[0.03]"
-                  }`}>
-                    <span className={`text-[0.55rem] font-semibold uppercase tracking-[0.15em] ${
-                      isFirst ? "text-[var(--danger)]/60" : "text-[var(--success)]/60"
+                  <HolographicCard scheme={isFirst ? "neon" : "aurora"} tilt={false}>
+                    <div data-float className={`h-full rounded-xl border p-8 md:p-10 ${
+                      isFirst
+                        ? "border-[var(--danger)]/15 bg-[var(--danger)]/[0.03]"
+                        : "border-[var(--success)]/15 bg-[var(--success)]/[0.03]"
                     }`}>
-                      {isFirst ? "O que parece" : "O que deveria ser"}
-                    </span>
-                    <h3 className="mt-3 font-display text-[clamp(1.8rem,3vw,2.5rem)] font-light leading-[1.05] text-[var(--text)]">
-                      {part.title}
-                    </h3>
-                    <p className="mt-4 text-[0.95rem] leading-relaxed text-[var(--text-secondary)]">
-                      {part.description}
-                    </p>
-                  </div>
+                      <span className={`text-[0.55rem] font-semibold uppercase tracking-[0.15em] ${
+                        isFirst ? "text-[var(--danger)]/60" : "text-[var(--success)]/60"
+                      }`}>
+                        {isFirst ? "O que parece" : "O que deveria ser"}
+                      </span>
+                      <h3 className="mt-3 font-display text-[clamp(1.8rem,3vw,2.5rem)] font-light leading-[1.05] text-[var(--text)]">
+                        {part.title}
+                      </h3>
+                      <p className="mt-4 text-[0.95rem] leading-relaxed text-[var(--text-secondary)]">
+                        {part.description}
+                      </p>
+                    </div>
+                  </HolographicCard>
                 </GSAPReveal>
               );
             })}

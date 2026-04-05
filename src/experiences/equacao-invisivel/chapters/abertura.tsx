@@ -1,12 +1,14 @@
 "use client";
 
 import { HeadlineSlide } from "@/components/cinematic/headline-slide";
+import { AmbientBackground } from "@/components/cinematic/ambient-background";
 import { TextReveal } from "@/components/motion/text-reveal";
 import { abertura } from "../content";
 
 export function AberturaChapter() {
   return (
-    <div id="abertura">
+    <div id="abertura" className="relative section-bg-neutral">
+      <AmbientBackground variant="diagonal-light" />
       {abertura.principios.map((p, i) => (
         <HeadlineSlide
           key={p.number}

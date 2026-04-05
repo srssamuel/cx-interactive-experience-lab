@@ -3,6 +3,7 @@
 import { Section, Container } from "@/components/design-system";
 import { GSAPReveal } from "@/components/motion/gsap-reveal";
 import { ChapterTransition } from "@/components/cinematic/headline-slide";
+import { AmbientBackground } from "@/components/cinematic/ambient-background";
 import { jornada } from "../content";
 
 /**
@@ -16,7 +17,8 @@ export function CapJornada() {
     <>
       <ChapterTransition textShadow="subtle" id="jornada" number="05" title={jornada.headline} />
 
-      <Section variant="breathing" background="surface">
+      <Section variant="breathing" background="surface" className="section-bg-cool relative">
+        <AmbientBackground variant="mesh-cool" />
         <Container>
           {/* Connected path — each phase a node */}
           <div className="relative">

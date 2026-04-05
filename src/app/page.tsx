@@ -10,6 +10,8 @@ import { GSAPReveal, GSAPCounter } from "@/components/motion/gsap-reveal";
 import { CursorParallaxContainer } from "@/components/motion/cursor-parallax-container";
 import { SkewTransition } from "@/components/motion/skew-transition";
 import { GrainOverlay } from "@/components/cinematic/headline-slide";
+import { AmbientBackground } from "@/components/cinematic/ambient-background";
+import { HolographicBadge } from "@/components/cinematic/holographic-card";
 import { useMagneticCursor } from "@/lib/hooks/use-magnetic-cursor";
 
 export default function Portal() {
@@ -35,6 +37,7 @@ export default function Portal() {
         className="relative flex min-h-screen flex-col justify-end pb-16 md:pb-24"
       >
         <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)] via-[var(--bg)] to-[var(--surface)]/30" />
+        <AmbientBackground variant="aurora" intensity={0.5} scrollAnimated={false} />
         <GrainOverlay opacity={0.02} />
 
         {/* Single diagonal rule — not 4 horizontal lines */}
@@ -93,9 +96,9 @@ export default function Portal() {
                 Cada material defende uma tese. Nenhum é neutro. Cada
                 interação ensina algo. Nenhuma é decorativa.
               </p>
-              <div className="mt-6 flex items-center gap-4 text-[0.55rem] uppercase tracking-[0.15em] text-[var(--text-muted)]">
+              <div className="mt-6 flex items-center gap-4">
                 {["Leitura", "Palco", "Workshop"].map((mode) => (
-                  <span key={mode}>{mode}</span>
+                  <HolographicBadge key={mode}>{mode}</HolographicBadge>
                 ))}
               </div>
             </motion.div>
@@ -122,8 +125,9 @@ export default function Portal() {
           Asymmetric: oversized number left, content right
           ═══════════════════════════════════════════ */}
       <Link href={`/experiencias/${equacao.slug}`} className="group block">
-        <section className={cn("theme-cx", "relative overflow-hidden")}>
+        <section className={cn("theme-cx", "section-bg-warm relative overflow-hidden")}>
           <div className="absolute inset-0 bg-gradient-to-r from-[var(--accent-primary)]/[0.02] to-transparent" />
+          <AmbientBackground variant="mesh-warm" intensity={0.7} />
 
           <div className="mx-auto max-w-7xl px-6 md:px-12">
             <div className="grid min-h-[80vh] items-center gap-0 md:grid-cols-[1fr_1fr] lg:grid-cols-[45%_55%]">
@@ -214,8 +218,9 @@ export default function Portal() {
           Inverted: content left (narrow), data right (wide)
           ═══════════════════════════════════════════ */}
       <Link href={`/experiencias/${paradoxo.slug}`} className="group block">
-        <section className={cn("theme-cs", "relative overflow-hidden")}>
+        <section className={cn("theme-cs", "section-bg-cool relative overflow-hidden")}>
           <div className="absolute inset-0 bg-gradient-to-l from-[var(--accent-primary)]/[0.02] to-transparent" />
+          <AmbientBackground variant="mesh-cool" intensity={0.7} />
 
           <div className="mx-auto max-w-7xl px-6 md:px-12">
             <div className="grid min-h-[80vh] items-center gap-8 md:grid-cols-[55%_45%]">
@@ -290,7 +295,8 @@ export default function Portal() {
       {/* ═══════════════════════════════════════════
           UPCOMING — Understated, just text
           ═══════════════════════════════════════════ */}
-      <section className="border-t border-[var(--border)] py-20 md:py-28">
+      <section className="section-bg-neutral relative border-t border-[var(--border)] py-20 md:py-28">
+        <AmbientBackground variant="topography" intensity={0.8} />
         <div className="mx-auto max-w-7xl px-6 md:px-12">
           <GSAPReveal>
             <span className="text-[0.6rem] font-medium uppercase tracking-[0.2em] text-[var(--text-muted)]">

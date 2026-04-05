@@ -5,6 +5,7 @@ import { WorkshopBlock } from "@/components/workshop/workshop-block";
 import { GSAPReveal } from "@/components/motion/gsap-reveal";
 import { TiltCard } from "@/components/interactive/tilt-card";
 import { ChapterTransition } from "@/components/cinematic/headline-slide";
+import { AmbientBackground } from "@/components/cinematic/ambient-background";
 import { dimensoes } from "../content";
 
 /**
@@ -17,7 +18,8 @@ export function CapDimensoes() {
     <>
       <ChapterTransition textShadow="subtle" id="dimensoes" number="03" title={dimensoes.headline} />
 
-      <Section variant="breathing">
+      <Section variant="breathing" className="relative section-bg-neutral">
+        <AmbientBackground variant="grid-data" />
         <Container>
           <BentoGrid columns={2} className="gap-5">
             {dimensoes.items.map((dim, i) => (

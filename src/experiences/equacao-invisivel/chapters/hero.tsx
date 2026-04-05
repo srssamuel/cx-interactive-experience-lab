@@ -14,6 +14,7 @@ import { ScrollReveal } from "@/components/motion/scroll-reveal";
 import { TextReveal } from "@/components/motion/text-reveal";
 import { CursorParallaxContainer } from "@/components/motion/cursor-parallax-container";
 import { GrainOverlay } from "@/components/cinematic/headline-slide";
+import { AmbientBackground } from "@/components/cinematic/ambient-background";
 import { hero } from "../content";
 
 const ParticleField = dynamic(
@@ -30,6 +31,7 @@ export function HeroChapter() {
       backgroundElement={
         <>
           <div className="absolute inset-0 bg-gradient-to-br from-[var(--bg)] via-[var(--bg)] to-[var(--surface)]/40" />
+          <AmbientBackground variant="mesh-warm" intensity={0.8} scrollAnimated={false} />
           <div className="absolute inset-0 opacity-30">
             <ParticleField color="var(--accent-primary)" count={300} interactive />
           </div>

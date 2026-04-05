@@ -11,6 +11,8 @@ import {
   HeadlineSlide,
   ChapterTransition,
 } from "@/components/cinematic/headline-slide";
+import { AmbientBackground } from "@/components/cinematic/ambient-background";
+import { HolographicCard } from "@/components/cinematic/holographic-card";
 import { equation } from "../content";
 
 /**
@@ -24,7 +26,8 @@ export function CapEquacao() {
       <ChapterTransition textShadow="subtle" id="equacao" number="01" title={equation.headline} />
 
       {/* The Formula — immersive, typographic */}
-      <Section variant="immersive" className="relative">
+      <Section variant="immersive" className="relative section-bg-warm">
+        <AmbientBackground variant="mesh-warm" intensity={0.8} />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(var(--accent-primary-rgb),0.04)_0%,transparent_55%)]" />
         <Container size="default">
           <div className="flex flex-col items-center gap-6 text-center md:flex-row md:justify-center md:gap-10">
@@ -55,15 +58,17 @@ export function CapEquacao() {
                 <span className="font-mono text-4xl font-bold text-[var(--accent-primary)]/40 md:text-5xl">
                   =
                 </span>
-                <div data-float className="rounded-lg border border-[var(--accent-primary)]/25 bg-[var(--accent-primary)]/[0.06] px-8 py-5 shadow-[0_0_40px_rgba(var(--accent-primary-rgb),0.06)]">
-                  <TextReveal
-                    text={equation.conclusion}
-                    tag="span"
-                    delay={1.5}
-                    stagger={0.04}
-                    className="font-display text-[clamp(1.6rem,3.5vw,2.5rem)] font-light tracking-[-0.02em] text-[var(--accent-primary)]"
-                  />
-                </div>
+                <HolographicCard scheme="subtle">
+                  <div data-float className="rounded-lg border border-[var(--accent-primary)]/25 bg-[var(--accent-primary)]/[0.06] px-8 py-5 shadow-[0_0_40px_rgba(var(--accent-primary-rgb),0.06)]">
+                    <TextReveal
+                      text={equation.conclusion}
+                      tag="span"
+                      delay={1.5}
+                      stagger={0.04}
+                      className="font-display text-[clamp(1.6rem,3.5vw,2.5rem)] font-light tracking-[-0.02em] text-[var(--accent-primary)]"
+                    />
+                  </div>
+                </HolographicCard>
               </div>
             </GSAPReveal>
           </div>
