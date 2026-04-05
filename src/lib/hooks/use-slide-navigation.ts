@@ -55,12 +55,13 @@ export function useSlideNavigation({ totalSlides }: UseSlideNavigationOptions) {
           goTo(totalSlides - 1);
           break;
         default:
-          // Number keys 1-9 for quick jump
-          if (/^[1-9]$/.test(e.key)) {
-            const target = parseInt(e.key, 10) - 1;
-            if (target < totalSlides) {
+          // Number keys 1-6 jump to section starts
+          if (/^[1-6]$/.test(e.key)) {
+            const sectionStarts = [0, 3, 12, 20, 27, 33]; // Opening, CX, CS, Data, AI, Closing
+            const idx = parseInt(e.key, 10) - 1;
+            if (idx < sectionStarts.length && sectionStarts[idx] < totalSlides) {
               e.preventDefault();
-              goTo(target);
+              goTo(sectionStarts[idx]);
             }
           }
           // 'f' for fullscreen

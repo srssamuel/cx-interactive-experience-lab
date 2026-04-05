@@ -156,6 +156,26 @@ export function SlideDeck({ children, className }: SlideDeckProps) {
         )}
       </div>
 
+      {/* Mobile swipe hint (first slide only) */}
+      {nav.current === 0 && (
+        <div className="absolute bottom-8 left-1/2 z-30 -translate-x-1/2 md:hidden">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 2, duration: 1 }}
+            className="flex items-center gap-2 text-[0.55rem] tracking-[0.12em] text-[var(--text-ghost)]"
+          >
+            <motion.span animate={{ x: [-3, 3, -3] }} transition={{ duration: 2, repeat: Infinity }}>
+              ←
+            </motion.span>
+            deslize para navegar
+            <motion.span animate={{ x: [3, -3, 3] }} transition={{ duration: 2, repeat: Infinity }}>
+              →
+            </motion.span>
+          </motion.div>
+        </div>
+      )}
+
       {/* Cursor spotlight */}
       <CursorSpotlight color={section.color.replace("#", "").match(/.{2}/g)?.map((h) => parseInt(h, 16)).join(", ") || "0, 229, 195"} />
 
