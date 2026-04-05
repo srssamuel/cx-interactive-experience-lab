@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "@/styles/globals.css";
+import { CustomCursor } from "@/components/fx";
 
 export const metadata: Metadata = {
   title: "CX Trends 2025 — O Futuro da Experiência",
@@ -22,6 +23,7 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body className="bg-[var(--bg)] text-[var(--text)] antialiased">
         {children}
+        <CustomCursor />
       </body>
     </html>
   );

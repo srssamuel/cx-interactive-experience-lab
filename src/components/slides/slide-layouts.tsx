@@ -33,17 +33,27 @@ function themeVars(theme?: SlideTheme): CSSProperties {
    SHARED FX COMPONENTS
    ═══════════════════════════════════════════════════ */
 
-function Grain({ opacity = 0.025 }: { opacity?: number }) {
-  return (
-    <div
-      className="pointer-events-none absolute inset-0 z-[2] mix-blend-overlay"
-      style={{
-        opacity,
-        backgroundImage:
-          "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")",
-      }}
-    />
-  );
+/* Cinematic vignette — creates depth focus */
+function Vignette() {
+  return <div className="vignette" />;
+}
+
+/* Noise layer — via CSS pseudo-element */
+function Noise() {
+  return <div className="noise-layer pointer-events-none absolute inset-0 z-[2]" />;
+}
+
+/* Mesh gradient background — section-aware via CSS classes */
+const MESH_CLASS: Record<SlideTheme, string> = {
+  default: "mesh-cx",
+  cx: "mesh-cx",
+  cs: "mesh-cs",
+  data: "mesh-data",
+  ai: "mesh-ai",
+};
+
+function MeshBg({ theme = "default" }: { theme?: SlideTheme }) {
+  return <div className={cn("pointer-events-none absolute inset-0", MESH_CLASS[theme || "default"])} />;
 }
 
 function Aurora({ theme = "default" }: { theme?: SlideTheme }) {
@@ -51,17 +61,24 @@ function Aurora({ theme = "default" }: { theme?: SlideTheme }) {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
       <div
-        className="absolute -inset-[50%] opacity-[0.04]"
+        className="absolute -inset-[50%] opacity-[0.05]"
         style={{
-          background: `radial-gradient(ellipse at 30% 40%, rgba(${t.rgb}, 0.4) 0%, transparent 50%)`,
+          background: `radial-gradient(ellipse at 25% 35%, rgba(${t.rgb}, 0.5) 0%, transparent 50%)`,
           animation: "aurora-drift 20s ease-in-out infinite",
         }}
       />
       <div
-        className="absolute -inset-[50%] opacity-[0.03]"
+        className="absolute -inset-[50%] opacity-[0.04]"
         style={{
-          background: `radial-gradient(ellipse at 70% 60%, rgba(${t.rgb}, 0.3) 0%, transparent 50%)`,
+          background: `radial-gradient(ellipse at 75% 65%, rgba(${t.rgb}, 0.35) 0%, transparent 50%)`,
           animation: "aurora-drift-2 25s ease-in-out infinite",
+        }}
+      />
+      <div
+        className="absolute -inset-[50%] opacity-[0.02]"
+        style={{
+          background: `radial-gradient(ellipse at 50% 50%, rgba(${t.rgb}, 0.25) 0%, transparent 40%)`,
+          animation: "aurora-drift-3 30s ease-in-out infinite",
         }}
       />
     </div>
@@ -71,12 +88,23 @@ function Aurora({ theme = "default" }: { theme?: SlideTheme }) {
 function DotGrid() {
   return (
     <div
-      className="pointer-events-none absolute inset-0 opacity-[0.03]"
+      className="pointer-events-none absolute inset-0 opacity-[0.025]"
       style={{
         backgroundImage: "radial-gradient(circle, var(--text) 0.5px, transparent 0.5px)",
         backgroundSize: "32px 32px",
       }}
     />
+  );
+}
+
+/* Oversized background text — ghost text for visual weight */
+function GhostText({ text, className }: { text: string; className?: string }) {
+  return (
+    <div className={cn("pointer-events-none absolute select-none", className)} aria-hidden="true">
+      <span className="text-outline block font-[var(--font-display)] text-[clamp(10rem,25vw,22rem)] font-normal leading-none tracking-[-0.05em]">
+        {text}
+      </span>
+    </div>
   );
 }
 
@@ -134,13 +162,39 @@ export function TitleSlide({ overline, title, subtitle, accent, theme, className
 
   return (
     <div ref={containerRef} className={cn("slide relative bg-[var(--bg)]", className)} style={themeVars(theme)}>
-      <Grain />
+      {/* 4-layer depth system */}
+      <MeshBg theme={theme} />
       <Aurora theme={theme} />
       <DotGrid />
       <ParticleCanvas count={40} color={THEMES[theme || "default"].rgb} className="pointer-events-none absolute inset-0 z-[1] opacity-25" />
+      <Noise />
+      <Vignette />
 
-      {/* Accent line */}
-      <div className="absolute left-8 top-[15%] h-[30%] w-[2px] md:left-16" style={{ background: `linear-gradient(to bottom, transparent, rgba(var(--accent-rgb), 0.3), transparent)` }} />
+      {/* Oversized ghost text for visual weight */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5, duration: 2 }}
+        className="pointer-events-none absolute -right-[5%] top-[10%] select-none"
+        style={{ transform: `translate(${nx * -20}px, ${ny * -20}px)` }}
+        aria-hidden="true"
+      >
+        <span className="text-outline block font-[var(--font-display)] text-[clamp(10rem,22vw,20rem)] font-normal italic leading-none tracking-[-0.05em]">
+          CX
+        </span>
+      </motion.div>
+
+      {/* Accent line — vertical */}
+      <div className="absolute left-8 top-[10%] h-[40%] w-[1px] md:left-16" style={{ background: `linear-gradient(to bottom, transparent, rgba(var(--accent-rgb), 0.2), transparent)` }} />
+
+      {/* Horizontal accent line */}
+      <motion.div
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ delay: 1.2, duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute bottom-[25%] left-0 h-[1px] w-[40%] origin-left"
+        style={{ background: `linear-gradient(to right, rgba(var(--accent-rgb), 0.15), transparent)` }}
+      />
 
       <div className="relative z-10 w-full max-w-6xl px-8 md:px-16">
         {overline && (
@@ -148,55 +202,62 @@ export function TitleSlide({ overline, title, subtitle, accent, theme, className
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="mb-6 inline-flex items-center gap-3 text-[0.6rem] font-semibold uppercase tracking-[0.25em] text-[var(--accent)]"
+            className="mb-8 inline-flex items-center gap-4 text-[0.65rem] font-medium uppercase tracking-[0.3em] text-[var(--accent)]"
             style={{ transform: `translate(${nx * -5}px, ${ny * -5}px)` }}
           >
-            <span className="h-[1px] w-8" style={{ background: "var(--accent)" }} />
+            <span className="h-[1px] w-12" style={{ background: "var(--accent)" }} />
             {overline}
           </motion.span>
         )}
 
         <h1
-          className="font-[var(--font-display)] text-[clamp(2.5rem,7vw,6rem)] font-normal leading-[0.9] tracking-[-0.04em] text-[var(--text)]"
+          className="font-[var(--font-display)] text-[clamp(3rem,9vw,8rem)] font-normal leading-[0.85] tracking-[-0.04em] text-[var(--text)]"
           style={{
-            textShadow: "var(--text-shadow-cinematic)",
+            textShadow: "var(--text-shadow-deep)",
             transform: `translate(${nx * 12}px, ${ny * 12}px)`,
           }}
         >
           {words.map((word, i) => (
             <motion.span
               key={i}
-              initial={{ opacity: 0, y: 40, rotateX: -15 }}
-              animate={{ opacity: 1, y: 0, rotateX: 0 }}
+              initial={{ opacity: 0, y: 50, filter: "blur(8px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{
-                delay: 0.3 + i * 0.08,
-                duration: 0.8,
+                delay: 0.3 + i * 0.1,
+                duration: 1,
                 ease: [0.16, 1, 0.3, 1],
               }}
-              className="mr-[0.3em] inline-block"
+              className="mr-[0.25em] inline-block"
             >
               {word}
             </motion.span>
           ))}
           {accent && (
             <motion.span
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 + words.length * 0.08, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="block text-[var(--accent)]"
+              initial={{ opacity: 0, y: 40, filter: "blur(8px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ delay: 0.3 + words.length * 0.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              className="block"
+              style={{
+                background: THEMES[theme || "default"].gradient,
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                filter: `drop-shadow(0 4px 30px rgba(var(--accent-rgb), 0.2))`,
+              }}
             >
               {accent}
-              <span className="ml-1 inline-block h-[0.8em] w-[3px] align-middle bg-[var(--accent)]" style={{ animation: "cursor-blink 1s step-end infinite" }} />
+              <span className="ml-1 inline-block h-[0.75em] w-[3px] align-middle" style={{ background: "var(--accent)", animation: "cursor-blink 1s step-end infinite", WebkitTextFillColor: "var(--accent)" }} />
             </motion.span>
           )}
         </h1>
 
         {subtitle && (
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
-            className="mt-6 max-w-[42ch] text-lg leading-relaxed text-[var(--text-secondary)]"
+            initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ delay: 1, duration: 0.8 }}
+            className="mt-8 max-w-[45ch] text-[1.1rem] leading-[1.8] text-[var(--text-secondary)]"
             style={{ transform: `translate(${nx * -3}px, ${ny * -3}px)` }}
           >
             {subtitle}
@@ -204,7 +265,7 @@ export function TitleSlide({ overline, title, subtitle, accent, theme, className
         )}
 
         {children && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1, duration: 0.6 }} className="mt-10">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2, duration: 0.6 }} className="mt-10">
             {children}
           </motion.div>
         )}
@@ -229,8 +290,10 @@ export function StatementSlide({ statement, attribution, theme, className }: Sta
 
   return (
     <div className={cn("slide relative bg-[var(--bg)]", className)} style={themeVars(theme)}>
-      <Grain />
+      <MeshBg theme={theme} />
       <Aurora theme={theme} />
+      <Noise />
+      <Vignette />
 
       {/* Ambient floating geometric shapes */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
@@ -274,7 +337,7 @@ export function StatementSlide({ statement, attribution, theme, className }: Sta
       </motion.span>
 
       <div className="relative z-10 mx-auto max-w-5xl px-8 text-center md:px-16">
-        <p className="font-[var(--font-display)] text-[clamp(1.8rem,5vw,3.8rem)] font-normal leading-[1.15] tracking-[-0.02em] text-[var(--text)]" style={{ textShadow: "var(--text-shadow-subtle)" }}>
+        <p className="font-[var(--font-display)] text-[clamp(2rem,5.5vw,4.2rem)] font-normal italic leading-[1.15] tracking-[-0.02em] text-[var(--text)]" style={{ textShadow: "var(--text-shadow-cinematic)" }}>
           {words.map((word, i) => (
             <motion.span
               key={i}
@@ -336,8 +399,10 @@ export function DataSlide({ stat, label, context, source, theme, className }: Da
 
   return (
     <div className={cn("slide relative bg-[var(--bg)]", className)} style={themeVars(theme)} ref={scope}>
-      <Grain />
+      <MeshBg theme={theme} />
       <Aurora theme={theme} />
+      <Noise />
+      <Vignette />
 
       {/* Radial glow behind number */}
       <div
@@ -369,8 +434,14 @@ export function DataSlide({ stat, label, context, source, theme, className }: Da
           initial={{ opacity: 0, scale: 0.7 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="block font-[var(--font-mono)] text-[clamp(4rem,15vw,12rem)] font-bold leading-none text-[var(--accent)]"
-          style={{ textShadow: `0 0 80px rgba(var(--accent-rgb), 0.4), 0 0 160px rgba(var(--accent-rgb), 0.15)` }}
+          className="block font-[var(--font-mono)] text-[clamp(5rem,18vw,15rem)] font-bold leading-none"
+          style={{
+            background: THEMES[theme || "default"].gradient,
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+            filter: `drop-shadow(0 0 80px rgba(var(--accent-rgb), 0.35)) drop-shadow(0 0 160px rgba(var(--accent-rgb), 0.15))`,
+          }}
         >
           {displayStat}
         </motion.span>
@@ -471,25 +542,27 @@ function TiltCard({ children, index }: { children: ReactNode; index: number }) {
 export function ListSlide({ title, items, theme, className }: ListSlideProps) {
   return (
     <div className={cn("slide relative bg-[var(--bg)]", className)} style={themeVars(theme)}>
-      <Grain />
+      <MeshBg theme={theme} />
       <Aurora theme={theme} />
       <DotGrid />
+      <Noise />
+      <Vignette />
 
       <div className="relative z-10 w-full max-w-5xl px-8 md:px-16">
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-12 font-[var(--font-display)] text-[clamp(1.8rem,4vw,3rem)] font-normal tracking-[-0.02em] text-[var(--text)]"
-          style={{ textShadow: "var(--text-shadow-subtle)" }}
+          initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.8 }}
+          className="mb-12 font-[var(--font-display)] text-[clamp(2rem,4.5vw,3.5rem)] font-normal italic tracking-[-0.02em] text-[var(--text)]"
+          style={{ textShadow: "var(--text-shadow-cinematic)" }}
         >
           {title}
           <motion.span
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
             transition={{ delay: 0.4, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-3 block h-[2px] w-16 origin-left"
-            style={{ background: `var(--accent)` }}
+            className="mt-4 block h-[2px] w-20 origin-left"
+            style={{ background: THEMES[theme || "default"].gradient }}
           />
         </motion.h2>
 
@@ -678,10 +751,12 @@ export function SplitSlide({ title, content, visual, visualType, accent, theme, 
   const VisualComponent = visualType ? VISUALS[visualType] : null;
   return (
     <div className={cn("slide relative bg-[var(--bg)]", className)} style={themeVars(theme)}>
-      <Grain />
+      <MeshBg theme={theme} />
       <Aurora theme={theme} />
+      <Noise />
+      <Vignette />
 
-      <div className="relative z-10 grid w-full max-w-6xl items-center gap-12 px-8 md:grid-cols-2 md:px-16">
+      <div className="relative z-10 grid w-full max-w-6xl items-center gap-16 px-8 md:grid-cols-[1fr_0.9fr] md:px-16">
         <div>
           {accent && (
             <motion.span
@@ -695,11 +770,11 @@ export function SplitSlide({ title, content, visual, visualType, accent, theme, 
             </motion.span>
           )}
           <motion.h2
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="font-[var(--font-display)] text-[clamp(2rem,4vw,3.5rem)] font-normal leading-[1] tracking-[-0.03em] text-[var(--text)]"
-            style={{ textShadow: "var(--text-shadow-subtle)" }}
+            initial={{ opacity: 0, y: 25, filter: "blur(4px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ delay: 0.3, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="font-[var(--font-display)] text-[clamp(2.2rem,4.5vw,3.8rem)] font-normal italic leading-[1] tracking-[-0.03em] text-[var(--text)]"
+            style={{ textShadow: "var(--text-shadow-cinematic)" }}
           >
             {title}
           </motion.h2>
@@ -750,15 +825,17 @@ interface ComparisonSlideProps {
 export function ComparisonSlide({ title, left, right, theme, className }: ComparisonSlideProps) {
   return (
     <div className={cn("slide relative bg-[var(--bg)]", className)} style={themeVars(theme)}>
-      <Grain />
+      <MeshBg theme={theme} />
       <Aurora theme={theme} />
+      <Noise />
+      <Vignette />
 
       <div className="relative z-10 w-full max-w-5xl px-8 md:px-16">
         <motion.h2
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-10 text-center font-[var(--font-display)] text-[clamp(1.6rem,3.5vw,2.8rem)] font-normal tracking-[-0.02em] text-[var(--text)]"
+          initial={{ opacity: 0, y: 15, filter: "blur(4px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.8 }}
+          className="mb-10 text-center font-[var(--font-display)] text-[clamp(1.8rem,4vw,3.2rem)] font-normal italic tracking-[-0.02em] text-[var(--text)]"
         >
           {title}
         </motion.h2>
@@ -848,74 +925,85 @@ export function SectionDivider({ number, title, subtitle, theme, className }: Se
   const { containerRef, nx, ny } = useCursorParallax({ strength: 0.3 });
 
   return (
-    <div ref={containerRef} className={cn("slide relative bg-[var(--bg-soft)]", className)} style={themeVars(theme)}>
-      <Grain opacity={0.03} />
+    <div ref={containerRef} className={cn("slide relative bg-[var(--bg)]", className)} style={themeVars(theme)}>
+      <MeshBg theme={theme} />
       <Aurora theme={theme} />
       <DotGrid />
       <ParticleCanvas count={30} color={THEMES[theme || "default"].rgb} className="pointer-events-none absolute inset-0 z-[1] opacity-20" />
+      <Noise />
+      <Vignette />
 
-      {/* Large blurred number background */}
+      {/* Massive blurred number — fills viewport */}
       <motion.span
-        initial={{ opacity: 0, scale: 0.6 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none font-[var(--font-mono)] text-[clamp(8rem,30vw,20rem)] font-bold leading-none"
+        initial={{ opacity: 0, scale: 0.5, filter: "blur(30px)" }}
+        animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+        transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+        className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 select-none font-[var(--font-mono)] text-[clamp(15rem,45vw,35rem)] font-bold leading-none"
         style={{
-          color: `rgba(var(--accent-rgb), 0.04)`,
-          textShadow: `0 0 100px rgba(var(--accent-rgb), 0.08)`,
-          transform: `translate(calc(-50% + ${nx * 15}px), calc(-50% + ${ny * 15}px))`,
+          color: `rgba(var(--accent-rgb), 0.03)`,
+          textShadow: `0 0 150px rgba(var(--accent-rgb), 0.06)`,
+          transform: `translate(calc(-50% + ${nx * 20}px), calc(-50% + ${ny * 20}px))`,
         }}
         aria-hidden="true"
       >
         {number}
       </motion.span>
 
+      {/* Horizontal accent line across full width */}
+      <motion.div
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ delay: 0.2, duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute left-0 top-1/2 h-[1px] w-full origin-left"
+        style={{ background: `linear-gradient(to right, transparent, rgba(var(--accent-rgb), 0.08), transparent)` }}
+      />
+
       <div className="relative z-10 mx-auto max-w-4xl px-8 text-center md:px-16">
         {/* Section number badge */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-6 inline-flex items-center gap-2"
+          className="mb-8 inline-flex items-center gap-3"
         >
-          <span className="h-[1px] w-8" style={{ background: `rgba(var(--accent-rgb), 0.3)` }} />
-          <span className="font-[var(--font-mono)] text-xs font-bold tracking-widest text-[var(--accent)]">
+          <span className="h-[1px] w-12" style={{ background: `rgba(var(--accent-rgb), 0.3)` }} />
+          <span className="font-[var(--font-mono)] text-[0.7rem] font-bold tracking-[0.3em] text-[var(--accent)]">
             SEÇÃO {number}
           </span>
-          <span className="h-[1px] w-8" style={{ background: `rgba(var(--accent-rgb), 0.3)` }} />
+          <span className="h-[1px] w-12" style={{ background: `rgba(var(--accent-rgb), 0.3)` }} />
         </motion.div>
 
         <motion.h2
-          initial={{ opacity: 0, y: 25 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.7 }}
-          className="font-[var(--font-display)] text-[clamp(2.5rem,6vw,5rem)] font-normal tracking-[-0.03em]"
+          initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ delay: 0.3, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="font-[var(--font-display)] text-[clamp(3rem,8vw,6.5rem)] font-normal italic tracking-[-0.03em]"
           style={{
             background: THEMES[theme || "default"].gradient,
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
-            filter: "drop-shadow(0 4px 20px rgba(var(--accent-rgb), 0.15))",
+            filter: "drop-shadow(0 4px 40px rgba(var(--accent-rgb), 0.2))",
           }}
         >
           {title}
         </motion.h2>
 
-        {/* Animated underline */}
+        {/* Animated underline — gradient */}
         <motion.div
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
-          transition={{ delay: 0.6, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="mx-auto mt-4 h-[2px] w-24 origin-center"
+          transition={{ delay: 0.7, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="mx-auto mt-6 h-[2px] w-32 origin-center"
           style={{ background: THEMES[theme || "default"].gradient }}
         />
 
         {subtitle && (
           <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8, duration: 0.5 }}
-            className="mt-6 text-base leading-relaxed text-[var(--text-secondary)]"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1, duration: 0.6 }}
+            className="mt-8 text-[1.05rem] leading-relaxed text-[var(--text-secondary)]"
           >
             {subtitle}
           </motion.p>
