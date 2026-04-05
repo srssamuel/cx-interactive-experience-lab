@@ -232,6 +232,35 @@ export function StatementSlide({ statement, attribution, theme, className }: Sta
       <Grain />
       <Aurora theme={theme} />
 
+      {/* Ambient floating geometric shapes */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+        {[
+          { w: 80, h: 80, top: "15%", left: "8%", rotate: 45, delay: 0 },
+          { w: 50, h: 50, top: "70%", right: "12%", rotate: -20, delay: 1.5 },
+          { w: 120, h: 1, top: "30%", right: "5%", rotate: 30, delay: 0.8 },
+          { w: 1, h: 100, top: "50%", left: "5%", rotate: 0, delay: 2 },
+          { w: 40, h: 40, top: "80%", left: "20%", rotate: 60, delay: 1 },
+        ].map((shape, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: shape.delay, duration: 2 }}
+            className="absolute rounded-sm border"
+            style={{
+              width: shape.w,
+              height: shape.h,
+              top: shape.top,
+              left: "left" in shape ? shape.left : undefined,
+              right: "right" in shape ? shape.right : undefined,
+              borderColor: `rgba(var(--accent-rgb), 0.06)`,
+              transform: `rotate(${shape.rotate}deg)`,
+              animation: `float-y ${5 + i}s ease-in-out ${i * 0.5}s infinite`,
+            }}
+          />
+        ))}
+      </div>
+
       {/* Decorative quote mark */}
       <motion.span
         initial={{ opacity: 0, scale: 0.5 }}
@@ -467,18 +496,29 @@ export function ListSlide({ title, items, theme, className }: ListSlideProps) {
         <div className="grid gap-4 md:grid-cols-2 lg:gap-5">
           {items.map((item, i) => (
             <TiltCard key={item.title} index={i}>
+              {/* Featured first item gets top gradient accent */}
+              {i === 0 && (
+                <div
+                  className="absolute left-0 right-0 top-0 h-[2px] rounded-t-xl"
+                  style={{ background: THEMES[theme || "default"].gradient }}
+                />
+              )}
               <div className="flex items-start gap-4">
                 <span
-                  className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md font-[var(--font-mono)] text-[0.55rem] font-bold"
+                  className={cn(
+                    "mt-0.5 flex shrink-0 items-center justify-center rounded-md font-[var(--font-mono)] text-[0.55rem] font-bold",
+                    i === 0 ? "h-9 w-9 text-[0.65rem]" : "h-7 w-7"
+                  )}
                   style={{
-                    background: `rgba(var(--accent-rgb), 0.1)`,
+                    background: i === 0 ? `rgba(var(--accent-rgb), 0.15)` : `rgba(var(--accent-rgb), 0.1)`,
                     color: "var(--accent)",
+                    boxShadow: i === 0 ? `0 0 12px rgba(var(--accent-rgb), 0.1)` : "none",
                   }}
                 >
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div>
-                  <h3 className="text-base font-semibold text-[var(--text)]">{item.title}</h3>
+                  <h3 className={cn("font-semibold text-[var(--text)]", i === 0 ? "text-[1.05rem]" : "text-base")}>{item.title}</h3>
                   <p className="mt-1.5 text-sm leading-relaxed text-[var(--text-secondary)]">{item.description}</p>
                 </div>
               </div>

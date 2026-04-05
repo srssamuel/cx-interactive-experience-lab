@@ -127,15 +127,16 @@ export function SlideDeck({ children, className }: SlideDeckProps) {
       {/* Slide counter */}
       <SlideCounter current={nav.current + 1} total={nav.totalSlides} color={section.color} />
 
-      {/* Navigation arrows (desktop) */}
+      {/* Navigation arrows (desktop) — with hover glow */}
       <div className="pointer-events-none absolute inset-0 z-40 hidden items-center justify-between px-4 md:flex">
         {!nav.isFirst && (
           <button
             onClick={nav.prev}
-            className="pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--bg)]/80 text-[var(--text-muted)] backdrop-blur-sm transition-all hover:border-[var(--border-hover)] hover:text-[var(--text)]"
+            className="pointer-events-auto group flex h-12 w-12 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--bg)]/80 text-[var(--text-muted)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--border-hover)] hover:text-[var(--text)]"
+            style={{ transition: "all 0.3s var(--ease-cinematic)" }}
             aria-label="Slide anterior"
           >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="transition-transform duration-300 group-hover:-translate-x-0.5">
               <path d="M12 4L6 10L12 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
@@ -144,10 +145,11 @@ export function SlideDeck({ children, className }: SlideDeckProps) {
         {!nav.isLast && (
           <button
             onClick={nav.next}
-            className="pointer-events-auto flex h-12 w-12 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--bg)]/80 text-[var(--text-muted)] backdrop-blur-sm transition-all hover:border-[var(--border-hover)] hover:text-[var(--text)]"
+            className="pointer-events-auto group flex h-12 w-12 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--bg)]/80 text-[var(--text-muted)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--border-hover)] hover:text-[var(--text)]"
+            style={{ transition: "all 0.3s var(--ease-cinematic)" }}
             aria-label="Próximo slide"
           >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="transition-transform duration-300 group-hover:translate-x-0.5">
               <path d="M8 4L14 10L8 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
@@ -158,10 +160,38 @@ export function SlideDeck({ children, className }: SlideDeckProps) {
       <CursorSpotlight color={section.color.replace("#", "").match(/.{2}/g)?.map((h) => parseInt(h, 16)).join(", ") || "0, 229, 195"} />
 
       {/* Keyboard hint */}
+      <AnimatePresence>
+        {nav.current === 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            transition={{ delay: 2.5, duration: 1 }}
+            className="absolute bottom-8 left-1/2 z-30 -translate-x-1/2"
+          >
+            {/* Animated scroll/click hint */}
+            <div className="flex flex-col items-center gap-2">
+              <span className="text-[0.55rem] tracking-[0.15em] text-[var(--text-ghost)]">
+                Clique ou pressione →
+              </span>
+              <motion.div
+                animate={{ x: [0, 6, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                className="text-[var(--text-ghost)]"
+              >
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M6 3L11 8L6 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 3, duration: 1 }}
+        animate={{ opacity: nav.current > 0 ? 1 : 0 }}
+        transition={{ duration: 0.5 }}
         className="absolute bottom-4 left-4 z-30 hidden text-[0.55rem] tracking-[0.1em] text-[var(--text-ghost)] md:block"
       >
         ← → navegar &middot; F fullscreen &middot; 1-9 ir para seção
