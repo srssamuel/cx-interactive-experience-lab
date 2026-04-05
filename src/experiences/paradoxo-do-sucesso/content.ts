@@ -16,7 +16,7 @@ export const hero = {
   subtext:
     "Renovação não é lealdade. É inércia. E inércia tem prazo de validade.",
   stats: [
-    { value: 44, suffix: "%", label: "renovam sem adotar o produto" },
+    { value: 40, suffix: "%", label: "do ARR vem de expansão — top quartil SaaS" },
     { value: 67, suffix: "%", label: "do churn começa no onboarding" },
   ],
   cta: "Entender o paradoxo",
@@ -85,29 +85,29 @@ export const metricas = {
   vanity: [
     {
       metric: "Logins por mês",
-      problem: "Logar não é usar. Usar não é extrair valor.",
+      problem: "Logar não é usar. Usar não é extrair valor. Apenas 20-25% das empresas são data-driven de verdade.",
     },
     {
       metric: "NPS alto",
-      problem: "Clientes dão nota 9 por gentileza, cancelam por ROI.",
+      problem: "Clientes dão nota 9 por gentileza, cancelam por ROI. Forrester CX Index caiu 3 anos seguidos.",
     },
     {
       metric: "Tickets resolvidos",
-      problem: "Resolver problema não é gerar sucesso. É manutenção.",
+      problem: "Resolver problema não é gerar sucesso. É manutenção. Cada $1 em CS retorna $3-5 — se focado em outcome.",
     },
   ],
   real: [
     {
-      metric: "Time-to-Value",
-      insight: "Quanto tempo até o cliente realizar o primeiro resultado concreto?",
+      metric: "Net Revenue Retention",
+      insight: "Mediana SaaS: 105-110%. Best-in-class: 130%+. Abaixo de 100% = contração líquida.",
     },
     {
-      metric: "Depth of Adoption",
-      insight: "Quantas funcionalidades são usadas vs. contratadas?",
+      metric: "Time-to-Value",
+      insight: "Onboarding estruturado = 3x mais chance de primeiro valor em 30 dias.",
     },
     {
       metric: "Outcome Achievement Rate",
-      insight: "O cliente atingiu os objetivos que motivaram a compra?",
+      insight: "O cliente atingiu os objetivos que motivaram a compra? Se não sabe, não gerencia sucesso.",
     },
   ],
 };
@@ -128,21 +128,21 @@ export const modelo = {
       label: "Nível 2",
       title: "Proativo",
       description:
-        "Monitora health score. Faz check-ins regulares. Identifica risco antes do pedido de cancelamento. Mas ainda opera por contato, não por dado.",
+        "Monitora health score com IA preditiva. Identifica risco 90 dias antes do cancelamento com 85-90% de precisão. Digital CS cobre 80%+ da base.",
     },
     {
       id: "consultivo",
       label: "Nível 3",
       title: "Consultivo",
       description:
-        "Conecta uso do produto a resultado de negócio. QBR mostra valor, não funcionalidade. O CSM é conselheiro, não operador.",
+        "Conecta uso do produto a resultado de negócio. QBR mostra valor, não funcionalidade. AI copilots automatizam playbooks de risco e expansão.",
     },
     {
       id: "orquestrado",
       label: "Nível 4",
       title: "Orquestrado",
       description:
-        "Jornada desenhada por segmento. Intervenções automatizadas por sinal. CS é sistema, não time. Expansão é consequência, não meta.",
+        "NRR acima de 130%. Jornada por segmento com intervenções automatizadas. CS é sistema, não time. Expansão orgânica é consequência — 30-40% do ARR novo.",
     },
   ],
 };
@@ -204,11 +204,11 @@ export const fechamento = {
   headline:
     "O cliente não cancela no dia que vai embora. Cancela no dia que para de progredir.",
   insights: [
-    "Renovação é o pior indicador de saúde. Quando descobre pelo churn, já perdeu meses de sinais.",
-    "CS que não mede outcome é suporte com nome bonito. O cliente sente a diferença.",
-    "O melhor momento para salvar um cliente é no onboarding. O pior é no pedido de cancelamento.",
-    "Expansão que precisa de desconto não é expansão. É retenção disfarçada.",
-    "O cliente não compra produto. Compra o resultado que espera. Se não mede resultado, não gerencia sucesso.",
+    "Renovação é o pior indicador de saúde. Empresas com CS dedicado têm 20-30% menos churn — Gainsight, 2024.",
+    "CS que não mede outcome é suporte com nome bonito. Cada $1 investido em CS retorna $3-5 em receita retida.",
+    "O melhor momento para salvar um cliente é no onboarding. 60-70% dos líderes de CS apontam onboarding como causa #1 de churn precoce.",
+    "Expansão que precisa de desconto não é expansão. Best-in-class NRR: 130%+. Abaixo de 100% é contração.",
+    "IA preditiva reduz churn em 10-25%. Mas 30% dos projetos GenAI morrem no POC — dados ruins, ROI incerto.",
   ],
   provocation:
     "A pergunta não é se seu cliente vai renovar. É se ele está progredindo o suficiente para que renovar seja óbvio — e não uma negociação.",

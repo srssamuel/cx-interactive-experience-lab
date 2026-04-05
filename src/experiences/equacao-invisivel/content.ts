@@ -26,8 +26,8 @@ export const hero = {
   headlineAccent: "Mas não voltaria a viajar com você.",
   subtext: "Fracasso silencioso: entregar o resultado certo da forma errada.",
   stats: [
-    { value: 73, suffix: "%", label: "saem sem reclamar" },
-    { value: 96, suffix: "%", label: "alto esforço = deslealdade" },
+    { value: 3.7, suffix: "T", label: "perdidos globalmente com CX ruim" },
+    { value: 65, suffix: "%", label: "trocaram de marca por experiência" },
   ],
   heroImage:
     "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1920&q=80",
@@ -89,35 +89,35 @@ export const myths = {
     {
       myth: "Experiência é atendimento",
       truth: "Atendimento é remédio, não saúde",
-      evidence: "4x mais retenção em empresas com menor esforço do cliente.",
+      evidence: "Reduzir esforço gera 4x mais retenção — PwC, 2024.",
       image:
         "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&q=80",
     },
     {
       myth: "Experiência é NPS",
       truth: "NPS mede intenção, não comportamento",
-      evidence: "NPS não prevê churn em 78% dos casos.",
+      evidence: "Forrester CX Index caiu 3 anos seguidos — NPS subiu no mesmo período.",
       image:
         "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
     },
     {
       myth: "Experiência é UX",
       truth: "UX é uma fatia, não o bolo",
-      evidence: "63% dos atritos acontecem fora da interface digital.",
+      evidence: "73% dos consumidores usam múltiplos canais — o atrito mora entre eles.",
       image:
         "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&q=80",
     },
     {
       myth: "Experiência é encantar",
       truth: "Encantamento cansa. Consistência fideliza.",
-      evidence: "Reduzir esforço é 2x mais efetivo que encantar.",
+      evidence: "32% abandonam uma marca amada após uma única experiência ruim — PwC.",
       image:
         "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80",
     },
     {
       myth: "Experiência é simpatia",
       truth: "Gentileza sem resolução é frustração educada",
-      evidence: "Tempo de resolução importa 3x mais que tom de voz.",
+      evidence: "GenAI reduziu tempo de resolução em 15-25% — mas 60% ainda preferem humanos para problemas complexos.",
       image:
         "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=80",
     },
@@ -196,7 +196,7 @@ export const forma = {
     {
       title: "Esforço",
       question: "Quanto trabalho ele faz?",
-      answer: "96% dos clientes de alto esforço se tornam desleais.",
+      answer: "96% dos clientes de alto esforço se tornam desleais. US$3,7 trilhões perdidos globalmente.",
     },
     {
       title: "Fluidez",
@@ -223,28 +223,28 @@ export const custoSilencio = {
   overline: "05 — O Custo do Silêncio",
   headline: "O cliente que não reclama é o mais perigoso",
   bigNumber: {
-    value: 91,
-    suffix: "%",
-    label: "nunca reclamam",
+    value: 3.7,
+    suffix: "T",
+    label: "perdidos globalmente — Qualtrics XM Institute, 2024",
   },
   stats: [
     {
-      value: 73,
+      value: 65,
       suffix: "%",
-      label: "saem sem aviso",
-      context: "Contam para 9-15 pessoas.",
+      label: "trocaram de marca",
+      context: "Por uma única experiência ruim — PwC, 2024.",
     },
     {
-      value: 4,
+      value: 3,
       suffix: "x",
-      label: "mais caro adquirir",
-      context: "89% dos orçamentos vão para aquisição.",
+      label: "CX líderes vs S&P 500",
+      context: "Retorno acumulado de quem investe em CX — Watermark.",
     },
     {
-      value: 12,
-      suffix: "",
-      label: "experiências positivas",
-      context: "Para compensar uma negativa.",
+      value: 89,
+      suffix: "%",
+      label: "retenção omnichannel",
+      context: "Vs 33% com omnichannel fraco — Aberdeen.",
     },
   ],
   pullQuote: "Silêncio não é satisfação. É desistência.",
@@ -348,19 +348,19 @@ export const maturidade = {
       short: "Sinais detectados antes da reclamação.",
       characteristics: [
         "Customer Effort Score ativo",
-        "Speech analytics",
-        "CX com budget próprio",
+        "Speech analytics em 100% das interações",
+        "CX com budget próprio e ROI medido",
       ],
     },
     {
       id: "orquestrado",
       label: "Nível 4",
       title: "Orquestrado",
-      short: "A experiência é o produto.",
+      short: "IA autônoma + experiência como produto.",
       characteristics: [
-        "CX como KPI do C-level",
-        "IA preditiva",
-        "Experiência = vantagem competitiva",
+        "Agentes IA resolvem 70% das queries — humanos para o complexo",
+        "Emoção e esforço medidos em tempo real",
+        "CX como KPI do C-level — 3x retorno no S&P 500",
       ],
     },
   ],
@@ -382,22 +382,22 @@ export const referencias = {
   headline: "Quem entendeu a equação",
   cases: [
     {
-      title: "Eliminou o esforço",
+      title: "IA Proativa",
       sector: "Telecom",
-      insight: "Antecipou falhas via IA. Cliente só liga quando quer.",
-      metric: { value: 60, suffix: "%", label: "menos contatos reativos" },
+      insight: "Agentes autônomos resolvem 70% das queries sem humano. Cliente só liga quando quer.",
+      metric: { value: 30, suffix: "%", label: "redução de custo por interação — IBM, 2024" },
     },
     {
-      title: "Personalizou a jornada",
+      title: "Hiperpersonalização",
       sector: "Varejo",
-      insight: "12 jornadas distintas por perfil.",
-      metric: { value: 34, suffix: "%", label: "aumento em recompra" },
+      insight: "CDP em tempo real, 12 jornadas por perfil. Personalização context-aware em cada canal.",
+      metric: { value: 700, suffix: "M", label: "receita adicional em 3 anos — Qualtrics" },
     },
     {
-      title: "Integrou CX no P&L",
+      title: "CX como Motor Financeiro",
       sector: "Financeiro",
-      insight: "Cada ponto de NPS traduzido em impacto financeiro.",
-      metric: { value: 2.3, suffix: "x", label: "ROI sobre CX" },
+      insight: "CX líder supera S&P 500 em 3x. Cada ponto de esforço traduzido em P&L.",
+      metric: { value: 86, suffix: "%", label: "pagariam mais por CX superior — PwC" },
     },
   ],
 };

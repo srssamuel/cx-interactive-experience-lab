@@ -263,10 +263,10 @@ export default function Portal() {
                 <GSAPReveal from={{ opacity: 0, x: 30 }} to={{ opacity: 1, x: 0, duration: 1, delay: 0.15, ease: "power3.out" }}>
                   <div className="text-right">
                     <span className="font-mono text-[clamp(4rem,10vw,8rem)] font-bold leading-none text-[var(--accent-primary)]/[0.15] transition-all duration-700 group-hover:text-[var(--accent-primary)]/[0.3]">
-                      44<span className="text-[0.6em]">%</span>
+                      40<span className="text-[0.6em]">%</span>
                     </span>
                     <p className="mt-1 text-[0.65rem] uppercase tracking-[0.12em] text-[var(--text-muted)]">
-                      renovam sem adotar o produto
+                      do ARR vem de expansão — top quartil
                     </p>
                   </div>
                 </GSAPReveal>
