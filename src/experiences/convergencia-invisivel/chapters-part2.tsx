@@ -11,6 +11,7 @@ import { CinematicHeadline } from '@/components/cinematic/cinematic-headline'
 import { AmbientBackground } from '@/components/cinematic/ambient-background'
 import { DiscussionPrompt } from '@/components/workshop/discussion-prompt'
 import { PausePoint } from '@/components/workshop/pause-point'
+import { TextReveal } from '@/components/motion/text-reveal'
 import { cn } from '@/lib/cn'
 import { content } from './content'
 
@@ -22,6 +23,7 @@ import { content } from './content'
 export function DataMaturidade() {
   return (
     <Section id="data-maturidade" bg="gradient-down">
+      <AmbientBackground variant="mesh-dark" />
       <CinematicHeadline
         overline="Dados"
         headline={content.dataMaturidade.headline}
@@ -79,6 +81,7 @@ export { DataMaturidade as ChapterDataMaturidade }
 export function DataDadoVsInsight() {
   return (
     <Section id="data-dado-vs-insight" bg="surface">
+      <AmbientBackground variant="top-light" />
       <CinematicHeadline
         overline="Dados"
         headline={content.dataDadoVsInsight.headline}
@@ -292,7 +295,13 @@ export function ConvergenciaSistema() {
             <ScrollReveal key={q.name} delay={i * 0.15}>
               <motion.div
                 className="p-8 rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] h-full"
-                whileHover={{ borderColor: quadrantColors[i], transition: { duration: 0.3 } }}
+                style={{ perspective: '600px' }}
+                whileHover={{
+                  borderColor: quadrantColors[i],
+                  boxShadow: `0 0 40px ${quadrantColors[i]}20, inset 0 0 20px ${quadrantColors[i]}08`,
+                  y: -4,
+                  transition: { duration: 0.4 },
+                }}
               >
                 <span
                   className="font-display text-3xl font-bold"
@@ -467,6 +476,7 @@ export { WorkshopDiscussao as ChapterWorkshopDiscussao }
 export function FechamentoJanela() {
   return (
     <Section id="fechamento-janela" bg="primary">
+      <AmbientBackground variant="bottom-fade" />
       <CinematicHeadline
         overline="Fechamento"
         headline={content.fechamentoJanela.headline}

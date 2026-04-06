@@ -10,6 +10,7 @@ import { AnimatedCounter } from '@/components/motion/animated-counter'
 import { CinematicHeadline } from '@/components/cinematic/cinematic-headline'
 import { AmbientBackground } from '@/components/cinematic/ambient-background'
 import { DiscussionPrompt } from '@/components/workshop/discussion-prompt'
+import { TextReveal } from '@/components/motion/text-reveal'
 import { cn } from '@/lib/cn'
 import { content } from './content'
 
@@ -216,6 +217,8 @@ export { ContextoIlusao as ChapterContextoIlusao }
 export function CxEquacao() {
   return (
     <Section id="cx-equacao-invisivel" bg="amber-glow">
+      <AmbientBackground variant="radial-amber" />
+      <div className="relative z-10">
       <CinematicHeadline
         overline="Customer Experience"
         headline={content.cxEquacao.headline}
@@ -252,6 +255,7 @@ export function CxEquacao() {
           </StaggerItem>
         ))}
       </StaggerGroup>
+      </div>
     </Section>
   )
 }
@@ -443,6 +447,7 @@ export { CxReflexao as ChapterCxReflexao }
 export function CsParadoxo() {
   return (
     <Section id="cs-paradoxo-retencao" bg="surface">
+      <AmbientBackground variant="radial-green" />
       <CinematicHeadline
         overline="Customer Success"
         headline={content.csParadoxo.headline}

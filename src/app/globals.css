@@ -30,6 +30,9 @@ body {
   background: var(--border-hover);
   border-radius: 3px;
 }
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-amber);
+}
 
 /* Display Font */
 .font-display {
