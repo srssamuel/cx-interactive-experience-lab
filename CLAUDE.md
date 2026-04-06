@@ -19,9 +19,9 @@ Uma **plataforma premium de experiências digitais interativas** construída sob
 - Experiências híbridas entre keynote, dashboard narrativo e facilitação
 
 **Modos de uso:**
-- Modo leitura / exploração
+
 - Modo apresentação (fullscreen, keyboard nav, chapter dots)
-- Modo workshop (painel lateral, discussion prompts, timer)
+
 
 **Não é** um gerador de landing pages, sites institucionais, dashboards genéricos ou templates com "cara de IA".
 
