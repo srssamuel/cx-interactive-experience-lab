@@ -1,0 +1,109 @@
+:root {
+  /* Palette — Midnight Authority */
+  --bg-primary: #0C0F14;
+  --bg-surface: #12151C;
+  --bg-elevated: #181C24;
+  --bg-hover: #1E222C;
+
+  --text-primary: #E8EDF2;
+  --text-secondary: #8A919C;
+  --text-tertiary: #5A6170;
+  --text-muted: #3D4350;
+
+  --accent-amber: #C8873A;
+  --accent-amber-soft: rgba(200, 135, 58, 0.15);
+  --accent-green: #4A7C5C;
+  --accent-green-soft: rgba(74, 124, 92, 0.15);
+
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-default: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.14);
+
+  /* Typography Scale */
+  --font-display: Georgia, 'Times New Roman', serif;
+  --font-body: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Courier New', Consolas, monospace;
+
+  --text-hero: clamp(2.5rem, 7vw, 6.5rem);
+  --text-display: clamp(2rem, 5vw, 4.5rem);
+  --text-heading: clamp(1.5rem, 3vw, 2.5rem);
+  --text-subheading: clamp(1.125rem, 2vw, 1.5rem);
+  --text-body: 1.125rem;
+  --text-small: 0.875rem;
+  --text-label: 0.75rem;
+
+  /* Spacing Scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-power3: cubic-bezier(0.33, 0, 0, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 600ms;
+  --duration-cinematic: 1000ms;
+
+  /* Layout */
+  --max-width-content: 800px;
+  --max-width-wide: 1200px;
+  --max-width-full: 1440px;
+  --perspective: 600px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
+  --shadow-glow-amber: 0 0 40px rgba(200, 135, 58, 0.15);
+  --shadow-glow-green: 0 0 40px rgba(74, 124, 92, 0.15);
+}
+
+/* Section Background Variants */
+.section-bg-primary { background-color: var(--bg-primary); }
+.section-bg-surface { background-color: var(--bg-surface); }
+.section-bg-elevated { background-color: var(--bg-elevated); }
+.section-bg-gradient-down {
+  background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-surface) 100%);
+}
+.section-bg-gradient-up {
+  background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-primary) 100%);
+}
+.section-bg-amber-glow {
+  background: radial-gradient(ellipse at 50% 0%, rgba(200, 135, 58, 0.06) 0%, var(--bg-primary) 70%);
+}
+.section-bg-green-glow {
+  background: radial-gradient(ellipse at 50% 100%, rgba(74, 124, 92, 0.06) 0%, var(--bg-primary) 70%);
+}
+.section-bg-vignette {
+  background: radial-gradient(ellipse at 50% 50%, var(--bg-surface) 0%, var(--bg-primary) 80%);
+}
+
+/* Grain Overlay */
+.grain-overlay::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
