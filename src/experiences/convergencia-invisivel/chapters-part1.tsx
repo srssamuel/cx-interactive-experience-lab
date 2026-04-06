@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Section } from '@/components/design-system'
-import { DisplayHeading, SectionHeading, SubHeading, Body, Overline, StatNumber } from '@/components/design-system/typography'
+import { SectionHeading, SubHeading, Body, Overline, StatNumber } from '@/components/design-system/typography'
 import { Card } from '@/components/design-system/card'
 import { ScrollReveal } from '@/components/motion/scroll-reveal'
 import { StaggerGroup, StaggerItem } from '@/components/motion/stagger-group'
@@ -11,6 +11,7 @@ import { CinematicHeadline } from '@/components/cinematic/cinematic-headline'
 import { AmbientBackground } from '@/components/cinematic/ambient-background'
 import { DiscussionPrompt } from '@/components/workshop/discussion-prompt'
 import { TextReveal } from '@/components/motion/text-reveal'
+import { ParallaxContainer } from '@/components/motion/parallax-container'
 import { cn } from '@/lib/cn'
 import { content } from './content'
 
@@ -23,60 +24,60 @@ export function Abertura() {
   return (
     <Section id="abertura" bg="primary" fullHeight>
       <AmbientBackground variant="spotlight" />
-      <div className="relative z-10 flex flex-col items-center justify-center text-center">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] as const }}
-        >
-          <StatNumber className="block text-[clamp(4rem,12vw,10rem)]">
-            {content.abertura.stat}
-          </StatNumber>
-        </motion.div>
+      <ParallaxContainer speed={0.15} className="relative z-10">
+        <div className="flex flex-col items-center justify-center text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] as const }}
+          >
+            <StatNumber className="block text-[clamp(4rem,12vw,10rem)]">
+              {content.abertura.stat}
+            </StatNumber>
+          </motion.div>
 
-        <motion.p
-          className="mt-4 font-mono text-xs uppercase tracking-[0.12em] text-[var(--text-muted)] max-w-lg"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-        >
-          {content.abertura.statLabel}
-        </motion.p>
+          <motion.p
+            className="mt-4 font-mono text-xs uppercase tracking-[0.12em] text-[var(--text-muted)] max-w-lg"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+          >
+            {content.abertura.statLabel}
+          </motion.p>
 
-        <motion.div
-          className="mt-16 max-w-3xl"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.8, ease: [0.16, 1, 0.3, 1] as const }}
-        >
-          <DisplayHeading className="text-[clamp(1.5rem,4vw,3rem)]">
-            {content.abertura.headline}
-          </DisplayHeading>
-        </motion.div>
+          <div className="mt-16 max-w-3xl">
+            <TextReveal
+              tag="h1"
+              className="text-[clamp(1.5rem,4vw,3rem)]"
+              delay={0.8}
+            >
+              {content.abertura.headline}
+            </TextReveal>
+          </div>
 
-        <motion.div
-          className="mt-8 max-w-xl"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 1.2, ease: [0.16, 1, 0.3, 1] as const }}
-        >
-          <Body className="text-lg">{content.abertura.body}</Body>
-        </motion.div>
+          <motion.div
+            className="mt-8 max-w-xl"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 1.2, ease: [0.16, 1, 0.3, 1] as const }}
+          >
+            <Body className="text-lg">{content.abertura.body}</Body>
+          </motion.div>
 
-        <motion.p
-          className="mt-12 font-display text-lg italic text-[var(--accent-amber)] max-w-lg"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 1.8 }}
-        >
-          {content.abertura.provocation}
-        </motion.p>
-      </div>
+          <motion.p
+            className="mt-12 font-display text-lg italic text-[var(--accent-amber)] max-w-lg"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 1.8 }}
+          >
+            {content.abertura.provocation}
+          </motion.p>
+        </div>
+      </ParallaxContainer>
     </Section>
   )
 }
@@ -219,12 +220,13 @@ export function CxEquacao() {
     <Section id="cx-equacao-invisivel" bg="amber-glow">
       <AmbientBackground variant="radial-amber" />
       <div className="relative z-10">
-      <CinematicHeadline
-        overline="Customer Experience"
-        headline={content.cxEquacao.headline}
-        align="center"
-        size="display"
-      />
+      <Overline className="text-center block mb-6">Customer Experience</Overline>
+      <TextReveal
+        tag="h2"
+        className="text-center text-[clamp(1.75rem,4vw,3.5rem)]"
+      >
+        {content.cxEquacao.headline}
+      </TextReveal>
 
       <ScrollReveal className="mt-6 max-w-3xl mx-auto text-center">
         <Body className="text-lg">{content.cxEquacao.body}</Body>

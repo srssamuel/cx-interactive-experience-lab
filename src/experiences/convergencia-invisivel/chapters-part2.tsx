@@ -12,6 +12,8 @@ import { AmbientBackground } from '@/components/cinematic/ambient-background'
 import { DiscussionPrompt } from '@/components/workshop/discussion-prompt'
 import { PausePoint } from '@/components/workshop/pause-point'
 import { TextReveal } from '@/components/motion/text-reveal'
+import { ParallaxContainer } from '@/components/motion/parallax-container'
+import { BorderRevealCard } from '@/components/effects/border-reveal-card'
 import { cn } from '@/lib/cn'
 import { content } from './content'
 
@@ -279,12 +281,14 @@ export function ConvergenciaSistema() {
     <Section id="convergencia-sistema-unico" bg="vignette">
       <AmbientBackground variant="diagonal-split" />
       <div className="relative z-10">
-        <CinematicHeadline
-          overline="A Convergencia"
-          headline={content.convergenciaSistema.headline}
-          align="center"
-          size="hero"
-        />
+        <Overline className="text-center block mb-6">A Convergencia</Overline>
+        <TextReveal
+          tag="h1"
+          className="text-center"
+          delay={0.2}
+        >
+          {content.convergenciaSistema.headline}
+        </TextReveal>
 
         <ScrollReveal className="mt-6 max-w-2xl mx-auto text-center">
           <Body className="text-lg">{content.convergenciaSistema.body}</Body>
@@ -293,15 +297,9 @@ export function ConvergenciaSistema() {
         <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {content.convergenciaSistema.quadrants.map((q, i) => (
             <ScrollReveal key={q.name} delay={i * 0.15}>
-              <motion.div
-                className="p-8 rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] h-full"
-                style={{ perspective: '600px' }}
-                whileHover={{
-                  borderColor: quadrantColors[i],
-                  boxShadow: `0 0 40px ${quadrantColors[i]}20, inset 0 0 20px ${quadrantColors[i]}08`,
-                  y: -4,
-                  transition: { duration: 0.4 },
-                }}
+              <BorderRevealCard
+                className="h-full"
+                glowColor={`${quadrantColors[i]}80`}
               >
                 <span
                   className="font-display text-3xl font-bold"
@@ -314,7 +312,7 @@ export function ConvergenciaSistema() {
                   <Overline className="text-[var(--text-muted)] block mb-1">Sozinho</Overline>
                   <Body className="text-sm text-[var(--text-tertiary)]">{q.alone}</Body>
                 </div>
-              </motion.div>
+              </BorderRevealCard>
             </ScrollReveal>
           ))}
         </div>
@@ -546,50 +544,49 @@ export function FechamentoProvocacao() {
   return (
     <Section id="fechamento-provocacao" bg="primary" fullHeight>
       <AmbientBackground variant="diagonal-split" />
-      <div className="relative z-10 flex flex-col items-center justify-center text-center min-h-[60vh]">
-        <motion.h2
-          className="font-display leading-[1.05] tracking-tight"
-          style={{ fontSize: 'var(--text-hero)' }}
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] as const }}
-        >
-          {content.fechamentoProvocacao.headline}
-        </motion.h2>
+      <ParallaxContainer speed={0.12} className="relative z-10">
+        <div className="flex flex-col items-center justify-center text-center min-h-[60vh]">
+          <TextReveal
+            tag="h2"
+            className="text-[var(--text-hero)]"
+            delay={0.3}
+          >
+            {content.fechamentoProvocacao.headline}
+          </TextReveal>
 
-        <motion.p
-          className="mt-6 font-display text-2xl md:text-4xl text-[var(--accent-amber)]"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] as const }}
-        >
-          {content.fechamentoProvocacao.subline}
-        </motion.p>
+          <motion.p
+            className="mt-6 font-display text-2xl md:text-4xl text-[var(--accent-amber)]"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] as const }}
+          >
+            {content.fechamentoProvocacao.subline}
+          </motion.p>
 
-        <motion.p
-          className="mt-12 text-[var(--text-secondary)] text-lg leading-relaxed max-w-[560px]"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 1, ease: [0.16, 1, 0.3, 1] as const }}
-        >
-          {content.fechamentoProvocacao.body}
-        </motion.p>
+          <motion.p
+            className="mt-12 text-[var(--text-secondary)] text-lg leading-relaxed max-w-[560px]"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 1, ease: [0.16, 1, 0.3, 1] as const }}
+          >
+            {content.fechamentoProvocacao.body}
+          </motion.p>
 
-        <motion.div
-          className="mt-20"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 1.5 }}
-        >
-          <Overline className="text-[var(--text-muted)]">
-            CX Experience Lab — 2025
-          </Overline>
-        </motion.div>
-      </div>
+          <motion.div
+            className="mt-20"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 1.5 }}
+          >
+            <Overline className="text-[var(--text-muted)]">
+              CX Experience Lab — 2025
+            </Overline>
+          </motion.div>
+        </div>
+      </ParallaxContainer>
     </Section>
   )
 }
