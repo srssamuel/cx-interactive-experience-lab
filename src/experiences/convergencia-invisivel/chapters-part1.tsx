@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Section } from '@/components/design-system'
-import { SectionHeading, SubHeading, Body, Overline, StatNumber } from '@/components/design-system/typography'
+import { SubHeading, Body, Overline, StatNumber } from '@/components/design-system/typography'
 import { Card } from '@/components/design-system/card'
 import { ScrollReveal } from '@/components/motion/scroll-reveal'
 import { StaggerGroup, StaggerItem } from '@/components/motion/stagger-group'
@@ -311,7 +311,7 @@ export function CxExperiencia() {
         icon={<TrendingUp className="w-4 h-4 text-[var(--accent-amber)]" />}
       />
 
-      <div className="mt-16 grid grid-cols-1 lg:grid-cols-7 gap-12 items-center">
+      <div className="mt-16 grid grid-cols-1 lg:grid-cols-7 gap-12 items-start">
         <div className="lg:col-span-4 space-y-8">
           <ScrollReveal>
             <Body className="text-lg leading-relaxed">
@@ -319,7 +319,40 @@ export function CxExperiencia() {
             </Body>
           </ScrollReveal>
 
+          {/* Perception Gap Visualization — unique to this chapter */}
           <ScrollReveal delay={0.2}>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <span className="font-mono text-xs text-[var(--accent-green)] uppercase tracking-wider">Experiencia Projetada</span>
+                <div className="h-3 rounded-full bg-[var(--bg-hover)] overflow-hidden">
+                  <motion.div
+                    className="h-full rounded-full bg-[var(--accent-green)]"
+                    initial={{ width: 0 }}
+                    whileInView={{ width: '85%' }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.2, delay: 0.4, ease: [0.16, 1, 0.3, 1] as const }}
+                  />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <span className="font-mono text-xs text-[var(--accent-red)] uppercase tracking-wider">Percepcao do Cliente</span>
+                <div className="h-3 rounded-full bg-[var(--bg-hover)] overflow-hidden">
+                  <motion.div
+                    className="h-full rounded-full bg-[var(--accent-red)]"
+                    initial={{ width: 0 }}
+                    whileInView={{ width: '42%' }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.2, delay: 0.7, ease: [0.16, 1, 0.3, 1] as const }}
+                  />
+                </div>
+              </div>
+              <p className="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-wider mt-1">
+                O gap que ninguem mede
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.4}>
             <Card variant="highlight" accentColor="green" hover={false}>
               <Overline className="text-[var(--accent-green)] mb-2 block">
                 Insight

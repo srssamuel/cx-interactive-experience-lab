@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Section } from '@/components/design-system'
-import { SectionHeading, SubHeading, Body, Overline, StatNumber } from '@/components/design-system/typography'
+import { SubHeading, Body, Overline, StatNumber } from '@/components/design-system/typography'
 import { Card } from '@/components/design-system/card'
 import { ScrollReveal } from '@/components/motion/scroll-reveal'
 import { StaggerGroup, StaggerItem } from '@/components/motion/stagger-group'
@@ -15,7 +15,6 @@ import { PausePoint } from '@/components/workshop/pause-point'
 import { TextReveal } from '@/components/motion/text-reveal'
 import { ParallaxContainer } from '@/components/motion/parallax-container'
 import { BorderRevealCard } from '@/components/effects/border-reveal-card'
-import { MovingBorder } from '@/components/effects/moving-border'
 import { LazyParticleField } from '@/components/three/lazy-particle-field'
 import { Spotlight } from '@/components/effects/spotlight'
 import { BackgroundBeams } from '@/components/effects/background-beams'
@@ -238,6 +237,7 @@ export { AiOQueFaz as ChapterAiOQueFaz }
    ═══════════════════════════════════════════════════ */
 
 export function AiOndeGanha() {
+  const bgVariants = ['surface', 'elevated', 'surface'] as const
   return (
     <Section id="ai-onde-ganha" bg="primary">
       <CinematicHeadline
@@ -248,37 +248,52 @@ export function AiOndeGanha() {
         icon={<Trophy className="w-4 h-4 text-[var(--accent-purple)]" />}
       />
 
-      <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Stacked full-width case study cards — each with watermark company name */}
+      <div className="mt-16 space-y-6">
         {content.aiOndeGanha.cases.map((c, i) => (
-          <ScrollReveal
-            key={c.company}
-            delay={i * 0.12}
-            variant={i % 2 === 0 ? 'scale' : 'blur'}
-          >
-            <BorderRevealCard
-              glowColor="rgba(139, 111, 176, 0.4)"
-              className={cn('h-full', i === 0 && 'md:col-span-2 lg:col-span-1')}
-            >
-              <Overline className="block text-[var(--accent-purple)] mb-2">
-                {c.area}
-              </Overline>
-              <SubHeading as="h3" className="text-xl">{c.company}</SubHeading>
-              <div className="mt-4 pt-4 border-t border-[var(--accent-purple)]/20">
-                <Body className="text-base text-[var(--text-primary)]">{c.result}</Body>
+          <ScrollReveal key={c.company} delay={i * 0.15} variant={i === 1 ? 'blur' : 'rise'}>
+            <div className={cn(
+              'relative overflow-hidden rounded-xl p-8 md:p-10',
+              `section-bg-${bgVariants[i]}`,
+              'border border-[var(--border-subtle)]'
+            )}>
+              {/* Watermark company name */}
+              <span
+                className="absolute -right-4 top-1/2 -translate-y-1/2 font-display text-[clamp(4rem,12vw,8rem)] text-[var(--accent-purple)] opacity-[0.04] leading-none select-none pointer-events-none"
+                aria-hidden="true"
+              >
+                {c.company}
+              </span>
+
+              <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                <div className="flex-1">
+                  <Overline className="block text-[var(--accent-purple)] mb-3">
+                    {c.area}
+                  </Overline>
+                  <h3 className="font-display text-2xl md:text-3xl tracking-tight text-[var(--text-primary)]">
+                    {c.company}
+                  </h3>
+                </div>
+                <div className="md:text-right md:max-w-sm">
+                  <Body className="text-lg text-[var(--text-primary)] font-medium leading-snug">
+                    {c.result}
+                  </Body>
+                </div>
               </div>
-            </BorderRevealCard>
+            </div>
           </ScrollReveal>
         ))}
       </div>
 
-      <ScrollReveal delay={0.5} variant="scale" className="mt-12">
-        <MovingBorder borderColor="var(--accent-amber)" duration={5} borderWidth={1} className="rounded-xl">
-          <Card variant="highlight" accentColor="amber" hover={false}>
-            <Body className="text-lg text-[var(--text-primary)] font-medium">
+      {/* Insight — centered breathing glow */}
+      <ScrollReveal delay={0.5} className="mt-16">
+        <div className="text-center max-w-2xl mx-auto">
+          <div className="inline-block px-8 py-6 rounded-2xl bg-[var(--accent-amber-soft)] border border-[var(--accent-amber)]/20">
+            <Body className="text-lg text-[var(--text-primary)] font-medium italic">
               {content.aiOndeGanha.insight}
             </Body>
-          </Card>
-        </MovingBorder>
+          </div>
+        </div>
       </ScrollReveal>
     </Section>
   )
@@ -432,8 +447,8 @@ export { ConvergenciaSistema as ChapterConvergenciaSistema }
    ═══════════════════════════════════════════════════ */
 
 export function ConvergenciaLidera() {
-  const roleColors = ['rgba(200, 135, 58, 0.4)', 'rgba(74, 124, 92, 0.4)', 'rgba(91, 143, 185, 0.4)']
-  const roleTextColors = ['var(--accent-amber)', 'var(--accent-green)', 'var(--accent-blue)']
+  const roleAccents = ['var(--accent-amber)', 'var(--accent-green)', 'var(--accent-blue)']
+  const roleBorders = ['rgba(200, 135, 58, 0.25)', 'rgba(74, 124, 92, 0.25)', 'rgba(91, 143, 185, 0.25)']
 
   return (
     <Section id="convergencia-quem-lidera" bg="gradient-up">
@@ -449,43 +464,69 @@ export function ConvergenciaLidera() {
         <Body className="text-lg">{content.convergenciaLidera.body}</Body>
       </ScrollReveal>
 
-      <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-        {content.convergenciaLidera.roles.map((role, i) => (
-          <ScrollReveal key={role.title} delay={i * 0.15} variant="scale">
-            <BorderRevealCard
-              glowColor={roleColors[i]}
-              className="h-full"
-            >
-              <span
-                className="block font-mono text-xs uppercase tracking-[0.2em] mb-4 opacity-60"
-                style={{ color: roleTextColors[i] }}
-              >
-                Role 0{i + 1}
-              </span>
-              <h3
-                className="font-display text-xl md:text-2xl mb-3"
-                style={{ color: roleTextColors[i] }}
-              >
-                {role.title}
-              </h3>
-              <Body className="text-sm">{role.desc}</Body>
-            </BorderRevealCard>
-          </ScrollReveal>
-        ))}
+      {/* Alternating left-right role cards with connecting vertical line */}
+      <div className="mt-16 relative">
+        {/* Vertical connector line */}
+        <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-[var(--border-default)] to-transparent hidden md:block" aria-hidden="true" />
+
+        <div className="space-y-12 md:space-y-16">
+          {content.convergenciaLidera.roles.map((role, i) => {
+            const isLeft = i % 2 === 0
+            return (
+              <ScrollReveal key={role.title} delay={i * 0.2} variant={isLeft ? 'slide-left' : 'slide-right'}>
+                <div className={cn(
+                  'relative flex flex-col md:flex-row items-center gap-8',
+                  !isLeft && 'md:flex-row-reverse'
+                )}>
+                  {/* Role card — takes half width */}
+                  <div className={cn('w-full md:w-5/12', isLeft ? 'md:text-right' : 'md:text-left')}>
+                    <span
+                      className="block font-mono text-xs uppercase tracking-[0.2em] mb-3 opacity-50"
+                      style={{ color: roleAccents[i] }}
+                    >
+                      Role 0{i + 1}
+                    </span>
+                    <h3
+                      className="font-display text-2xl md:text-3xl tracking-tight mb-4"
+                      style={{ color: roleAccents[i] }}
+                    >
+                      {role.title}
+                    </h3>
+                    <Body className="text-base">{role.desc}</Body>
+                  </div>
+
+                  {/* Center node */}
+                  <div className="hidden md:flex items-center justify-center w-2/12">
+                    <motion.div
+                      className="w-4 h-4 rounded-full border-2"
+                      style={{ borderColor: roleAccents[i], backgroundColor: `${roleBorders[i]}` }}
+                      initial={{ scale: 0 }}
+                      whileInView={{ scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: i * 0.2 + 0.3, ease: [0.16, 1, 0.3, 1] as const }}
+                    />
+                  </div>
+
+                  {/* Empty half for asymmetry */}
+                  <div className="hidden md:block w-5/12" />
+                </div>
+              </ScrollReveal>
+            )
+          })}
+        </div>
       </div>
 
-      <ScrollReveal delay={0.5} className="mt-16">
-        <div className="border-t border-[var(--border-default)] pt-8 text-center">
-          <motion.p
-            className="font-display text-2xl md:text-3xl leading-[1.2] text-[var(--text-primary)] max-w-2xl mx-auto"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as const }}
-          >
-            {content.convergenciaLidera.provocation}
-          </motion.p>
-        </div>
+      {/* Provocation — full-width centered */}
+      <ScrollReveal delay={0.6} className="mt-20">
+        <motion.p
+          className="font-display text-2xl md:text-3xl leading-[1.2] text-[var(--text-primary)] text-center max-w-2xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as const }}
+        >
+          {content.convergenciaLidera.provocation}
+        </motion.p>
       </ScrollReveal>
     </Section>
   )
