@@ -17,6 +17,8 @@ import { BorderRevealCard } from '@/components/effects/border-reveal-card'
 import { MovingBorder } from '@/components/effects/moving-border'
 import { FloatingElements } from '@/components/effects/floating-elements'
 import { CharReveal } from '@/components/motion/char-reveal'
+import { StaggerGroup, StaggerItem } from '@/components/motion/stagger-group'
+import { GradientMesh } from '@/components/effects/gradient-mesh'
 import { Globe, Sparkles, BarChart3, TrendingUp, DollarSign, MessageSquare, HeartHandshake, ChartNoAxesCombined, Unplug, Database } from 'lucide-react'
 import { cn } from '@/lib/cn'
 import { content } from './content'
@@ -31,6 +33,7 @@ export function Abertura() {
     <Spotlight className="w-full" color="rgba(200, 135, 58, 0.05)" size={800}>
     <Section id="abertura" bg="primary" fullHeight>
       <AmbientBackground variant="spotlight" />
+      <FloatingElements count={5} color="var(--accent-amber)" />
       <ParallaxContainer speed={0.15} className="relative z-10">
         <div className="flex flex-col items-center justify-center text-center">
           <motion.div
@@ -123,6 +126,7 @@ export function ContextoMundoMudou() {
   return (
     <Section id="contexto-o-mundo-mudou" bg="gradient-down" spacing="generous">
       <BackgroundBeams color="rgba(200, 135, 58, 0.06)" beamCount={2} />
+      <FloatingElements count={4} color="var(--accent-amber)" />
       <div className="relative z-10">
       <Overline className="block mb-6 text-[var(--text-muted)] inline-flex items-center gap-2"><Globe className="w-4 h-4 text-[var(--accent-amber)]" />Contexto</Overline>
       <TextReveal
@@ -183,6 +187,8 @@ export function ContextoIlusao() {
   return (
     <Spotlight className="w-full" color="rgba(200, 135, 58, 0.03)" size={700}>
     <Section id="contexto-ilusao-digital" bg="surface" spacing="compact">
+      <AmbientBackground variant="top-light" />
+      <div className="relative z-10">
       <CinematicHeadline
         overline="Contexto"
         headline={content.contextoIlusao.headline}
@@ -235,6 +241,7 @@ export function ContextoIlusao() {
           </ScrollReveal>
         </div>
       </div>
+      </div>
     </Section>
     </Spotlight>
   )
@@ -257,6 +264,7 @@ export function CxEquacao() {
   return (
     <Section id="cx-equacao-invisivel" bg="amber-glow">
       <AmbientBackground variant="radial-amber" breathe={true} />
+      <FloatingElements count={6} color="var(--accent-amber)" />
       <div className="relative z-10">
         <Overline className="text-center mb-6 inline-flex items-center gap-2 w-full justify-center"><BarChart3 className="w-4 h-4 text-[var(--accent-amber)]" />Customer Experience</Overline>
         <TextReveal
@@ -325,6 +333,8 @@ export function CxExperiencia() {
   return (
     <Spotlight className="w-full" color="rgba(200, 135, 58, 0.04)" size={600}>
     <Section id="cx-experiencia-vs-percepcao" bg="elevated">
+      <BackgroundBeams color="rgba(200, 135, 58, 0.04)" beamCount={2} />
+      <div className="relative z-10">
       <CinematicHeadline
         overline="Customer Experience"
         headline={content.cxExperiencia.headline}
@@ -399,6 +409,7 @@ export function CxExperiencia() {
           </ScrollReveal>
         </div>
       </div>
+      </div>
     </Section>
     </Spotlight>
   )
@@ -415,6 +426,7 @@ export { CxExperiencia as ChapterCxExperiencia }
 export function CxCusto() {
   return (
     <Section id="cx-custo-do-atrito" bg="gradient-up" spacing="dramatic">
+      <AmbientBackground variant="bottom-fade" />
       <div className="relative overflow-hidden">
         {/* Watermark stat numbers — giant, ghostly, layered */}
         <div
@@ -493,7 +505,10 @@ export function CxReflexao() {
   const marginSteps = ['ml-0', 'ml-6 md:ml-12', 'ml-12 md:ml-24', 'ml-18 md:ml-36']
 
   return (
+    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.04)" size={600}>
     <Section id="cx-momento-reflexao" bg="vignette" spacing="compact">
+      <BackgroundBeams color="rgba(200, 135, 58, 0.05)" beamCount={2} />
+      <div className="relative z-10">
       <CinematicHeadline
         overline="Reflexao"
         headline={content.cxReflexao.headline}
@@ -550,7 +565,9 @@ export function CxReflexao() {
           context="Considere nao onde voce gostaria de estar — mas onde os dados realmente colocam sua operacao hoje."
         />
       </ScrollReveal>
+      </div>
     </Section>
+    </Spotlight>
   )
 }
 
@@ -652,6 +669,7 @@ export { CsParadoxo as ChapterCsParadoxo }
 
 export function CsMetricas() {
   return (
+    <Spotlight className="w-full" color="rgba(74, 124, 92, 0.03)" size={700}>
     <Section id="cs-metricas-que-mentem" bg="primary" spacing="dramatic">
       <Overline className="mb-6 text-[var(--text-muted)] text-center flex items-center justify-center gap-2">
         <ChartNoAxesCombined className="w-4 h-4 text-[var(--accent-green)]" />Customer Success
@@ -705,6 +723,7 @@ export function CsMetricas() {
         </div>
       </ScrollReveal>
     </Section>
+    </Spotlight>
   )
 }
 
@@ -786,6 +805,8 @@ export { CsExpansao as ChapterCsExpansao }
 export function DataVerdade() {
   return (
     <Section id="data-verdade-sobre-cliente" bg="elevated" spacing="dramatic">
+      <BackgroundBeams color="rgba(91, 143, 185, 0.05)" beamCount={2} />
+      <div className="relative z-10">
       <CinematicHeadline
         overline="Dados"
         headline={content.dataVerdade.headline}
@@ -884,6 +905,7 @@ export function DataVerdade() {
             </div>
           </ScrollReveal>
         </div>
+      </div>
       </div>
     </Section>
   )

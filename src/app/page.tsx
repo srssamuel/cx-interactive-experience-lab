@@ -14,6 +14,7 @@ import { GradientMesh } from '@/components/effects/gradient-mesh'
 import { FloatingElements } from '@/components/effects/floating-elements'
 import { BackgroundBeams } from '@/components/effects/background-beams'
 import { BorderRevealCard } from '@/components/effects/border-reveal-card'
+import { AmbientBackground } from '@/components/cinematic/ambient-background'
 
 const ease = [0.16, 1, 0.3, 1] as const
 
@@ -122,8 +123,9 @@ export default function PortalPage() {
       {/* =========================================
           SECTION 2 — FOUR DIMENSIONS — ASYMMETRIC
           ========================================= */}
-      <section className="relative py-32 md:py-48">
-        <div className="max-w-7xl mx-auto px-8 md:px-16 lg:px-24">
+      <section className="relative py-32 md:py-48 overflow-hidden">
+        <AmbientBackground variant="mesh-dark" />
+        <div className="relative z-10 max-w-7xl mx-auto px-8 md:px-16 lg:px-24">
           {/* Section heading */}
           <div className="mb-20 max-w-xl">
             <TextReveal
@@ -286,8 +288,9 @@ export default function PortalPage() {
       {/* =========================================
           SECTION 3 — INTERMEDIATE / TRANSITION
           ========================================= */}
-      <section className="relative py-32 md:py-40 section-bg-amber-glow">
+      <section className="relative py-32 md:py-40 section-bg-amber-glow overflow-hidden">
         <BackgroundBeams color="rgba(200, 135, 58, 0.08)" beamCount={3} />
+        <FloatingElements count={5} color="var(--accent-amber)" />
         <div className="gradient-border-top" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-8 md:px-16 lg:px-24">
@@ -334,12 +337,13 @@ export default function PortalPage() {
       {/* =========================================
           SECTION 4 — FOOTER (3-column)
           ========================================= */}
-      <footer className="relative py-20 md:py-24 section-bg-surface gradient-border-top">
-        <div className="max-w-7xl mx-auto px-8 md:px-16 lg:px-24">
+      <footer className="relative py-20 md:py-24 section-bg-surface gradient-border-top overflow-hidden">
+        <BackgroundBeams color="rgba(200, 135, 58, 0.03)" beamCount={2} />
+        <div className="relative z-10 max-w-7xl mx-auto px-8 md:px-16 lg:px-24">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
             {/* Col 1: Brand */}
             <div>
-              <span className="font-display text-xl text-[var(--text-primary)] tracking-tight">
+              <span className="font-display text-xl text-gradient-amber tracking-tight">
                 CX Experience Lab
               </span>
               <p className="mt-4 text-sm leading-relaxed text-[var(--text-tertiary)] max-w-xs">

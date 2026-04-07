@@ -19,6 +19,8 @@ import { LazyParticleField } from '@/components/three/lazy-particle-field'
 import { Spotlight } from '@/components/effects/spotlight'
 import { BackgroundBeams } from '@/components/effects/background-beams'
 import { CharReveal } from '@/components/motion/char-reveal'
+import { FloatingElements } from '@/components/effects/floating-elements'
+import { MovingBorder } from '@/components/effects/moving-border'
 import { Layers, ScanSearch, BrainCircuit, Trophy, ShieldAlert, Merge, Users, ClipboardCheck, MessagesSquare, Clock, Flame } from 'lucide-react'
 import { cn } from '@/lib/cn'
 import { content } from './content'
@@ -33,6 +35,7 @@ export function DataMaturidade() {
     <Section id="data-maturidade" bg="gradient-down" spacing="generous">
       <AmbientBackground variant="mesh-dark" />
       <BackgroundBeams color="rgba(91, 143, 185, 0.08)" beamCount={3} />
+      <FloatingElements count={4} color="var(--accent-blue)" />
       <div className="relative z-10">
       <CinematicHeadline
         overline="Dados"
@@ -47,8 +50,10 @@ export function DataMaturidade() {
           <ScrollReveal key={level.name} delay={i * 0.1} variant="rise">
             <div
               className={cn(
-                'flex flex-col md:flex-row md:items-center gap-4 rounded-xl border border-[var(--border-subtle)] transition-all',
-                'hover:border-[var(--border-hover)]'
+                'flex flex-col md:flex-row md:items-center gap-4 rounded-xl border transition-all',
+                i === content.dataMaturidade.levels.length - 1
+                  ? 'border-[var(--accent-amber)]/30 bg-[var(--accent-amber-soft)] hover:border-[var(--accent-amber)]/50'
+                  : 'border-[var(--border-subtle)] hover:border-[var(--border-hover)]'
               )}
               style={{
                 padding: `${16 + i * 4}px ${24 + i * 4}px`,
@@ -64,13 +69,21 @@ export function DataMaturidade() {
               </span>
               <SubHeading
                 as="h3"
-                className="text-base font-semibold shrink-0 min-w-[140px] text-[var(--accent-blue)]"
+                className={cn(
+                  'text-base font-semibold shrink-0 min-w-[140px] text-[var(--accent-blue)]',
+                  i === content.dataMaturidade.levels.length - 1 && 'text-[var(--accent-amber)]'
+                )}
               >
                 {level.name}
               </SubHeading>
               <Body as="span" className="text-sm">
                 {level.desc}
               </Body>
+              {i === content.dataMaturidade.levels.length - 1 && (
+                <span className="ml-auto shrink-0 font-mono text-[10px] uppercase tracking-widest text-[var(--accent-amber)] opacity-70">
+                  target
+                </span>
+              )}
             </div>
           </ScrollReveal>
         ))}
@@ -240,6 +253,9 @@ export function AiOndeGanha() {
   const bgVariants = ['surface', 'elevated', 'surface'] as const
   return (
     <Section id="ai-onde-ganha" bg="primary">
+      <BackgroundBeams color="rgba(139, 111, 176, 0.06)" beamCount={4} />
+      <FloatingElements count={5} color="var(--accent-purple)" />
+      <div className="relative z-10">
       <CinematicHeadline
         overline="Inteligencia Artificial"
         headline={content.aiOndeGanha.headline}
@@ -252,11 +268,17 @@ export function AiOndeGanha() {
       <div className="mt-16 space-y-6">
         {content.aiOndeGanha.cases.map((c, i) => (
           <ScrollReveal key={c.company} delay={i * 0.15} variant={i === 1 ? 'blur' : 'rise'}>
-            <div className={cn(
-              'relative overflow-hidden rounded-xl p-8 md:p-10',
-              `section-bg-${bgVariants[i]}`,
-              'border border-[var(--border-subtle)]'
-            )}>
+            <BorderRevealCard
+              glowColor="rgba(139, 111, 176, 0.35)"
+              tilt={false}
+              className={cn(
+                '!rounded-xl',
+                i === 0 && '!bg-[var(--bg-surface)]',
+                i === 1 && '!bg-[var(--bg-elevated)]',
+                i === 2 && '!bg-[var(--bg-surface)]'
+              )}
+            >
+              <div className="relative overflow-hidden">
               {/* Watermark company name */}
               <span
                 className="absolute -right-4 top-1/2 -translate-y-1/2 font-display text-[clamp(4rem,12vw,8rem)] text-[var(--accent-purple)] opacity-[0.04] leading-none select-none pointer-events-none"
@@ -280,7 +302,8 @@ export function AiOndeGanha() {
                   </Body>
                 </div>
               </div>
-            </div>
+              </div>
+            </BorderRevealCard>
           </ScrollReveal>
         ))}
       </div>
@@ -295,6 +318,7 @@ export function AiOndeGanha() {
           </div>
         </div>
       </ScrollReveal>
+      </div>
     </Section>
   )
 }
@@ -309,6 +333,8 @@ export { AiOndeGanha as ChapterAiOndeGanha }
 export function AiArmadilhas() {
   return (
     <Section id="ai-armadilhas" bg="elevated" spacing="compact">
+      <AmbientBackground variant="diagonal-split" />
+      <div className="relative z-10">
       <Overline className="text-center mb-6 text-sm tracking-[0.25em] uppercase text-[var(--accent-red)] flex items-center justify-center gap-2">
         <ShieldAlert className="w-4 h-4" />CAUTION
       </Overline>
@@ -364,6 +390,7 @@ export function AiArmadilhas() {
           {content.aiArmadilhas.statContext}
         </Body>
       </ScrollReveal>
+      </div>
     </Section>
   )
 }
@@ -452,6 +479,8 @@ export function ConvergenciaLidera() {
 
   return (
     <Section id="convergencia-quem-lidera" bg="gradient-up">
+      <BackgroundBeams color="rgba(200, 135, 58, 0.05)" beamCount={3} />
+      <div className="relative z-10">
       <CinematicHeadline
         overline="Lideranca"
         headline={content.convergenciaLidera.headline}
@@ -528,6 +557,7 @@ export function ConvergenciaLidera() {
           {content.convergenciaLidera.provocation}
         </motion.p>
       </ScrollReveal>
+      </div>
     </Section>
   )
 }
@@ -551,6 +581,8 @@ export function WorkshopDiagnostico() {
   return (
     <Spotlight className="w-full" color="rgba(200, 135, 58, 0.04)" size={600}>
     <Section id="workshop-diagnostico" bg="surface" className="dot-grid" spacing="generous">
+      <AmbientBackground variant="radial-amber" />
+      <div className="relative z-10">
       <PausePoint label="Workshop" />
 
       <CinematicHeadline
@@ -561,24 +593,46 @@ export function WorkshopDiagnostico() {
         icon={<ClipboardCheck className="w-4 h-4 text-[var(--accent-amber)]" />}
       />
 
-      <StaggerGroup className="mt-12 space-y-4 max-w-3xl mx-auto">
-        {content.workshopDiagnostico.dimensions.map((dim) => (
+      <StaggerGroup className="mt-12 space-y-5 max-w-3xl mx-auto">
+        {content.workshopDiagnostico.dimensions.map((dim, i) => {
+          const color = dimColors[dim.dim] || 'var(--text-secondary)'
+          return (
           <StaggerItem key={dim.dim}>
-            <div className="glass flex items-start gap-4 p-6 rounded-xl border border-[var(--border-subtle)]">
-              <span
-                className="font-mono text-sm font-bold shrink-0 w-20 text-center py-1 rounded"
-                style={{
-                  color: dimColors[dim.dim] || 'var(--text-secondary)',
-                  backgroundColor: `${dimColors[dim.dim] || 'var(--text-secondary)'}15`,
-                }}
-              >
-                {dim.dim}
-              </span>
-              <Body className="text-base text-[var(--text-primary)]">{dim.q}</Body>
+            <div
+              className="relative overflow-hidden rounded-xl border border-[var(--border-subtle)] hover:border-[var(--border-hover)] transition-colors"
+              style={{ paddingLeft: `${20 + i * 8}px` }}
+            >
+              {/* Colored left accent bar */}
+              <div
+                className="absolute left-0 top-0 bottom-0 w-1"
+                style={{ backgroundColor: color }}
+              />
+              <div className="flex items-start gap-5 p-6 pl-4">
+                <div className="shrink-0 flex flex-col items-center gap-1">
+                  <span
+                    className="font-mono text-[0.65rem] font-bold tracking-widest uppercase opacity-50"
+                  >
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <span
+                    className="font-mono text-sm font-bold px-3 py-1.5 rounded-md"
+                    style={{
+                      color,
+                      backgroundColor: `${color}15`,
+                      border: `1px solid ${color}25`,
+                    }}
+                  >
+                    {dim.dim}
+                  </span>
+                </div>
+                <Body className="text-base text-[var(--text-primary)] pt-1 leading-relaxed">{dim.q}</Body>
+              </div>
             </div>
           </StaggerItem>
-        ))}
+          )
+        })}
       </StaggerGroup>
+      </div>
     </Section>
     </Spotlight>
   )
@@ -641,6 +695,8 @@ export function WorkshopDiscussao() {
 
   return (
     <Section id="workshop-discussao" bg="green-glow" className="dot-grid">
+      <FloatingElements count={6} color="var(--accent-green)" />
+      <div className="relative z-10">
       <PausePoint label="Discussao em grupo" />
 
       <CinematicHeadline
@@ -667,6 +723,7 @@ export function WorkshopDiscussao() {
           Passe o mouse ou toque para revelar o contexto
         </Body>
       </ScrollReveal>
+      </div>
     </Section>
   )
 }
