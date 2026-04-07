@@ -12,9 +12,9 @@ interface SkewTransitionProps {
 const colors = {
   primary: 'bg-[var(--bg-primary)]',
   surface: 'bg-[var(--bg-surface)]',
-  amber: 'bg-[var(--accent-amber)]/10',
-  green: 'bg-[var(--accent-green)]/10',
-  purple: 'bg-[var(--accent-purple)]/10',
+  amber: 'bg-[var(--accent-amber)]/25',
+  green: 'bg-[var(--accent-green)]/25',
+  purple: 'bg-[var(--accent-purple)]/25',
 }
 
 export function SkewTransition({

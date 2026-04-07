@@ -24,9 +24,9 @@ export default function PortalPage() {
       {/* =========================================
           SECTION 1 — FULL VIEWPORT HERO
           ========================================= */}
-      <Spotlight className="relative min-h-[100dvh] flex items-center" color="rgba(200, 135, 58, 0.08)" size={700}>
+      <Spotlight className="relative min-h-[100dvh] flex items-center" color="rgba(200, 135, 58, 0.18)" size={800}>
         {/* Backgrounds — layered */}
-        <GradientMesh opacity={0.15} />
+        <GradientMesh opacity={0.30} />
         <div className="absolute inset-0 z-0">
           <LazyParticleField color="#C8873A" count={120} bloom interactive />
         </div>
@@ -197,7 +197,7 @@ export default function PortalPage() {
 
                   <div
                     className="absolute inset-0 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                    style={{ background: 'radial-gradient(ellipse at 20% 50%, rgba(74, 124, 92, 0.06), transparent 70%)' }}
+                    style={{ background: 'radial-gradient(ellipse at 20% 50%, rgba(74, 124, 92, 0.15), transparent 70%)' }}
                   />
                 </div>
               </MovingBorder>
@@ -235,7 +235,7 @@ export default function PortalPage() {
 
                   <div
                     className="absolute inset-0 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                    style={{ background: 'radial-gradient(ellipse at 80% 50%, rgba(91, 143, 185, 0.06), transparent 70%)' }}
+                    style={{ background: 'radial-gradient(ellipse at 80% 50%, rgba(91, 143, 185, 0.15), transparent 70%)' }}
                   />
                 </div>
               </MovingBorder>
@@ -289,7 +289,7 @@ export default function PortalPage() {
           SECTION 3 — INTERMEDIATE / TRANSITION
           ========================================= */}
       <section className="relative py-32 md:py-40 section-bg-amber-glow overflow-hidden">
-        <BackgroundBeams color="rgba(200, 135, 58, 0.08)" beamCount={3} />
+        <BackgroundBeams color="rgba(200, 135, 58, 0.35)" beamCount={5} />
         <FloatingElements count={5} color="var(--accent-amber)" />
         <div className="gradient-border-top" />
 
@@ -338,7 +338,7 @@ export default function PortalPage() {
           SECTION 4 — FOOTER (3-column)
           ========================================= */}
       <footer className="relative py-24 md:py-32 section-bg-surface gradient-border-top overflow-hidden">
-        <BackgroundBeams color="rgba(200, 135, 58, 0.03)" beamCount={2} />
+        <BackgroundBeams color="rgba(200, 135, 58, 0.25)" beamCount={3} />
         <FloatingElements count={3} color="var(--accent-amber)" />
         <div className="relative z-10 max-w-7xl mx-auto px-8 md:px-16 lg:px-24">
           {/* Brand hero line */}

@@ -57,9 +57,11 @@ body {
 
 /* Backdrop blur glass effect for cards */
 .glass {
-  backdrop-filter: blur(20px) saturate(150%);
-  -webkit-backdrop-filter: blur(20px) saturate(150%);
-  background: rgba(21, 25, 33, 0.7);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(21, 25, 33, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 /* Terminal aesthetic for AI chapters */
@@ -95,41 +97,41 @@ body {
 /* Gradient divider between chapters */
 .gradient-divider {
   border: none;
-  height: 1px;
+  height: 2px;
   background: linear-gradient(90deg, transparent 5%, var(--accent-amber) 50%, transparent 95%);
-  opacity: 0.2;
+  opacity: 0.5;
   margin: 0;
-  box-shadow: 0 0 8px rgba(200, 135, 58, 0.1);
+  box-shadow: 0 0 20px rgba(200, 135, 58, 0.3), 0 0 60px rgba(200, 135, 58, 0.1);
 }
 .gradient-divider-green {
   border: none;
-  height: 1px;
+  height: 2px;
   background: linear-gradient(90deg, transparent 5%, var(--accent-green) 50%, transparent 95%);
-  opacity: 0.2;
+  opacity: 0.5;
   margin: 0;
-  box-shadow: 0 0 8px rgba(74, 124, 92, 0.1);
+  box-shadow: 0 0 20px rgba(74, 124, 92, 0.3), 0 0 60px rgba(74, 124, 92, 0.1);
 }
 .gradient-divider-blue {
   border: none;
-  height: 1px;
+  height: 2px;
   background: linear-gradient(90deg, transparent 5%, var(--accent-blue) 50%, transparent 95%);
-  opacity: 0.2;
+  opacity: 0.5;
   margin: 0;
-  box-shadow: 0 0 8px rgba(91, 143, 185, 0.1);
+  box-shadow: 0 0 20px rgba(91, 143, 185, 0.3), 0 0 60px rgba(91, 143, 185, 0.1);
 }
 .gradient-divider-purple {
   border: none;
-  height: 1px;
+  height: 2px;
   background: linear-gradient(90deg, transparent 5%, var(--accent-purple) 50%, transparent 95%);
-  opacity: 0.2;
+  opacity: 0.5;
   margin: 0;
-  box-shadow: 0 0 8px rgba(139, 111, 176, 0.1);
+  box-shadow: 0 0 20px rgba(139, 111, 176, 0.3), 0 0 60px rgba(139, 111, 176, 0.1);
 }
 
 /* Breathing glow for CTA buttons */
 @keyframes cta-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(200, 135, 58, 0.15); }
-  50% { box-shadow: 0 0 40px rgba(200, 135, 58, 0.3); }
+  0%, 100% { box-shadow: 0 0 30px rgba(200, 135, 58, 0.3), 0 0 60px rgba(200, 135, 58, 0.1); }
+  50% { box-shadow: 0 0 50px rgba(200, 135, 58, 0.5), 0 0 100px rgba(200, 135, 58, 0.2); }
 }
 .cta-glow {
   animation: cta-glow 3s ease-in-out infinite;

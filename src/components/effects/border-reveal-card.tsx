@@ -60,7 +60,7 @@ export function BorderRevealCard({
       className={cn(
         'relative rounded-2xl p-8 bg-[var(--bg-surface)] border border-[var(--border-subtle)]',
         'transition-[box-shadow] duration-300',
-        'hover:shadow-[0_20px_60px_rgba(0,0,0,0.3)]',
+        'hover:shadow-[0_20px_60px_rgba(0,0,0,0.4),0_0_40px_rgba(200,135,58,0.1)]',
         'will-change-transform',
         className
       )}
@@ -87,7 +87,7 @@ export function BorderRevealCard({
       <div
         className="pointer-events-none absolute inset-0 rounded-2xl transition-opacity duration-500"
         style={{
-          background: `radial-gradient(300px at var(--x, 50%) var(--y, 50%), ${glowColor.replace(/[\d.]+\)$/, '0.04)')}, transparent)`,
+          background: `radial-gradient(300px at var(--x, 50%) var(--y, 50%), ${glowColor.replace(/[\d.]+\)$/, '0.12)')}, transparent)`,
           opacity: isHovered ? 1 : 0,
         }}
       />

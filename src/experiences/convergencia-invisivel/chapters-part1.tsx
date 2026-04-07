@@ -30,7 +30,7 @@ import { content } from './content'
 
 export function Abertura() {
   return (
-    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.05)" size={800}>
+    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.15)" size={800}>
     <Section id="abertura" bg="primary" fullHeight>
       <AmbientBackground variant="spotlight" />
       <FloatingElements count={5} color="var(--accent-amber)" />
@@ -125,7 +125,7 @@ const ch2Rotations = ['-1deg', '0deg', '1deg'] as const
 export function ContextoMundoMudou() {
   return (
     <Section id="contexto-o-mundo-mudou" bg="gradient-down" spacing="generous">
-      <BackgroundBeams color="rgba(200, 135, 58, 0.06)" beamCount={2} />
+      <BackgroundBeams color="rgba(200, 135, 58, 0.35)" beamCount={2} />
       <FloatingElements count={4} color="var(--accent-amber)" />
       <div className="relative z-10">
       <Overline className="block mb-6 text-[var(--text-muted)] inline-flex items-center gap-2"><Globe className="w-4 h-4 text-[var(--accent-amber)]" />Contexto</Overline>
@@ -185,7 +185,7 @@ export { ContextoMundoMudou as ChapterContextoMundoMudou }
 
 export function ContextoIlusao() {
   return (
-    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.03)" size={700}>
+    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.15)" size={700}>
     <Section id="contexto-ilusao-digital" bg="surface" spacing="compact">
       <AmbientBackground variant="top-light" />
       <div className="relative z-10">
@@ -282,9 +282,9 @@ export function CxEquacao() {
         <div className="mt-16 relative">
           {/* SVG connecting lines between nodes */}
           <svg className="absolute inset-0 w-full h-full pointer-events-none hidden md:block" aria-hidden="true">
-            <line x1="50%" y1="15%" x2="20%" y2="85%" stroke="var(--accent-amber)" strokeWidth="1" opacity="0.15" />
-            <line x1="50%" y1="15%" x2="80%" y2="85%" stroke="var(--accent-amber)" strokeWidth="1" opacity="0.15" />
-            <line x1="20%" y1="85%" x2="80%" y2="85%" stroke="var(--accent-amber)" strokeWidth="1" opacity="0.15" />
+            <line x1="50%" y1="15%" x2="20%" y2="85%" stroke="var(--accent-amber)" strokeWidth="1" opacity="0.35" />
+            <line x1="50%" y1="15%" x2="80%" y2="85%" stroke="var(--accent-amber)" strokeWidth="1" opacity="0.35" />
+            <line x1="20%" y1="85%" x2="80%" y2="85%" stroke="var(--accent-amber)" strokeWidth="1" opacity="0.35" />
           </svg>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-y-16">
@@ -292,7 +292,7 @@ export function CxEquacao() {
               <ScrollReveal key={pillar.title} variant="scale" delay={i * 0.2} className={nodePositions[i]}>
                 <div className="relative p-6 md:p-8 rounded-2xl border border-[var(--accent-amber)]/20 bg-[var(--bg-primary)]/60 backdrop-blur-sm max-w-xs">
                   {/* Node number — large faded */}
-                  <span className="absolute -top-4 -left-2 font-display text-5xl text-[var(--accent-amber)] opacity-[0.12] leading-none select-none" aria-hidden="true">
+                  <span className="absolute -top-4 -left-2 font-display text-5xl text-[var(--accent-amber)] opacity-[0.25] leading-none select-none" aria-hidden="true">
                     0{i + 1}
                   </span>
                   <SubHeading className="text-[var(--accent-amber)] text-xl">
@@ -331,9 +331,9 @@ export { CxEquacao as ChapterCxEquacao }
 
 export function CxExperiencia() {
   return (
-    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.04)" size={600}>
+    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.15)" size={600}>
     <Section id="cx-experiencia-vs-percepcao" bg="elevated">
-      <BackgroundBeams color="rgba(200, 135, 58, 0.04)" beamCount={2} />
+      <BackgroundBeams color="rgba(200, 135, 58, 0.35)" beamCount={2} />
       <div className="relative z-10">
       <CinematicHeadline
         overline="Customer Experience"
@@ -437,7 +437,7 @@ export function CxCusto() {
             <span
               key={stat.label}
               className={cn(
-                'font-display font-black text-[20vw] leading-none text-[var(--text-primary)] opacity-[0.04]',
+                'font-display font-black text-[20vw] leading-none text-[var(--text-primary)] opacity-[0.08]',
                 i % 2 === 0 ? 'self-start -ml-[4vw]' : 'self-end -mr-[4vw]'
               )}
             >
@@ -505,9 +505,9 @@ export function CxReflexao() {
   const marginSteps = ['ml-0', 'ml-6 md:ml-12', 'ml-12 md:ml-24', 'ml-18 md:ml-36']
 
   return (
-    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.04)" size={600}>
+    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.15)" size={600}>
     <Section id="cx-momento-reflexao" bg="vignette" spacing="compact">
-      <BackgroundBeams color="rgba(200, 135, 58, 0.05)" beamCount={2} />
+      <BackgroundBeams color="rgba(200, 135, 58, 0.35)" beamCount={2} />
       <div className="relative z-10">
       <CinematicHeadline
         overline="Reflexao"
@@ -581,7 +581,7 @@ export { CxReflexao as ChapterCxReflexao }
 export function CsParadoxo() {
   return (
     <Section id="cs-paradoxo-retencao" bg="surface">
-      <BackgroundBeams color="rgba(74, 124, 92, 0.12)" beamCount={3} />
+      <BackgroundBeams color="rgba(74, 124, 92, 0.35)" beamCount={3} />
       <div className="relative z-10">
         <CinematicHeadline
           overline="Customer Success"
@@ -631,7 +631,7 @@ export function CsParadoxo() {
 
           {/* Right panel — "reality" */}
           <ScrollReveal variant="slide-right" delay={0.3} className="flex-1">
-            <div className="h-full p-8 rounded-r-xl md:rounded-l-none rounded-xl border border-[var(--accent-red)]/20 bg-[rgba(199,91,91,0.08)]">
+            <div className="h-full p-8 rounded-r-xl md:rounded-l-none rounded-xl border border-[var(--accent-red)]/20 bg-[rgba(199,91,91,0.15)]">
               <Overline className="text-[var(--accent-red)] mb-6 block">O que o cliente sente</Overline>
               <div>
                 <AnimatedCounter
@@ -669,7 +669,7 @@ export { CsParadoxo as ChapterCsParadoxo }
 
 export function CsMetricas() {
   return (
-    <Spotlight className="w-full" color="rgba(74, 124, 92, 0.03)" size={700}>
+    <Spotlight className="w-full" color="rgba(74, 124, 92, 0.15)" size={700}>
     <Section id="cs-metricas-que-mentem" bg="primary" spacing="dramatic">
       <Overline className="mb-6 text-[var(--text-muted)] text-center flex items-center justify-center gap-2">
         <ChartNoAxesCombined className="w-4 h-4 text-[var(--accent-green)]" />Customer Success
@@ -805,7 +805,7 @@ export { CsExpansao as ChapterCsExpansao }
 export function DataVerdade() {
   return (
     <Section id="data-verdade-sobre-cliente" bg="elevated" spacing="dramatic">
-      <BackgroundBeams color="rgba(91, 143, 185, 0.05)" beamCount={2} />
+      <BackgroundBeams color="rgba(91, 143, 185, 0.35)" beamCount={2} />
       <div className="relative z-10">
       <CinematicHeadline
         overline="Dados"

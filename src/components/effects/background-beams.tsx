@@ -10,10 +10,9 @@ interface BackgroundBeamsProps {
 
 export function BackgroundBeams({
   className,
-  color = 'rgba(200, 135, 58, 0.15)',
+  color = 'rgba(200, 135, 58, 0.4)',
   beamCount = 4,
 }: BackgroundBeamsProps) {
-  // Generate varied bezier paths
   const beams = Array.from({ length: beamCount }, (_, i) => {
     const yStart = 20 + (i * 60) / beamCount + Math.sin(i * 1.5) * 10
     const yEnd = 30 + (i * 50) / beamCount + Math.cos(i * 2) * 15
@@ -38,21 +37,38 @@ export function BackgroundBeams({
         fill="none"
       >
         {beams.map((beam, i) => (
-          <path
-            key={i}
-            d={beam.d}
-            stroke={color}
-            strokeWidth="0.15"
-            filter="url(#beam-blur)"
-            strokeDasharray={`${beam.dashArray} ${beam.dashArray * 2}`}
-            style={{
-              animation: `beam-dash ${beam.duration}s linear ${beam.delay}s infinite`,
-            }}
-          />
+          <g key={i}>
+            {/* Glow layer — wide, soft */}
+            <path
+              d={beam.d}
+              stroke={color}
+              strokeWidth="1.5"
+              filter="url(#beam-glow)"
+              strokeDasharray={`${beam.dashArray} ${beam.dashArray * 2}`}
+              style={{
+                animation: `beam-dash ${beam.duration}s linear ${beam.delay}s infinite`,
+                opacity: 0.4,
+              }}
+            />
+            {/* Core beam — bright, thin */}
+            <path
+              d={beam.d}
+              stroke={color}
+              strokeWidth="0.4"
+              filter="url(#beam-blur)"
+              strokeDasharray={`${beam.dashArray} ${beam.dashArray * 2}`}
+              style={{
+                animation: `beam-dash ${beam.duration}s linear ${beam.delay}s infinite`,
+              }}
+            />
+          </g>
         ))}
         <defs>
           <filter id="beam-blur">
             <feGaussianBlur stdDeviation="0.3" />
+          </filter>
+          <filter id="beam-glow">
+            <feGaussianBlur stdDeviation="1.5" />
           </filter>
         </defs>
       </svg>

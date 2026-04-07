@@ -24,7 +24,7 @@ export function MovingBorder({
         className="absolute inset-0 rounded-[inherit] pointer-events-none"
         style={{
           padding: `${borderWidth}px`,
-          background: `conic-gradient(from var(--angle), transparent 60%, ${borderColor} 80%, transparent 100%)`,
+          background: `conic-gradient(from var(--angle), transparent 50%, ${borderColor} 75%, transparent 100%)`,
           mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
           maskComposite: 'exclude',
           WebkitMaskComposite: 'xor',

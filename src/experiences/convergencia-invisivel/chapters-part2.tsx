@@ -34,7 +34,7 @@ export function DataMaturidade() {
   return (
     <Section id="data-maturidade" bg="gradient-down" spacing="generous">
       <AmbientBackground variant="mesh-dark" />
-      <BackgroundBeams color="rgba(91, 143, 185, 0.08)" beamCount={3} />
+      <BackgroundBeams color="rgba(91, 143, 185, 0.35)" beamCount={3} />
       <FloatingElements count={4} color="var(--accent-blue)" />
       <div className="relative z-10">
       <CinematicHeadline
@@ -111,7 +111,7 @@ export { DataMaturidade as ChapterDataMaturidade }
 
 export function DataDadoVsInsight() {
   return (
-    <Spotlight className="w-full" color="rgba(91, 143, 185, 0.05)" size={700}>
+    <Spotlight className="w-full" color="rgba(91, 143, 185, 0.15)" size={700}>
     <Section id="data-dado-vs-insight" bg="surface" spacing="compact">
       <AmbientBackground variant="top-light" />
       <div className="relative z-10">
@@ -253,7 +253,7 @@ export function AiOndeGanha() {
   const bgVariants = ['surface', 'elevated', 'surface'] as const
   return (
     <Section id="ai-onde-ganha" bg="primary">
-      <BackgroundBeams color="rgba(139, 111, 176, 0.06)" beamCount={4} />
+      <BackgroundBeams color="rgba(139, 111, 176, 0.35)" beamCount={4} />
       <FloatingElements count={5} color="var(--accent-purple)" />
       <div className="relative z-10">
       <CinematicHeadline
@@ -281,7 +281,7 @@ export function AiOndeGanha() {
               <div className="relative overflow-hidden">
               {/* Watermark company name */}
               <span
-                className="absolute -right-4 top-1/2 -translate-y-1/2 font-display text-[clamp(4rem,12vw,8rem)] text-[var(--accent-purple)] opacity-[0.04] leading-none select-none pointer-events-none"
+                className="absolute -right-4 top-1/2 -translate-y-1/2 font-display text-[clamp(4rem,12vw,8rem)] text-[var(--accent-purple)] opacity-[0.08] leading-none select-none pointer-events-none"
                 aria-hidden="true"
               >
                 {c.company}
@@ -406,9 +406,9 @@ export function ConvergenciaSistema() {
   const quadrantColors = ['#5B8FB9', '#4A7C5C', '#8B6FB0', '#C75B5B']
 
   return (
-    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.07)" size={800}>
+    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.15)" size={800}>
     <Section id="convergencia-sistema-unico" bg="vignette" spacing="dramatic">
-      <BackgroundBeams color="rgba(200, 135, 58, 0.12)" beamCount={5} />
+      <BackgroundBeams color="rgba(200, 135, 58, 0.35)" beamCount={5} />
       <AmbientBackground variant="diagonal-split" breathe={true} />
       <div className="relative z-10">
         <Overline className="text-center mb-6 flex items-center justify-center gap-2"><Merge className="w-4 h-4 text-[var(--accent-amber)]" />A Convergencia</Overline>
@@ -479,7 +479,7 @@ export function ConvergenciaLidera() {
 
   return (
     <Section id="convergencia-quem-lidera" bg="gradient-up">
-      <BackgroundBeams color="rgba(200, 135, 58, 0.05)" beamCount={3} />
+      <BackgroundBeams color="rgba(200, 135, 58, 0.35)" beamCount={3} />
       <div className="relative z-10">
       <CinematicHeadline
         overline="Lideranca"
@@ -579,7 +579,7 @@ export function WorkshopDiagnostico() {
   }
 
   return (
-    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.04)" size={600}>
+    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.15)" size={600}>
     <Section id="workshop-diagnostico" bg="surface" className="dot-grid" spacing="generous">
       <AmbientBackground variant="radial-amber" />
       <div className="relative z-10">
@@ -739,7 +739,7 @@ export function FechamentoJanela() {
   return (
     <Section id="fechamento-janela" bg="primary">
       <AmbientBackground variant="bottom-fade" />
-      <BackgroundBeams color="rgba(200, 135, 58, 0.06)" beamCount={2} />
+      <BackgroundBeams color="rgba(200, 135, 58, 0.35)" beamCount={2} />
       <FloatingElements count={4} color="var(--accent-amber)" />
       <div className="relative z-10">
       <CinematicHeadline
@@ -811,10 +811,10 @@ export { FechamentoJanela as ChapterFechamentoJanela }
 
 export function FechamentoProvocacao() {
   return (
-    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.06)" size={800}>
+    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.15)" size={800}>
     <Section id="fechamento-provocacao" bg="primary" fullHeight spacing="dramatic">
       <AmbientBackground variant="diagonal-split" />
-      <BackgroundBeams color="rgba(200, 135, 58, 0.10)" beamCount={4} />
+      <BackgroundBeams color="rgba(200, 135, 58, 0.35)" beamCount={4} />
       <div className="absolute inset-0 z-[1] pointer-events-none">
         <LazyParticleField bloom interactive />
       </div>

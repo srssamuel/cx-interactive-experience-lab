@@ -7,7 +7,7 @@ interface GradientMeshProps {
   opacity?: number
 }
 
-export function GradientMesh({ className, opacity = 0.18 }: GradientMeshProps) {
+export function GradientMesh({ className, opacity = 0.35 }: GradientMeshProps) {
   return (
     <div
       className={cn('absolute inset-0 overflow-hidden pointer-events-none', className)}
@@ -15,45 +15,45 @@ export function GradientMesh({ className, opacity = 0.18 }: GradientMeshProps) {
     >
       {/* Blob 1 — Amber */}
       <div
-        className="gradient-mesh-blob absolute w-[60%] h-[60%] rounded-full"
+        className="gradient-mesh-blob absolute w-[70%] h-[70%] rounded-full"
         style={{
-          background: 'radial-gradient(circle, #C8873A 0%, transparent 70%)',
-          filter: 'blur(120px)',
-          top: '10%',
-          left: '15%',
+          background: 'radial-gradient(circle, #C8873A 0%, transparent 65%)',
+          filter: 'blur(80px)',
+          top: '5%',
+          left: '10%',
           animation: 'mesh-blob-1 20s ease-in-out infinite',
         }}
       />
       {/* Blob 2 — Green */}
       <div
-        className="gradient-mesh-blob absolute w-[50%] h-[50%] rounded-full"
+        className="gradient-mesh-blob absolute w-[55%] h-[55%] rounded-full"
         style={{
-          background: 'radial-gradient(circle, #4A7C5C 0%, transparent 70%)',
-          filter: 'blur(120px)',
-          top: '40%',
-          right: '10%',
+          background: 'radial-gradient(circle, #4A7C5C 0%, transparent 65%)',
+          filter: 'blur(80px)',
+          top: '35%',
+          right: '5%',
           animation: 'mesh-blob-2 25s ease-in-out infinite',
         }}
       />
       {/* Blob 3 — Blue */}
       <div
-        className="gradient-mesh-blob absolute w-[45%] h-[45%] rounded-full"
+        className="gradient-mesh-blob absolute w-[50%] h-[50%] rounded-full"
         style={{
-          background: 'radial-gradient(circle, #5B8FB9 0%, transparent 70%)',
-          filter: 'blur(120px)',
-          bottom: '5%',
-          left: '30%',
+          background: 'radial-gradient(circle, #5B8FB9 0%, transparent 65%)',
+          filter: 'blur(80px)',
+          bottom: '0%',
+          left: '25%',
           animation: 'mesh-blob-3 30s ease-in-out infinite',
         }}
       />
       {/* Blob 4 — Purple */}
       <div
-        className="gradient-mesh-blob absolute w-[40%] h-[40%] rounded-full"
+        className="gradient-mesh-blob absolute w-[45%] h-[45%] rounded-full"
         style={{
-          background: 'radial-gradient(circle, #8B6FB0 0%, transparent 70%)',
-          filter: 'blur(120px)',
-          top: '25%',
-          right: '25%',
+          background: 'radial-gradient(circle, #8B6FB0 0%, transparent 65%)',
+          filter: 'blur(80px)',
+          top: '20%',
+          right: '20%',
           animation: 'mesh-blob-4 35s ease-in-out infinite',
         }}
       />
