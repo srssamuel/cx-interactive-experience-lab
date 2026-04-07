@@ -4,7 +4,7 @@ import { cn } from '@/lib/cn'
 import { useStageMode } from '@/lib/use-stage-mode'
 import type { Chapter } from '@/lib/types'
 import { ChapterNav } from './chapter-nav'
-import { ScrollProgress } from '@/components/effects/scroll-progress'
+import { SlideDeck } from './slide-deck'
 import { Maximize, Minimize } from 'lucide-react'
 
 interface PresentationShellProps {
@@ -24,8 +24,6 @@ export function PresentationShell({
 
   return (
     <div className={cn('relative', className)}>
-      <ScrollProgress />
-
       {/* Top bar */}
       <header
         className={cn(
@@ -52,13 +50,13 @@ export function PresentationShell({
         </div>
       </header>
 
-      {/* Chapter navigation */}
+      {/* Chapter navigation — reads from SlideContext */}
       <ChapterNav chapters={chapters} />
 
-      {/* Main content */}
-      <main className="pt-16">
+      {/* Slide engine */}
+      <SlideDeck chapters={chapters}>
         {children}
-      </main>
+      </SlideDeck>
     </div>
   )
 }

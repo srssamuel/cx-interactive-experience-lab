@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/cn'
-import { useLenis } from '@/lib/providers/smooth-scroll-provider'
+import { useSlide } from './slide-deck'
 import type { Chapter } from '@/lib/types'
 
 interface ChapterNavProps {
@@ -24,88 +24,8 @@ const blockColors: Record<string, string> = {
 }
 
 export function ChapterNav({ chapters, className }: ChapterNavProps) {
-  const [activeIndex, setActiveIndex] = useState(0)
+  const { currentSlide, goTo } = useSlide()
   const [isOpen, setIsOpen] = useState(false)
-  const activeIndexRef = useRef(0)
-  const isScrollingRef = useRef(false)
-  const lenis = useLenis()
-
-  const scrollToChapter = useCallback((index: number) => {
-    const target = document.getElementById(chapters[index].id)
-    if (!target) return
-
-    isScrollingRef.current = true
-    activeIndexRef.current = index
-    setActiveIndex(index)
-
-    if (lenis) {
-      lenis.scrollTo(target, {
-        offset: 0,
-        duration: 0.8,
-        onComplete: () => {
-          isScrollingRef.current = false
-        },
-      })
-    } else {
-      target.scrollIntoView({ behavior: 'smooth' })
-      setTimeout(() => {
-        isScrollingRef.current = false
-      }, 900)
-    }
-  }, [chapters, lenis])
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (isScrollingRef.current) return
-
-      const sections = chapters.map((ch) => document.getElementById(ch.id))
-      const scrollY = window.scrollY + window.innerHeight / 3
-
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = sections[i]
-        if (section && section.offsetTop <= scrollY) {
-          activeIndexRef.current = i
-          setActiveIndex(i)
-          break
-        }
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [chapters])
-
-  useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      const tag = (e.target as HTMLElement)?.tagName
-      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return
-      if (isScrollingRef.current) return
-
-      const current = activeIndexRef.current
-
-      if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === 'PageDown') {
-        e.preventDefault()
-        const next = Math.min(current + 1, chapters.length - 1)
-        if (next !== current) scrollToChapter(next)
-      }
-      if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp') {
-        e.preventDefault()
-        const prev = Math.max(current - 1, 0)
-        if (prev !== current) scrollToChapter(prev)
-      }
-      if (e.key === 'Home') {
-        e.preventDefault()
-        scrollToChapter(0)
-      }
-      if (e.key === 'End') {
-        e.preventDefault()
-        scrollToChapter(chapters.length - 1)
-      }
-    }
-
-    window.addEventListener('keydown', handleKey)
-    return () => window.removeEventListener('keydown', handleKey)
-  }, [chapters, scrollToChapter])
 
   return (
     <>
@@ -120,12 +40,12 @@ export function ChapterNav({ chapters, className }: ChapterNavProps) {
       >
         {/* Chapter counter */}
         <span className="font-mono text-[10px] text-[var(--text-muted)] mb-1 tabular-nums">
-          {String(activeIndex + 1).padStart(2, '0')}/{String(chapters.length).padStart(2, '0')}
+          {String(currentSlide + 1).padStart(2, '0')}/{String(chapters.length).padStart(2, '0')}
         </span>
         {chapters.map((ch, i) => (
           <button
             key={ch.id}
-            onClick={() => scrollToChapter(i)}
+            onClick={() => goTo(i)}
             className="group relative flex items-center justify-end"
             aria-label={ch.title}
             title={ch.title}
@@ -137,7 +57,7 @@ export function ChapterNav({ chapters, className }: ChapterNavProps) {
             <span
               className={cn(
                 'rounded-full transition-all duration-300',
-                i === activeIndex
+                i === currentSlide
                   ? cn('w-3 h-3', blockColors[ch.block])
                   : 'w-1.5 h-1.5 bg-[var(--text-muted)] hover:bg-[var(--text-tertiary)] hover:w-2 hover:h-2'
               )}
@@ -152,7 +72,7 @@ export function ChapterNav({ chapters, className }: ChapterNavProps) {
         className="fixed bottom-6 right-6 z-50 lg:hidden w-12 h-12 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-full flex items-center justify-center"
         aria-label="Menu de capitulos"
       >
-        <span className="text-sm font-mono">{activeIndex + 1}</span>
+        <span className="text-sm font-mono">{currentSlide + 1}</span>
       </button>
 
       {/* Mobile drawer */}
@@ -167,12 +87,12 @@ export function ChapterNav({ chapters, className }: ChapterNavProps) {
             <button
               key={ch.id}
               onClick={() => {
-                scrollToChapter(i)
+                goTo(i)
                 setIsOpen(false)
               }}
               className={cn(
                 'w-full text-left px-3 py-2 text-sm rounded-lg transition-colors',
-                i === activeIndex
+                i === currentSlide
                   ? 'text-[var(--text-primary)] bg-[var(--bg-hover)]'
                   : 'text-[var(--text-tertiary)] hover:text-[var(--text-secondary)]'
               )}
