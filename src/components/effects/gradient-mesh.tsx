@@ -15,7 +15,7 @@ export function GradientMesh({ className, opacity = 0.18 }: GradientMeshProps) {
     >
       {/* Blob 1 — Amber */}
       <div
-        className="absolute w-[60%] h-[60%] rounded-full"
+        className="gradient-mesh-blob absolute w-[60%] h-[60%] rounded-full"
         style={{
           background: 'radial-gradient(circle, #C8873A 0%, transparent 70%)',
           filter: 'blur(120px)',
@@ -26,7 +26,7 @@ export function GradientMesh({ className, opacity = 0.18 }: GradientMeshProps) {
       />
       {/* Blob 2 — Green */}
       <div
-        className="absolute w-[50%] h-[50%] rounded-full"
+        className="gradient-mesh-blob absolute w-[50%] h-[50%] rounded-full"
         style={{
           background: 'radial-gradient(circle, #4A7C5C 0%, transparent 70%)',
           filter: 'blur(120px)',
@@ -37,7 +37,7 @@ export function GradientMesh({ className, opacity = 0.18 }: GradientMeshProps) {
       />
       {/* Blob 3 — Blue */}
       <div
-        className="absolute w-[45%] h-[45%] rounded-full"
+        className="gradient-mesh-blob absolute w-[45%] h-[45%] rounded-full"
         style={{
           background: 'radial-gradient(circle, #5B8FB9 0%, transparent 70%)',
           filter: 'blur(120px)',
@@ -48,7 +48,7 @@ export function GradientMesh({ className, opacity = 0.18 }: GradientMeshProps) {
       />
       {/* Blob 4 — Purple */}
       <div
-        className="absolute w-[40%] h-[40%] rounded-full"
+        className="gradient-mesh-blob absolute w-[40%] h-[40%] rounded-full"
         style={{
           background: 'radial-gradient(circle, #8B6FB0 0%, transparent 70%)',
           filter: 'blur(120px)',
@@ -58,6 +58,12 @@ export function GradientMesh({ className, opacity = 0.18 }: GradientMeshProps) {
         }}
       />
       <style>{`
+        @media (max-width: 768px) {
+          .gradient-mesh-blob { filter: blur(60px) !important; opacity: 0.6; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .gradient-mesh-blob { animation: none !important; }
+        }
         @keyframes mesh-blob-1 {
           0%, 100% { transform: translate(0, 0) scale(1); }
           33% { transform: translate(5%, 10%) scale(1.1); }

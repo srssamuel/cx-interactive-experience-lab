@@ -15,6 +15,7 @@ import { PausePoint } from '@/components/workshop/pause-point'
 import { TextReveal } from '@/components/motion/text-reveal'
 import { ParallaxContainer } from '@/components/motion/parallax-container'
 import { BorderRevealCard } from '@/components/effects/border-reveal-card'
+import { MovingBorder } from '@/components/effects/moving-border'
 import { LazyParticleField } from '@/components/three/lazy-particle-field'
 import { Spotlight } from '@/components/effects/spotlight'
 import { BackgroundBeams } from '@/components/effects/background-beams'
@@ -92,53 +93,65 @@ export { DataMaturidade as ChapterDataMaturidade }
 
 export function DataDadoVsInsight() {
   return (
+    <Spotlight className="w-full" color="rgba(91, 143, 185, 0.05)" size={700}>
     <Section id="data-dado-vs-insight" bg="surface" spacing="compact">
       <AmbientBackground variant="top-light" />
-      <CinematicHeadline
-        overline="Dados"
-        headline={content.dataDadoVsInsight.headline}
-        align="center"
-        size="display"
-      />
+      <div className="relative z-10">
+        <CinematicHeadline
+          overline="Dados"
+          headline={content.dataDadoVsInsight.headline}
+          align="center"
+          size="display"
+        />
 
-      <ScrollReveal className="mt-6 max-w-2xl mx-auto text-center">
-        <Body className="text-lg">{content.dataDadoVsInsight.body}</Body>
-      </ScrollReveal>
+        <ScrollReveal className="mt-6 max-w-2xl mx-auto text-center">
+          <Body className="text-lg">{content.dataDadoVsInsight.body}</Body>
+        </ScrollReveal>
 
-      <div className="mt-16 flex flex-col md:flex-row items-stretch gap-2 md:gap-0">
-        {content.dataDadoVsInsight.pipeline.map((step, i) => (
-          <div key={step.stage} className="flex-1 flex items-stretch">
-            <ScrollReveal delay={i * 0.12} className="flex-1">
-              <div
-                className={cn(
-                  'glass h-full p-5 rounded-xl md:rounded-none border border-[var(--border-subtle)]',
-                  i === 0 && 'md:rounded-l-xl',
-                  i === content.dataDadoVsInsight.pipeline.length - 1 && 'md:rounded-r-xl',
-                  i === content.dataDadoVsInsight.pipeline.length - 1 && 'bg-[var(--accent-green-soft)] border-[var(--accent-green)]/20'
-                )}
-              >
-                <span
-                  className="overline block mb-2"
-                  style={{
-                    color: i === content.dataDadoVsInsight.pipeline.length - 1
-                      ? 'var(--accent-green)'
-                      : 'var(--accent-blue)',
-                  }}
+        <div className="mt-16 flex flex-col md:flex-row items-stretch gap-2 md:gap-0">
+          {content.dataDadoVsInsight.pipeline.map((step, i) => (
+            <div key={step.stage} className="flex-1 flex items-stretch">
+              <ScrollReveal delay={i * 0.12} className="flex-1">
+                <BorderRevealCard
+                  glowColor={i === content.dataDadoVsInsight.pipeline.length - 1 ? 'rgba(74, 124, 92, 0.4)' : 'rgba(91, 143, 185, 0.4)'}
+                  tilt={false}
+                  className={cn(
+                    'h-full !p-5 !rounded-xl md:!rounded-none !border-[var(--border-subtle)]',
+                    i === 0 && 'md:!rounded-l-xl',
+                    i === content.dataDadoVsInsight.pipeline.length - 1 && 'md:!rounded-r-xl !bg-[var(--accent-green-soft)] !border-[var(--accent-green)]/20'
+                  )}
                 >
-                  {step.stage}
-                </span>
-                <Body as="span" className="text-sm">{step.example}</Body>
-              </div>
-            </ScrollReveal>
-            {i < content.dataDadoVsInsight.pipeline.length - 1 && (
-              <span className="hidden md:flex items-center text-lg px-1" style={{ color: 'var(--accent-blue, #5B8FB9)' }}>
-                →
-              </span>
-            )}
-          </div>
-        ))}
+                  <span
+                    className="overline block mb-2"
+                    style={{
+                      color: i === content.dataDadoVsInsight.pipeline.length - 1
+                        ? 'var(--accent-green)'
+                        : 'var(--accent-blue)',
+                    }}
+                  >
+                    {step.stage}
+                  </span>
+                  <Body as="span" className="text-sm">{step.example}</Body>
+                </BorderRevealCard>
+              </ScrollReveal>
+              {i < content.dataDadoVsInsight.pipeline.length - 1 && (
+                <motion.span
+                  className="hidden md:flex items-center text-lg px-1"
+                  style={{ color: 'var(--accent-blue, #5B8FB9)' }}
+                  initial={{ opacity: 0, x: -5 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: 0.2 + i * 0.15 }}
+                >
+                  →
+                </motion.span>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </Section>
+    </Spotlight>
   )
 }
 
@@ -227,37 +240,37 @@ export function AiOndeGanha() {
         size="display"
       />
 
-      <div className="mt-12 space-y-6">
+      <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {content.aiOndeGanha.cases.map((c, i) => (
           <ScrollReveal
             key={c.company}
-            delay={i * 0.15}
+            delay={i * 0.12}
             variant={i % 2 === 0 ? 'scale' : 'blur'}
           >
-            <div className="flex flex-col md:flex-row items-start md:items-center gap-6 p-6 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)]">
-              <div className="shrink-0">
-                <Overline className="block text-[var(--accent-purple)]">
-                  {c.area}
-                </Overline>
-                <SubHeading as="h3" className="text-xl mt-1">{c.company}</SubHeading>
-              </div>
-              <div
-                className="flex-1 md:border-l md:pl-6"
-                style={{ borderColor: 'var(--accent-purple, #8B6FB0)' }}
-              >
+            <BorderRevealCard
+              glowColor="rgba(139, 111, 176, 0.4)"
+              className={cn('h-full', i === 0 && 'md:col-span-2 lg:col-span-1')}
+            >
+              <Overline className="block text-[var(--accent-purple)] mb-2">
+                {c.area}
+              </Overline>
+              <SubHeading as="h3" className="text-xl">{c.company}</SubHeading>
+              <div className="mt-4 pt-4 border-t border-[var(--accent-purple)]/20">
                 <Body className="text-base text-[var(--text-primary)]">{c.result}</Body>
               </div>
-            </div>
+            </BorderRevealCard>
           </ScrollReveal>
         ))}
       </div>
 
       <ScrollReveal delay={0.5} variant="scale" className="mt-12">
-        <Card variant="highlight" accentColor="amber">
-          <Body className="text-lg text-[var(--text-primary)] font-medium">
-            {content.aiOndeGanha.insight}
-          </Body>
-        </Card>
+        <MovingBorder borderColor="var(--accent-amber)" duration={5} borderWidth={1} className="rounded-xl">
+          <Card variant="highlight" accentColor="amber" hover={false}>
+            <Body className="text-lg text-[var(--text-primary)] font-medium">
+              {content.aiOndeGanha.insight}
+            </Body>
+          </Card>
+        </MovingBorder>
       </ScrollReveal>
     </Section>
   )
@@ -409,8 +422,8 @@ export { ConvergenciaSistema as ChapterConvergenciaSistema }
    ═══════════════════════════════════════════════════ */
 
 export function ConvergenciaLidera() {
-  const roleColors = ['var(--accent-amber)', 'var(--accent-green, #4A7C5C)', 'var(--accent-blue, #5B8FB9)']
-  const roleAccents: Array<'amber' | 'green'> = ['amber', 'green', 'green']
+  const roleColors = ['rgba(200, 135, 58, 0.4)', 'rgba(74, 124, 92, 0.4)', 'rgba(91, 143, 185, 0.4)']
+  const roleTextColors = ['var(--accent-amber)', 'var(--accent-green)', 'var(--accent-blue)']
 
   return (
     <Section id="convergencia-quem-lidera" bg="gradient-up">
@@ -425,24 +438,30 @@ export function ConvergenciaLidera() {
         <Body className="text-lg">{content.convergenciaLidera.body}</Body>
       </ScrollReveal>
 
-      <StaggerGroup className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
         {content.convergenciaLidera.roles.map((role, i) => (
-          <StaggerItem key={role.title}>
-            <div
-              className="h-full p-6 rounded-xl border bg-[var(--bg-elevated)]"
-              style={{ borderColor: `${roleColors[i]}40` }}
+          <ScrollReveal key={role.title} delay={i * 0.15} variant="scale">
+            <BorderRevealCard
+              glowColor={roleColors[i]}
+              className="h-full"
             >
+              <span
+                className="block font-mono text-xs uppercase tracking-[0.2em] mb-4 opacity-60"
+                style={{ color: roleTextColors[i] }}
+              >
+                Role 0{i + 1}
+              </span>
               <h3
-                className="font-medium text-lg mb-3"
-                style={{ color: roleColors[i], fontSize: 'var(--text-heading)' }}
+                className="font-display text-xl md:text-2xl mb-3"
+                style={{ color: roleTextColors[i] }}
               >
                 {role.title}
               </h3>
               <Body className="text-sm">{role.desc}</Body>
-            </div>
-          </StaggerItem>
+            </BorderRevealCard>
+          </ScrollReveal>
         ))}
-      </StaggerGroup>
+      </div>
 
       <ScrollReveal delay={0.5} className="mt-16">
         <div className="border-t border-[var(--border-default)] pt-8 text-center">

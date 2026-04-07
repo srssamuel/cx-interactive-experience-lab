@@ -92,6 +92,19 @@ body {
   }
 }
 
+/* Fullscreen sections — dynamic viewport height */
+.section-fullscreen {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+@supports not (min-height: 100dvh) {
+  .section-fullscreen {
+    min-height: 100vh;
+  }
+}
+
 /* @property for animated angle (moving border) */
 @property --angle {
   syntax: '<angle>';

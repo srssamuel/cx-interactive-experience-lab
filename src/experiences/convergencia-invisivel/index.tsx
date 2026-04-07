@@ -21,6 +21,7 @@ export function ConvergenciaInvisivel() {
       <DataVerdade />
       <DataMaturidade />
       <DataDadoVsInsight />
+      <SkewTransition color="surface" direction="up" />
       <AiOQueFaz />
       <AiOndeGanha />
       <AiArmadilhas />

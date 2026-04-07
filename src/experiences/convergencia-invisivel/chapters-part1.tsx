@@ -13,6 +13,9 @@ import { DiscussionPrompt } from '@/components/workshop/discussion-prompt'
 import { TextReveal } from '@/components/motion/text-reveal'
 import { ParallaxContainer } from '@/components/motion/parallax-container'
 import { Spotlight } from '@/components/effects/spotlight'
+import { BackgroundBeams } from '@/components/effects/background-beams'
+import { BorderRevealCard } from '@/components/effects/border-reveal-card'
+import { MovingBorder } from '@/components/effects/moving-border'
 import { cn } from '@/lib/cn'
 import { content } from './content'
 
@@ -477,22 +480,19 @@ export { CxReflexao as ChapterCxReflexao }
 export function CsParadoxo() {
   return (
     <Section id="cs-paradoxo-retencao" bg="surface">
-      <AmbientBackground variant="radial-green" />
-      <CinematicHeadline
-        overline="Customer Success"
-        headline={content.csParadoxo.headline}
-        align="left"
-        size="display"
-      />
+      <BackgroundBeams color="rgba(74, 124, 92, 0.12)" beamCount={3} />
+      <div className="relative z-10">
+        <CinematicHeadline
+          overline="Customer Success"
+          headline={content.csParadoxo.headline}
+          align="left"
+          size="display"
+        />
 
-      <StaggerGroup
-        className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6"
-        staggerDelay={0.1}
-      >
-        {content.csParadoxo.stats.map((stat) => (
-          <StaggerItem key={stat.label}>
-            <ScrollReveal variant="blur">
-              <Card variant="stat" accentColor="green" className="h-full">
+        <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6">
+          {content.csParadoxo.stats.map((stat, i) => (
+            <ScrollReveal key={stat.label} variant="blur" delay={i * 0.1}>
+              <BorderRevealCard glowColor="rgba(74, 124, 92, 0.4)" className="h-full text-center">
                 <AnimatedCounter
                   value={stat.value}
                   suffix={stat.suffix}
@@ -502,26 +502,26 @@ export function CsParadoxo() {
                 <span className="mt-1 block font-mono text-[0.65rem] text-[var(--text-muted)]">
                   {stat.source}
                 </span>
-              </Card>
+              </BorderRevealCard>
             </ScrollReveal>
-          </StaggerItem>
-        ))}
-      </StaggerGroup>
+          ))}
+        </div>
 
-      <ScrollReveal delay={0.3} className="mt-12 max-w-3xl">
-        <Body className="text-lg leading-relaxed">{content.csParadoxo.body}</Body>
-      </ScrollReveal>
+        <ScrollReveal delay={0.3} className="mt-12 max-w-3xl">
+          <Body className="text-lg leading-relaxed">{content.csParadoxo.body}</Body>
+        </ScrollReveal>
 
-      <ScrollReveal delay={0.5} className="mt-8 max-w-3xl">
-        <Card variant="highlight" accentColor="green" hover={false}>
-          <Overline className="text-[var(--accent-green)] mb-2 block">
-            O paradoxo
-          </Overline>
-          <Body className="text-[var(--text-primary)] font-medium">
-            {content.csParadoxo.insight}
-          </Body>
-        </Card>
-      </ScrollReveal>
+        <ScrollReveal delay={0.5} className="mt-8 max-w-3xl">
+          <Card variant="highlight" accentColor="green" hover={false}>
+            <Overline className="text-[var(--accent-green)] mb-2 block">
+              O paradoxo
+            </Overline>
+            <Body className="text-[var(--text-primary)] font-medium">
+              {content.csParadoxo.insight}
+            </Body>
+          </Card>
+        </ScrollReveal>
+      </div>
     </Section>
   )
 }
@@ -601,41 +601,47 @@ export { CsMetricas as ChapterCsMetricas }
 
 export function CsExpansao() {
   return (
+    <Spotlight className="w-full" color="rgba(74, 124, 92, 0.05)" size={700}>
     <Section id="cs-expansao-escondida" bg="green-glow" spacing="compact">
-      <CinematicHeadline
-        overline="Customer Success"
-        headline={content.csExpansao.headline}
-        align="left"
-        size="display"
-      />
+      <div className="relative z-10">
+        <CinematicHeadline
+          overline="Customer Success"
+          headline={content.csExpansao.headline}
+          align="left"
+          size="display"
+        />
 
-      <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <ScrollReveal variant="scale">
-          <div className="text-center lg:text-left">
-            <StatNumber className="block text-[clamp(4rem,12vw,8rem)]">
-              {content.csExpansao.stat}
-            </StatNumber>
-            <Body className="mt-4 text-sm max-w-sm mx-auto lg:mx-0">
-              {content.csExpansao.statContext}
+        <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <ScrollReveal variant="scale">
+            <MovingBorder borderColor="var(--accent-green)" duration={6} borderWidth={1} className="rounded-2xl">
+              <div className="text-center p-8 bg-[var(--bg-surface)] rounded-2xl">
+                <StatNumber className="block text-[clamp(4rem,12vw,8rem)]">
+                  {content.csExpansao.stat}
+                </StatNumber>
+                <Body className="mt-4 text-sm max-w-sm mx-auto">
+                  {content.csExpansao.statContext}
+                </Body>
+              </div>
+            </MovingBorder>
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.2}>
+            <Body className="text-lg leading-relaxed">
+              {content.csExpansao.body}
+            </Body>
+          </ScrollReveal>
+        </div>
+
+        <ScrollReveal delay={0.5} className="mt-16">
+          <div className="border-t border-[var(--border-subtle)] pt-8">
+            <Body className="text-lg text-[var(--text-primary)] font-medium max-w-3xl">
+              {content.csExpansao.closing}
             </Body>
           </div>
         </ScrollReveal>
-
-        <ScrollReveal delay={0.2}>
-          <Body className="text-lg leading-relaxed">
-            {content.csExpansao.body}
-          </Body>
-        </ScrollReveal>
       </div>
-
-      <ScrollReveal delay={0.5} className="mt-16">
-        <div className="border-t border-[var(--border-subtle)] pt-8">
-          <Body className="text-lg text-[var(--text-primary)] font-medium max-w-3xl">
-            {content.csExpansao.closing}
-          </Body>
-        </div>
-      </ScrollReveal>
     </Section>
+    </Spotlight>
   )
 }
 
