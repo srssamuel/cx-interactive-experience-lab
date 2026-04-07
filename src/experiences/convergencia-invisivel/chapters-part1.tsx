@@ -15,6 +15,7 @@ import { Spotlight } from '@/components/effects/spotlight'
 import { BackgroundBeams } from '@/components/effects/background-beams'
 import { BorderRevealCard } from '@/components/effects/border-reveal-card'
 import { MovingBorder } from '@/components/effects/moving-border'
+import { FloatingElements } from '@/components/effects/floating-elements'
 import { CharReveal } from '@/components/motion/char-reveal'
 import { Globe, Sparkles, BarChart3, TrendingUp, DollarSign, MessageSquare, HeartHandshake, ChartNoAxesCombined, Unplug, Database } from 'lucide-react'
 import { cn } from '@/lib/cn'
@@ -716,48 +717,61 @@ export { CsMetricas as ChapterCsMetricas }
 
 export function CsExpansao() {
   return (
-    <Spotlight className="w-full" color="rgba(74, 124, 92, 0.05)" size={700}>
-    <Section id="cs-expansao-escondida" bg="green-glow" spacing="compact">
+    <Section id="cs-expansao-escondida" bg="green-glow" spacing="dramatic">
+      <FloatingElements count={8} color="var(--accent-green)" />
       <div className="relative z-10">
-        <CinematicHeadline
-          overline="Customer Success"
-          headline={content.csExpansao.headline}
-          align="left"
-          size="display"
-          icon={<Unplug className="w-4 h-4 text-[var(--accent-green)]" />}
-        />
+        <Overline className="text-center mb-6 flex items-center justify-center gap-2">
+          <Unplug className="w-4 h-4 text-[var(--accent-green)]" />Customer Success
+        </Overline>
 
-        <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <ScrollReveal variant="scale">
-            <MovingBorder borderColor="var(--accent-green)" duration={6} borderWidth={1} className="rounded-2xl">
-              <div className="text-center p-8 bg-[var(--bg-surface)] rounded-2xl">
-                <StatNumber className="block text-[clamp(4rem,12vw,8rem)]">
+        {/* Giant centered stat — hero-scale, unique to this chapter */}
+        <ScrollReveal variant="scale">
+          <div className="text-center">
+            <MovingBorder borderColor="var(--accent-green)" duration={6} borderWidth={1} className="inline-block rounded-2xl">
+              <div className="px-16 py-12 md:px-24 md:py-16 bg-[var(--bg-surface)] rounded-2xl">
+                <StatNumber className="block text-[clamp(5rem,16vw,12rem)] leading-none">
                   {content.csExpansao.stat}
                 </StatNumber>
-                <Body className="mt-4 text-sm max-w-sm mx-auto">
-                  {content.csExpansao.statContext}
-                </Body>
               </div>
             </MovingBorder>
-          </ScrollReveal>
+            <ScrollReveal delay={0.2}>
+              <Body className="mt-6 text-sm text-[var(--text-muted)] max-w-md mx-auto">
+                {content.csExpansao.statContext}
+              </Body>
+            </ScrollReveal>
+          </div>
+        </ScrollReveal>
 
-          <ScrollReveal delay={0.2}>
-            <Body className="text-lg leading-relaxed">
-              {content.csExpansao.body}
-            </Body>
-          </ScrollReveal>
-        </div>
+        {/* Wide headline below stat */}
+        <ScrollReveal delay={0.3} className="mt-16">
+          <TextReveal
+            tag="h2"
+            className="text-center text-[clamp(1.75rem,4vw,3rem)] max-w-3xl mx-auto"
+          >
+            {content.csExpansao.headline}
+          </TextReveal>
+        </ScrollReveal>
 
-        <ScrollReveal delay={0.5} className="mt-16">
-          <div className="border-t border-[var(--border-subtle)] pt-8">
-            <Body className="text-lg text-[var(--text-primary)] font-medium max-w-3xl">
+        {/* Body text — wide, centered, breathing room */}
+        <ScrollReveal delay={0.4} className="mt-10">
+          <Body className="text-lg leading-relaxed text-center max-w-2xl mx-auto">
+            {content.csExpansao.body}
+          </Body>
+        </ScrollReveal>
+
+        {/* Closing — full-width accent bar */}
+        <ScrollReveal delay={0.6} className="mt-16">
+          <div className="relative max-w-3xl mx-auto px-8 py-6 rounded-xl border border-[var(--accent-green)]/20 bg-[var(--accent-green-soft)]">
+            <span className="absolute -top-3 left-8 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--accent-green)] bg-[var(--bg-primary)] px-3">
+              Insight
+            </span>
+            <Body className="text-lg text-[var(--text-primary)] font-medium text-center">
               {content.csExpansao.closing}
             </Body>
           </div>
         </ScrollReveal>
       </div>
     </Section>
-    </Spotlight>
   )
 }
 

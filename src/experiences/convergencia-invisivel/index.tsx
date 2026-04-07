@@ -44,7 +44,7 @@ export function ConvergenciaInvisivel() {
       <GradientDivider variant="blue" />
       <DataDadoVsInsight />
 
-      <SkewTransition color="surface" direction="up" />
+      <SkewTransition color="purple" direction="up" />
 
       {/* ACT III — AI */}
       <AiOQueFaz />

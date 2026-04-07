@@ -5,7 +5,7 @@ import { cn } from '@/lib/cn'
 
 interface SkewTransitionProps {
   className?: string
-  color?: 'primary' | 'surface' | 'amber' | 'green'
+  color?: 'primary' | 'surface' | 'amber' | 'green' | 'purple'
   direction?: 'down' | 'up'
 }
 
@@ -14,6 +14,7 @@ const colors = {
   surface: 'bg-[var(--bg-surface)]',
   amber: 'bg-[var(--accent-amber)]/10',
   green: 'bg-[var(--accent-green)]/10',
+  purple: 'bg-[var(--accent-purple)]/10',
 }
 
 export function SkewTransition({
