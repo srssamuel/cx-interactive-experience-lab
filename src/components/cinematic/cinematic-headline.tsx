@@ -10,6 +10,7 @@ interface CinematicHeadlineProps {
   className?: string
   align?: 'left' | 'center'
   size?: 'hero' | 'display' | 'section'
+  icon?: React.ReactNode
 }
 
 export function CinematicHeadline({
@@ -19,6 +20,7 @@ export function CinematicHeadline({
   className,
   align = 'center',
   size = 'display',
+  icon,
 }: CinematicHeadlineProps) {
   const sizeMap = {
     hero: 'var(--text-hero)',
@@ -36,12 +38,23 @@ export function CinematicHeadline({
     >
       {overline && (
         <motion.span
-          className="overline block"
+          className={cn('overline block', icon && 'inline-flex items-center gap-2')}
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as const }}
         >
+          {icon && (
+            <motion.span
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+              className="inline-flex"
+            >
+              {icon}
+            </motion.span>
+          )}
           {overline}
         </motion.span>
       )}

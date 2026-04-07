@@ -16,6 +16,7 @@ import { Spotlight } from '@/components/effects/spotlight'
 import { BackgroundBeams } from '@/components/effects/background-beams'
 import { BorderRevealCard } from '@/components/effects/border-reveal-card'
 import { MovingBorder } from '@/components/effects/moving-border'
+import { Globe, Sparkles, BarChart3, TrendingUp, DollarSign, MessageSquare, HeartHandshake, ChartNoAxesCombined, Unplug, Database } from 'lucide-react'
 import { cn } from '@/lib/cn'
 import { content } from './content'
 
@@ -101,7 +102,9 @@ const ch2Rotations = ['-1deg', '0deg', '1deg'] as const
 export function ContextoMundoMudou() {
   return (
     <Section id="contexto-o-mundo-mudou" bg="gradient-down" spacing="generous">
-      <Overline className="block mb-6 text-[var(--text-muted)]">Contexto</Overline>
+      <BackgroundBeams color="rgba(200, 135, 58, 0.06)" beamCount={2} />
+      <div className="relative z-10">
+      <Overline className="block mb-6 text-[var(--text-muted)] inline-flex items-center gap-2"><Globe className="w-4 h-4 text-[var(--accent-amber)]" />Contexto</Overline>
       <TextReveal
         tag="h2"
         className="text-[clamp(1.75rem,4.5vw,3.5rem)] max-w-4xl"
@@ -144,6 +147,7 @@ export function ContextoMundoMudou() {
           {content.contextoMundoMudou.closing}
         </Body>
       </ScrollReveal>
+      </div>
     </Section>
   )
 }
@@ -163,6 +167,7 @@ export function ContextoIlusao() {
         headline={content.contextoIlusao.headline}
         align="left"
         size="display"
+        icon={<Sparkles className="w-4 h-4 text-[var(--accent-amber)]" />}
       />
 
       <ScrollReveal variant="slide-right" className="mt-8 max-w-3xl">
@@ -223,7 +228,7 @@ export function CxEquacao() {
     <Section id="cx-equacao-invisivel" bg="amber-glow">
       <AmbientBackground variant="radial-amber" breathe={true} />
       <div className="relative z-10">
-        <Overline className="text-center block mb-6">Customer Experience</Overline>
+        <Overline className="text-center mb-6 inline-flex items-center gap-2 w-full justify-center"><BarChart3 className="w-4 h-4 text-[var(--accent-amber)]" />Customer Experience</Overline>
         <TextReveal
           tag="h2"
           className="text-center text-[clamp(1.75rem,4vw,3.5rem)]"
@@ -276,12 +281,14 @@ export { CxEquacao as ChapterCxEquacao }
 
 export function CxExperiencia() {
   return (
+    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.04)" size={600}>
     <Section id="cx-experiencia-vs-percepcao" bg="elevated">
       <CinematicHeadline
         overline="Customer Experience"
         headline={content.cxExperiencia.headline}
         align="left"
         size="display"
+        icon={<TrendingUp className="w-4 h-4 text-[var(--accent-amber)]" />}
       />
 
       <div className="mt-16 grid grid-cols-1 lg:grid-cols-7 gap-12 items-center">
@@ -318,6 +325,7 @@ export function CxExperiencia() {
         </div>
       </div>
     </Section>
+    </Spotlight>
   )
 }
 
@@ -353,7 +361,7 @@ export function CxCusto() {
 
         {/* Actual content overlaid */}
         <div className="relative z-10">
-          <Overline className="block mb-6 text-[var(--text-muted)]">Customer Experience</Overline>
+          <Overline className="mb-6 text-[var(--text-muted)] inline-flex items-center gap-2"><DollarSign className="w-4 h-4 text-[var(--accent-amber)]" />Customer Experience</Overline>
           <TextReveal
             tag="h2"
             className="text-[clamp(1.75rem,4.5vw,3.5rem)] max-w-3xl"
@@ -416,6 +424,7 @@ export function CxReflexao() {
         headline={content.cxReflexao.headline}
         align="left"
         size="display"
+        icon={<MessageSquare className="w-4 h-4 text-[var(--accent-amber)]" />}
       />
 
       <div className="mt-16 space-y-4">
@@ -487,6 +496,7 @@ export function CsParadoxo() {
           headline={content.csParadoxo.headline}
           align="left"
           size="display"
+          icon={<HeartHandshake className="w-4 h-4 text-[var(--accent-green)]" />}
         />
 
         <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -537,8 +547,8 @@ export { CsParadoxo as ChapterCsParadoxo }
 export function CsMetricas() {
   return (
     <Section id="cs-metricas-que-mentem" bg="primary" spacing="dramatic">
-      <Overline className="block mb-6 text-[var(--text-muted)] text-center">
-        Customer Success
+      <Overline className="mb-6 text-[var(--text-muted)] text-center flex items-center justify-center gap-2">
+        <ChartNoAxesCombined className="w-4 h-4 text-[var(--accent-green)]" />Customer Success
       </Overline>
       <TextReveal
         tag="h2"
@@ -609,6 +619,7 @@ export function CsExpansao() {
           headline={content.csExpansao.headline}
           align="left"
           size="display"
+          icon={<Unplug className="w-4 h-4 text-[var(--accent-green)]" />}
         />
 
         <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -661,6 +672,7 @@ export function DataVerdade() {
         headline={content.dataVerdade.headline}
         align="left"
         size="display"
+        icon={<Database className="w-4 h-4 text-[var(--accent-blue)]" />}
       />
 
       <ScrollReveal className="mt-6 max-w-3xl">

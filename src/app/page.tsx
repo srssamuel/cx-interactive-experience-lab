@@ -96,7 +96,7 @@ export default function PortalPage() {
               <MagneticButton strength={0.3} radius={120}>
                 <Link
                   href="/experiencias/convergencia-invisivel"
-                  className="group relative inline-flex items-center gap-4 px-10 py-5 text-base font-mono uppercase tracking-[0.12em] text-[var(--text-primary)] bg-[rgba(200,135,58,0.08)] border border-[var(--accent-amber)]/30 hover:bg-[rgba(200,135,58,0.15)] hover:border-[var(--accent-amber)] rounded-sm transition-all duration-500"
+                  className="group relative inline-flex items-center gap-4 px-10 py-5 text-base font-mono uppercase tracking-[0.12em] text-[var(--text-primary)] bg-[rgba(200,135,58,0.08)] border border-[var(--accent-amber)]/30 hover:bg-[rgba(200,135,58,0.15)] hover:border-[var(--accent-amber)] rounded-sm transition-all duration-500 cta-glow"
                 >
                   <span className="relative z-10">Iniciar Experiencia</span>
                   <ArrowRight className="relative z-10 w-5 h-5 text-[var(--accent-amber)] transition-transform duration-500 group-hover:translate-x-1" />

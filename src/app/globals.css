@@ -92,6 +92,38 @@ body {
   }
 }
 
+/* Gradient divider between chapters */
+.gradient-divider {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 5%, var(--accent-amber) 50%, transparent 95%);
+  opacity: 0.15;
+  margin: 0;
+}
+.gradient-divider-green {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 5%, var(--accent-green) 50%, transparent 95%);
+  opacity: 0.15;
+  margin: 0;
+}
+.gradient-divider-blue {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 5%, var(--accent-blue) 50%, transparent 95%);
+  opacity: 0.15;
+  margin: 0;
+}
+
+/* Breathing glow for CTA buttons */
+@keyframes cta-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(200, 135, 58, 0.15); }
+  50% { box-shadow: 0 0 40px rgba(200, 135, 58, 0.3); }
+}
+.cta-glow {
+  animation: cta-glow 3s ease-in-out infinite;
+}
+
 /* Fullscreen sections — dynamic viewport height */
 .section-fullscreen {
   min-height: 100dvh;

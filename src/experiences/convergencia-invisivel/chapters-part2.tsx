@@ -19,6 +19,7 @@ import { MovingBorder } from '@/components/effects/moving-border'
 import { LazyParticleField } from '@/components/three/lazy-particle-field'
 import { Spotlight } from '@/components/effects/spotlight'
 import { BackgroundBeams } from '@/components/effects/background-beams'
+import { Layers, ScanSearch, BrainCircuit, Trophy, ShieldAlert, Merge, Users, ClipboardCheck, MessagesSquare, Clock, Flame } from 'lucide-react'
 import { cn } from '@/lib/cn'
 import { content } from './content'
 
@@ -31,11 +32,14 @@ export function DataMaturidade() {
   return (
     <Section id="data-maturidade" bg="gradient-down" spacing="generous">
       <AmbientBackground variant="mesh-dark" />
+      <BackgroundBeams color="rgba(91, 143, 185, 0.08)" beamCount={3} />
+      <div className="relative z-10">
       <CinematicHeadline
         overline="Dados"
         headline={content.dataMaturidade.headline}
         align="left"
         size="display"
+        icon={<Layers className="w-4 h-4 text-[var(--accent-blue)]" />}
       />
 
       <div className="mt-16 space-y-4">
@@ -80,6 +84,7 @@ export function DataMaturidade() {
           {content.dataMaturidade.statContext}
         </Body>
       </ScrollReveal>
+      </div>
     </Section>
   )
 }
@@ -102,6 +107,7 @@ export function DataDadoVsInsight() {
           headline={content.dataDadoVsInsight.headline}
           align="center"
           size="display"
+          icon={<ScanSearch className="w-4 h-4 text-[var(--accent-blue)]" />}
         />
 
         <ScrollReveal className="mt-6 max-w-2xl mx-auto text-center">
@@ -169,8 +175,8 @@ export function AiOQueFaz() {
     <Section id="ai-o-que-realmente-faz" bg="primary" spacing="generous">
       <AmbientBackground variant="mesh-dark" />
       <div className="relative z-10">
-        <Overline className="block mb-4 text-[var(--accent-purple)]">
-          Inteligencia Artificial
+        <Overline className="mb-4 text-[var(--accent-purple)] flex items-center gap-2">
+          <BrainCircuit className="w-4 h-4" />Inteligencia Artificial
         </Overline>
         <h2
           className="font-display text-4xl md:text-6xl lg:text-7xl leading-[0.95] tracking-[-0.02em]"
@@ -238,6 +244,7 @@ export function AiOndeGanha() {
         headline={content.aiOndeGanha.headline}
         align="left"
         size="display"
+        icon={<Trophy className="w-4 h-4 text-[var(--accent-purple)]" />}
       />
 
       <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -286,8 +293,8 @@ export { AiOndeGanha as ChapterAiOndeGanha }
 export function AiArmadilhas() {
   return (
     <Section id="ai-armadilhas" bg="elevated" spacing="compact">
-      <Overline className="block text-center mb-6 text-sm tracking-[0.25em] uppercase text-[var(--accent-red)]">
-        CAUTION
+      <Overline className="text-center mb-6 text-sm tracking-[0.25em] uppercase text-[var(--accent-red)] flex items-center justify-center gap-2">
+        <ShieldAlert className="w-4 h-4" />CAUTION
       </Overline>
 
       <h2
@@ -361,7 +368,7 @@ export function ConvergenciaSistema() {
       <BackgroundBeams color="rgba(200, 135, 58, 0.12)" beamCount={5} />
       <AmbientBackground variant="diagonal-split" breathe={true} />
       <div className="relative z-10">
-        <Overline className="text-center block mb-6">A Convergencia</Overline>
+        <Overline className="text-center mb-6 flex items-center justify-center gap-2"><Merge className="w-4 h-4 text-[var(--accent-amber)]" />A Convergencia</Overline>
         <TextReveal
           tag="h1"
           className="text-center"
@@ -432,6 +439,7 @@ export function ConvergenciaLidera() {
         headline={content.convergenciaLidera.headline}
         align="left"
         size="display"
+        icon={<Users className="w-4 h-4 text-[var(--accent-amber)]" />}
       />
 
       <ScrollReveal className="mt-6 max-w-3xl">
@@ -497,6 +505,7 @@ export function WorkshopDiagnostico() {
   }
 
   return (
+    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.04)" size={600}>
     <Section id="workshop-diagnostico" bg="surface" className="dot-grid" spacing="generous">
       <PausePoint label="Workshop" />
 
@@ -505,6 +514,7 @@ export function WorkshopDiagnostico() {
         headline={content.workshopDiagnostico.headline}
         align="center"
         size="display"
+        icon={<ClipboardCheck className="w-4 h-4 text-[var(--accent-amber)]" />}
       />
 
       <StaggerGroup className="mt-12 space-y-4 max-w-3xl mx-auto">
@@ -526,6 +536,7 @@ export function WorkshopDiagnostico() {
         ))}
       </StaggerGroup>
     </Section>
+    </Spotlight>
   )
 }
 
@@ -593,6 +604,7 @@ export function WorkshopDiscussao() {
         headline={content.workshopDiscussao.headline}
         align="center"
         size="display"
+        icon={<MessagesSquare className="w-4 h-4 text-[var(--accent-green)]" />}
       />
 
       <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -626,11 +638,14 @@ export function FechamentoJanela() {
   return (
     <Section id="fechamento-janela" bg="primary">
       <AmbientBackground variant="bottom-fade" />
+      <BackgroundBeams color="rgba(200, 135, 58, 0.06)" beamCount={2} />
+      <div className="relative z-10">
       <CinematicHeadline
         overline="Fechamento"
         headline={content.fechamentoJanela.headline}
         align="left"
         size="display"
+        icon={<Clock className="w-4 h-4 text-[var(--accent-amber)]" />}
       />
 
       <ScrollReveal className="mt-6 max-w-3xl">
@@ -679,6 +694,7 @@ export function FechamentoJanela() {
             </Body>
           </Card>
         </ScrollReveal>
+      </div>
       </div>
     </Section>
   )
