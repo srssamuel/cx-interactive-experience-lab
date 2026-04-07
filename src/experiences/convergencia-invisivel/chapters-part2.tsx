@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Section } from '@/components/design-system'
 import { SectionHeading, SubHeading, Body, Overline, StatNumber } from '@/components/design-system/typography'
@@ -11,17 +12,24 @@ import { CinematicHeadline } from '@/components/cinematic/cinematic-headline'
 import { AmbientBackground } from '@/components/cinematic/ambient-background'
 import { DiscussionPrompt } from '@/components/workshop/discussion-prompt'
 import { PausePoint } from '@/components/workshop/pause-point'
+import { TextReveal } from '@/components/motion/text-reveal'
+import { ParallaxContainer } from '@/components/motion/parallax-container'
+import { BorderRevealCard } from '@/components/effects/border-reveal-card'
+import { LazyParticleField } from '@/components/three/lazy-particle-field'
+import { Spotlight } from '@/components/effects/spotlight'
+import { BackgroundBeams } from '@/components/effects/background-beams'
 import { cn } from '@/lib/cn'
 import { content } from './content'
 
 /* ═══════════════════════════════════════════════════
    Chapter 12 — O Modelo de Maturidade
-   Five ascending levels as horizontal bands.
+   Ascending levels with accent-blue labels + rise animation.
    ═══════════════════════════════════════════════════ */
 
 export function DataMaturidade() {
   return (
-    <Section id="data-maturidade" bg="gradient-down">
+    <Section id="data-maturidade" bg="gradient-down" spacing="generous">
+      <AmbientBackground variant="mesh-dark" />
       <CinematicHeadline
         overline="Dados"
         headline={content.dataMaturidade.headline}
@@ -31,7 +39,7 @@ export function DataMaturidade() {
 
       <div className="mt-16 space-y-4">
         {content.dataMaturidade.levels.map((level, i) => (
-          <ScrollReveal key={level.name} delay={i * 0.1}>
+          <ScrollReveal key={level.name} delay={i * 0.1} variant="rise">
             <div
               className={cn(
                 'flex flex-col md:flex-row md:items-center gap-4 rounded-xl border border-[var(--border-subtle)] transition-all',
@@ -43,10 +51,16 @@ export function DataMaturidade() {
                 marginLeft: `${i * 16}px`,
               }}
             >
-              <span className="font-mono text-xs text-[var(--text-muted)] shrink-0 w-8">
+              <span
+                className="font-mono text-xs shrink-0 w-8 font-bold"
+                style={{ color: 'var(--accent-blue, #5B8FB9)' }}
+              >
                 L{i + 1}
               </span>
-              <SubHeading as="h3" className="text-base font-semibold shrink-0 min-w-[140px]">
+              <SubHeading
+                as="h3"
+                className="text-base font-semibold shrink-0 min-w-[140px] text-[var(--accent-blue)]"
+              >
                 {level.name}
               </SubHeading>
               <Body as="span" className="text-sm">
@@ -57,7 +71,7 @@ export function DataMaturidade() {
         ))}
       </div>
 
-      <ScrollReveal delay={0.6} className="mt-16 flex items-baseline gap-4">
+      <ScrollReveal delay={0.6} variant="rise" className="mt-16 flex items-baseline gap-4">
         <span className="font-display text-5xl md:text-6xl text-[var(--accent-amber)]">
           <AnimatedCounter value={245} suffix="%" />
         </span>
@@ -73,12 +87,13 @@ export { DataMaturidade as ChapterDataMaturidade }
 
 /* ═══════════════════════════════════════════════════
    Chapter 13 — Dado vs Insight
-   Pipeline visualization: 5 stages connected.
+   Pipeline with accent-blue stages + glass cards.
    ═══════════════════════════════════════════════════ */
 
 export function DataDadoVsInsight() {
   return (
-    <Section id="data-dado-vs-insight" bg="surface">
+    <Section id="data-dado-vs-insight" bg="surface" spacing="compact">
+      <AmbientBackground variant="top-light" />
       <CinematicHeadline
         overline="Dados"
         headline={content.dataDadoVsInsight.headline}
@@ -96,23 +111,27 @@ export function DataDadoVsInsight() {
             <ScrollReveal delay={i * 0.12} className="flex-1">
               <div
                 className={cn(
-                  'h-full p-5 rounded-xl md:rounded-none border border-[var(--border-subtle)]',
+                  'glass h-full p-5 rounded-xl md:rounded-none border border-[var(--border-subtle)]',
                   i === 0 && 'md:rounded-l-xl',
                   i === content.dataDadoVsInsight.pipeline.length - 1 && 'md:rounded-r-xl',
                   i === content.dataDadoVsInsight.pipeline.length - 1 && 'bg-[var(--accent-green-soft)] border-[var(--accent-green)]/20'
                 )}
               >
-                <Overline className={cn(
-                  'block mb-2',
-                  i === content.dataDadoVsInsight.pipeline.length - 1 ? 'text-[var(--accent-green)]' : ''
-                )}>
+                <span
+                  className="overline block mb-2"
+                  style={{
+                    color: i === content.dataDadoVsInsight.pipeline.length - 1
+                      ? 'var(--accent-green)'
+                      : 'var(--accent-blue)',
+                  }}
+                >
                   {step.stage}
-                </Overline>
+                </span>
                 <Body as="span" className="text-sm">{step.example}</Body>
               </div>
             </ScrollReveal>
             {i < content.dataDadoVsInsight.pipeline.length - 1 && (
-              <span className="hidden md:flex items-center text-[var(--text-muted)] text-lg px-1">
+              <span className="hidden md:flex items-center text-lg px-1" style={{ color: 'var(--accent-blue, #5B8FB9)' }}>
                 →
               </span>
             )}
@@ -127,48 +146,64 @@ export { DataDadoVsInsight as ChapterDataDadoVsInsight }
 
 /* ═══════════════════════════════════════════════════
    Chapter 14 — O que AI Realmente Faz
-   Three stats top, body center, warning bottom.
+   TERMINAL AESTHETIC — monospace, green text, command-line cards.
    ═══════════════════════════════════════════════════ */
 
 export function AiOQueFaz() {
-  return (
-    <Section id="ai-o-que-realmente-faz" bg="amber-glow">
-      <AmbientBackground variant="corner-glow" />
-      <div className="relative z-10">
-        <CinematicHeadline
-          overline="Inteligencia Artificial"
-          headline={content.aiOQueFaz.headline}
-          align="left"
-          size="display"
-        />
+  const commands = ['$ ai --analyze --depth=full', '$ ai --predict --confidence=0.92', '$ ai --automate --scope=cx']
 
-        <StaggerGroup className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-          {content.aiOQueFaz.stats.map((stat) => (
-            <StaggerItem key={stat.label}>
-              <Card variant="stat" accentColor="amber">
-                <span className="font-display text-4xl text-[var(--accent-amber)]">
+  return (
+    <Section id="ai-o-que-realmente-faz" bg="primary" spacing="generous">
+      <AmbientBackground variant="mesh-dark" />
+      <div className="relative z-10">
+        <Overline className="block mb-4 text-[var(--accent-purple)]">
+          Inteligencia Artificial
+        </Overline>
+        <h2
+          className="font-display text-4xl md:text-6xl lg:text-7xl leading-[0.95] tracking-[-0.02em]"
+          style={{ color: 'var(--accent-purple, #8B6FB0)' }}
+        >
+          {content.aiOQueFaz.headline}
+        </h2>
+
+        <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6">
+          {content.aiOQueFaz.stats.map((stat, i) => (
+            <ScrollReveal key={stat.label} delay={i * 0.12} variant="clip-up">
+              <div className="terminal-card rounded-lg border border-[#4A7C5C]/30 p-6 bg-[#0a1a10]">
+                <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[#4A7C5C]/20">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#C75B5B]" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[var(--accent-amber)]" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#4A7C5C]" />
+                  <span className="font-mono text-[10px] text-[#4A7C5C]/60 ml-2">terminal</span>
+                </div>
+                <p className="font-mono text-xs text-[#4A7C5C]/70 mb-3">
+                  {commands[i] || '$ ai --run'}
+                </p>
+                <span className="font-mono text-4xl font-bold block" style={{ color: '#4A7C5C' }}>
                   <AnimatedCounter value={stat.value} suffix={stat.suffix} />
                 </span>
-                <Body as="span" className="block mt-3 text-sm">{stat.label}</Body>
-                <span className="block mt-1 font-mono text-xs text-[var(--text-muted)]">{stat.source}</span>
-              </Card>
-            </StaggerItem>
+                <p className="font-mono text-sm mt-3" style={{ color: '#4A7C5C' }}>
+                  {stat.label}
+                </p>
+                <p className="font-mono text-[10px] mt-2 text-[var(--text-muted)]">
+                  // {stat.source}
+                </p>
+              </div>
+            </ScrollReveal>
           ))}
-        </StaggerGroup>
+        </div>
 
-        <ScrollReveal delay={0.3} className="mt-12 max-w-3xl">
+        <ScrollReveal delay={0.4} variant="clip-up" className="mt-12 max-w-3xl">
           <Body className="text-lg">{content.aiOQueFaz.body}</Body>
         </ScrollReveal>
 
-        <ScrollReveal delay={0.5} className="mt-8">
-          <Card variant="bordered" hover={false}>
-            <div className="flex items-start gap-4">
-              <span className="text-2xl shrink-0">⚠</span>
-              <Body className="text-[var(--accent-amber)] font-medium text-base">
-                {content.aiOQueFaz.warning}
-              </Body>
-            </div>
-          </Card>
+        <ScrollReveal delay={0.6} variant="clip-up" className="mt-8">
+          <div className="terminal-card rounded-lg border border-[#4A7C5C]/30 p-5 bg-[#0a1a10]">
+            <p className="font-mono text-xs text-[#C75B5B] mb-2">$ WARNING: ROI_CHECK_FAILED</p>
+            <p className="font-mono text-sm" style={{ color: '#4A7C5C' }}>
+              {content.aiOQueFaz.warning}
+            </p>
+          </div>
         </ScrollReveal>
       </div>
     </Section>
@@ -179,7 +214,7 @@ export { AiOQueFaz as ChapterAiOQueFaz }
 
 /* ═══════════════════════════════════════════════════
    Chapter 15 — Onde AI Realmente Ganha
-   Three case study cards + insight highlight.
+   Case cards with accent-purple, alternating scale/blur.
    ═══════════════════════════════════════════════════ */
 
 export function AiOndeGanha() {
@@ -194,13 +229,22 @@ export function AiOndeGanha() {
 
       <div className="mt-12 space-y-6">
         {content.aiOndeGanha.cases.map((c, i) => (
-          <ScrollReveal key={c.company} delay={i * 0.15} direction={i % 2 === 0 ? 'left' : 'right'}>
+          <ScrollReveal
+            key={c.company}
+            delay={i * 0.15}
+            variant={i % 2 === 0 ? 'scale' : 'blur'}
+          >
             <div className="flex flex-col md:flex-row items-start md:items-center gap-6 p-6 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)]">
               <div className="shrink-0">
-                <Overline className="text-[var(--accent-amber)] block">{c.area}</Overline>
+                <Overline className="block text-[var(--accent-purple)]">
+                  {c.area}
+                </Overline>
                 <SubHeading as="h3" className="text-xl mt-1">{c.company}</SubHeading>
               </div>
-              <div className="flex-1 md:border-l md:border-[var(--border-subtle)] md:pl-6">
+              <div
+                className="flex-1 md:border-l md:pl-6"
+                style={{ borderColor: 'var(--accent-purple, #8B6FB0)' }}
+              >
                 <Body className="text-base text-[var(--text-primary)]">{c.result}</Body>
               </div>
             </div>
@@ -208,7 +252,7 @@ export function AiOndeGanha() {
         ))}
       </div>
 
-      <ScrollReveal delay={0.5} className="mt-12">
+      <ScrollReveal delay={0.5} variant="scale" className="mt-12">
         <Card variant="highlight" accentColor="amber">
           <Body className="text-lg text-[var(--text-primary)] font-medium">
             {content.aiOndeGanha.insight}
@@ -223,35 +267,61 @@ export { AiOndeGanha as ChapterAiOndeGanha }
 
 /* ═══════════════════════════════════════════════════
    Chapter 16 — As Armadilhas
-   Three numbered trap cards + stat.
+   WARNING PATTERN — hazard stripes, accent-red, rotated numbers.
    ═══════════════════════════════════════════════════ */
 
 export function AiArmadilhas() {
   return (
-    <Section id="ai-armadilhas" bg="elevated">
-      <CinematicHeadline
-        overline="Inteligencia Artificial"
-        headline={content.aiArmadilhas.headline}
-        align="center"
-        size="display"
-      />
+    <Section id="ai-armadilhas" bg="elevated" spacing="compact">
+      <Overline className="block text-center mb-6 text-sm tracking-[0.25em] uppercase text-[var(--accent-red)]">
+        CAUTION
+      </Overline>
 
-      <StaggerGroup className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-        {content.aiArmadilhas.traps.map((trap) => (
-          <StaggerItem key={trap.name}>
-            <Card variant="bordered" hover={true}>
-              <span className="font-display text-5xl text-[var(--text-muted)]/30 block mb-4">
+      <h2
+        className="font-display text-4xl md:text-6xl lg:text-7xl text-center leading-[0.95] tracking-[-0.02em]"
+        style={{ color: 'var(--accent-red, #C75B5B)' }}
+      >
+        {content.aiArmadilhas.headline}
+      </h2>
+
+      <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+        {content.aiArmadilhas.traps.map((trap, i) => (
+          <ScrollReveal
+            key={trap.name}
+            delay={i * 0.18}
+            variant={i % 2 === 0 ? 'slide-left' : 'slide-right'}
+          >
+            <div
+              className="warning-stripes relative rounded-xl overflow-hidden border p-6 pt-20"
+              style={{ borderColor: 'rgba(199, 91, 91, 0.3)' }}
+            >
+              <span
+                className="absolute top-3 left-4 font-display text-[5rem] leading-none font-bold opacity-15 select-none"
+                style={{
+                  color: 'var(--accent-red, #C75B5B)',
+                  transform: `rotate(-8deg)`,
+                }}
+              >
                 {trap.icon.padStart(2, '0')}
               </span>
-              <SubHeading as="h3" className="text-lg mb-3">{trap.name}</SubHeading>
-              <Body className="text-sm">{trap.desc}</Body>
-            </Card>
-          </StaggerItem>
-        ))}
-      </StaggerGroup>
 
-      <ScrollReveal delay={0.4} className="mt-16 text-center">
-        <span className="font-display text-5xl md:text-6xl text-[var(--accent-amber)]">
+              <SubHeading
+                as="h3"
+                className="relative z-10 text-lg mb-3 text-[var(--accent-red)]"
+              >
+                {trap.name}
+              </SubHeading>
+              <Body className="relative z-10 text-sm">{trap.desc}</Body>
+            </div>
+          </ScrollReveal>
+        ))}
+      </div>
+
+      <ScrollReveal delay={0.5} variant="slide-left" className="mt-16 text-center">
+        <span
+          className="font-display text-5xl md:text-6xl"
+          style={{ color: 'var(--accent-red, #C75B5B)' }}
+        >
           <AnimatedCounter value={72} suffix="%" />
         </span>
         <Body className="mt-3 max-w-lg mx-auto">
@@ -266,22 +336,26 @@ export { AiArmadilhas as ChapterAiArmadilhas }
 
 /* ═══════════════════════════════════════════════════
    Chapter 17 — O Sistema Unico (CLIMAX)
-   Four quadrant 2x2 grid. Powerful visual.
+   BorderRevealCards + AmbientBackground breathe + scale reveals.
    ═══════════════════════════════════════════════════ */
 
 export function ConvergenciaSistema() {
   const quadrantColors = ['#5B8FB9', '#4A7C5C', '#8B6FB0', '#C75B5B']
 
   return (
-    <Section id="convergencia-sistema-unico" bg="vignette">
-      <AmbientBackground variant="diagonal-split" />
+    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.07)" size={800}>
+    <Section id="convergencia-sistema-unico" bg="vignette" spacing="dramatic">
+      <BackgroundBeams color="rgba(200, 135, 58, 0.12)" beamCount={5} />
+      <AmbientBackground variant="diagonal-split" breathe={true} />
       <div className="relative z-10">
-        <CinematicHeadline
-          overline="A Convergencia"
-          headline={content.convergenciaSistema.headline}
-          align="center"
-          size="hero"
-        />
+        <Overline className="text-center block mb-6">A Convergencia</Overline>
+        <TextReveal
+          tag="h1"
+          className="text-center"
+          delay={0.2}
+        >
+          {content.convergenciaSistema.headline}
+        </TextReveal>
 
         <ScrollReveal className="mt-6 max-w-2xl mx-auto text-center">
           <Body className="text-lg">{content.convergenciaSistema.body}</Body>
@@ -289,10 +363,10 @@ export function ConvergenciaSistema() {
 
         <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {content.convergenciaSistema.quadrants.map((q, i) => (
-            <ScrollReveal key={q.name} delay={i * 0.15}>
-              <motion.div
-                className="p-8 rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] h-full"
-                whileHover={{ borderColor: quadrantColors[i], transition: { duration: 0.3 } }}
+            <ScrollReveal key={q.name} delay={i * 0.15} variant="scale">
+              <BorderRevealCard
+                className="h-full"
+                glowColor={`${quadrantColors[i]}80`}
               >
                 <span
                   className="font-display text-3xl font-bold"
@@ -305,14 +379,14 @@ export function ConvergenciaSistema() {
                   <Overline className="text-[var(--text-muted)] block mb-1">Sozinho</Overline>
                   <Body className="text-sm text-[var(--text-tertiary)]">{q.alone}</Body>
                 </div>
-              </motion.div>
+              </BorderRevealCard>
             </ScrollReveal>
           ))}
         </div>
 
-        <ScrollReveal delay={0.7} className="mt-16 text-center">
+        <ScrollReveal delay={0.7} variant="scale" className="mt-16 text-center">
           <motion.p
-            className="font-display text-xl md:text-2xl leading-relaxed text-[var(--text-primary)] max-w-3xl mx-auto"
+            className="gradient-border-top font-display text-xl md:text-2xl leading-relaxed text-[var(--text-primary)] max-w-3xl mx-auto pt-8"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -323,6 +397,7 @@ export function ConvergenciaSistema() {
         </ScrollReveal>
       </div>
     </Section>
+    </Spotlight>
   )
 }
 
@@ -330,10 +405,13 @@ export { ConvergenciaSistema as ChapterConvergenciaSistema }
 
 /* ═══════════════════════════════════════════════════
    Chapter 18 — Quem Lidera Isso?
-   Three role cards + provocation.
+   Each role card uses a different accent (amber, green, blue).
    ═══════════════════════════════════════════════════ */
 
 export function ConvergenciaLidera() {
+  const roleColors = ['var(--accent-amber)', 'var(--accent-green, #4A7C5C)', 'var(--accent-blue, #5B8FB9)']
+  const roleAccents: Array<'amber' | 'green'> = ['amber', 'green', 'green']
+
   return (
     <Section id="convergencia-quem-lidera" bg="gradient-up">
       <CinematicHeadline
@@ -348,12 +426,20 @@ export function ConvergenciaLidera() {
       </ScrollReveal>
 
       <StaggerGroup className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
-        {content.convergenciaLidera.roles.map((role) => (
+        {content.convergenciaLidera.roles.map((role, i) => (
           <StaggerItem key={role.title}>
-            <Card variant="accent" accentColor="green" className="h-full">
-              <SubHeading as="h3" className="text-lg mb-3">{role.title}</SubHeading>
+            <div
+              className="h-full p-6 rounded-xl border bg-[var(--bg-elevated)]"
+              style={{ borderColor: `${roleColors[i]}40` }}
+            >
+              <h3
+                className="font-medium text-lg mb-3"
+                style={{ color: roleColors[i], fontSize: 'var(--text-heading)' }}
+              >
+                {role.title}
+              </h3>
               <Body className="text-sm">{role.desc}</Body>
-            </Card>
+            </div>
           </StaggerItem>
         ))}
       </StaggerGroup>
@@ -379,7 +465,7 @@ export { ConvergenciaLidera as ChapterConvergenciaLidera }
 
 /* ═══════════════════════════════════════════════════
    Chapter 19 — Diagnostico Rapido
-   Five dimension cards with questions.
+   Glass dimension cards + dot-grid background.
    ═══════════════════════════════════════════════════ */
 
 export function WorkshopDiagnostico() {
@@ -392,7 +478,7 @@ export function WorkshopDiagnostico() {
   }
 
   return (
-    <Section id="workshop-diagnostico" bg="surface">
+    <Section id="workshop-diagnostico" bg="surface" className="dot-grid" spacing="generous">
       <PausePoint label="Workshop" />
 
       <CinematicHeadline
@@ -405,7 +491,7 @@ export function WorkshopDiagnostico() {
       <StaggerGroup className="mt-12 space-y-4 max-w-3xl mx-auto">
         {content.workshopDiagnostico.dimensions.map((dim) => (
           <StaggerItem key={dim.dim}>
-            <div className="flex items-start gap-4 p-6 rounded-xl bg-[var(--bg-elevated)] border border-[var(--border-subtle)]">
+            <div className="glass flex items-start gap-4 p-6 rounded-xl border border-[var(--border-subtle)]">
               <span
                 className="font-mono text-sm font-bold shrink-0 w-20 text-center py-1 rounded"
                 style={{
@@ -428,12 +514,59 @@ export { WorkshopDiagnostico as ChapterWorkshopDiagnostico }
 
 /* ═══════════════════════════════════════════════════
    Chapter 20 — O que Muda Segunda-Feira?
-   Three prompt cards. Facilitation moment.
+   INTERACTIVE FLIP CARDS — Framer Motion rotateY on hover.
    ═══════════════════════════════════════════════════ */
 
-export function WorkshopDiscussao() {
+function FlipCard({ front, back }: { front: string; back: string }) {
+  const [flipped, setFlipped] = useState(false)
+
   return (
-    <Section id="workshop-discussao" bg="green-glow">
+    <div
+      className="relative w-full"
+      style={{ perspective: '600px' }}
+      onMouseEnter={() => setFlipped(true)}
+      onMouseLeave={() => setFlipped(false)}
+      onClick={() => setFlipped((f) => !f)}
+    >
+      <motion.div
+        className="relative w-full min-h-[260px]"
+        animate={{ rotateY: flipped ? 180 : 0 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        style={{ transformStyle: 'preserve-3d' }}
+      >
+        {/* Front */}
+        <div
+          className="absolute inset-0 flex items-center justify-center p-8 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)]"
+          style={{ backfaceVisibility: 'hidden' }}
+        >
+          <p className="font-display text-xl md:text-2xl text-center leading-snug text-[var(--text-primary)]">
+            {front}
+          </p>
+        </div>
+
+        {/* Back */}
+        <div
+          className="absolute inset-0 flex items-center justify-center p-8 rounded-xl border border-[var(--accent-green)]/30 bg-[var(--accent-green-soft,_#0d1f14)]"
+          style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+        >
+          <p className="text-base text-center leading-relaxed text-[var(--text-primary)]">
+            {back}
+          </p>
+        </div>
+      </motion.div>
+    </div>
+  )
+}
+
+export function WorkshopDiscussao() {
+  const backTexts = [
+    'Identifique o atrito mais silencioso — aquele que ninguem reclama, mas que faz o cliente desistir.',
+    'O dado que conecta CX e CS e o que mostra comportamento, nao opiniao.',
+    'O dono do sistema integrado e quem tem mandato sobre a experiencia end-to-end.',
+  ]
+
+  return (
+    <Section id="workshop-discussao" bg="green-glow" className="dot-grid">
       <PausePoint label="Discussao em grupo" />
 
       <CinematicHeadline
@@ -443,16 +576,22 @@ export function WorkshopDiscussao() {
         size="display"
       />
 
-      <div className="mt-12 space-y-6 max-w-3xl mx-auto">
+      <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
         {content.workshopDiscussao.prompts.map((prompt, i) => (
           <ScrollReveal key={i} delay={i * 0.2}>
-            <DiscussionPrompt
-              question={prompt}
-              context={`Pergunta ${i + 1} de ${content.workshopDiscussao.prompts.length}`}
+            <FlipCard
+              front={prompt}
+              back={backTexts[i] || `Reflexao ${i + 1}`}
             />
           </ScrollReveal>
         ))}
       </div>
+
+      <ScrollReveal delay={0.7} className="mt-8 text-center">
+        <Body className="text-sm text-[var(--text-muted)]">
+          Passe o mouse ou toque para revelar o contexto
+        </Body>
+      </ScrollReveal>
     </Section>
   )
 }
@@ -461,12 +600,13 @@ export { WorkshopDiscussao as ChapterWorkshopDiscussao }
 
 /* ═══════════════════════════════════════════════════
    Chapter 21 — A Janela de 24 Meses
-   Timeline: 2025, 2026, 2027+. Stat at side.
+   Timeline with blur reveal for items.
    ═══════════════════════════════════════════════════ */
 
 export function FechamentoJanela() {
   return (
     <Section id="fechamento-janela" bg="primary">
+      <AmbientBackground variant="bottom-fade" />
       <CinematicHeadline
         overline="Fechamento"
         headline={content.fechamentoJanela.headline}
@@ -481,7 +621,7 @@ export function FechamentoJanela() {
       <div className="mt-16 grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
         <div className="lg:col-span-3 space-y-0">
           {content.fechamentoJanela.timeline.map((t, i) => (
-            <ScrollReveal key={t.period} delay={i * 0.2}>
+            <ScrollReveal key={t.period} delay={i * 0.2} variant="blur">
               <div className="flex items-stretch gap-6">
                 <div className="flex flex-col items-center">
                   <span
@@ -510,7 +650,7 @@ export function FechamentoJanela() {
           ))}
         </div>
 
-        <ScrollReveal delay={0.5} className="lg:col-span-2">
+        <ScrollReveal delay={0.5} variant="blur" className="lg:col-span-2">
           <Card variant="stat" accentColor="amber" className="text-center">
             <span className="font-display text-5xl md:text-6xl text-[var(--accent-amber)]">
               <AnimatedCounter value={48} prefix="$" suffix="B" />
@@ -529,57 +669,59 @@ export { FechamentoJanela as ChapterFechamentoJanela }
 
 /* ═══════════════════════════════════════════════════
    Chapter 22 — Provocacao Final
-   Full viewport. Giant headline. Minimal, powerful.
+   Full viewport + ParallaxContainer + LazyParticleField background.
    ═══════════════════════════════════════════════════ */
 
 export function FechamentoProvocacao() {
   return (
-    <Section id="fechamento-provocacao" bg="primary" fullHeight>
+    <Section id="fechamento-provocacao" bg="primary" fullHeight spacing="dramatic">
       <AmbientBackground variant="diagonal-split" />
-      <div className="relative z-10 flex flex-col items-center justify-center text-center min-h-[60vh]">
-        <motion.h2
-          className="font-display leading-[1.05] tracking-tight"
-          style={{ fontSize: 'var(--text-hero)' }}
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] as const }}
-        >
-          {content.fechamentoProvocacao.headline}
-        </motion.h2>
-
-        <motion.p
-          className="mt-6 font-display text-2xl md:text-4xl text-[var(--accent-amber)]"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] as const }}
-        >
-          {content.fechamentoProvocacao.subline}
-        </motion.p>
-
-        <motion.p
-          className="mt-12 text-[var(--text-secondary)] text-lg leading-relaxed max-w-[560px]"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 1, ease: [0.16, 1, 0.3, 1] as const }}
-        >
-          {content.fechamentoProvocacao.body}
-        </motion.p>
-
-        <motion.div
-          className="mt-20"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 1.5 }}
-        >
-          <Overline className="text-[var(--text-muted)]">
-            CX Experience Lab — 2025
-          </Overline>
-        </motion.div>
+      <div className="absolute inset-0 z-[1] pointer-events-none">
+        <LazyParticleField />
       </div>
+      <ParallaxContainer speed={0.12} className="relative z-10">
+        <div className="flex flex-col items-center justify-center text-center min-h-[60vh]">
+          <TextReveal
+            tag="h2"
+            className="text-[var(--text-hero)]"
+            delay={0.3}
+          >
+            {content.fechamentoProvocacao.headline}
+          </TextReveal>
+
+          <motion.p
+            className="mt-6 font-display text-2xl md:text-4xl text-[var(--accent-amber)]"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] as const }}
+          >
+            {content.fechamentoProvocacao.subline}
+          </motion.p>
+
+          <motion.p
+            className="mt-12 text-[var(--text-secondary)] text-lg leading-relaxed max-w-[560px]"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 1, ease: [0.16, 1, 0.3, 1] as const }}
+          >
+            {content.fechamentoProvocacao.body}
+          </motion.p>
+
+          <motion.div
+            className="mt-20"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 1.5 }}
+          >
+            <Overline className="text-[var(--text-muted)]">
+              CX Experience Lab — 2025
+            </Overline>
+          </motion.div>
+        </div>
+      </ParallaxContainer>
     </Section>
   )
 }

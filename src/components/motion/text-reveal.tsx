@@ -8,9 +8,10 @@ interface TextRevealProps {
   className?: string
   tag?: 'h1' | 'h2' | 'h3' | 'p' | 'span'
   delay?: number
+  variant?: 'slide' | 'blur'
 }
 
-export function TextReveal({ children, className, tag: Tag = 'h2', delay = 0 }: TextRevealProps) {
+export function TextReveal({ children, className, tag: Tag = 'h2', delay = 0, variant = 'slide' }: TextRevealProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const hasAnimated = useRef(false)
 
@@ -36,19 +37,37 @@ export function TextReveal({ children, className, tag: Tag = 'h2', delay = 0 }: 
 
       const words = el.querySelectorAll('.word-wrap')
 
-      gsap.default.set(words, { yPercent: 110 })
-      gsap.default.to(words, {
-        yPercent: 0,
-        duration: 0.8,
-        stagger: 0.04,
-        ease: 'power3.out',
-        delay,
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 85%',
-          once: true,
-        },
-      })
+      if (variant === 'blur') {
+        gsap.default.set(words, { opacity: 0, filter: 'blur(8px)', y: 10 })
+        gsap.default.to(words, {
+          opacity: 1,
+          filter: 'blur(0px)',
+          y: 0,
+          duration: 0.6,
+          stagger: 0.05,
+          ease: 'power2.out',
+          delay,
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+            once: true,
+          },
+        })
+      } else {
+        gsap.default.set(words, { yPercent: 110 })
+        gsap.default.to(words, {
+          yPercent: 0,
+          duration: 0.8,
+          stagger: 0.04,
+          ease: 'power3.out',
+          delay,
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+            once: true,
+          },
+        })
+      }
 
       hasAnimated.current = true
     }
@@ -63,12 +82,12 @@ export function TextReveal({ children, className, tag: Tag = 'h2', delay = 0 }: 
         }
       }
     }
-  }, [delay])
+  }, [delay, variant])
 
   const words = children.split(' ')
 
   return (
-    <div ref={containerRef} className={cn('opacity-0', className)} style={{ opacity: 0 }}>
+    <div ref={containerRef} className={cn('opacity-0', className)}>
       <Tag className="font-display leading-[1.1] tracking-tight">
         {words.map((word, i) => (
           <span key={i} className="inline-block overflow-hidden mr-[0.3em]">

@@ -1,12 +1,7 @@
-// Font CSS variables — using system font stacks as fallback
-// In production, replace with next/font Google imports when network available
-export const fontVariables = [
-  'font-display',
-  'font-body',
-  'font-mono',
-] as const
+import { GeistSans } from 'geist/font/sans'
+import { GeistMono } from 'geist/font/mono'
 
-// Applied via CSS custom properties in design-tokens.css
-// --font-display: Georgia, 'Times New Roman', serif
-// --font-body: system-ui, -apple-system, sans-serif
-// --font-mono: 'Courier New', monospace
+export const geistSans = GeistSans
+export const geistMono = GeistMono
+
+export const fontVariables = `${GeistSans.variable} ${GeistMono.variable}`

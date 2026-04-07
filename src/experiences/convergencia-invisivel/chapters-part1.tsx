@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Section } from '@/components/design-system'
-import { DisplayHeading, SectionHeading, SubHeading, Body, Overline, StatNumber } from '@/components/design-system/typography'
+import { SectionHeading, SubHeading, Body, Overline, StatNumber } from '@/components/design-system/typography'
 import { Card } from '@/components/design-system/card'
 import { ScrollReveal } from '@/components/motion/scroll-reveal'
 import { StaggerGroup, StaggerItem } from '@/components/motion/stagger-group'
@@ -10,6 +10,9 @@ import { AnimatedCounter } from '@/components/motion/animated-counter'
 import { CinematicHeadline } from '@/components/cinematic/cinematic-headline'
 import { AmbientBackground } from '@/components/cinematic/ambient-background'
 import { DiscussionPrompt } from '@/components/workshop/discussion-prompt'
+import { TextReveal } from '@/components/motion/text-reveal'
+import { ParallaxContainer } from '@/components/motion/parallax-container'
+import { Spotlight } from '@/components/effects/spotlight'
 import { cn } from '@/lib/cn'
 import { content } from './content'
 
@@ -20,63 +23,65 @@ import { content } from './content'
 
 export function Abertura() {
   return (
+    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.05)" size={800}>
     <Section id="abertura" bg="primary" fullHeight>
       <AmbientBackground variant="spotlight" />
-      <div className="relative z-10 flex flex-col items-center justify-center text-center">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] as const }}
-        >
-          <StatNumber className="block text-[clamp(4rem,12vw,10rem)]">
-            {content.abertura.stat}
-          </StatNumber>
-        </motion.div>
+      <ParallaxContainer speed={0.15} className="relative z-10">
+        <div className="flex flex-col items-center justify-center text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] as const }}
+          >
+            <StatNumber className="block text-[clamp(4rem,12vw,10rem)]">
+              {content.abertura.stat}
+            </StatNumber>
+          </motion.div>
 
-        <motion.p
-          className="mt-4 font-mono text-xs uppercase tracking-[0.12em] text-[var(--text-muted)] max-w-lg"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-        >
-          {content.abertura.statLabel}
-        </motion.p>
+          <motion.p
+            className="mt-4 font-mono text-xs uppercase tracking-[0.12em] text-[var(--text-muted)] max-w-lg"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+          >
+            {content.abertura.statLabel}
+          </motion.p>
 
-        <motion.div
-          className="mt-16 max-w-3xl"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.8, ease: [0.16, 1, 0.3, 1] as const }}
-        >
-          <DisplayHeading className="text-[clamp(1.5rem,4vw,3rem)]">
-            {content.abertura.headline}
-          </DisplayHeading>
-        </motion.div>
+          <div className="mt-16 max-w-3xl">
+            <TextReveal
+              tag="h1"
+              className="text-[clamp(1.5rem,4vw,3rem)]"
+              delay={0.8}
+            >
+              {content.abertura.headline}
+            </TextReveal>
+          </div>
 
-        <motion.div
-          className="mt-8 max-w-xl"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 1.2, ease: [0.16, 1, 0.3, 1] as const }}
-        >
-          <Body className="text-lg">{content.abertura.body}</Body>
-        </motion.div>
+          <motion.div
+            className="mt-8 max-w-xl"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 1.2, ease: [0.16, 1, 0.3, 1] as const }}
+          >
+            <Body className="text-lg">{content.abertura.body}</Body>
+          </motion.div>
 
-        <motion.p
-          className="mt-12 font-display text-lg italic text-[var(--accent-amber)] max-w-lg"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 1.8 }}
-        >
-          {content.abertura.provocation}
-        </motion.p>
-      </div>
+          <motion.p
+            className="mt-12 font-display text-lg italic text-[var(--accent-amber)] max-w-lg"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay: 1.8 }}
+          >
+            {content.abertura.provocation}
+          </motion.p>
+        </div>
+      </ParallaxContainer>
     </Section>
+    </Spotlight>
   )
 }
 
@@ -84,57 +89,54 @@ export { Abertura as ChapterAbertura }
 
 /* ═══════════════════════════════════════════════════
    Chapter 2 — O Mundo Mudou
-   Three stat cards in staggered grid with varying spans.
+   STACKED CARDS WITH ROTATION — no CinematicHeadline.
+   Each card tilts slightly, large stat dominates.
    ═══════════════════════════════════════════════════ */
+
+const ch2Rotations = ['-1deg', '0deg', '1deg'] as const
 
 export function ContextoMundoMudou() {
   return (
-    <Section id="contexto-o-mundo-mudou" bg="gradient-down">
-      <CinematicHeadline
-        overline="Contexto"
-        headline={content.contextoMundoMudou.headline}
-        align="left"
-        size="display"
-      />
-
-      <StaggerGroup
-        className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6"
-        staggerDelay={0.12}
+    <Section id="contexto-o-mundo-mudou" bg="gradient-down" spacing="generous">
+      <Overline className="block mb-6 text-[var(--text-muted)]">Contexto</Overline>
+      <TextReveal
+        tag="h2"
+        className="text-[clamp(1.75rem,4.5vw,3.5rem)] max-w-4xl"
       >
+        {content.contextoMundoMudou.headline}
+      </TextReveal>
+
+      <div className="mt-20 flex flex-col items-center gap-8 max-w-2xl mx-auto">
         {content.contextoMundoMudou.points.map((point, i) => (
-          <StaggerItem
+          <ScrollReveal
             key={point.stat}
-            className={cn(
-              i === 0 && 'md:col-span-2',
-              i === 1 && 'md:col-span-1',
-              i === 2 && 'md:col-span-3'
-            )}
+            variant="scale"
+            delay={i * 0.15}
+            className="w-full"
           >
-            <Card
-              variant={i === 2 ? 'accent' : 'default'}
-              hover
+            <motion.div
+              style={{ rotateZ: ch2Rotations[i] }}
               className={cn(
-                'h-full',
-                i === 2 && 'md:flex md:items-center md:gap-12'
+                'relative p-8 md:p-10 rounded-2xl border border-[var(--border-subtle)]',
+                'bg-[var(--bg-surface)] hover:border-[var(--accent-amber)]/30 transition-colors duration-500',
+                i === 2 && 'border-[var(--accent-amber)]/20 bg-[var(--accent-amber-soft)]'
               )}
             >
-              <StatNumber className="block text-[clamp(2.5rem,6vw,4.5rem)]">
+              <StatNumber className="block text-[clamp(3rem,8vw,5rem)] leading-none">
                 {point.stat}
               </StatNumber>
-              <div className={cn(i === 2 ? 'mt-0' : 'mt-4')}>
-                <Body className="text-[var(--text-primary)] font-medium">
-                  {point.text}
-                </Body>
-                <span className="mt-2 block font-mono text-xs text-[var(--text-muted)]">
-                  {point.source}
-                </span>
-              </div>
-            </Card>
-          </StaggerItem>
+              <Body className="mt-4 text-[var(--text-primary)] font-medium text-lg">
+                {point.text}
+              </Body>
+              <span className="mt-3 block font-mono text-xs text-[var(--text-muted)]">
+                {point.source}
+              </span>
+            </motion.div>
+          </ScrollReveal>
         ))}
-      </StaggerGroup>
+      </div>
 
-      <ScrollReveal delay={0.6} className="mt-12">
+      <ScrollReveal delay={0.6} className="mt-16">
         <Body className="max-w-2xl text-lg text-[var(--text-primary)] font-medium">
           {content.contextoMundoMudou.closing}
         </Body>
@@ -147,12 +149,12 @@ export { ContextoMundoMudou as ChapterContextoMundoMudou }
 
 /* ═══════════════════════════════════════════════════
    Chapter 3 — A Ilusao Digital
-   Split layout: left contrast cards, right stat.
+   Alternating slide-left / slide-right reveals.
    ═══════════════════════════════════════════════════ */
 
 export function ContextoIlusao() {
   return (
-    <Section id="contexto-ilusao-digital" bg="surface">
+    <Section id="contexto-ilusao-digital" bg="surface" spacing="compact">
       <CinematicHeadline
         overline="Contexto"
         headline={content.contextoIlusao.headline}
@@ -160,13 +162,13 @@ export function ContextoIlusao() {
         size="display"
       />
 
-      <ScrollReveal className="mt-8 max-w-3xl">
+      <ScrollReveal variant="slide-right" className="mt-8 max-w-3xl">
         <Body className="text-lg">{content.contextoIlusao.body}</Body>
       </ScrollReveal>
 
       <div className="mt-16 grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
         <div className="lg:col-span-3 space-y-6">
-          <ScrollReveal delay={0.1}>
+          <ScrollReveal variant="slide-left" delay={0.1}>
             <Card variant="bordered" hover={false}>
               <Overline className="text-[var(--text-muted)] mb-3 block">
                 O que as empresas mediram
@@ -177,7 +179,7 @@ export function ContextoIlusao() {
             </Card>
           </ScrollReveal>
 
-          <ScrollReveal delay={0.25}>
+          <ScrollReveal variant="slide-right" delay={0.25}>
             <Card variant="highlight" accentColor="amber" hover={false}>
               <Overline className="text-[var(--accent-amber)] mb-3 block">
                 O que deveriam ter medido
@@ -190,7 +192,7 @@ export function ContextoIlusao() {
         </div>
 
         <div className="lg:col-span-2 flex flex-col items-center justify-center">
-          <ScrollReveal delay={0.4}>
+          <ScrollReveal variant="slide-left" delay={0.4}>
             <Card variant="stat" accentColor="amber" className="text-center">
               <StatNumber className="block text-[clamp(3rem,8vw,5rem)]">
                 {content.contextoIlusao.stat}
@@ -210,48 +212,54 @@ export { ContextoIlusao as ChapterContextoIlusao }
 
 /* ═══════════════════════════════════════════════════
    Chapter 4 — CX: A Equacao Invisivel
-   Three pillars in bordered cards with amber accent.
+   AmbientBackground breathe + scale reveals for cards.
    ═══════════════════════════════════════════════════ */
 
 export function CxEquacao() {
   return (
     <Section id="cx-equacao-invisivel" bg="amber-glow">
-      <CinematicHeadline
-        overline="Customer Experience"
-        headline={content.cxEquacao.headline}
-        align="center"
-        size="display"
-      />
+      <AmbientBackground variant="radial-amber" breathe={true} />
+      <div className="relative z-10">
+        <Overline className="text-center block mb-6">Customer Experience</Overline>
+        <TextReveal
+          tag="h2"
+          className="text-center text-[clamp(1.75rem,4vw,3.5rem)]"
+        >
+          {content.cxEquacao.headline}
+        </TextReveal>
 
-      <ScrollReveal className="mt-6 max-w-3xl mx-auto text-center">
-        <Body className="text-lg">{content.cxEquacao.body}</Body>
-      </ScrollReveal>
+        <ScrollReveal variant="scale" className="mt-6 max-w-3xl mx-auto text-center">
+          <Body className="text-lg">{content.cxEquacao.body}</Body>
+        </ScrollReveal>
 
-      <StaggerGroup
-        className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8"
-        staggerDelay={0.1}
-        baseDelay={0.2}
-      >
-        {content.cxEquacao.pillars.map((pillar, i) => (
-          <StaggerItem key={pillar.title}>
-            <Card
-              variant="bordered"
-              className={cn(
-                'h-full relative overflow-hidden',
-                'border-[var(--accent-amber)]/20'
-              )}
-            >
-              <span className="absolute top-4 right-4 font-mono text-xs text-[var(--accent-amber)]/50">
-                0{i + 1}
-              </span>
-              <SubHeading className="text-[var(--accent-amber)]">
-                {pillar.title}
-              </SubHeading>
-              <Body className="mt-4">{pillar.desc}</Body>
-            </Card>
-          </StaggerItem>
-        ))}
-      </StaggerGroup>
+        <StaggerGroup
+          className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8"
+          staggerDelay={0.1}
+          baseDelay={0.2}
+        >
+          {content.cxEquacao.pillars.map((pillar, i) => (
+            <StaggerItem key={pillar.title}>
+              <ScrollReveal variant="scale" delay={i * 0.08}>
+                <Card
+                  variant="bordered"
+                  className={cn(
+                    'h-full relative overflow-hidden',
+                    'border-[var(--accent-amber)]/20'
+                  )}
+                >
+                  <span className="absolute top-4 right-4 font-mono text-xs text-[var(--accent-amber)]/50">
+                    0{i + 1}
+                  </span>
+                  <SubHeading className="text-[var(--accent-amber)]">
+                    {pillar.title}
+                  </SubHeading>
+                  <Body className="mt-4">{pillar.desc}</Body>
+                </Card>
+              </ScrollReveal>
+            </StaggerItem>
+          ))}
+        </StaggerGroup>
+      </div>
     </Section>
   )
 }
@@ -260,7 +268,7 @@ export { CxEquacao as ChapterCxEquacao }
 
 /* ═══════════════════════════════════════════════════
    Chapter 5 — Experiencia vs Percepcao
-   Asymmetric two-column: wider left (text + insight), right (stat).
+   "rise" variant for the stat card.
    ═══════════════════════════════════════════════════ */
 
 export function CxExperiencia() {
@@ -294,7 +302,7 @@ export function CxExperiencia() {
         </div>
 
         <div className="lg:col-span-3 flex flex-col items-center justify-center">
-          <ScrollReveal delay={0.3} direction="right">
+          <ScrollReveal variant="rise" delay={0.3}>
             <div className="text-center">
               <StatNumber className="block text-[clamp(3.5rem,10vw,6rem)]">
                 {content.cxExperiencia.stat}
@@ -314,50 +322,76 @@ export { CxExperiencia as ChapterCxExperiencia }
 
 /* ═══════════════════════════════════════════════════
    Chapter 6 — O Custo do Atrito
-   Four stats in 2x2 grid with AnimatedCounter.
+   FULL-BLEED STAT WALL — giant watermark numbers
+   behind asymmetric content. No grid.
    ═══════════════════════════════════════════════════ */
 
 export function CxCusto() {
   return (
-    <Section id="cx-custo-do-atrito" bg="gradient-up">
-      <CinematicHeadline
-        overline="Customer Experience"
-        headline={content.cxCusto.headline}
-        align="center"
-        size="display"
-      />
+    <Section id="cx-custo-do-atrito" bg="gradient-up" spacing="dramatic">
+      <div className="relative overflow-hidden">
+        {/* Watermark stat numbers — giant, ghostly, layered */}
+        <div
+          className="absolute inset-0 flex flex-col items-end justify-between pointer-events-none select-none"
+          aria-hidden="true"
+        >
+          {content.cxCusto.stats.map((stat, i) => (
+            <span
+              key={stat.label}
+              className={cn(
+                'font-display font-black text-[20vw] leading-none text-[var(--text-primary)] opacity-[0.04]',
+                i % 2 === 0 ? 'self-start -ml-[4vw]' : 'self-end -mr-[4vw]'
+              )}
+            >
+              {stat.prefix}{stat.value}{stat.suffix}
+            </span>
+          ))}
+        </div>
 
-      <StaggerGroup
-        className="mt-16 grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto"
-        staggerDelay={0.15}
-        baseDelay={0.2}
-      >
-        {content.cxCusto.stats.map((stat) => (
-          <StaggerItem key={stat.label}>
-            <Card variant="stat" accentColor="amber" className="h-full">
-              <AnimatedCounter
-                value={stat.value}
-                suffix={stat.suffix}
-                prefix={stat.prefix}
-                className="block text-[var(--accent-amber)] text-[clamp(2.5rem,6vw,4rem)] leading-none"
-              />
-              <Body className="mt-4 text-sm">{stat.label}</Body>
-            </Card>
-          </StaggerItem>
-        ))}
-      </StaggerGroup>
+        {/* Actual content overlaid */}
+        <div className="relative z-10">
+          <Overline className="block mb-6 text-[var(--text-muted)]">Customer Experience</Overline>
+          <TextReveal
+            tag="h2"
+            className="text-[clamp(1.75rem,4.5vw,3.5rem)] max-w-3xl"
+          >
+            {content.cxCusto.headline}
+          </TextReveal>
 
-      <ScrollReveal delay={0.6} className="mt-8 text-center">
-        <span className="font-mono text-xs text-[var(--text-muted)] uppercase tracking-[0.1em]">
-          {content.cxCusto.source}
-        </span>
-      </ScrollReveal>
+          <div className="mt-20 flex flex-col gap-16 max-w-2xl">
+            {content.cxCusto.stats.map((stat, i) => (
+              <ScrollReveal
+                key={stat.label}
+                variant="blur"
+                delay={i * 0.12}
+                className={cn(i % 2 !== 0 && 'ml-auto')}
+              >
+                <div className="flex items-baseline gap-6">
+                  <AnimatedCounter
+                    value={stat.value}
+                    suffix={stat.suffix}
+                    prefix={stat.prefix}
+                    className="block text-[var(--accent-amber)] text-[clamp(3rem,7vw,5rem)] leading-none font-display"
+                  />
+                  <Body className="text-lg max-w-xs">{stat.label}</Body>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
 
-      <ScrollReveal delay={0.8} className="mt-12 max-w-2xl mx-auto text-center">
-        <Body className="text-lg text-[var(--text-primary)] font-medium italic">
-          {content.cxCusto.closing}
-        </Body>
-      </ScrollReveal>
+          <ScrollReveal variant="blur" delay={0.6} className="mt-8">
+            <span className="font-mono text-xs text-[var(--text-muted)] uppercase tracking-[0.1em]">
+              {content.cxCusto.source}
+            </span>
+          </ScrollReveal>
+
+          <ScrollReveal variant="blur" delay={0.8} className="mt-12 max-w-2xl">
+            <Body className="text-lg text-[var(--text-primary)] font-medium italic">
+              {content.cxCusto.closing}
+            </Body>
+          </ScrollReveal>
+        </div>
+      </div>
     </Section>
   )
 }
@@ -366,14 +400,14 @@ export { CxCusto as ChapterCxCusto }
 
 /* ═══════════════════════════════════════════════════
    Chapter 7 — Momento de Reflexao
-   Staircase cards + DiscussionPrompt.
+   Staircase cards with gradient-border-top + DiscussionPrompt.
    ═══════════════════════════════════════════════════ */
 
 export function CxReflexao() {
   const marginSteps = ['ml-0', 'ml-6 md:ml-12', 'ml-12 md:ml-24', 'ml-18 md:ml-36']
 
   return (
-    <Section id="cx-momento-reflexao" bg="vignette">
+    <Section id="cx-momento-reflexao" bg="vignette" spacing="compact">
       <CinematicHeadline
         overline="Reflexao"
         headline={content.cxReflexao.headline}
@@ -389,7 +423,7 @@ export function CxReflexao() {
                 variant="minimal"
                 hover={false}
                 className={cn(
-                  'flex items-start gap-6 border-l-2 pl-6 rounded-none',
+                  'gradient-border-top flex items-start gap-6 border-l-2 pl-6 rounded-none',
                   i === 3
                     ? 'border-l-[var(--accent-amber)] bg-[var(--accent-amber-soft)]'
                     : 'border-l-[var(--border-default)]'
@@ -437,12 +471,13 @@ export { CxReflexao as ChapterCxReflexao }
 
 /* ═══════════════════════════════════════════════════
    Chapter 8 — O Paradoxo da Retencao
-   Three stat cards at top, body below, insight highlight.
+   "blur" variant for stat cards. Insight highlight.
    ═══════════════════════════════════════════════════ */
 
 export function CsParadoxo() {
   return (
     <Section id="cs-paradoxo-retencao" bg="surface">
+      <AmbientBackground variant="radial-green" />
       <CinematicHeadline
         overline="Customer Success"
         headline={content.csParadoxo.headline}
@@ -456,17 +491,19 @@ export function CsParadoxo() {
       >
         {content.csParadoxo.stats.map((stat) => (
           <StaggerItem key={stat.label}>
-            <Card variant="stat" accentColor="green" className="h-full">
-              <AnimatedCounter
-                value={stat.value}
-                suffix={stat.suffix}
-                className="block text-[var(--accent-green)] text-[clamp(2rem,5vw,3.5rem)] leading-none"
-              />
-              <Body className="mt-3 text-sm font-medium">{stat.label}</Body>
-              <span className="mt-1 block font-mono text-[0.65rem] text-[var(--text-muted)]">
-                {stat.source}
-              </span>
-            </Card>
+            <ScrollReveal variant="blur">
+              <Card variant="stat" accentColor="green" className="h-full">
+                <AnimatedCounter
+                  value={stat.value}
+                  suffix={stat.suffix}
+                  className="block text-[var(--accent-green)] text-[clamp(2rem,5vw,3.5rem)] leading-none"
+                />
+                <Body className="mt-3 text-sm font-medium">{stat.label}</Body>
+                <span className="mt-1 block font-mono text-[0.65rem] text-[var(--text-muted)]">
+                  {stat.source}
+                </span>
+              </Card>
+            </ScrollReveal>
           </StaggerItem>
         ))}
       </StaggerGroup>
@@ -493,54 +530,63 @@ export { CsParadoxo as ChapterCsParadoxo }
 
 /* ═══════════════════════════════════════════════════
    Chapter 9 — Metricas que Mentem
-   Three vertical metric cards + alternative accent card.
+   STRIKE-THROUGH METRICS — pure typography + space.
+   Struck metric names, truth fades in below.
    ═══════════════════════════════════════════════════ */
 
 export function CsMetricas() {
   return (
-    <Section id="cs-metricas-que-mentem" bg="primary">
-      <CinematicHeadline
-        overline="Customer Success"
-        headline={content.csMetricas.headline}
-        align="center"
-        size="display"
-      />
-
-      <StaggerGroup
-        className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8"
-        staggerDelay={0.12}
-        baseDelay={0.15}
+    <Section id="cs-metricas-que-mentem" bg="primary" spacing="dramatic">
+      <Overline className="block mb-6 text-[var(--text-muted)] text-center">
+        Customer Success
+      </Overline>
+      <TextReveal
+        tag="h2"
+        className="text-center text-[clamp(1.75rem,4.5vw,3.5rem)] max-w-3xl mx-auto"
       >
-        {content.csMetricas.metrics.map((metric) => (
-          <StaggerItem key={metric.name}>
-            <Card variant="bordered" className="h-full flex flex-col">
-              <div className="mb-6">
-                <span className="font-display text-3xl md:text-4xl text-[var(--text-primary)]">
-                  {metric.name}
-                </span>
-              </div>
-              <div className="flex-1 border-t border-[var(--border-subtle)] pt-6">
-                <Overline className="text-[var(--text-muted)] mb-2 block">
+        {content.csMetricas.headline}
+      </TextReveal>
+
+      <div className="mt-24 space-y-20 max-w-3xl mx-auto">
+        {content.csMetricas.metrics.map((metric, i) => (
+          <div key={metric.name}>
+            {/* The struck metric name */}
+            <ScrollReveal variant="fade" delay={i * 0.1}>
+              <span
+                className={cn(
+                  'font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-none',
+                  'text-[var(--accent-amber)] line-through decoration-[3px]',
+                  'decoration-[var(--accent-amber)]/60'
+                )}
+              >
+                {metric.name}
+              </span>
+            </ScrollReveal>
+
+            {/* The truth underneath */}
+            <ScrollReveal variant="clip-up" delay={i * 0.1 + 0.2} className="mt-6">
+              <div className="pl-1 border-l-2 border-[var(--accent-green)]/40 ml-1">
+                <Overline className="text-[var(--accent-green)] mb-2 block pl-4">
                   A realidade
                 </Overline>
-                <Body className="text-sm leading-relaxed">
+                <Body className="text-lg leading-relaxed text-[var(--text-primary)] pl-4">
                   {metric.reality}
                 </Body>
               </div>
-            </Card>
-          </StaggerItem>
+            </ScrollReveal>
+          </div>
         ))}
-      </StaggerGroup>
+      </div>
 
-      <ScrollReveal delay={0.5} className="mt-12 max-w-2xl mx-auto">
-        <Card variant="accent" accentColor="green" hover={false}>
-          <Overline className="text-[var(--accent-green)] mb-2 block">
+      <ScrollReveal variant="clip-up" delay={0.5} className="mt-24 max-w-2xl mx-auto text-center">
+        <div className="p-8 rounded-2xl border border-[var(--accent-green)]/20 bg-[var(--accent-green-soft)]">
+          <Overline className="text-[var(--accent-green)] mb-3 block">
             Alternativa
           </Overline>
-          <Body className="text-[var(--text-primary)] font-medium">
+          <Body className="text-[var(--text-primary)] font-medium text-lg">
             {content.csMetricas.alternative}
           </Body>
-        </Card>
+        </div>
       </ScrollReveal>
     </Section>
   )
@@ -550,12 +596,12 @@ export { CsMetricas as ChapterCsMetricas }
 
 /* ═══════════════════════════════════════════════════
    Chapter 10 — A Expansao Escondida
-   Big stat hero left, body text right. Closing full-width.
+   "scale" variant for the big stat.
    ═══════════════════════════════════════════════════ */
 
 export function CsExpansao() {
   return (
-    <Section id="cs-expansao-escondida" bg="green-glow">
+    <Section id="cs-expansao-escondida" bg="green-glow" spacing="compact">
       <CinematicHeadline
         overline="Customer Success"
         headline={content.csExpansao.headline}
@@ -564,7 +610,7 @@ export function CsExpansao() {
       />
 
       <div className="mt-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <ScrollReveal direction="left">
+        <ScrollReveal variant="scale">
           <div className="text-center lg:text-left">
             <StatNumber className="block text-[clamp(4rem,12vw,8rem)]">
               {content.csExpansao.stat}
@@ -597,12 +643,13 @@ export { CsExpansao as ChapterCsExpansao }
 
 /* ═══════════════════════════════════════════════════
    Chapter 11 — A Verdade Sobre o Cliente
-   Two columns: bad vs good data. Contrast reveal.
+   SPLIT SCREEN — blurred left vs clear right,
+   amber-glow divider that grows from zero height.
    ═══════════════════════════════════════════════════ */
 
 export function DataVerdade() {
   return (
-    <Section id="data-verdade-sobre-cliente" bg="elevated">
+    <Section id="data-verdade-sobre-cliente" bg="elevated" spacing="dramatic">
       <CinematicHeadline
         overline="Dados"
         headline={content.dataVerdade.headline}
@@ -614,52 +661,92 @@ export function DataVerdade() {
         <Body className="text-lg">{content.dataVerdade.body}</Body>
       </ScrollReveal>
 
-      <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
-        <ScrollReveal delay={0.1}>
-          <div className="space-y-3">
-            <Overline className="text-[var(--text-muted)] mb-4 block">
-              O que seu CRM guarda
+      <div className="mt-16 relative flex flex-col md:flex-row min-h-[400px]">
+        {/* Left side — blurred / muted */}
+        <div className="flex-1 md:pr-12">
+          <ScrollReveal variant="slide-left" delay={0.1}>
+            <Overline className="text-[var(--text-muted)] mb-6 block">
+              O que seu CRM sabe
             </Overline>
-            {content.dataVerdade.contrast.bad.map((item) => (
-              <motion.div
-                key={item}
-                className="flex items-center gap-3 p-4 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] opacity-60"
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 0.6, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as const }}
-              >
-                <span className="w-2 h-2 rounded-full bg-[var(--text-muted)] shrink-0" />
-                <Body as="span" className="text-sm text-[var(--text-muted)]">
-                  {item}
-                </Body>
-              </motion.div>
-            ))}
-          </div>
-        </ScrollReveal>
+            <div className="space-y-4">
+              {content.dataVerdade.contrast.bad.map((item, i) => (
+                <motion.div
+                  key={item}
+                  className="flex items-center gap-3 p-4 rounded-xl bg-[var(--bg-surface)]/60 backdrop-blur-sm"
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 0.5, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{
+                    duration: 0.5,
+                    delay: 0.15 + i * 0.08,
+                    ease: [0.16, 1, 0.3, 1] as const,
+                  }}
+                >
+                  <span className="w-2 h-2 rounded-full bg-[var(--text-muted)] shrink-0" />
+                  <Body as="span" className="text-sm text-[var(--text-muted)]">
+                    {item}
+                  </Body>
+                </motion.div>
+              ))}
+            </div>
+          </ScrollReveal>
+        </div>
 
-        <ScrollReveal delay={0.3}>
-          <div className="space-y-3">
-            <Overline className="text-[var(--accent-green)] mb-4 block">
-              O que deveria guardar
+        {/* Center divider — grows from 0 to full height with amber glow */}
+        <motion.div
+          className="hidden md:block absolute left-1/2 top-0 w-px -translate-x-1/2"
+          style={{
+            background: 'linear-gradient(to bottom, transparent, var(--accent-amber), transparent)',
+            boxShadow: '0 0 12px var(--accent-amber), 0 0 4px var(--accent-amber)',
+          }}
+          initial={{ height: 0 }}
+          whileInView={{ height: '100%' }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] as const }}
+        />
+
+        {/* Mobile divider */}
+        <motion.div
+          className="md:hidden my-8 mx-auto h-px w-0"
+          style={{
+            background: 'linear-gradient(to right, transparent, var(--accent-amber), transparent)',
+            boxShadow: '0 0 12px var(--accent-amber)',
+          }}
+          initial={{ width: 0 }}
+          whileInView={{ width: '80%' }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] as const }}
+        />
+
+        {/* Right side — clear / primary */}
+        <div className="flex-1 md:pl-12">
+          <ScrollReveal variant="slide-right" delay={0.2}>
+            <Overline className="text-[var(--accent-green)] mb-6 block">
+              O que deveria saber
             </Overline>
-            {content.dataVerdade.contrast.good.map((item) => (
-              <motion.div
-                key={item}
-                className="flex items-center gap-3 p-4 rounded-xl bg-[var(--accent-green-soft)] border border-[var(--accent-green)]/20"
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] as const }}
-              >
-                <span className="w-2 h-2 rounded-full bg-[var(--accent-green)] shrink-0" />
-                <Body as="span" className="text-sm text-[var(--text-primary)] font-medium">
-                  {item}
-                </Body>
-              </motion.div>
-            ))}
-          </div>
-        </ScrollReveal>
+            <div className="space-y-4">
+              {content.dataVerdade.contrast.good.map((item, i) => (
+                <motion.div
+                  key={item}
+                  className="flex items-center gap-3 p-4 rounded-xl bg-[var(--accent-green-soft)] border border-[var(--accent-green)]/20"
+                  initial={{ opacity: 0, x: 30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{
+                    duration: 0.5,
+                    delay: 0.25 + i * 0.08,
+                    ease: [0.16, 1, 0.3, 1] as const,
+                  }}
+                >
+                  <span className="w-2 h-2 rounded-full bg-[var(--accent-green)] shrink-0" />
+                  <Body as="span" className="text-sm text-[var(--text-primary)] font-medium">
+                    {item}
+                  </Body>
+                </motion.div>
+              ))}
+            </div>
+          </ScrollReveal>
+        </div>
       </div>
     </Section>
   )

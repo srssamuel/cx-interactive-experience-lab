@@ -1,5 +1,8 @@
 import type { Metadata } from 'next'
 import { SmoothScrollProvider } from '@/lib/providers/smooth-scroll-provider'
+import { fontVariables } from '@/lib/fonts'
+import { CustomCursor } from '@/components/effects/custom-cursor'
+import { ScrollProgress } from '@/components/effects/scroll-progress'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -9,8 +12,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR">
+    <html lang="pt-BR" className={fontVariables}>
       <body className="grain-overlay">
+        <CustomCursor />
+        <ScrollProgress />
         <SmoothScrollProvider>
           {children}
         </SmoothScrollProvider>

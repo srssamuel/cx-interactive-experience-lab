@@ -5,7 +5,7 @@ import { cn } from '@/lib/cn'
 interface CardProps {
   children: React.ReactNode
   className?: string
-  variant?: 'default' | 'bordered' | 'highlight' | 'stat' | 'minimal' | 'accent'
+  variant?: 'default' | 'bordered' | 'highlight' | 'stat' | 'minimal' | 'accent' | 'glow'
   accentColor?: 'amber' | 'green'
   hover?: boolean
 }
@@ -29,6 +29,12 @@ export function Card({
       accentColor === 'amber' ? 'shadow-[var(--shadow-glow-amber)]' : 'shadow-[var(--shadow-glow-green)]'
     ),
     minimal: 'p-6',
+    glow: cn(
+      'bg-[var(--bg-surface)] rounded-2xl p-8 border border-[var(--border-subtle)]',
+      accentColor === 'amber'
+        ? 'shadow-[0_0_40px_rgba(200,135,58,0.1),inset_0_0_20px_rgba(200,135,58,0.03)]'
+        : 'shadow-[0_0_40px_rgba(74,124,92,0.1),inset_0_0_20px_rgba(74,124,92,0.03)]'
+    ),
     accent: cn(
       'rounded-2xl p-8 border',
       accentColor === 'amber'
@@ -41,7 +47,7 @@ export function Card({
     <div
       className={cn(
         variants[variant],
-        hover && 'transition-all duration-300 hover:-translate-y-1 hover:border-[var(--border-hover)]',
+        hover && 'transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] hover:border-[var(--border-hover)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.3)]',
         className
       )}
     >
