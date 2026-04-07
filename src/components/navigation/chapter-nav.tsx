@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/cn'
+import { useLenis } from '@/lib/providers/smooth-scroll-provider'
 import type { Chapter } from '@/lib/types'
 
 interface ChapterNavProps {
@@ -25,15 +26,45 @@ const blockColors: Record<string, string> = {
 export function ChapterNav({ chapters, className }: ChapterNavProps) {
   const [activeIndex, setActiveIndex] = useState(0)
   const [isOpen, setIsOpen] = useState(false)
+  const activeIndexRef = useRef(0)
+  const isScrollingRef = useRef(false)
+  const lenis = useLenis()
+
+  const scrollToChapter = useCallback((index: number) => {
+    const target = document.getElementById(chapters[index].id)
+    if (!target) return
+
+    isScrollingRef.current = true
+    activeIndexRef.current = index
+    setActiveIndex(index)
+
+    if (lenis) {
+      lenis.scrollTo(target, {
+        offset: 0,
+        duration: 0.8,
+        onComplete: () => {
+          isScrollingRef.current = false
+        },
+      })
+    } else {
+      target.scrollIntoView({ behavior: 'smooth' })
+      setTimeout(() => {
+        isScrollingRef.current = false
+      }, 900)
+    }
+  }, [chapters, lenis])
 
   useEffect(() => {
     const handleScroll = () => {
+      if (isScrollingRef.current) return
+
       const sections = chapters.map((ch) => document.getElementById(ch.id))
       const scrollY = window.scrollY + window.innerHeight / 3
 
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i]
         if (section && section.offsetTop <= scrollY) {
+          activeIndexRef.current = i
           setActiveIndex(i)
           break
         }
@@ -46,34 +77,35 @@ export function ChapterNav({ chapters, className }: ChapterNavProps) {
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
-      // Skip if typing in inputs
       const tag = (e.target as HTMLElement)?.tagName
       if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return
+      if (isScrollingRef.current) return
+
+      const current = activeIndexRef.current
 
       if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === 'PageDown') {
         e.preventDefault()
-        const next = Math.min(activeIndex + 1, chapters.length - 1)
-        document.getElementById(chapters[next].id)?.scrollIntoView({ behavior: 'smooth' })
+        const next = Math.min(current + 1, chapters.length - 1)
+        if (next !== current) scrollToChapter(next)
       }
       if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp') {
         e.preventDefault()
-        const prev = Math.max(activeIndex - 1, 0)
-        document.getElementById(chapters[prev].id)?.scrollIntoView({ behavior: 'smooth' })
+        const prev = Math.max(current - 1, 0)
+        if (prev !== current) scrollToChapter(prev)
       }
-      // Home = first chapter, End = last chapter
       if (e.key === 'Home') {
         e.preventDefault()
-        document.getElementById(chapters[0].id)?.scrollIntoView({ behavior: 'smooth' })
+        scrollToChapter(0)
       }
       if (e.key === 'End') {
         e.preventDefault()
-        document.getElementById(chapters[chapters.length - 1].id)?.scrollIntoView({ behavior: 'smooth' })
+        scrollToChapter(chapters.length - 1)
       }
     }
 
     window.addEventListener('keydown', handleKey)
     return () => window.removeEventListener('keydown', handleKey)
-  }, [activeIndex, chapters])
+  }, [chapters, scrollToChapter])
 
   return (
     <>
@@ -93,7 +125,7 @@ export function ChapterNav({ chapters, className }: ChapterNavProps) {
         {chapters.map((ch, i) => (
           <button
             key={ch.id}
-            onClick={() => document.getElementById(ch.id)?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => scrollToChapter(i)}
             className="group relative flex items-center justify-end"
             aria-label={ch.title}
             title={ch.title}
@@ -135,7 +167,7 @@ export function ChapterNav({ chapters, className }: ChapterNavProps) {
             <button
               key={ch.id}
               onClick={() => {
-                document.getElementById(ch.id)?.scrollIntoView({ behavior: 'smooth' })
+                scrollToChapter(i)
                 setIsOpen(false)
               }}
               className={cn(
