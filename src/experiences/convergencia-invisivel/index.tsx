@@ -4,9 +4,14 @@ import { Abertura, ContextoMundoMudou, ContextoIlusao, CxEquacao, CxExperiencia,
 import { DataMaturidade, DataDadoVsInsight, AiOQueFaz, AiOndeGanha, AiArmadilhas, ConvergenciaSistema, ConvergenciaLidera, WorkshopDiagnostico, WorkshopDiscussao, FechamentoJanela, FechamentoProvocacao } from './chapters-part2'
 import { SkewTransition } from '@/components/motion/skew-transition'
 
-function GradientDivider({ variant = 'amber' }: { variant?: 'amber' | 'green' | 'blue' }) {
-  const cls = variant === 'green' ? 'gradient-divider-green' : variant === 'blue' ? 'gradient-divider-blue' : 'gradient-divider'
-  return <hr className={cls} aria-hidden="true" />
+function GradientDivider({ variant = 'amber' }: { variant?: 'amber' | 'green' | 'blue' | 'purple' }) {
+  const classMap = {
+    amber: 'gradient-divider',
+    green: 'gradient-divider-green',
+    blue: 'gradient-divider-blue',
+    purple: 'gradient-divider-purple',
+  }
+  return <hr className={classMap[variant]} aria-hidden="true" />
 }
 
 export function ConvergenciaInvisivel() {
@@ -48,9 +53,9 @@ export function ConvergenciaInvisivel() {
 
       {/* ACT III — AI */}
       <AiOQueFaz />
-      <GradientDivider />
+      <GradientDivider variant="purple" />
       <AiOndeGanha />
-      <GradientDivider />
+      <GradientDivider variant="purple" />
       <AiArmadilhas />
 
       <SkewTransition color="amber" direction="up" />

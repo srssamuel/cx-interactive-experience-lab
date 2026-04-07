@@ -97,22 +97,33 @@ body {
   border: none;
   height: 1px;
   background: linear-gradient(90deg, transparent 5%, var(--accent-amber) 50%, transparent 95%);
-  opacity: 0.15;
+  opacity: 0.2;
   margin: 0;
+  box-shadow: 0 0 8px rgba(200, 135, 58, 0.1);
 }
 .gradient-divider-green {
   border: none;
   height: 1px;
   background: linear-gradient(90deg, transparent 5%, var(--accent-green) 50%, transparent 95%);
-  opacity: 0.15;
+  opacity: 0.2;
   margin: 0;
+  box-shadow: 0 0 8px rgba(74, 124, 92, 0.1);
 }
 .gradient-divider-blue {
   border: none;
   height: 1px;
   background: linear-gradient(90deg, transparent 5%, var(--accent-blue) 50%, transparent 95%);
-  opacity: 0.15;
+  opacity: 0.2;
   margin: 0;
+  box-shadow: 0 0 8px rgba(91, 143, 185, 0.1);
+}
+.gradient-divider-purple {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 5%, var(--accent-purple) 50%, transparent 95%);
+  opacity: 0.2;
+  margin: 0;
+  box-shadow: 0 0 8px rgba(139, 111, 176, 0.1);
 }
 
 /* Breathing glow for CTA buttons */

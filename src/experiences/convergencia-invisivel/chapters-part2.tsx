@@ -740,6 +740,7 @@ export function FechamentoJanela() {
     <Section id="fechamento-janela" bg="primary">
       <AmbientBackground variant="bottom-fade" />
       <BackgroundBeams color="rgba(200, 135, 58, 0.06)" beamCount={2} />
+      <FloatingElements count={4} color="var(--accent-amber)" />
       <div className="relative z-10">
       <CinematicHeadline
         overline="Fechamento"
@@ -839,15 +840,21 @@ export function FechamentoProvocacao() {
             {content.fechamentoProvocacao.headline}
           </CharReveal>
 
-          <motion.p
-            className="mt-8 font-display text-2xl md:text-4xl text-gradient-amber"
+          <motion.div
+            className="mt-10"
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 1, delay: 0.8, ease: [0.16, 1, 0.3, 1] as const }}
           >
-            {content.fechamentoProvocacao.subline}
-          </motion.p>
+            <MovingBorder borderColor="var(--accent-amber)" duration={5} borderWidth={1} className="inline-block rounded-lg">
+              <div className="px-10 py-5 md:px-16 md:py-7 bg-[var(--bg-primary)]/80 rounded-lg">
+                <p className="font-display text-2xl md:text-4xl text-gradient-amber">
+                  {content.fechamentoProvocacao.subline}
+                </p>
+              </div>
+            </MovingBorder>
+          </motion.div>
 
           <motion.p
             className="mt-12 text-[var(--text-secondary)] text-lg leading-relaxed max-w-[560px]"
@@ -859,8 +866,21 @@ export function FechamentoProvocacao() {
             {content.fechamentoProvocacao.body}
           </motion.p>
 
+          {/* Breathing separator line */}
           <motion.div
-            className="mt-24"
+            className="mt-16 w-32 h-px mx-auto ambient-breathe"
+            style={{
+              background: 'linear-gradient(90deg, transparent, var(--accent-amber), transparent)',
+              boxShadow: '0 0 12px rgba(200, 135, 58, 0.3)',
+            }}
+            initial={{ opacity: 0, scaleX: 0 }}
+            whileInView={{ opacity: 1, scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.5, delay: 1.6, ease: [0.16, 1, 0.3, 1] as const }}
+          />
+
+          <motion.div
+            className="mt-16"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 0.4 }}
             viewport={{ once: true }}

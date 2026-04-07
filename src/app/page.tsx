@@ -337,61 +337,104 @@ export default function PortalPage() {
       {/* =========================================
           SECTION 4 — FOOTER (3-column)
           ========================================= */}
-      <footer className="relative py-20 md:py-24 section-bg-surface gradient-border-top overflow-hidden">
+      <footer className="relative py-24 md:py-32 section-bg-surface gradient-border-top overflow-hidden">
         <BackgroundBeams color="rgba(200, 135, 58, 0.03)" beamCount={2} />
+        <FloatingElements count={3} color="var(--accent-amber)" />
         <div className="relative z-10 max-w-7xl mx-auto px-8 md:px-16 lg:px-24">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
-            {/* Col 1: Brand */}
-            <div>
-              <span className="font-display text-xl text-gradient-amber tracking-tight">
+          {/* Brand hero line */}
+          <ScrollReveal>
+            <div className="mb-16">
+              <span className="font-display text-3xl md:text-4xl text-gradient-amber tracking-tight block">
                 CX Experience Lab
               </span>
-              <p className="mt-4 text-sm leading-relaxed text-[var(--text-tertiary)] max-w-xs">
+              <p className="mt-4 text-base leading-relaxed text-[var(--text-tertiary)] max-w-lg">
                 Experiencias digitais interativas para keynotes, workshops e apresentacoes executivas com profundidade de playbook.
               </p>
             </div>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
+            {/* Col 1: Dimensions */}
+            <ScrollReveal delay={0.1}>
+              <div>
+                <span className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--text-muted)] mb-5 block">
+                  Dimensoes
+                </span>
+                <div className="flex flex-wrap gap-3">
+                  {[
+                    { label: 'CX', color: 'var(--accent-amber)' },
+                    { label: 'CS', color: 'var(--accent-green)' },
+                    { label: 'Dados', color: 'var(--accent-blue)' },
+                    { label: 'AI', color: 'var(--accent-purple)' },
+                  ].map((dim) => (
+                    <span
+                      key={dim.label}
+                      className="font-mono text-xs px-3 py-1.5 rounded border"
+                      style={{
+                        color: dim.color,
+                        borderColor: `color-mix(in srgb, ${dim.color} 25%, transparent)`,
+                        backgroundColor: `color-mix(in srgb, ${dim.color} 8%, transparent)`,
+                      }}
+                    >
+                      {dim.label}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </ScrollReveal>
 
             {/* Col 2: Navigation */}
-            <div>
-              <span className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--text-muted)] mb-4 block">
-                Navegacao
-              </span>
-              <nav className="flex flex-col gap-3">
-                <Link href="/experiencias/convergencia-invisivel" className="text-sm text-[var(--text-secondary)] hover:text-[var(--accent-amber)] transition-colors duration-300 font-mono">
-                  A Convergencia Invisivel
-                </Link>
-                <span className="text-sm text-[var(--text-muted)] font-mono cursor-default">
-                  Workshops <span className="text-[10px] ml-1 opacity-50">em breve</span>
+            <ScrollReveal delay={0.2}>
+              <div>
+                <span className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--text-muted)] mb-5 block">
+                  Navegacao
                 </span>
-                <span className="text-sm text-[var(--text-muted)] font-mono cursor-default">
-                  Playbooks <span className="text-[10px] ml-1 opacity-50">em breve</span>
-                </span>
-              </nav>
-            </div>
+                <nav className="flex flex-col gap-3">
+                  <Link href="/experiencias/convergencia-invisivel" className="text-sm text-[var(--text-secondary)] hover:text-[var(--accent-amber)] transition-colors duration-300 font-mono group flex items-center gap-2">
+                    A Convergencia Invisivel
+                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-1 group-hover:translate-x-0" />
+                  </Link>
+                  <span className="text-sm text-[var(--text-muted)] font-mono cursor-default">
+                    Workshops <span className="text-[10px] ml-1 opacity-50">em breve</span>
+                  </span>
+                  <span className="text-sm text-[var(--text-muted)] font-mono cursor-default">
+                    Playbooks <span className="text-[10px] ml-1 opacity-50">em breve</span>
+                  </span>
+                </nav>
+              </div>
+            </ScrollReveal>
 
             {/* Col 3: Info */}
-            <div>
-              <span className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--text-muted)] mb-4 block">
-                Sobre
-              </span>
-              <p className="text-sm text-[var(--text-tertiary)] leading-relaxed">
-                Projetado para presenca de palco. Cada pixel comunica antes do texto.
-              </p>
-              <p className="mt-4 text-sm text-[var(--text-tertiary)]">
-                Otimizado para projecao em tela grande.
-              </p>
-            </div>
+            <ScrollReveal delay={0.3}>
+              <div>
+                <span className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--text-muted)] mb-5 block">
+                  Sobre
+                </span>
+                <p className="text-sm text-[var(--text-tertiary)] leading-relaxed">
+                  Projetado para presenca de palco. Cada pixel comunica antes do texto.
+                </p>
+                <p className="mt-4 text-sm text-[var(--text-tertiary)]">
+                  Otimizado para projecao em tela grande.
+                </p>
+              </div>
+            </ScrollReveal>
           </div>
 
           {/* Bottom bar */}
-          <div className="mt-16 pt-8 border-t border-[var(--border-subtle)] flex flex-col md:flex-row items-center justify-between gap-4">
-            <span className="font-mono text-xs text-[var(--text-muted)] opacity-50">
-              2025 &mdash; Designed for stage presence
-            </span>
-            <span className="font-mono text-xs text-[var(--text-muted)] opacity-30">
-              Built with Next.js + Three.js + GSAP
-            </span>
-          </div>
+          <ScrollReveal delay={0.4}>
+            <div className="mt-20 pt-8 border-t border-[var(--border-subtle)] flex flex-col md:flex-row items-center justify-between gap-4">
+              <span className="font-mono text-xs text-[var(--text-muted)] opacity-50">
+                2025 &mdash; Designed for stage presence
+              </span>
+              <div className="flex items-center gap-4">
+                <span className="font-mono text-[10px] text-[var(--accent-amber)] opacity-30">22 capitulos</span>
+                <span className="w-px h-3 bg-[var(--text-muted)] opacity-20" />
+                <span className="font-mono text-[10px] text-[var(--accent-green)] opacity-30">4 dimensoes</span>
+                <span className="w-px h-3 bg-[var(--text-muted)] opacity-20" />
+                <span className="font-mono text-[10px] text-[var(--text-muted)] opacity-30">Next.js + Three.js + GSAP</span>
+              </div>
+            </div>
+          </ScrollReveal>
         </div>
       </footer>
     </main>
