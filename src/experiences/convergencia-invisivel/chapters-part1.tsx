@@ -5,7 +5,6 @@ import { Section } from '@/components/design-system'
 import { SubHeading, Body, Overline, StatNumber } from '@/components/design-system/typography'
 import { Card } from '@/components/design-system/card'
 import { ScrollReveal } from '@/components/motion/scroll-reveal'
-import { StaggerGroup, StaggerItem } from '@/components/motion/stagger-group'
 import { AnimatedCounter } from '@/components/motion/animated-counter'
 import { CinematicHeadline } from '@/components/cinematic/cinematic-headline'
 import { AmbientBackground } from '@/components/cinematic/ambient-background'
@@ -181,6 +180,7 @@ export { ContextoMundoMudou as ChapterContextoMundoMudou }
 
 export function ContextoIlusao() {
   return (
+    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.03)" size={700}>
     <Section id="contexto-ilusao-digital" bg="surface" spacing="compact">
       <CinematicHeadline
         overline="Contexto"
@@ -197,34 +197,36 @@ export function ContextoIlusao() {
       <div className="mt-16 grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
         <div className="lg:col-span-3 space-y-6">
           <ScrollReveal variant="slide-left" delay={0.1}>
-            <Card variant="bordered" hover={false}>
+            <BorderRevealCard glowColor="rgba(255, 255, 255, 0.15)" className="h-full">
               <Overline className="text-[var(--text-muted)] mb-3 block">
                 O que as empresas mediram
               </Overline>
               <Body className="text-[var(--text-primary)]">
                 {content.contextoIlusao.contrast.before}
               </Body>
-            </Card>
+            </BorderRevealCard>
           </ScrollReveal>
 
           <ScrollReveal variant="slide-right" delay={0.25}>
-            <Card variant="highlight" accentColor="amber" hover={false}>
+            <BorderRevealCard glowColor="rgba(200, 135, 58, 0.4)" className="h-full">
               <Overline className="text-[var(--accent-amber)] mb-3 block">
                 O que deveriam ter medido
               </Overline>
               <Body className="text-[var(--text-primary)] font-medium">
                 {content.contextoIlusao.contrast.after}
               </Body>
-            </Card>
+            </BorderRevealCard>
           </ScrollReveal>
         </div>
 
         <div className="lg:col-span-2 flex flex-col items-center justify-center">
           <ScrollReveal variant="slide-left" delay={0.4}>
             <Card variant="stat" accentColor="amber" className="text-center">
-              <StatNumber className="block text-[clamp(3rem,8vw,5rem)]">
-                {content.contextoIlusao.stat}
-              </StatNumber>
+              <AnimatedCounter
+                value={40}
+                suffix="%"
+                className="block text-[var(--accent-amber)] text-[clamp(3rem,8vw,5rem)] leading-none"
+              />
               <Body className="mt-4 text-sm text-[var(--text-secondary)]">
                 {content.contextoIlusao.statContext}
               </Body>
@@ -233,6 +235,7 @@ export function ContextoIlusao() {
         </div>
       </div>
     </Section>
+    </Spotlight>
   )
 }
 
@@ -244,6 +247,12 @@ export { ContextoIlusao as ChapterContextoIlusao }
    ═══════════════════════════════════════════════════ */
 
 export function CxEquacao() {
+  const nodePositions = [
+    'md:col-start-2 md:col-span-2 md:justify-self-center', // Expectativa — top center
+    'md:col-start-1 md:col-span-2',                        // Percepcao — bottom left
+    'md:col-start-3 md:col-span-2 md:justify-self-end',    // Memoria — bottom right
+  ]
+
   return (
     <Section id="cx-equacao-invisivel" bg="amber-glow">
       <AmbientBackground variant="radial-amber" breathe={true} />
@@ -260,33 +269,45 @@ export function CxEquacao() {
           <Body className="text-lg">{content.cxEquacao.body}</Body>
         </ScrollReveal>
 
-        <StaggerGroup
-          className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8"
-          staggerDelay={0.1}
-          baseDelay={0.2}
-        >
-          {content.cxEquacao.pillars.map((pillar, i) => (
-            <StaggerItem key={pillar.title}>
-              <ScrollReveal variant="scale" delay={i * 0.08}>
-                <Card
-                  variant="bordered"
-                  className={cn(
-                    'h-full relative overflow-hidden',
-                    'border-[var(--accent-amber)]/20'
-                  )}
-                >
-                  <span className="absolute top-4 right-4 font-mono text-xs text-[var(--accent-amber)]/50">
+        {/* Triangular equation diagram — 3 nodes forming a visual equation */}
+        <div className="mt-16 relative">
+          {/* SVG connecting lines between nodes */}
+          <svg className="absolute inset-0 w-full h-full pointer-events-none hidden md:block" aria-hidden="true">
+            <line x1="50%" y1="15%" x2="20%" y2="85%" stroke="var(--accent-amber)" strokeWidth="1" opacity="0.15" />
+            <line x1="50%" y1="15%" x2="80%" y2="85%" stroke="var(--accent-amber)" strokeWidth="1" opacity="0.15" />
+            <line x1="20%" y1="85%" x2="80%" y2="85%" stroke="var(--accent-amber)" strokeWidth="1" opacity="0.15" />
+          </svg>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-y-16">
+            {content.cxEquacao.pillars.map((pillar, i) => (
+              <ScrollReveal key={pillar.title} variant="scale" delay={i * 0.2} className={nodePositions[i]}>
+                <div className="relative p-6 md:p-8 rounded-2xl border border-[var(--accent-amber)]/20 bg-[var(--bg-primary)]/60 backdrop-blur-sm max-w-xs">
+                  {/* Node number — large faded */}
+                  <span className="absolute -top-4 -left-2 font-display text-5xl text-[var(--accent-amber)] opacity-[0.12] leading-none select-none" aria-hidden="true">
                     0{i + 1}
                   </span>
-                  <SubHeading className="text-[var(--accent-amber)]">
+                  <SubHeading className="text-[var(--accent-amber)] text-xl">
                     {pillar.title}
                   </SubHeading>
-                  <Body className="mt-4">{pillar.desc}</Body>
-                </Card>
+                  <Body className="mt-3 text-sm">{pillar.desc}</Body>
+                  {/* Operator symbols between nodes */}
+                  {i < 2 && (
+                    <span className="hidden md:block absolute -bottom-10 left-1/2 -translate-x-1/2 font-display text-2xl text-[var(--accent-amber)] opacity-30">
+                      {i === 0 ? '\u00d7' : '='}
+                    </span>
+                  )}
+                </div>
               </ScrollReveal>
-            </StaggerItem>
-          ))}
-        </StaggerGroup>
+            ))}
+          </div>
+
+          {/* Equation result */}
+          <ScrollReveal delay={0.7} className="mt-12 text-center">
+            <span className="font-display text-lg md:text-xl text-[var(--accent-amber)] opacity-60 tracking-wide">
+              Expectativa &times; Percepcao &times; Tempo = Experiencia
+            </span>
+          </ScrollReveal>
+        </div>
       </div>
     </Section>
   )
@@ -552,37 +573,68 @@ export function CsParadoxo() {
           icon={<HeartHandshake className="w-4 h-4 text-[var(--accent-green)]" />}
         />
 
-        <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6">
-          {content.csParadoxo.stats.map((stat, i) => (
-            <ScrollReveal key={stat.label} variant="blur" delay={i * 0.1}>
-              <BorderRevealCard glowColor="rgba(74, 124, 92, 0.4)" className="h-full text-center">
-                <AnimatedCounter
-                  value={stat.value}
-                  suffix={stat.suffix}
-                  className="block text-[var(--accent-green)] text-[clamp(2rem,5vw,3.5rem)] leading-none"
-                />
-                <Body className="mt-3 text-sm font-medium">{stat.label}</Body>
-                <span className="mt-1 block font-mono text-[0.65rem] text-[var(--text-muted)]">
-                  {stat.source}
-                </span>
-              </BorderRevealCard>
-            </ScrollReveal>
-          ))}
-        </div>
-
-        <ScrollReveal delay={0.3} className="mt-12 max-w-3xl">
+        <ScrollReveal delay={0.1} className="mt-8 max-w-3xl">
           <Body className="text-lg leading-relaxed">{content.csParadoxo.body}</Body>
         </ScrollReveal>
 
-        <ScrollReveal delay={0.5} className="mt-8 max-w-3xl">
-          <Card variant="highlight" accentColor="green" hover={false}>
-            <Overline className="text-[var(--accent-green)] mb-2 block">
-              O paradoxo
-            </Overline>
-            <Body className="text-[var(--text-primary)] font-medium">
+        {/* Dual-panel paradox tension — opposing panels with gap reveal */}
+        <div className="mt-16 flex flex-col md:flex-row gap-4 md:gap-0 items-stretch min-h-[280px]">
+          {/* Left panel — "healthy" metrics */}
+          <ScrollReveal variant="slide-left" delay={0.2} className="flex-1">
+            <div className="h-full p-8 rounded-l-xl md:rounded-r-none rounded-xl border border-[var(--accent-green)]/20 bg-[var(--accent-green-soft)]">
+              <Overline className="text-[var(--accent-green)] mb-6 block">O que o numero diz</Overline>
+              <div className="space-y-4">
+                {content.csParadoxo.stats.slice(0, 2).map((stat) => (
+                  <div key={stat.label}>
+                    <AnimatedCounter
+                      value={stat.value}
+                      suffix={stat.suffix}
+                      className="block text-[var(--accent-green)] text-[clamp(1.5rem,4vw,2.5rem)] leading-none font-display"
+                    />
+                    <Body className="mt-1 text-sm">{stat.label}</Body>
+                    <span className="font-mono text-[0.6rem] text-[var(--text-muted)]">{stat.source}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* Center divider — glowing gap */}
+          <div className="hidden md:flex items-center justify-center w-16 relative">
+            <motion.div
+              className="w-px h-full bg-gradient-to-b from-transparent via-[var(--accent-amber)] to-transparent"
+              initial={{ scaleY: 0 }}
+              whileInView={{ scaleY: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] as const }}
+            />
+            <span className="absolute font-display text-sm text-[var(--accent-amber)] bg-[var(--bg-surface)] px-2">vs</span>
+          </div>
+
+          {/* Right panel — "reality" */}
+          <ScrollReveal variant="slide-right" delay={0.3} className="flex-1">
+            <div className="h-full p-8 rounded-r-xl md:rounded-l-none rounded-xl border border-[var(--accent-red)]/20 bg-[rgba(199,91,91,0.08)]">
+              <Overline className="text-[var(--accent-red)] mb-6 block">O que o cliente sente</Overline>
+              <div>
+                <AnimatedCounter
+                  value={content.csParadoxo.stats[2].value}
+                  suffix={content.csParadoxo.stats[2].suffix}
+                  className="block text-[var(--accent-red)] text-[clamp(1.5rem,4vw,2.5rem)] leading-none font-display"
+                />
+                <Body className="mt-1 text-sm">{content.csParadoxo.stats[2].label}</Body>
+                <span className="font-mono text-[0.6rem] text-[var(--text-muted)]">{content.csParadoxo.stats[2].source}</span>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+
+        {/* Paradox insight — revealed below the tension */}
+        <ScrollReveal delay={0.6} className="mt-12">
+          <div className="text-center max-w-2xl mx-auto px-6 py-5 border-t border-b border-[var(--accent-amber)]/15">
+            <Body className="text-lg text-[var(--text-primary)] font-medium italic">
               {content.csParadoxo.insight}
             </Body>
-          </Card>
+          </div>
         </ScrollReveal>
       </div>
     </Section>
