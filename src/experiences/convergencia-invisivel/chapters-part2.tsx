@@ -19,6 +19,7 @@ import { MovingBorder } from '@/components/effects/moving-border'
 import { LazyParticleField } from '@/components/three/lazy-particle-field'
 import { Spotlight } from '@/components/effects/spotlight'
 import { BackgroundBeams } from '@/components/effects/background-beams'
+import { CharReveal } from '@/components/motion/char-reveal'
 import { Layers, ScanSearch, BrainCircuit, Trophy, ShieldAlert, Merge, Users, ClipboardCheck, MessagesSquare, Clock, Flame } from 'lucide-react'
 import { cn } from '@/lib/cn'
 import { content } from './content'
@@ -369,13 +370,15 @@ export function ConvergenciaSistema() {
       <AmbientBackground variant="diagonal-split" breathe={true} />
       <div className="relative z-10">
         <Overline className="text-center mb-6 flex items-center justify-center gap-2"><Merge className="w-4 h-4 text-[var(--accent-amber)]" />A Convergencia</Overline>
-        <TextReveal
+        <CharReveal
           tag="h1"
-          className="text-center"
+          className="text-center text-[var(--text-hero)]"
           delay={0.2}
+          stagger={0.02}
+          color="var(--accent-amber)"
         >
           {content.convergenciaSistema.headline}
-        </TextReveal>
+        </CharReveal>
 
         <ScrollReveal className="mt-6 max-w-2xl mx-auto text-center">
           <Body className="text-lg">{content.convergenciaSistema.body}</Body>
@@ -709,27 +712,41 @@ export { FechamentoJanela as ChapterFechamentoJanela }
 
 export function FechamentoProvocacao() {
   return (
+    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.06)" size={800}>
     <Section id="fechamento-provocacao" bg="primary" fullHeight spacing="dramatic">
       <AmbientBackground variant="diagonal-split" />
+      <BackgroundBeams color="rgba(200, 135, 58, 0.10)" beamCount={4} />
       <div className="absolute inset-0 z-[1] pointer-events-none">
-        <LazyParticleField />
+        <LazyParticleField bloom interactive />
       </div>
       <ParallaxContainer speed={0.12} className="relative z-10">
         <div className="flex flex-col items-center justify-center text-center min-h-[60vh]">
-          <TextReveal
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] as const }}
+          >
+            <Overline className="mb-8 flex items-center justify-center gap-2">
+              <Flame className="w-4 h-4 text-[var(--accent-amber)]" />Provocacao Final
+            </Overline>
+          </motion.div>
+
+          <CharReveal
             tag="h2"
             className="text-[var(--text-hero)]"
             delay={0.3}
+            stagger={0.03}
           >
             {content.fechamentoProvocacao.headline}
-          </TextReveal>
+          </CharReveal>
 
           <motion.p
-            className="mt-6 font-display text-2xl md:text-4xl text-[var(--accent-amber)]"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+            className="mt-8 font-display text-2xl md:text-4xl text-gradient-amber"
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] as const }}
+            transition={{ duration: 1, delay: 0.8, ease: [0.16, 1, 0.3, 1] as const }}
           >
             {content.fechamentoProvocacao.subline}
           </motion.p>
@@ -739,17 +756,17 @@ export function FechamentoProvocacao() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 1, ease: [0.16, 1, 0.3, 1] as const }}
+            transition={{ duration: 0.8, delay: 1.2, ease: [0.16, 1, 0.3, 1] as const }}
           >
             {content.fechamentoProvocacao.body}
           </motion.p>
 
           <motion.div
-            className="mt-20"
+            className="mt-24"
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+            whileInView={{ opacity: 0.4 }}
             viewport={{ once: true }}
-            transition={{ duration: 1, delay: 1.5 }}
+            transition={{ duration: 1.5, delay: 2 }}
           >
             <Overline className="text-[var(--text-muted)]">
               CX Experience Lab — 2025
@@ -758,6 +775,7 @@ export function FechamentoProvocacao() {
         </div>
       </ParallaxContainer>
     </Section>
+    </Spotlight>
   )
 }
 

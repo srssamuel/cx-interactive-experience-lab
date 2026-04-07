@@ -16,6 +16,7 @@ import { Spotlight } from '@/components/effects/spotlight'
 import { BackgroundBeams } from '@/components/effects/background-beams'
 import { BorderRevealCard } from '@/components/effects/border-reveal-card'
 import { MovingBorder } from '@/components/effects/moving-border'
+import { CharReveal } from '@/components/motion/char-reveal'
 import { Globe, Sparkles, BarChart3, TrendingUp, DollarSign, MessageSquare, HeartHandshake, ChartNoAxesCombined, Unplug, Database } from 'lucide-react'
 import { cn } from '@/lib/cn'
 import { content } from './content'
@@ -54,13 +55,14 @@ export function Abertura() {
           </motion.p>
 
           <div className="mt-16 max-w-3xl">
-            <TextReveal
+            <CharReveal
               tag="h1"
               className="text-[clamp(1.5rem,4vw,3rem)]"
               delay={0.8}
+              stagger={0.025}
             >
               {content.abertura.headline}
-            </TextReveal>
+            </CharReveal>
           </div>
 
           <motion.div

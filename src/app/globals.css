@@ -124,6 +124,25 @@ body {
   animation: cta-glow 3s ease-in-out infinite;
 }
 
+/* Link hover underline — grows from left */
+.link-underline {
+  position: relative;
+  text-decoration: none;
+}
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width var(--duration-normal) var(--ease-out);
+}
+.link-underline:hover::after {
+  width: 100%;
+}
+
 /* Fullscreen sections — dynamic viewport height */
 .section-fullscreen {
   min-height: 100dvh;
