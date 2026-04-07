@@ -3,9 +3,14 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { LazyParticleField } from '@/components/three/lazy-particle-field'
-import { AmbientBackground } from '@/components/cinematic/ambient-background'
+
 import { ScrollReveal } from '@/components/motion/scroll-reveal'
 import { TextReveal } from '@/components/motion/text-reveal'
+import { Spotlight } from '@/components/effects/spotlight'
+import { MagneticButton } from '@/components/effects/magnetic-button'
+import { MovingBorder } from '@/components/effects/moving-border'
+import { GradientMesh } from '@/components/effects/gradient-mesh'
+import { FloatingElements } from '@/components/effects/floating-elements'
 
 const ease = [0.16, 1, 0.3, 1] as const
 
@@ -50,12 +55,13 @@ export default function PortalPage() {
       {/* =========================================
           SECTION 1 — FULL VIEWPORT HERO
           ========================================= */}
-      <section className="relative min-h-screen flex items-center">
-        {/* Backgrounds */}
+      <Spotlight className="relative min-h-screen flex items-center" color="rgba(200, 135, 58, 0.08)" size={700}>
+        {/* Backgrounds — layered */}
+        <GradientMesh opacity={0.15} />
         <div className="absolute inset-0 z-0">
-          <LazyParticleField color="#C8873A" count={120} />
+          <LazyParticleField color="#C8873A" count={120} bloom interactive />
         </div>
-        <AmbientBackground variant="diagonal-split" breathe={true} />
+        <FloatingElements count={6} color="var(--accent-amber)" />
 
         {/* Content — LEFT-aligned, asymmetric */}
         <div className="relative z-10 w-full max-w-7xl mx-auto px-8 md:px-16 lg:px-24">
@@ -78,10 +84,10 @@ export default function PortalPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.2, delay: 0.6, ease }}
             >
-              <span className="block text-[var(--text-primary)]">
+              <span className="block text-shimmer">
                 A Convergencia
               </span>
-              <span className="block text-[var(--accent-amber)]">
+              <span className="block text-gradient-amber">
                 Invisivel
               </span>
             </motion.h1>
@@ -112,23 +118,25 @@ export default function PortalPage() {
               <span>4 dimensoes</span>
             </motion.div>
 
-            {/* CTA */}
+            {/* CTA — Magnetic */}
             <motion.div
               className="mt-14"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.6, ease }}
             >
-              <Link
-                href="/experiencias/convergencia-invisivel"
-                className="group relative inline-flex items-center gap-3 px-10 py-5 text-sm font-mono uppercase tracking-[0.15em] text-[var(--text-primary)] border border-transparent hover:border-[var(--accent-amber)] transition-all duration-700"
-              >
-                <span className="relative z-10">Iniciar Experiencia</span>
-                <span className="relative z-10 inline-block w-6 h-px bg-[var(--accent-amber)] transition-all duration-500 group-hover:w-10" />
-                {/* Border reveal effect */}
-                <span className="absolute inset-0 border border-[rgba(255,255,255,0.06)] group-hover:border-[var(--accent-amber)] transition-colors duration-700" />
-                <span className="absolute bottom-0 left-0 h-px w-0 bg-[var(--accent-amber)] group-hover:w-full transition-all duration-700" />
-              </Link>
+              <MagneticButton strength={0.3} radius={120}>
+                <Link
+                  href="/experiencias/convergencia-invisivel"
+                  className="group relative inline-flex items-center gap-3 px-10 py-5 text-sm font-mono uppercase tracking-[0.15em] text-[var(--text-primary)] border border-transparent hover:border-[var(--accent-amber)] transition-all duration-700"
+                >
+                  <span className="relative z-10">Iniciar Experiencia</span>
+                  <span className="relative z-10 inline-block w-6 h-px bg-[var(--accent-amber)] transition-all duration-500 group-hover:w-10" />
+                  {/* Border reveal effect */}
+                  <span className="absolute inset-0 border border-[rgba(255,255,255,0.06)] group-hover:border-[var(--accent-amber)] transition-colors duration-700" />
+                  <span className="absolute bottom-0 left-0 h-px w-0 bg-[var(--accent-amber)] group-hover:w-full transition-all duration-700" />
+                </Link>
+              </MagneticButton>
             </motion.div>
           </div>
         </div>
@@ -142,7 +150,7 @@ export default function PortalPage() {
         >
           <span className="block w-px h-12 bg-gradient-to-b from-transparent to-[var(--text-muted)]" />
         </motion.div>
-      </section>
+      </Spotlight>
 
       {/* =========================================
           SECTION 2 — FOUR DIMENSION CARDS
@@ -167,6 +175,7 @@ export default function PortalPage() {
                 variant={dim.variant}
                 delay={0.1 * i}
               >
+                <MovingBorder borderColor={dim.accent} duration={5 + i} borderWidth={1} className="rounded-sm">
                 <div
                   className="glass relative p-8 md:p-10 rounded-sm border-l-[3px] min-h-[220px] flex flex-col justify-between group hover:-translate-y-1 transition-transform duration-500"
                   style={{ borderLeftColor: dim.accent }}
@@ -205,6 +214,7 @@ export default function PortalPage() {
                     }}
                   />
                 </div>
+                </MovingBorder>
               </ScrollReveal>
             ))}
           </div>

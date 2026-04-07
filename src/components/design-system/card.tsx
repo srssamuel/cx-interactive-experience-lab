@@ -47,7 +47,7 @@ export function Card({
     <div
       className={cn(
         variants[variant],
-        hover && 'transition-all duration-300 hover:-translate-y-2 hover:border-[var(--border-hover)] hover:shadow-lg',
+        hover && 'transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] hover:border-[var(--border-hover)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.3)]',
         className
       )}
     >

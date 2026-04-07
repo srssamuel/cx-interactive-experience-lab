@@ -137,6 +137,58 @@
   );
 }
 
+/* Gradient text effects */
+.text-gradient-amber {
+  background: linear-gradient(135deg, #E5A04B, #C8873A, #E5A04B);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.text-gradient-multi {
+  background: linear-gradient(135deg, #E5A04B, #8B6FB0, #5B8FB9);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.text-gradient-cool {
+  background: linear-gradient(135deg, #5B8FB9, #4A7C5C);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Text shimmer effect — runs 2x then stops */
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.text-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--text-primary) 0%,
+    var(--text-primary) 40%,
+    rgba(255,255,255,0.8) 50%,
+    var(--text-primary) 60%,
+    var(--text-primary) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s 1s 2 linear;
+}
+
+/* Glass card with backdrop-filter */
+.glass-card {
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  background: rgba(21, 25, 33, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

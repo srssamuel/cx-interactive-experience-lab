@@ -16,6 +16,8 @@ import { TextReveal } from '@/components/motion/text-reveal'
 import { ParallaxContainer } from '@/components/motion/parallax-container'
 import { BorderRevealCard } from '@/components/effects/border-reveal-card'
 import { LazyParticleField } from '@/components/three/lazy-particle-field'
+import { Spotlight } from '@/components/effects/spotlight'
+import { BackgroundBeams } from '@/components/effects/background-beams'
 import { cn } from '@/lib/cn'
 import { content } from './content'
 
@@ -26,7 +28,7 @@ import { content } from './content'
 
 export function DataMaturidade() {
   return (
-    <Section id="data-maturidade" bg="gradient-down">
+    <Section id="data-maturidade" bg="gradient-down" spacing="generous">
       <AmbientBackground variant="mesh-dark" />
       <CinematicHeadline
         overline="Dados"
@@ -90,7 +92,7 @@ export { DataMaturidade as ChapterDataMaturidade }
 
 export function DataDadoVsInsight() {
   return (
-    <Section id="data-dado-vs-insight" bg="surface">
+    <Section id="data-dado-vs-insight" bg="surface" spacing="compact">
       <AmbientBackground variant="top-light" />
       <CinematicHeadline
         overline="Dados"
@@ -151,7 +153,7 @@ export function AiOQueFaz() {
   const commands = ['$ ai --analyze --depth=full', '$ ai --predict --confidence=0.92', '$ ai --automate --scope=cx']
 
   return (
-    <Section id="ai-o-que-realmente-faz" bg="primary">
+    <Section id="ai-o-que-realmente-faz" bg="primary" spacing="generous">
       <AmbientBackground variant="mesh-dark" />
       <div className="relative z-10">
         <Overline className="block mb-4 text-[var(--accent-purple)]">
@@ -270,7 +272,7 @@ export { AiOndeGanha as ChapterAiOndeGanha }
 
 export function AiArmadilhas() {
   return (
-    <Section id="ai-armadilhas" bg="elevated">
+    <Section id="ai-armadilhas" bg="elevated" spacing="compact">
       <Overline className="block text-center mb-6 text-sm tracking-[0.25em] uppercase text-[var(--accent-red)]">
         CAUTION
       </Overline>
@@ -341,7 +343,9 @@ export function ConvergenciaSistema() {
   const quadrantColors = ['#5B8FB9', '#4A7C5C', '#8B6FB0', '#C75B5B']
 
   return (
-    <Section id="convergencia-sistema-unico" bg="vignette">
+    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.07)" size={800}>
+    <Section id="convergencia-sistema-unico" bg="vignette" spacing="dramatic">
+      <BackgroundBeams color="rgba(200, 135, 58, 0.12)" beamCount={5} />
       <AmbientBackground variant="diagonal-split" breathe={true} />
       <div className="relative z-10">
         <Overline className="text-center block mb-6">A Convergencia</Overline>
@@ -393,6 +397,7 @@ export function ConvergenciaSistema() {
         </ScrollReveal>
       </div>
     </Section>
+    </Spotlight>
   )
 }
 
@@ -473,7 +478,7 @@ export function WorkshopDiagnostico() {
   }
 
   return (
-    <Section id="workshop-diagnostico" bg="surface" className="dot-grid">
+    <Section id="workshop-diagnostico" bg="surface" className="dot-grid" spacing="generous">
       <PausePoint label="Workshop" />
 
       <CinematicHeadline
@@ -669,7 +674,7 @@ export { FechamentoJanela as ChapterFechamentoJanela }
 
 export function FechamentoProvocacao() {
   return (
-    <Section id="fechamento-provocacao" bg="primary" fullHeight>
+    <Section id="fechamento-provocacao" bg="primary" fullHeight spacing="dramatic">
       <AmbientBackground variant="diagonal-split" />
       <div className="absolute inset-0 z-[1] pointer-events-none">
         <LazyParticleField />

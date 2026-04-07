@@ -10,6 +10,14 @@ const ParticleField = dynamic(
   }
 )
 
-export function LazyParticleField(props: { className?: string; color?: string; count?: number }) {
+interface LazyParticleFieldProps {
+  className?: string
+  color?: string
+  count?: number
+  interactive?: boolean
+  bloom?: boolean
+}
+
+export function LazyParticleField(props: LazyParticleFieldProps) {
   return <ParticleField {...props} />
 }

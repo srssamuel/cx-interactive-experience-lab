@@ -12,6 +12,7 @@ import { AmbientBackground } from '@/components/cinematic/ambient-background'
 import { DiscussionPrompt } from '@/components/workshop/discussion-prompt'
 import { TextReveal } from '@/components/motion/text-reveal'
 import { ParallaxContainer } from '@/components/motion/parallax-container'
+import { Spotlight } from '@/components/effects/spotlight'
 import { cn } from '@/lib/cn'
 import { content } from './content'
 
@@ -22,6 +23,7 @@ import { content } from './content'
 
 export function Abertura() {
   return (
+    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.05)" size={800}>
     <Section id="abertura" bg="primary" fullHeight>
       <AmbientBackground variant="spotlight" />
       <ParallaxContainer speed={0.15} className="relative z-10">
@@ -79,6 +81,7 @@ export function Abertura() {
         </div>
       </ParallaxContainer>
     </Section>
+    </Spotlight>
   )
 }
 
@@ -94,7 +97,7 @@ const ch2Rotations = ['-1deg', '0deg', '1deg'] as const
 
 export function ContextoMundoMudou() {
   return (
-    <Section id="contexto-o-mundo-mudou" bg="gradient-down">
+    <Section id="contexto-o-mundo-mudou" bg="gradient-down" spacing="generous">
       <Overline className="block mb-6 text-[var(--text-muted)]">Contexto</Overline>
       <TextReveal
         tag="h2"
@@ -151,7 +154,7 @@ export { ContextoMundoMudou as ChapterContextoMundoMudou }
 
 export function ContextoIlusao() {
   return (
-    <Section id="contexto-ilusao-digital" bg="surface">
+    <Section id="contexto-ilusao-digital" bg="surface" spacing="compact">
       <CinematicHeadline
         overline="Contexto"
         headline={content.contextoIlusao.headline}
@@ -325,7 +328,7 @@ export { CxExperiencia as ChapterCxExperiencia }
 
 export function CxCusto() {
   return (
-    <Section id="cx-custo-do-atrito" bg="gradient-up">
+    <Section id="cx-custo-do-atrito" bg="gradient-up" spacing="dramatic">
       <div className="relative overflow-hidden">
         {/* Watermark stat numbers — giant, ghostly, layered */}
         <div
@@ -404,7 +407,7 @@ export function CxReflexao() {
   const marginSteps = ['ml-0', 'ml-6 md:ml-12', 'ml-12 md:ml-24', 'ml-18 md:ml-36']
 
   return (
-    <Section id="cx-momento-reflexao" bg="vignette">
+    <Section id="cx-momento-reflexao" bg="vignette" spacing="compact">
       <CinematicHeadline
         overline="Reflexao"
         headline={content.cxReflexao.headline}
@@ -533,7 +536,7 @@ export { CsParadoxo as ChapterCsParadoxo }
 
 export function CsMetricas() {
   return (
-    <Section id="cs-metricas-que-mentem" bg="primary">
+    <Section id="cs-metricas-que-mentem" bg="primary" spacing="dramatic">
       <Overline className="block mb-6 text-[var(--text-muted)] text-center">
         Customer Success
       </Overline>
@@ -598,7 +601,7 @@ export { CsMetricas as ChapterCsMetricas }
 
 export function CsExpansao() {
   return (
-    <Section id="cs-expansao-escondida" bg="green-glow">
+    <Section id="cs-expansao-escondida" bg="green-glow" spacing="compact">
       <CinematicHeadline
         overline="Customer Success"
         headline={content.csExpansao.headline}
@@ -646,7 +649,7 @@ export { CsExpansao as ChapterCsExpansao }
 
 export function DataVerdade() {
   return (
-    <Section id="data-verdade-sobre-cliente" bg="elevated">
+    <Section id="data-verdade-sobre-cliente" bg="elevated" spacing="dramatic">
       <CinematicHeadline
         overline="Dados"
         headline={content.dataVerdade.headline}

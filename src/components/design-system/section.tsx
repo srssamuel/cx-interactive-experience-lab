@@ -13,6 +13,8 @@ type SectionBg =
   | 'green-glow'
   | 'vignette'
 
+type SectionSpacing = 'compact' | 'normal' | 'generous' | 'dramatic'
+
 interface SectionProps {
   children: React.ReactNode
   className?: string
@@ -21,10 +23,18 @@ interface SectionProps {
   fullHeight?: boolean
   narrow?: boolean
   wide?: boolean
+  spacing?: SectionSpacing
 }
 
 export const Section = forwardRef<HTMLElement, SectionProps>(
-  ({ children, className, id, bg = 'primary', fullHeight, narrow, wide }, ref) => {
+  ({ children, className, id, bg = 'primary', fullHeight, narrow, wide, spacing = 'normal' }, ref) => {
+    const spacingClasses = {
+      compact: 'py-16 md:py-20',
+      normal: 'py-24 md:py-32',
+      generous: 'py-32 md:py-40',
+      dramatic: 'py-40 md:py-56',
+    }
+
     return (
       <section
         ref={ref}
@@ -38,7 +48,8 @@ export const Section = forwardRef<HTMLElement, SectionProps>(
       >
         <div
           className={cn(
-            'mx-auto w-full px-6 md:px-12 py-24 md:py-32',
+            'mx-auto w-full px-6 md:px-12',
+            spacingClasses[spacing],
             narrow && 'max-w-[var(--max-width-content)]',
             wide && 'max-w-[var(--max-width-full)]',
             !narrow && !wide && 'max-w-[var(--max-width-wide)]'
