@@ -42,7 +42,7 @@ export const Section = forwardRef<HTMLElement, SectionProps>(
         className={cn(
           `section-bg-${bg}`,
           'relative',
-          fullHeight && 'min-h-screen flex flex-col justify-center',
+          fullHeight && 'section-fullscreen',
           className
         )}
       >

@@ -84,6 +84,24 @@ export function Abertura() {
           >
             {content.abertura.provocation}
           </motion.p>
+
+          {/* Scroll indicator */}
+          <motion.div
+            className="mt-16 scroll-indicator"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 2.4 }}
+          >
+            <div className="flex flex-col items-center gap-2">
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--text-muted)]">
+                scroll
+              </span>
+              <svg width="16" height="24" viewBox="0 0 16 24" fill="none" className="text-[var(--text-muted)]">
+                <path d="M8 0v18M2 14l6 6 6-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+          </motion.div>
         </div>
       </ParallaxContainer>
     </Section>

@@ -46,15 +46,28 @@ export function ChapterNav({ chapters, className }: ChapterNavProps) {
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+      // Skip if typing in inputs
+      const tag = (e.target as HTMLElement)?.tagName
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return
+
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === 'PageDown') {
         e.preventDefault()
         const next = Math.min(activeIndex + 1, chapters.length - 1)
         document.getElementById(chapters[next].id)?.scrollIntoView({ behavior: 'smooth' })
       }
-      if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+      if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp') {
         e.preventDefault()
         const prev = Math.max(activeIndex - 1, 0)
         document.getElementById(chapters[prev].id)?.scrollIntoView({ behavior: 'smooth' })
+      }
+      // Home = first chapter, End = last chapter
+      if (e.key === 'Home') {
+        e.preventDefault()
+        document.getElementById(chapters[0].id)?.scrollIntoView({ behavior: 'smooth' })
+      }
+      if (e.key === 'End') {
+        e.preventDefault()
+        document.getElementById(chapters[chapters.length - 1].id)?.scrollIntoView({ behavior: 'smooth' })
       }
     }
 
@@ -67,12 +80,16 @@ export function ChapterNav({ chapters, className }: ChapterNavProps) {
       {/* Dot indicators — always visible */}
       <nav
         className={cn(
-          'fixed right-4 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-2',
+          'fixed right-4 top-1/2 -translate-y-1/2 z-50 flex flex-col items-end gap-2',
           'hidden lg:flex',
           className
         )}
         aria-label="Navegacao de capitulos"
       >
+        {/* Chapter counter */}
+        <span className="font-mono text-[10px] text-[var(--text-muted)] mb-1 tabular-nums">
+          {String(activeIndex + 1).padStart(2, '0')}/{String(chapters.length).padStart(2, '0')}
+        </span>
         {chapters.map((ch, i) => (
           <button
             key={ch.id}
@@ -82,15 +99,15 @@ export function ChapterNav({ chapters, className }: ChapterNavProps) {
             title={ch.title}
           >
             {/* Tooltip on hover */}
-            <span className="absolute right-6 opacity-0 group-hover:opacity-100 transition-opacity text-xs text-[var(--text-secondary)] whitespace-nowrap bg-[var(--bg-elevated)] px-2 py-1 rounded">
+            <span className="absolute right-6 opacity-0 group-hover:opacity-100 transition-opacity text-xs text-[var(--text-secondary)] whitespace-nowrap bg-[var(--bg-elevated)] px-2 py-1 rounded pointer-events-none">
               {ch.title}
             </span>
             <span
               className={cn(
-                'w-2 h-2 rounded-full transition-all duration-300',
+                'rounded-full transition-all duration-300',
                 i === activeIndex
-                  ? cn('w-2.5 h-2.5', blockColors[ch.block])
-                  : 'bg-[var(--text-muted)] hover:bg-[var(--text-tertiary)]'
+                  ? cn('w-3 h-3', blockColors[ch.block])
+                  : 'w-1.5 h-1.5 bg-[var(--text-muted)] hover:bg-[var(--text-tertiary)] hover:w-2 hover:h-2'
               )}
             />
           </button>

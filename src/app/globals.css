@@ -156,6 +156,33 @@ body {
   }
 }
 
+/* Stage/Presentation Mode */
+body.stage-mode {
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+}
+body.stage-mode section {
+  scroll-snap-align: start;
+}
+body.stage-mode::-webkit-scrollbar {
+  width: 0;
+}
+
+/* Scroll indicator — animated chevron */
+@keyframes scroll-hint {
+  0%, 100% { opacity: 0.4; transform: translateY(0); }
+  50% { opacity: 0.8; transform: translateY(6px); }
+}
+.scroll-indicator {
+  animation: scroll-hint 2.5s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-indicator {
+    animation: none;
+    opacity: 0.4;
+  }
+}
+
 /* @property for animated angle (moving border) */
 @property --angle {
   syntax: '<angle>';
