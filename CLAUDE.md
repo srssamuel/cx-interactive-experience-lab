@@ -90,6 +90,54 @@ src/styles/                 -> Design tokens e CSS base
 
 ---
 
+## Build Quality
+
+- Always run `npm run build` after every round of file changes. Never assume the build passes.
+- When using component props, READ the component's type definitions first before using them. Do not guess prop names.
+- Use `React.useRef<HTMLDivElement>(null)` pattern for DOM refs — never pass refs with mismatched types.
+- When integrating Three.js or animation libraries, check their TypeScript types before usage.
+- Never suppress errors with `any`, `@ts-ignore`, or type assertions unless absolutely necessary.
+
+---
+
+## Anti-Template Design Standards
+
+- Never produce generic/template-looking UI. Every component must have unique visual identity.
+- Audit visual output against "does this look AI-generated?" criteria before considering work complete.
+- Use installed libraries actively — no dead imports or unused dependencies.
+- No two chapters may share the same layout structure.
+- Every chapter must have at least one unique visual element not found in any other chapter.
+- Varied spacing, typography, and color accents between sections — never uniform.
+
+---
+
+## Agent & Rate Limit Management
+
+- Do NOT spawn more than 4-5 parallel sub-agents at once. Stagger work in batches to avoid rate limits.
+- If rate-limited, complete remaining work sequentially rather than retrying parallel agents.
+- Each wave of agents must be fully complete (including build verification) before starting the next wave.
+
+---
+
+## Continuation Protocol
+
+When resuming work ("continue"):
+1. Check git status and current branch
+2. Run build to verify clean state
+3. Review TODO list before proceeding
+4. Never assume previous session left things in a working state
+
+---
+
+## Custom Skills
+
+- `/premium-audit` — Anti-template quality scoring for all chapters (10-point rubric)
+- `/build-fix` — Autonomous build error detection and fix loop
+- `/chapter-rebuild` — Batched chapter generation with quality gates (max 4 agents per wave)
+- `/red-team` — Adversarial design quality audit (senior design director perspective)
+
+---
+
 ## Quality Gates
 
 ### Gate 1: Narrativa (eliminatorio)
