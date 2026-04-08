@@ -3,6 +3,7 @@
 import { useRef, useState, useEffect, useCallback, createContext, useContext } from 'react'
 import { gsap } from 'gsap'
 import { useLenis } from '@/lib/providers/smooth-scroll-provider'
+import { useActiveChapter } from '@/lib/active-chapter-context'
 import type { Chapter } from '@/lib/types'
 
 interface SlideContextValue {
@@ -50,6 +51,15 @@ export function SlideDeck({ children, chapters }: SlideDeckProps) {
   const overlayRef = useRef<HTMLDivElement>(null)
   const lenis = useLenis()
 
+  const { setActiveChapter } = useActiveChapter()
+
+  // Sync initial chapter state
+  useEffect(() => {
+    if (chapters.length > 0) {
+      setActiveChapter(chapters[0].block, 0, chapters.length)
+    }
+  }, [chapters, setActiveChapter])
+
   // Disable Lenis smooth scroll — SlideDeck handles its own navigation
   useEffect(() => {
     if (lenis) {
@@ -80,6 +90,7 @@ export function SlideDeck({ children, chapters }: SlideDeckProps) {
           }
           currentSlideRef.current = index
           setCurrentSlide(index)
+          setActiveChapter(chapters[index].block, index, chapters.length)
 
           // Fade out overlay
           gsap.to(overlay, {
@@ -123,7 +134,7 @@ export function SlideDeck({ children, chapters }: SlideDeckProps) {
         { opacity: 1, duration: 0.3, ease: 'power2.in' }
       )
     }
-  }, [chapters])
+  }, [chapters, setActiveChapter])
 
   const next = useCallback(() => {
     goTo(currentSlideRef.current + 1)
