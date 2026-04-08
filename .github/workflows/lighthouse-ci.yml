@@ -1,31 +1,33 @@
-name: Lighthouse CI
+name: Auditoria de Performance e UX (Lighthouse)
 
 on:
   push:
-    branches: [main]
+    branches: [main, master]
   pull_request:
-    branches: [main]
+    branches: [main, master]
 
 jobs:
-  lighthouse:
+  auditoria:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Clonando o repositorio
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Configurando Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20'
           cache: npm
 
-      - name: Install dependencies
+      - name: Instalando dependencias
         run: npm ci --legacy-peer-deps
 
-      - name: Build
+      - name: Compilando o projeto (Build)
         run: npm run build
 
-      - name: Run Lighthouse CI
+      - name: Executando Lighthouse CI
         uses: treosh/lighthouse-ci-action@v12
         with:
+          configPath: ./lighthouserc.json
           uploadArtifacts: true
           temporaryPublicStorage: true
-          configPath: ./lighthouserc.json
