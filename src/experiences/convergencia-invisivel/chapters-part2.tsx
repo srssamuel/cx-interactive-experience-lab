@@ -21,6 +21,11 @@ import { BackgroundBeams } from '@/components/effects/background-beams'
 import { CharReveal } from '@/components/motion/char-reveal'
 import { FloatingElements } from '@/components/effects/floating-elements'
 import { MovingBorder } from '@/components/effects/moving-border'
+import { GsapTextReveal } from '@/components/cinematic/gsap-text-reveal'
+import { CinematicCounter } from '@/components/cinematic/cinematic-counter'
+import { GlitchText } from '@/components/cinematic/glitch-text'
+import { DataPipeline } from '@/components/cinematic/data-pipeline'
+import { HeartbeatLine } from '@/components/cinematic/heartbeat-line'
 import { Layers, ScanSearch, BrainCircuit, Trophy, ShieldAlert, Merge, Users, ClipboardCheck, MessagesSquare, Clock, Flame } from 'lucide-react'
 import { cn } from '@/lib/cn'
 import { content } from './content'
@@ -89,10 +94,20 @@ export function DataMaturidade() {
         ))}
       </div>
 
-      <ScrollReveal delay={0.6} variant="rise" className="mt-16 flex items-baseline gap-4">
-        <span className="font-display text-5xl md:text-6xl text-[var(--accent-blue)]">
-          <AnimatedCounter value={245} suffix="%" />
-        </span>
+      <ScrollReveal delay={0.5} className="mt-12">
+        <div className="max-w-3xl mx-auto rounded-xl overflow-hidden border border-[var(--accent-blue)]/15 bg-[var(--bg-primary)]/60">
+          <HeartbeatLine state="healthy" className="h-[130px]" />
+        </div>
+      </ScrollReveal>
+
+      <ScrollReveal delay={0.6} variant="rise" className="mt-10 flex items-baseline gap-4">
+        <CinematicCounter
+          value={245}
+          suffix="%"
+          className="text-5xl md:text-6xl"
+          glowIntensity="high"
+          color="var(--accent-blue-vivid)"
+        />
         <Body className="text-lg max-w-md">
           {content.dataMaturidade.statContext}
         </Body>
@@ -127,47 +142,16 @@ export function DataDadoVsInsight() {
           <Body className="text-lg">{content.dataDadoVsInsight.body}</Body>
         </ScrollReveal>
 
-        <div className="mt-16 flex flex-col md:flex-row items-stretch gap-2 md:gap-0">
-          {content.dataDadoVsInsight.pipeline.map((step, i) => (
-            <div key={step.stage} className="flex-1 flex items-stretch">
-              <ScrollReveal delay={i * 0.12} className="flex-1">
-                <BorderRevealCard
-                  glowColor={i === content.dataDadoVsInsight.pipeline.length - 1 ? 'rgba(0, 188, 212, 0.4)' : 'rgba(38, 198, 218, 0.4)'}
-                  tilt={false}
-                  className={cn(
-                    'h-full !p-5 !rounded-xl md:!rounded-none !border-[var(--border-subtle)]',
-                    i === 0 && 'md:!rounded-l-xl',
-                    i === content.dataDadoVsInsight.pipeline.length - 1 && 'md:!rounded-r-xl !bg-[var(--accent-teal-soft)] !border-[var(--accent-teal)]/20'
-                  )}
-                >
-                  <span
-                    className="overline block mb-2"
-                    style={{
-                      color: i === content.dataDadoVsInsight.pipeline.length - 1
-                        ? 'var(--accent-teal)'
-                        : 'var(--accent-blue)',
-                    }}
-                  >
-                    {step.stage}
-                  </span>
-                  <Body as="span" className="text-sm">{step.example}</Body>
-                </BorderRevealCard>
-              </ScrollReveal>
-              {i < content.dataDadoVsInsight.pipeline.length - 1 && (
-                <motion.span
-                  className="hidden md:flex items-center text-lg px-1"
-                  style={{ color: 'var(--accent-blue, #26C6DA)' }}
-                  initial={{ opacity: 0, x: -5 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: 0.2 + i * 0.15 }}
-                >
-                  →
-                </motion.span>
-              )}
-            </div>
-          ))}
-        </div>
+        {/* Animated data pipeline visualization */}
+        <ScrollReveal delay={0.3} className="mt-16">
+          <DataPipeline
+            stages={content.dataDadoVsInsight.pipeline.map((step) => ({
+              label: step.stage,
+              description: step.example,
+            }))}
+            className="mb-8"
+          />
+        </ScrollReveal>
       </div>
     </Section>
     </Spotlight>
@@ -191,11 +175,10 @@ export function AiOQueFaz() {
         <Overline className="mb-4 text-[var(--accent-purple)] flex items-center gap-2">
           <BrainCircuit className="w-4 h-4" />Inteligencia Artificial
         </Overline>
-        <h2
-          className="font-display text-4xl md:text-6xl lg:text-7xl leading-[0.95] tracking-[-0.02em]"
-          style={{ color: 'var(--accent-purple, #7C4DFF)' }}
-        >
-          {content.aiOQueFaz.headline}
+        <h2 className="font-display text-4xl md:text-6xl lg:text-7xl leading-[0.95] tracking-[-0.02em]">
+          <GlitchText intensity="low" color="var(--accent-purple, #7C4DFF)">
+            {content.aiOQueFaz.headline}
+          </GlitchText>
         </h2>
 
         <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -339,11 +322,10 @@ export function AiArmadilhas() {
         <ShieldAlert className="w-4 h-4" />CAUTION
       </Overline>
 
-      <h2
-        className="font-display text-4xl md:text-6xl lg:text-7xl text-center leading-[0.95] tracking-[-0.02em]"
-        style={{ color: 'var(--accent-red, #E74C3C)' }}
-      >
-        {content.aiArmadilhas.headline}
+      <h2 className="font-display text-4xl md:text-6xl lg:text-7xl text-center leading-[0.95] tracking-[-0.02em]">
+        <GlitchText intensity="high" color="var(--accent-red, #E74C3C)">
+          {content.aiArmadilhas.headline}
+        </GlitchText>
       </h2>
 
       <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -380,12 +362,13 @@ export function AiArmadilhas() {
       </div>
 
       <ScrollReveal delay={0.5} variant="slide-left" className="mt-16 text-center">
-        <span
-          className="font-display text-5xl md:text-6xl"
-          style={{ color: 'var(--accent-red, #E74C3C)' }}
-        >
-          <AnimatedCounter value={72} suffix="%" />
-        </span>
+        <CinematicCounter
+          value={72}
+          suffix="%"
+          className="text-5xl md:text-6xl"
+          color="#E74C3C"
+          glowIntensity="high"
+        />
         <Body className="mt-3 max-w-lg mx-auto">
           {content.aiArmadilhas.statContext}
         </Body>
@@ -427,15 +410,17 @@ export function ConvergenciaSistema() {
       </div>
       <div className="relative z-10">
         <Overline className="text-center mb-6 flex items-center justify-center gap-2"><Merge className="w-4 h-4 text-[var(--accent-blue)]" />A Convergencia</Overline>
-        <CharReveal
+        <GsapTextReveal
           tag="h1"
           className="text-center text-[var(--text-hero)]"
+          variant="chars"
           delay={0.2}
-          stagger={0.02}
+          stagger={0.025}
           color="var(--accent-blue)"
+          glowColor="rgba(52, 152, 219, 0.6)"
         >
           {content.convergenciaSistema.headline}
-        </CharReveal>
+        </GsapTextReveal>
 
         <ScrollReveal className="mt-6 max-w-2xl mx-auto text-center">
           <Body className="text-lg">{content.convergenciaSistema.body}</Body>
@@ -803,9 +788,14 @@ export function FechamentoJanela() {
 
         <ScrollReveal delay={0.5} variant="blur" className="lg:col-span-2">
           <Card variant="stat" accentColor="amber" className="text-center">
-            <span className="font-display text-5xl md:text-6xl text-[var(--accent-blue)]">
-              <AnimatedCounter value={48} prefix="$" suffix="B" />
-            </span>
+            <CinematicCounter
+              value={48}
+              prefix="$"
+              suffix="B"
+              className="text-5xl md:text-6xl"
+              glowIntensity="high"
+              color="var(--accent-blue-vivid)"
+            />
             <Body className="mt-4 text-sm">
               {content.fechamentoJanela.statContext}
             </Body>
@@ -846,14 +836,16 @@ export function FechamentoProvocacao() {
             </Overline>
           </motion.div>
 
-          <CharReveal
+          <GsapTextReveal
             tag="h2"
             className="text-[var(--text-hero)]"
+            variant="chars"
             delay={0.3}
             stagger={0.03}
+            glowColor="rgba(52, 152, 219, 0.4)"
           >
             {content.fechamentoProvocacao.headline}
-          </CharReveal>
+          </GsapTextReveal>
 
           <motion.div
             className="mt-10"

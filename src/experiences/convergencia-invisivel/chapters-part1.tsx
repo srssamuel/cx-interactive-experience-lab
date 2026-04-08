@@ -19,6 +19,11 @@ import { FloatingElements } from '@/components/effects/floating-elements'
 import { CharReveal } from '@/components/motion/char-reveal'
 import { StaggerGroup, StaggerItem } from '@/components/motion/stagger-group'
 import { GradientMesh } from '@/components/effects/gradient-mesh'
+import { GsapTextReveal } from '@/components/cinematic/gsap-text-reveal'
+import { CinematicCounter } from '@/components/cinematic/cinematic-counter'
+import { GlitchText } from '@/components/cinematic/glitch-text'
+import { HeartbeatLine } from '@/components/cinematic/heartbeat-line'
+import { AnimatedEquation } from '@/components/cinematic/animated-equation'
 import { Globe, Sparkles, BarChart3, TrendingUp, DollarSign, MessageSquare, HeartHandshake, ChartNoAxesCombined, Unplug, Database } from 'lucide-react'
 import { cn } from '@/lib/cn'
 import { content } from './content'
@@ -84,14 +89,16 @@ export function Abertura() {
           </motion.p>
 
           <div className="mt-16 max-w-3xl">
-            <CharReveal
+            <GsapTextReveal
               tag="h1"
               className="text-[clamp(1.5rem,4vw,3rem)]"
-              delay={0.8}
+              variant="chars"
               stagger={0.025}
+              delay={0.8}
+              glowColor="rgba(52, 152, 219, 0.5)"
             >
               {content.abertura.headline}
-            </CharReveal>
+            </GsapTextReveal>
           </div>
 
           <motion.div
@@ -315,40 +322,42 @@ export function CxEquacao() {
           <Body className="text-lg">{content.cxEquacao.body}</Body>
         </ScrollReveal>
 
-        {/* Triangular equation diagram — 3 nodes forming a visual equation */}
+        {/* Animated triangle equation — rotating nodes with particle flow */}
         <div className="mt-16 relative">
-          {/* SVG connecting lines between nodes */}
-          <svg className="absolute inset-0 w-full h-full pointer-events-none hidden md:block" aria-hidden="true">
-            <line x1="50%" y1="15%" x2="20%" y2="85%" stroke="var(--accent-blue)" strokeWidth="1" opacity="0.35" />
-            <line x1="50%" y1="15%" x2="80%" y2="85%" stroke="var(--accent-blue)" strokeWidth="1" opacity="0.35" />
-            <line x1="20%" y1="85%" x2="80%" y2="85%" stroke="var(--accent-blue)" strokeWidth="1" opacity="0.35" />
-          </svg>
+          <ScrollReveal variant="scale" delay={0.3}>
+            <AnimatedEquation
+              nodes={[
+                {
+                  label: content.cxEquacao.pillars[0].title,
+                  icon: <BarChart3 className="w-5 h-5" />,
+                },
+                {
+                  label: content.cxEquacao.pillars[1].title,
+                  icon: <TrendingUp className="w-5 h-5" />,
+                },
+                {
+                  label: content.cxEquacao.pillars[2].title,
+                  icon: <Globe className="w-5 h-5" />,
+                },
+              ]}
+              className="my-4"
+            />
+          </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-y-16">
+          {/* Pillar descriptions below */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8 max-w-4xl mx-auto">
             {content.cxEquacao.pillars.map((pillar, i) => (
-              <ScrollReveal key={pillar.title} variant="scale" delay={i * 0.2} className={nodePositions[i]}>
-                <div className="relative p-6 md:p-8 rounded-2xl border border-[var(--accent-blue)]/20 bg-[var(--bg-primary)]/60 backdrop-blur-sm max-w-xs">
-                  {/* Node number — large faded */}
-                  <span className="absolute -top-4 -left-2 font-display text-5xl text-[var(--accent-blue)] opacity-[0.25] leading-none select-none" aria-hidden="true">
-                    0{i + 1}
-                  </span>
-                  <SubHeading className="text-[var(--accent-blue)] text-xl">
-                    {pillar.title}
-                  </SubHeading>
-                  <Body className="mt-3 text-sm">{pillar.desc}</Body>
-                  {/* Operator symbols between nodes */}
-                  {i < 2 && (
-                    <span className="hidden md:block absolute -bottom-10 left-1/2 -translate-x-1/2 font-display text-2xl text-[var(--accent-blue)] opacity-30">
-                      {i === 0 ? '\u00d7' : '='}
-                    </span>
-                  )}
+              <ScrollReveal key={pillar.title} variant="rise" delay={0.5 + i * 0.15}>
+                <div className="text-center p-4">
+                  <SubHeading className="text-[var(--accent-blue)] text-lg">{pillar.title}</SubHeading>
+                  <Body className="mt-2 text-sm">{pillar.desc}</Body>
                 </div>
               </ScrollReveal>
             ))}
           </div>
 
           {/* Equation result */}
-          <ScrollReveal delay={0.7} className="mt-12 text-center">
+          <ScrollReveal delay={0.9} className="mt-8 text-center">
             <span className="font-display text-lg md:text-xl text-[var(--accent-blue)] opacity-60 tracking-wide">
               Expectativa &times; Percepcao &times; Tempo = Experiencia
             </span>
@@ -504,11 +513,13 @@ export function CxCusto() {
                 className={cn(i % 2 !== 0 && 'ml-auto')}
               >
                 <div className="flex items-baseline gap-6">
-                  <AnimatedCounter
+                  <CinematicCounter
                     value={stat.value}
                     suffix={stat.suffix}
                     prefix={stat.prefix}
-                    className="block text-[var(--accent-blue)] text-[clamp(3rem,7vw,5rem)] leading-none font-display"
+                    className="text-[clamp(3rem,7vw,5rem)]"
+                    glowIntensity="high"
+                    color="var(--accent-blue-vivid)"
                   />
                   <Body className="text-lg max-w-xs">{stat.label}</Body>
                 </div>
@@ -685,8 +696,15 @@ export function CsParadoxo() {
           </ScrollReveal>
         </div>
 
+        {/* Heartbeat monitor — showing the paradox visually */}
+        <ScrollReveal delay={0.5} className="mt-12">
+          <div className="max-w-3xl mx-auto rounded-xl overflow-hidden border border-[var(--accent-teal)]/20 bg-[var(--bg-primary)]/80">
+            <HeartbeatLine state="danger" className="h-[160px]" />
+          </div>
+        </ScrollReveal>
+
         {/* Paradox insight — revealed below the tension */}
-        <ScrollReveal delay={0.6} className="mt-12">
+        <ScrollReveal delay={0.7} className="mt-8">
           <div className="text-center max-w-2xl mx-auto px-6 py-5 border-t border-b border-[var(--accent-blue)]/15">
             <Body className="text-lg text-[var(--text-primary)] font-medium italic">
               {content.csParadoxo.insight}
@@ -723,16 +741,16 @@ export function CsMetricas() {
       <div className="mt-24 space-y-20 max-w-3xl mx-auto">
         {content.csMetricas.metrics.map((metric, i) => (
           <div key={metric.name}>
-            {/* The struck metric name */}
+            {/* The struck metric name with glitch distortion */}
             <ScrollReveal variant="fade" delay={i * 0.1}>
-              <span
-                className={cn(
-                  'font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-none',
-                  'text-[var(--accent-blue)] line-through decoration-[3px]',
-                  'decoration-[var(--accent-blue)]/60'
-                )}
-              >
-                {metric.name}
+              <span className="line-through decoration-[3px] decoration-[var(--accent-blue)]/60">
+                <GlitchText
+                  className="font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-none"
+                  intensity={i === 0 ? 'high' : 'medium'}
+                  color="var(--accent-blue-vivid)"
+                >
+                  {metric.name}
+                </GlitchText>
               </span>
             </ScrollReveal>
 
@@ -787,9 +805,14 @@ export function CsExpansao() {
           <div className="text-center">
             <MovingBorder borderColor="var(--accent-teal)" duration={6} borderWidth={1} className="inline-block rounded-2xl">
               <div className="px-16 py-12 md:px-24 md:py-16 bg-[var(--bg-surface)] rounded-2xl">
-                <StatNumber className="block text-[clamp(5rem,16vw,12rem)] leading-none">
-                  {content.csExpansao.stat}
-                </StatNumber>
+                <CinematicCounter
+                  value={parseFloat(content.csExpansao.stat.replace(/[^0-9.]/g, ''))}
+                  suffix={content.csExpansao.stat.replace(/[0-9.]/g, '')}
+                  className="text-[clamp(5rem,16vw,12rem)]"
+                  glowIntensity="high"
+                  color="var(--accent-teal)"
+                  duration={3}
+                />
               </div>
             </MovingBorder>
             <ScrollReveal delay={0.2}>
