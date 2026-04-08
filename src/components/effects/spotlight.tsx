@@ -13,7 +13,7 @@ interface SpotlightProps {
 export function Spotlight({
   children,
   className,
-  color = 'rgba(200, 135, 58, 0.30)',
+  color = 'rgba(52, 152, 219, 0.30)',
   size = 800,
 }: SpotlightProps) {
   const containerRef = useRef<HTMLDivElement>(null)

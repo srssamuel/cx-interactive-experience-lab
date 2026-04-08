@@ -10,14 +10,10 @@ interface HeroOrbProps {
   secondaryColor?: string
 }
 
-/**
- * Large animated glowing orb for hero sections.
- * Creates a dramatic, clearly visible pulsing light effect.
- */
 export function HeroOrb({
   className,
-  color = '#C8873A',
-  secondaryColor = '#E5A04B',
+  color = '#3498DB',
+  secondaryColor = '#5DADE2',
   size = 500,
 }: HeroOrbProps) {
   return (

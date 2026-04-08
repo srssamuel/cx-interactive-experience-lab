@@ -11,6 +11,8 @@ type SectionBg =
   | 'gradient-up'
   | 'amber-glow'
   | 'green-glow'
+  | 'blue-glow'
+  | 'purple-glow'
   | 'vignette'
 
 type SectionSpacing = 'compact' | 'normal' | 'generous' | 'dramatic'

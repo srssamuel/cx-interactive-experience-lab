@@ -6,7 +6,7 @@ interface CardProps {
   children: React.ReactNode
   className?: string
   variant?: 'default' | 'bordered' | 'highlight' | 'stat' | 'minimal' | 'accent' | 'glow'
-  accentColor?: 'amber' | 'green'
+  accentColor?: 'amber' | 'green' | 'blue' | 'teal'
   hover?: boolean
 }
 
@@ -14,33 +14,25 @@ export function Card({
   children,
   className,
   variant = 'default',
-  accentColor = 'amber',
+  accentColor = 'blue',
   hover = true,
 }: CardProps) {
+  const accentMap = {
+    amber: { border: 'var(--accent-blue)', soft: 'var(--accent-blue-soft)', shadow: 'var(--shadow-glow-blue)' },
+    green: { border: 'var(--accent-teal)', soft: 'var(--accent-green-soft)', shadow: 'var(--shadow-glow-teal)' },
+    blue: { border: 'var(--accent-blue)', soft: 'var(--accent-blue-soft)', shadow: 'var(--shadow-glow-blue)' },
+    teal: { border: 'var(--accent-teal)', soft: 'var(--accent-green-soft)', shadow: 'var(--shadow-glow-teal)' },
+  }
+  const accent = accentMap[accentColor] || accentMap.blue
+
   const variants = {
     default: 'bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-8',
     bordered: 'bg-transparent border border-[var(--border-default)] rounded-2xl p-8',
-    highlight: cn(
-      'border-l-[3px] bg-[var(--bg-surface)]/50 rounded-r-xl p-8',
-      accentColor === 'amber' ? 'border-l-[var(--accent-amber)]' : 'border-l-[var(--accent-green)]'
-    ),
-    stat: cn(
-      'bg-[var(--bg-surface)] rounded-2xl p-8 text-center',
-      accentColor === 'amber' ? 'shadow-[var(--shadow-glow-amber)]' : 'shadow-[var(--shadow-glow-green)]'
-    ),
+    highlight: `border-l-[3px] bg-[var(--bg-surface)]/50 rounded-r-xl p-8 border-l-[${accent.border}]`,
+    stat: `bg-[var(--bg-surface)] rounded-2xl p-8 text-center shadow-[${accent.shadow}]`,
     minimal: 'p-6',
-    glow: cn(
-      'bg-[var(--bg-surface)] rounded-2xl p-8 border border-[var(--border-subtle)]',
-      accentColor === 'amber'
-        ? 'shadow-[0_0_40px_rgba(200,135,58,0.1),inset_0_0_20px_rgba(200,135,58,0.03)]'
-        : 'shadow-[0_0_40px_rgba(74,124,92,0.1),inset_0_0_20px_rgba(74,124,92,0.03)]'
-    ),
-    accent: cn(
-      'rounded-2xl p-8 border',
-      accentColor === 'amber'
-        ? 'bg-[var(--accent-amber-soft)] border-[var(--accent-amber)]/20'
-        : 'bg-[var(--accent-green-soft)] border-[var(--accent-green)]/20'
-    ),
+    glow: `bg-[var(--bg-surface)] rounded-2xl p-8 border border-[var(--border-subtle)] shadow-[0_0_40px_rgba(52,152,219,0.1),inset_0_0_20px_rgba(52,152,219,0.03)]`,
+    accent: `rounded-2xl p-8 border bg-[${accent.soft}] border-[${accent.border}]/20`,
   }
 
   return (

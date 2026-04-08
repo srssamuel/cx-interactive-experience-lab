@@ -75,7 +75,7 @@ export function Overline({ children, className }: Omit<TypographyProps, 'as'>) {
 export function StatNumber({ children, className }: Omit<TypographyProps, 'as'>) {
   return (
     <span
-      className={cn('font-display text-[var(--accent-amber)] leading-none', className)}
+      className={cn('font-display text-[var(--accent-blue-vivid)] leading-none', className)}
       style={{ fontSize: 'var(--text-hero)' }}
     >
       {children}

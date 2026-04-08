@@ -34,7 +34,7 @@ export function DataMaturidade() {
   return (
     <Section id="data-maturidade" bg="gradient-down" spacing="generous">
       <AmbientBackground variant="mesh-dark" />
-      <BackgroundBeams color="rgba(91, 143, 185, 0.35)" beamCount={3} />
+      <BackgroundBeams color="rgba(38, 198, 218, 0.35)" beamCount={3} />
       <FloatingElements count={4} color="var(--accent-blue)" />
       <div className="relative z-10">
       <CinematicHeadline
@@ -52,7 +52,7 @@ export function DataMaturidade() {
               className={cn(
                 'flex flex-col md:flex-row md:items-center gap-4 rounded-xl border transition-all',
                 i === content.dataMaturidade.levels.length - 1
-                  ? 'border-[var(--accent-amber)]/30 bg-[var(--accent-amber-soft)] hover:border-[var(--accent-amber)]/50'
+                  ? 'border-[var(--accent-blue)]/30 bg-[var(--accent-blue-soft)] hover:border-[var(--accent-blue)]/50'
                   : 'border-[var(--border-subtle)] hover:border-[var(--border-hover)]'
               )}
               style={{
@@ -63,7 +63,7 @@ export function DataMaturidade() {
             >
               <span
                 className="font-mono text-xs shrink-0 w-8 font-bold"
-                style={{ color: 'var(--accent-blue, #5B8FB9)' }}
+                style={{ color: 'var(--accent-blue, #26C6DA)' }}
               >
                 L{i + 1}
               </span>
@@ -71,7 +71,7 @@ export function DataMaturidade() {
                 as="h3"
                 className={cn(
                   'text-base font-semibold shrink-0 min-w-[140px] text-[var(--accent-blue)]',
-                  i === content.dataMaturidade.levels.length - 1 && 'text-[var(--accent-amber)]'
+                  i === content.dataMaturidade.levels.length - 1 && 'text-[var(--accent-blue)]'
                 )}
               >
                 {level.name}
@@ -80,7 +80,7 @@ export function DataMaturidade() {
                 {level.desc}
               </Body>
               {i === content.dataMaturidade.levels.length - 1 && (
-                <span className="ml-auto shrink-0 font-mono text-[10px] uppercase tracking-widest text-[var(--accent-amber)] opacity-70">
+                <span className="ml-auto shrink-0 font-mono text-[10px] uppercase tracking-widest text-[var(--accent-blue)] opacity-70">
                   target
                 </span>
               )}
@@ -90,7 +90,7 @@ export function DataMaturidade() {
       </div>
 
       <ScrollReveal delay={0.6} variant="rise" className="mt-16 flex items-baseline gap-4">
-        <span className="font-display text-5xl md:text-6xl text-[var(--accent-amber)]">
+        <span className="font-display text-5xl md:text-6xl text-[var(--accent-blue)]">
           <AnimatedCounter value={245} suffix="%" />
         </span>
         <Body className="text-lg max-w-md">
@@ -111,7 +111,7 @@ export { DataMaturidade as ChapterDataMaturidade }
 
 export function DataDadoVsInsight() {
   return (
-    <Spotlight className="w-full" color="rgba(91, 143, 185, 0.15)" size={700}>
+    <Spotlight className="w-full" color="rgba(38, 198, 218, 0.15)" size={700}>
     <Section id="data-dado-vs-insight" bg="surface" spacing="compact">
       <AmbientBackground variant="top-light" />
       <div className="relative z-10">
@@ -132,19 +132,19 @@ export function DataDadoVsInsight() {
             <div key={step.stage} className="flex-1 flex items-stretch">
               <ScrollReveal delay={i * 0.12} className="flex-1">
                 <BorderRevealCard
-                  glowColor={i === content.dataDadoVsInsight.pipeline.length - 1 ? 'rgba(74, 124, 92, 0.4)' : 'rgba(91, 143, 185, 0.4)'}
+                  glowColor={i === content.dataDadoVsInsight.pipeline.length - 1 ? 'rgba(0, 188, 212, 0.4)' : 'rgba(38, 198, 218, 0.4)'}
                   tilt={false}
                   className={cn(
                     'h-full !p-5 !rounded-xl md:!rounded-none !border-[var(--border-subtle)]',
                     i === 0 && 'md:!rounded-l-xl',
-                    i === content.dataDadoVsInsight.pipeline.length - 1 && 'md:!rounded-r-xl !bg-[var(--accent-green-soft)] !border-[var(--accent-green)]/20'
+                    i === content.dataDadoVsInsight.pipeline.length - 1 && 'md:!rounded-r-xl !bg-[var(--accent-teal-soft)] !border-[var(--accent-teal)]/20'
                   )}
                 >
                   <span
                     className="overline block mb-2"
                     style={{
                       color: i === content.dataDadoVsInsight.pipeline.length - 1
-                        ? 'var(--accent-green)'
+                        ? 'var(--accent-teal)'
                         : 'var(--accent-blue)',
                     }}
                   >
@@ -156,7 +156,7 @@ export function DataDadoVsInsight() {
               {i < content.dataDadoVsInsight.pipeline.length - 1 && (
                 <motion.span
                   className="hidden md:flex items-center text-lg px-1"
-                  style={{ color: 'var(--accent-blue, #5B8FB9)' }}
+                  style={{ color: 'var(--accent-blue, #26C6DA)' }}
                   initial={{ opacity: 0, x: -5 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
@@ -193,7 +193,7 @@ export function AiOQueFaz() {
         </Overline>
         <h2
           className="font-display text-4xl md:text-6xl lg:text-7xl leading-[0.95] tracking-[-0.02em]"
-          style={{ color: 'var(--accent-purple, #8B6FB0)' }}
+          style={{ color: 'var(--accent-purple, #7C4DFF)' }}
         >
           {content.aiOQueFaz.headline}
         </h2>
@@ -201,20 +201,20 @@ export function AiOQueFaz() {
         <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6">
           {content.aiOQueFaz.stats.map((stat, i) => (
             <ScrollReveal key={stat.label} delay={i * 0.12} variant="clip-up">
-              <div className="terminal-card rounded-lg border border-[#4A7C5C]/30 p-6 bg-[#0a1a10]">
-                <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[#4A7C5C]/20">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#C75B5B]" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-[var(--accent-amber)]" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#4A7C5C]" />
-                  <span className="font-mono text-[10px] text-[#4A7C5C]/60 ml-2">terminal</span>
+              <div className="terminal-card rounded-lg border border-[#00BCD4]/30 p-6 bg-[#0a1a10]">
+                <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[#00BCD4]/20">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#E74C3C]" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[var(--accent-blue)]" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#00BCD4]" />
+                  <span className="font-mono text-[10px] text-[#00BCD4]/60 ml-2">terminal</span>
                 </div>
-                <p className="font-mono text-xs text-[#4A7C5C]/70 mb-3">
+                <p className="font-mono text-xs text-[#00BCD4]/70 mb-3">
                   {commands[i] || '$ ai --run'}
                 </p>
-                <span className="font-mono text-4xl font-bold block" style={{ color: '#4A7C5C' }}>
+                <span className="font-mono text-4xl font-bold block" style={{ color: '#00BCD4' }}>
                   <AnimatedCounter value={stat.value} suffix={stat.suffix} />
                 </span>
-                <p className="font-mono text-sm mt-3" style={{ color: '#4A7C5C' }}>
+                <p className="font-mono text-sm mt-3" style={{ color: '#00BCD4' }}>
                   {stat.label}
                 </p>
                 <p className="font-mono text-[10px] mt-2 text-[var(--text-muted)]">
@@ -230,9 +230,9 @@ export function AiOQueFaz() {
         </ScrollReveal>
 
         <ScrollReveal delay={0.6} variant="clip-up" className="mt-8">
-          <div className="terminal-card rounded-lg border border-[#4A7C5C]/30 p-5 bg-[#0a1a10]">
-            <p className="font-mono text-xs text-[#C75B5B] mb-2">$ WARNING: ROI_CHECK_FAILED</p>
-            <p className="font-mono text-sm" style={{ color: '#4A7C5C' }}>
+          <div className="terminal-card rounded-lg border border-[#00BCD4]/30 p-5 bg-[#0a1a10]">
+            <p className="font-mono text-xs text-[#E74C3C] mb-2">$ WARNING: ROI_CHECK_FAILED</p>
+            <p className="font-mono text-sm" style={{ color: '#00BCD4' }}>
               {content.aiOQueFaz.warning}
             </p>
           </div>
@@ -253,7 +253,7 @@ export function AiOndeGanha() {
   const bgVariants = ['surface', 'elevated', 'surface'] as const
   return (
     <Section id="ai-onde-ganha" bg="primary">
-      <BackgroundBeams color="rgba(139, 111, 176, 0.35)" beamCount={4} />
+      <BackgroundBeams color="rgba(124, 77, 255, 0.35)" beamCount={4} />
       <FloatingElements count={5} color="var(--accent-purple)" />
       <div className="relative z-10">
       <CinematicHeadline
@@ -269,7 +269,7 @@ export function AiOndeGanha() {
         {content.aiOndeGanha.cases.map((c, i) => (
           <ScrollReveal key={c.company} delay={i * 0.15} variant={i === 1 ? 'blur' : 'rise'}>
             <BorderRevealCard
-              glowColor="rgba(139, 111, 176, 0.35)"
+              glowColor="rgba(124, 77, 255, 0.35)"
               tilt={false}
               className={cn(
                 '!rounded-xl',
@@ -311,7 +311,7 @@ export function AiOndeGanha() {
       {/* Insight — centered breathing glow */}
       <ScrollReveal delay={0.5} className="mt-16">
         <div className="text-center max-w-2xl mx-auto">
-          <div className="inline-block px-8 py-6 rounded-2xl bg-[var(--accent-amber-soft)] border border-[var(--accent-amber)]/20">
+          <div className="inline-block px-8 py-6 rounded-2xl bg-[var(--accent-blue-soft)] border border-[var(--accent-blue)]/20">
             <Body className="text-lg text-[var(--text-primary)] font-medium italic">
               {content.aiOndeGanha.insight}
             </Body>
@@ -341,7 +341,7 @@ export function AiArmadilhas() {
 
       <h2
         className="font-display text-4xl md:text-6xl lg:text-7xl text-center leading-[0.95] tracking-[-0.02em]"
-        style={{ color: 'var(--accent-red, #C75B5B)' }}
+        style={{ color: 'var(--accent-red, #E74C3C)' }}
       >
         {content.aiArmadilhas.headline}
       </h2>
@@ -355,12 +355,12 @@ export function AiArmadilhas() {
           >
             <div
               className="warning-stripes relative rounded-xl overflow-hidden border p-6 pt-20"
-              style={{ borderColor: 'rgba(199, 91, 91, 0.3)' }}
+              style={{ borderColor: 'rgba(231, 76, 60, 0.3)' }}
             >
               <span
                 className="absolute top-3 left-4 font-display text-[5rem] leading-none font-bold opacity-15 select-none"
                 style={{
-                  color: 'var(--accent-red, #C75B5B)',
+                  color: 'var(--accent-red, #E74C3C)',
                   transform: `rotate(-8deg)`,
                 }}
               >
@@ -382,7 +382,7 @@ export function AiArmadilhas() {
       <ScrollReveal delay={0.5} variant="slide-left" className="mt-16 text-center">
         <span
           className="font-display text-5xl md:text-6xl"
-          style={{ color: 'var(--accent-red, #C75B5B)' }}
+          style={{ color: 'var(--accent-red, #E74C3C)' }}
         >
           <AnimatedCounter value={72} suffix="%" />
         </span>
@@ -403,21 +403,36 @@ export { AiArmadilhas as ChapterAiArmadilhas }
    ═══════════════════════════════════════════════════ */
 
 export function ConvergenciaSistema() {
-  const quadrantColors = ['#5B8FB9', '#4A7C5C', '#8B6FB0', '#C75B5B']
+  const quadrantColors = ['#42A5F5', '#00BCD4', '#26C6DA', '#7C4DFF']
 
   return (
-    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.15)" size={800}>
+    <Spotlight className="w-full" color="rgba(52, 152, 219, 0.25)" size={900}>
     <Section id="convergencia-sistema-unico" bg="vignette" spacing="dramatic">
-      <BackgroundBeams color="rgba(200, 135, 58, 0.35)" beamCount={5} />
+      <BackgroundBeams color="rgba(52, 152, 219, 0.4)" beamCount={6} />
       <AmbientBackground variant="diagonal-split" breathe={true} />
+      {/* Convergence center orb — unique to climax */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[1]">
+        <motion.div
+          className="w-32 h-32 rounded-full"
+          style={{
+            background: 'radial-gradient(circle, rgba(52,152,219,0.6) 0%, rgba(52,152,219,0.2) 40%, transparent 70%)',
+            boxShadow: '0 0 80px rgba(52,152,219,0.4), 0 0 160px rgba(52,152,219,0.2)',
+          }}
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.6, 1, 0.6],
+          }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+        />
+      </div>
       <div className="relative z-10">
-        <Overline className="text-center mb-6 flex items-center justify-center gap-2"><Merge className="w-4 h-4 text-[var(--accent-amber)]" />A Convergencia</Overline>
+        <Overline className="text-center mb-6 flex items-center justify-center gap-2"><Merge className="w-4 h-4 text-[var(--accent-blue)]" />A Convergencia</Overline>
         <CharReveal
           tag="h1"
           className="text-center text-[var(--text-hero)]"
           delay={0.2}
           stagger={0.02}
-          color="var(--accent-amber)"
+          color="var(--accent-blue)"
         >
           {content.convergenciaSistema.headline}
         </CharReveal>
@@ -474,19 +489,19 @@ export { ConvergenciaSistema as ChapterConvergenciaSistema }
    ═══════════════════════════════════════════════════ */
 
 export function ConvergenciaLidera() {
-  const roleAccents = ['var(--accent-amber)', 'var(--accent-green)', 'var(--accent-blue)']
-  const roleBorders = ['rgba(200, 135, 58, 0.25)', 'rgba(74, 124, 92, 0.25)', 'rgba(91, 143, 185, 0.25)']
+  const roleAccents = ['var(--accent-blue)', 'var(--accent-teal)', 'var(--accent-blue)']
+  const roleBorders = ['rgba(52, 152, 219, 0.25)', 'rgba(0, 188, 212, 0.25)', 'rgba(38, 198, 218, 0.25)']
 
   return (
     <Section id="convergencia-quem-lidera" bg="gradient-up">
-      <BackgroundBeams color="rgba(200, 135, 58, 0.35)" beamCount={3} />
+      <BackgroundBeams color="rgba(52, 152, 219, 0.35)" beamCount={3} />
       <div className="relative z-10">
       <CinematicHeadline
         overline="Lideranca"
         headline={content.convergenciaLidera.headline}
         align="left"
         size="display"
-        icon={<Users className="w-4 h-4 text-[var(--accent-amber)]" />}
+        icon={<Users className="w-4 h-4 text-[var(--accent-blue)]" />}
       />
 
       <ScrollReveal className="mt-6 max-w-3xl">
@@ -571,17 +586,17 @@ export { ConvergenciaLidera as ChapterConvergenciaLidera }
 
 export function WorkshopDiagnostico() {
   const dimColors: Record<string, string> = {
-    CX: '#5B8FB9',
-    CS: '#4A7C5C',
-    Dados: '#8B6FB0',
-    AI: '#C75B5B',
-    Integracao: '#C8873A',
+    CX: '#26C6DA',
+    CS: '#00BCD4',
+    Dados: '#7C4DFF',
+    AI: '#E74C3C',
+    Integracao: '#3498DB',
   }
 
   return (
-    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.15)" size={600}>
+    <Spotlight className="w-full" color="rgba(52, 152, 219, 0.15)" size={600}>
     <Section id="workshop-diagnostico" bg="surface" className="dot-grid" spacing="generous">
-      <AmbientBackground variant="radial-amber" />
+      <AmbientBackground variant="radial-blue" />
       <div className="relative z-10">
       <PausePoint label="Workshop" />
 
@@ -590,7 +605,7 @@ export function WorkshopDiagnostico() {
         headline={content.workshopDiagnostico.headline}
         align="center"
         size="display"
-        icon={<ClipboardCheck className="w-4 h-4 text-[var(--accent-amber)]" />}
+        icon={<ClipboardCheck className="w-4 h-4 text-[var(--accent-blue)]" />}
       />
 
       <StaggerGroup className="mt-12 space-y-5 max-w-3xl mx-auto">
@@ -674,7 +689,7 @@ function FlipCard({ front, back }: { front: string; back: string }) {
 
         {/* Back */}
         <div
-          className="absolute inset-0 flex items-center justify-center p-8 rounded-xl border border-[var(--accent-green)]/30 bg-[var(--accent-green-soft,_#0d1f14)]"
+          className="absolute inset-0 flex items-center justify-center p-8 rounded-xl border border-[var(--accent-teal)]/30 bg-[var(--accent-teal-soft,_#0d1f14)]"
           style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
         >
           <p className="text-base text-center leading-relaxed text-[var(--text-primary)]">
@@ -695,7 +710,7 @@ export function WorkshopDiscussao() {
 
   return (
     <Section id="workshop-discussao" bg="green-glow" className="dot-grid">
-      <FloatingElements count={6} color="var(--accent-green)" />
+      <FloatingElements count={6} color="var(--accent-teal)" />
       <div className="relative z-10">
       <PausePoint label="Discussao em grupo" />
 
@@ -704,7 +719,7 @@ export function WorkshopDiscussao() {
         headline={content.workshopDiscussao.headline}
         align="center"
         size="display"
-        icon={<MessagesSquare className="w-4 h-4 text-[var(--accent-green)]" />}
+        icon={<MessagesSquare className="w-4 h-4 text-[var(--accent-teal)]" />}
       />
 
       <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -739,15 +754,15 @@ export function FechamentoJanela() {
   return (
     <Section id="fechamento-janela" bg="primary">
       <AmbientBackground variant="bottom-fade" />
-      <BackgroundBeams color="rgba(200, 135, 58, 0.35)" beamCount={2} />
-      <FloatingElements count={4} color="var(--accent-amber)" />
+      <BackgroundBeams color="rgba(52, 152, 219, 0.35)" beamCount={2} />
+      <FloatingElements count={4} color="var(--accent-blue)" />
       <div className="relative z-10">
       <CinematicHeadline
         overline="Fechamento"
         headline={content.fechamentoJanela.headline}
         align="left"
         size="display"
-        icon={<Clock className="w-4 h-4 text-[var(--accent-amber)]" />}
+        icon={<Clock className="w-4 h-4 text-[var(--accent-blue)]" />}
       />
 
       <ScrollReveal className="mt-6 max-w-3xl">
@@ -764,7 +779,7 @@ export function FechamentoJanela() {
                     className={cn(
                       'w-4 h-4 rounded-full border-2 shrink-0',
                       i === 0
-                        ? 'bg-[var(--accent-amber)] border-[var(--accent-amber)]'
+                        ? 'bg-[var(--accent-blue)] border-[var(--accent-blue)]'
                         : 'bg-transparent border-[var(--text-muted)]'
                     )}
                   />
@@ -775,7 +790,7 @@ export function FechamentoJanela() {
                 <div className="pb-8">
                   <span className={cn(
                     'font-display text-2xl',
-                    i === 0 ? 'text-[var(--accent-amber)]' : 'text-[var(--text-tertiary)]'
+                    i === 0 ? 'text-[var(--accent-blue)]' : 'text-[var(--text-tertiary)]'
                   )}>
                     {t.period}
                   </span>
@@ -788,7 +803,7 @@ export function FechamentoJanela() {
 
         <ScrollReveal delay={0.5} variant="blur" className="lg:col-span-2">
           <Card variant="stat" accentColor="amber" className="text-center">
-            <span className="font-display text-5xl md:text-6xl text-[var(--accent-amber)]">
+            <span className="font-display text-5xl md:text-6xl text-[var(--accent-blue)]">
               <AnimatedCounter value={48} prefix="$" suffix="B" />
             </span>
             <Body className="mt-4 text-sm">
@@ -811,10 +826,10 @@ export { FechamentoJanela as ChapterFechamentoJanela }
 
 export function FechamentoProvocacao() {
   return (
-    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.15)" size={800}>
+    <Spotlight className="w-full" color="rgba(52, 152, 219, 0.15)" size={800}>
     <Section id="fechamento-provocacao" bg="primary" fullHeight spacing="dramatic">
       <AmbientBackground variant="diagonal-split" />
-      <BackgroundBeams color="rgba(200, 135, 58, 0.35)" beamCount={4} />
+      <BackgroundBeams color="rgba(52, 152, 219, 0.35)" beamCount={4} />
       <div className="absolute inset-0 z-[1] pointer-events-none">
         <LazyParticleField bloom interactive />
       </div>
@@ -827,7 +842,7 @@ export function FechamentoProvocacao() {
             transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] as const }}
           >
             <Overline className="mb-8 flex items-center justify-center gap-2">
-              <Flame className="w-4 h-4 text-[var(--accent-amber)]" />Provocacao Final
+              <Flame className="w-4 h-4 text-[var(--accent-blue)]" />Provocacao Final
             </Overline>
           </motion.div>
 
@@ -847,9 +862,9 @@ export function FechamentoProvocacao() {
             viewport={{ once: true }}
             transition={{ duration: 1, delay: 0.8, ease: [0.16, 1, 0.3, 1] as const }}
           >
-            <MovingBorder borderColor="var(--accent-amber)" duration={5} borderWidth={1} className="inline-block rounded-lg">
+            <MovingBorder borderColor="var(--accent-blue)" duration={5} borderWidth={1} className="inline-block rounded-lg">
               <div className="px-10 py-5 md:px-16 md:py-7 bg-[var(--bg-primary)]/80 rounded-lg">
-                <p className="font-display text-2xl md:text-4xl text-gradient-amber">
+                <p className="font-display text-2xl md:text-4xl text-gradient-blue">
                   {content.fechamentoProvocacao.subline}
                 </p>
               </div>
@@ -870,8 +885,8 @@ export function FechamentoProvocacao() {
           <motion.div
             className="mt-16 w-32 h-px mx-auto ambient-breathe"
             style={{
-              background: 'linear-gradient(90deg, transparent, var(--accent-amber), transparent)',
-              boxShadow: '0 0 12px rgba(200, 135, 58, 0.3)',
+              background: 'linear-gradient(90deg, transparent, var(--accent-blue), transparent)',
+              boxShadow: '0 0 12px rgba(52, 152, 219, 0.3)',
             }}
             initial={{ opacity: 0, scaleX: 0 }}
             whileInView={{ opacity: 1, scaleX: 1 }}

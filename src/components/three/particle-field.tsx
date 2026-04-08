@@ -7,7 +7,7 @@ import * as THREE from 'three'
 
 function Particles({
   count = 1500,
-  color = '#C8873A',
+  color = '#3498DB',
   interactive = false,
 }: {
   count?: number
@@ -131,7 +131,7 @@ interface ParticleFieldProps {
 
 export function ParticleField({
   className,
-  color = '#C8873A',
+  color = '#3498DB',
   count = 1500,
   interactive = false,
   bloom = false,

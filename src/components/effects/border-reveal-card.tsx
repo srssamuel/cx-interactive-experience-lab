@@ -14,7 +14,7 @@ interface BorderRevealCardProps {
 export function BorderRevealCard({
   children,
   className,
-  glowColor = 'rgba(200, 135, 58, 0.4)',
+  glowColor = 'rgba(52, 152, 219, 0.4)',
   tilt = true,
   maxTilt = 5,
 }: BorderRevealCardProps) {
