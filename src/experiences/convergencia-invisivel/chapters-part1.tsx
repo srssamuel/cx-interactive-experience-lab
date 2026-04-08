@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion'
 import { Section } from '@/components/design-system'
 import { SubHeading, Body, Overline, StatNumber } from '@/components/design-system/typography'
-import { Card } from '@/components/design-system/card'
 import { ScrollReveal } from '@/components/motion/scroll-reveal'
 import { AnimatedCounter } from '@/components/motion/animated-counter'
 import { CinematicHeadline } from '@/components/cinematic/cinematic-headline'
@@ -13,12 +12,8 @@ import { TextReveal } from '@/components/motion/text-reveal'
 import { ParallaxContainer } from '@/components/motion/parallax-container'
 import { Spotlight } from '@/components/effects/spotlight'
 import { BackgroundBeams } from '@/components/effects/background-beams'
-import { BorderRevealCard } from '@/components/effects/border-reveal-card'
 import { MovingBorder } from '@/components/effects/moving-border'
 import { FloatingElements } from '@/components/effects/floating-elements'
-import { CharReveal } from '@/components/motion/char-reveal'
-import { StaggerGroup, StaggerItem } from '@/components/motion/stagger-group'
-import { GradientMesh } from '@/components/effects/gradient-mesh'
 import { GsapTextReveal } from '@/components/cinematic/gsap-text-reveal'
 import { CinematicCounter } from '@/components/cinematic/cinematic-counter'
 import { GlitchText } from '@/components/cinematic/glitch-text'
@@ -158,48 +153,69 @@ const ch2Rotations = ['-1deg', '0deg', '1deg'] as const
 export function ContextoMundoMudou() {
   return (
     <Section id="contexto-o-mundo-mudou" bg="gradient-down" spacing="generous">
-      <BackgroundBeams color="rgba(52, 152, 219, 0.35)" beamCount={3} />
-      {/* Grid lines — unique to this chapter */}
-      <div className="absolute inset-0 pointer-events-none z-[1] overflow-hidden" style={{ opacity: 0.06 }}>
-        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      <AmbientBackground variant="deep-ocean" />
+      {/* Seismograph-style grid — unique to this chapter */}
+      <div className="absolute inset-0 pointer-events-none z-[1] overflow-hidden">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style={{ opacity: 0.08 }}>
           {Array.from({ length: 12 }, (_, i) => (
             <line key={`h${i}`} x1="0" y1={`${(i + 1) * 8.33}%`} x2="100%" y2={`${(i + 1) * 8.33}%`} stroke="#3498DB" strokeWidth="0.5" />
           ))}
           {Array.from({ length: 16 }, (_, i) => (
             <line key={`v${i}`} x1={`${(i + 1) * 6.25}%`} y1="0" x2={`${(i + 1) * 6.25}%`} y2="100%" stroke="#3498DB" strokeWidth="0.5" />
           ))}
+          {/* Seismograph wave crossing the grid */}
+          <path
+            d="M0,50% Q10%,45% 15%,50% T30%,50% Q35%,30% 38%,50% T50%,50% Q55%,20% 60%,50% T75%,50% Q80%,40% 85%,50% T100%,50%"
+            stroke="#3498DB" strokeWidth="2" fill="none" opacity="0.4"
+            strokeDasharray="1200" strokeDashoffset="1200"
+          >
+            <animate attributeName="stroke-dashoffset" from="1200" to="0" dur="3s" fill="freeze" begin="0.5s" />
+          </path>
         </svg>
       </div>
-      <FloatingElements count={4} color="var(--accent-blue)" />
       <div className="relative z-10">
       <Overline className="block mb-6 text-[var(--text-muted)] inline-flex items-center gap-2"><Globe className="w-4 h-4 text-[var(--accent-blue)]" />Contexto</Overline>
-      <TextReveal
+      <GsapTextReveal
         tag="h2"
         className="text-[clamp(1.75rem,4.5vw,3.5rem)] max-w-4xl"
+        variant="words"
+        stagger={0.08}
+        glowColor="rgba(52, 152, 219, 0.3)"
       >
         {content.contextoMundoMudou.headline}
-      </TextReveal>
+      </GsapTextReveal>
 
-      <div className="mt-20 flex flex-col items-center gap-8 max-w-2xl mx-auto">
+      {/* Horizontal scroll-like stat parade — unique layout */}
+      <div className="mt-20 flex flex-col md:flex-row items-stretch gap-6 max-w-5xl mx-auto">
         {content.contextoMundoMudou.points.map((point, i) => (
           <ScrollReveal
             key={point.stat}
             variant="scale"
-            delay={i * 0.15}
-            className="w-full"
+            delay={i * 0.2}
+            className="flex-1"
           >
             <motion.div
-              style={{ rotateZ: ch2Rotations[i] }}
               className={cn(
-                'relative p-8 md:p-10 rounded-2xl border border-[var(--border-subtle)]',
-                'bg-[var(--bg-surface)] hover:border-[var(--accent-blue)]/30 transition-colors duration-500',
-                i === 2 && 'border-[var(--accent-blue)]/20 bg-[var(--accent-blue-soft)]'
+                'relative h-full p-8 md:p-10 rounded-2xl border overflow-hidden',
+                'hover:border-[var(--accent-blue)]/40 transition-all duration-700',
+                i === 2
+                  ? 'border-[var(--accent-blue)]/30 bg-[var(--accent-blue-soft)]'
+                  : 'border-[var(--border-subtle)] bg-[var(--bg-surface)]'
               )}
+              whileHover={{ y: -4, transition: { duration: 0.4 } }}
             >
-              <StatNumber className="block text-[clamp(3rem,8vw,5rem)] leading-none">
-                {point.stat}
-              </StatNumber>
-              <Body className="mt-4 text-[var(--text-primary)] font-medium text-lg">
+              {/* Giant faded index number */}
+              <span className="absolute -top-6 -right-2 font-display text-[8rem] leading-none text-[var(--accent-blue)] opacity-[0.06] select-none pointer-events-none">
+                0{i + 1}
+              </span>
+              <CinematicCounter
+                value={parseFloat(point.stat.replace(/[^0-9.]/g, ''))}
+                suffix={point.stat.replace(/[0-9.]/g, '')}
+                className="text-[clamp(2.5rem,6vw,4rem)]"
+                glowIntensity={i === 2 ? 'high' : 'medium'}
+                color="var(--accent-blue-vivid)"
+              />
+              <Body className="mt-4 text-[var(--text-primary)] font-medium text-base">
                 {point.text}
               </Body>
               <span className="mt-3 block font-mono text-xs text-[var(--text-muted)]">
@@ -210,8 +226,8 @@ export function ContextoMundoMudou() {
         ))}
       </div>
 
-      <ScrollReveal delay={0.6} className="mt-16">
-        <Body className="max-w-2xl text-lg text-[var(--text-primary)] font-medium">
+      <ScrollReveal delay={0.7} className="mt-16">
+        <Body className="max-w-2xl text-lg text-[var(--text-primary)] font-medium italic border-l-2 border-[var(--accent-blue)]/30 pl-6">
           {content.contextoMundoMudou.closing}
         </Body>
       </ScrollReveal>
@@ -229,65 +245,103 @@ export { ContextoMundoMudou as ChapterContextoMundoMudou }
 
 export function ContextoIlusao() {
   return (
-    <Spotlight className="w-full" color="rgba(52, 152, 219, 0.15)" size={700}>
     <Section id="contexto-ilusao-digital" bg="surface" spacing="compact">
       <AmbientBackground variant="top-light" />
+      {/* Mirrored/reflected text background — unique "illusion" visual */}
+      <div className="absolute inset-0 pointer-events-none z-[1] overflow-hidden flex items-center justify-center">
+        <div className="relative w-full max-w-4xl px-8">
+          <span
+            className="block font-display text-[clamp(4rem,14vw,10rem)] leading-none text-center text-[var(--accent-blue)] opacity-[0.04] select-none"
+            aria-hidden="true"
+          >
+            ILUSÃO
+          </span>
+          <span
+            className="block font-display text-[clamp(4rem,14vw,10rem)] leading-none text-center text-[var(--accent-blue)] opacity-[0.03] select-none"
+            style={{ transform: 'scaleY(-1)', maskImage: 'linear-gradient(to bottom, white 20%, transparent 80%)' }}
+            aria-hidden="true"
+          >
+            ILUSÃO
+          </span>
+        </div>
+      </div>
       <div className="relative z-10">
-      <CinematicHeadline
-        overline="Contexto"
-        headline={content.contextoIlusao.headline}
-        align="left"
-        size="display"
-        icon={<Sparkles className="w-4 h-4 text-[var(--accent-blue)]" />}
-      />
+      <Overline className="mb-6 text-[var(--text-muted)] inline-flex items-center gap-2">
+        <Sparkles className="w-4 h-4 text-[var(--accent-blue)]" />Contexto
+      </Overline>
+      {/* GlitchText headline — the illusion distorts */}
+      <h2 className="font-display text-[clamp(1.75rem,4.5vw,3.5rem)] leading-[0.95] tracking-[-0.02em] max-w-3xl">
+        <GlitchText intensity="low" color="var(--accent-blue-vivid, #5DADE2)">
+          {content.contextoIlusao.headline}
+        </GlitchText>
+      </h2>
 
       <ScrollReveal variant="slide-right" className="mt-8 max-w-3xl">
         <Body className="text-lg">{content.contextoIlusao.body}</Body>
       </ScrollReveal>
 
-      <div className="mt-16 grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
-        <div className="lg:col-span-3 space-y-6">
-          <ScrollReveal variant="slide-left" delay={0.1}>
-            <BorderRevealCard glowColor="rgba(255, 255, 255, 0.15)" className="h-full">
-              <Overline className="text-[var(--text-muted)] mb-3 block">
-                O que as empresas mediram
-              </Overline>
-              <Body className="text-[var(--text-primary)]">
-                {content.contextoIlusao.contrast.before}
-              </Body>
-            </BorderRevealCard>
-          </ScrollReveal>
+      {/* Full-width before/after split — not grid cards */}
+      <div className="mt-16 flex flex-col md:flex-row gap-0 items-stretch min-h-[240px] max-w-4xl">
+        {/* Before panel — faded/muted */}
+        <ScrollReveal variant="slide-left" delay={0.1} className="flex-1">
+          <div className="h-full p-8 md:p-10 border border-[var(--border-subtle)] md:rounded-l-2xl md:rounded-r-none rounded-2xl bg-[var(--bg-surface)]/60 relative overflow-hidden">
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-[var(--accent-blue)]/5 to-transparent"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1, delay: 0.3 }}
+            />
+            <Overline className="text-[var(--text-muted)] mb-4 block relative z-10">
+              O que as empresas mediram
+            </Overline>
+            <Body className="text-[var(--text-secondary)] relative z-10 opacity-70">
+              {content.contextoIlusao.contrast.before}
+            </Body>
+          </div>
+        </ScrollReveal>
 
-          <ScrollReveal variant="slide-right" delay={0.25}>
-            <BorderRevealCard glowColor="rgba(52, 152, 219, 0.4)" className="h-full">
-              <Overline className="text-[var(--accent-blue)] mb-3 block">
-                O que deveriam ter medido
-              </Overline>
-              <Body className="text-[var(--text-primary)] font-medium">
-                {content.contextoIlusao.contrast.after}
-              </Body>
-            </BorderRevealCard>
-          </ScrollReveal>
+        {/* Center glowing divider */}
+        <div className="hidden md:flex items-center justify-center w-12 relative">
+          <motion.div
+            className="w-px h-4/5 bg-gradient-to-b from-transparent via-[var(--accent-blue)] to-transparent"
+            style={{ boxShadow: '0 0 20px rgba(52,152,219,0.5)' }}
+            initial={{ scaleY: 0 }}
+            whileInView={{ scaleY: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          />
+          <span className="absolute font-mono text-[10px] text-[var(--accent-blue)] bg-[var(--bg-surface)] px-1.5 py-0.5 rounded">vs</span>
         </div>
 
-        <div className="lg:col-span-2 flex flex-col items-center justify-center">
-          <ScrollReveal variant="slide-left" delay={0.4}>
-            <Card variant="stat" accentColor="amber" className="text-center">
-              <AnimatedCounter
-                value={40}
-                suffix="%"
-                className="block text-[var(--accent-blue)] text-[clamp(3rem,8vw,5rem)] leading-none"
-              />
-              <Body className="mt-4 text-sm text-[var(--text-secondary)]">
-                {content.contextoIlusao.statContext}
-              </Body>
-            </Card>
-          </ScrollReveal>
-        </div>
+        {/* After panel — vivid/clear */}
+        <ScrollReveal variant="slide-right" delay={0.25} className="flex-1">
+          <div className="h-full p-8 md:p-10 border border-[var(--accent-blue)]/25 md:rounded-r-2xl md:rounded-l-none rounded-2xl bg-[var(--accent-blue-soft)] relative overflow-hidden">
+            <Overline className="text-[var(--accent-blue)] mb-4 block">
+              O que deveriam ter medido
+            </Overline>
+            <Body className="text-[var(--text-primary)] font-medium">
+              {content.contextoIlusao.contrast.after}
+            </Body>
+          </div>
+        </ScrollReveal>
       </div>
+
+      {/* Centered stat with CinematicCounter */}
+      <ScrollReveal variant="scale" delay={0.5} className="mt-16 text-center">
+        <CinematicCounter
+          value={40}
+          suffix="%"
+          className="text-[clamp(3.5rem,10vw,6rem)]"
+          glowIntensity="high"
+          color="var(--accent-blue-vivid)"
+        />
+        <Body className="mt-4 text-sm text-[var(--text-secondary)] max-w-md mx-auto">
+          {content.contextoIlusao.statContext}
+        </Body>
+      </ScrollReveal>
       </div>
     </Section>
-    </Spotlight>
   )
 }
 
@@ -377,87 +431,110 @@ export { CxEquacao as ChapterCxEquacao }
 
 export function CxExperiencia() {
   return (
-    <Spotlight className="w-full" color="rgba(52, 152, 219, 0.15)" size={600}>
     <Section id="cx-experiencia-vs-percepcao" bg="elevated">
-      <BackgroundBeams color="rgba(52, 152, 219, 0.35)" beamCount={2} />
+      <AmbientBackground variant="bottom-fade" />
       <div className="relative z-10">
-      <CinematicHeadline
-        overline="Customer Experience"
-        headline={content.cxExperiencia.headline}
-        align="left"
-        size="display"
-        icon={<TrendingUp className="w-4 h-4 text-[var(--accent-blue)]" />}
-      />
+      <Overline className="mb-6 text-[var(--text-muted)] inline-flex items-center gap-2">
+        <TrendingUp className="w-4 h-4 text-[var(--accent-blue)]" />Customer Experience
+      </Overline>
+      <GsapTextReveal
+        tag="h2"
+        className="text-[clamp(1.75rem,4.5vw,3.5rem)] max-w-3xl"
+        variant="words"
+        stagger={0.06}
+        glowColor="rgba(52, 152, 219, 0.3)"
+      >
+        {content.cxExperiencia.headline}
+      </GsapTextReveal>
 
-      <div className="mt-16 grid grid-cols-1 lg:grid-cols-7 gap-12 items-start">
-        <div className="lg:col-span-4 space-y-8">
-          <ScrollReveal>
-            <Body className="text-lg leading-relaxed">
-              {content.cxExperiencia.body}
-            </Body>
-          </ScrollReveal>
+      {/* Full-width perception gap — hero visual */}
+      <div className="mt-16 max-w-4xl">
+        <ScrollReveal>
+          <Body className="text-lg leading-relaxed max-w-3xl">
+            {content.cxExperiencia.body}
+          </Body>
+        </ScrollReveal>
 
-          {/* Perception Gap Visualization — unique to this chapter */}
-          <ScrollReveal delay={0.2}>
-            <div className="space-y-4">
-              <div className="space-y-2">
+        {/* Perception Gap Bars — wider, more dramatic */}
+        <ScrollReveal delay={0.2} className="mt-12">
+          <div className="space-y-6 p-8 rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)]/60">
+            <div className="space-y-2">
+              <div className="flex items-baseline justify-between">
                 <span className="font-mono text-xs text-[var(--accent-teal)] uppercase tracking-wider">Experiencia Projetada</span>
-                <div className="h-3 rounded-full bg-[var(--bg-hover)] overflow-hidden">
-                  <motion.div
-                    className="h-full rounded-full bg-[var(--accent-teal)]"
-                    initial={{ width: 0 }}
-                    whileInView={{ width: '85%' }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1.2, delay: 0.4, ease: [0.16, 1, 0.3, 1] as const }}
-                  />
-                </div>
+                <span className="font-mono text-sm text-[var(--accent-teal)] font-bold">85%</span>
               </div>
-              <div className="space-y-2">
+              <div className="h-4 rounded-full bg-[var(--bg-hover)] overflow-hidden">
+                <motion.div
+                  className="h-full rounded-full"
+                  style={{ background: 'linear-gradient(90deg, var(--accent-teal), #26C6DA)' }}
+                  initial={{ width: 0 }}
+                  whileInView={{ width: '85%' }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1.2, delay: 0.4, ease: [0.16, 1, 0.3, 1] as const }}
+                />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <div className="flex items-baseline justify-between">
                 <span className="font-mono text-xs text-[var(--accent-red)] uppercase tracking-wider">Percepcao do Cliente</span>
-                <div className="h-3 rounded-full bg-[var(--bg-hover)] overflow-hidden">
-                  <motion.div
-                    className="h-full rounded-full bg-[var(--accent-red)]"
-                    initial={{ width: 0 }}
-                    whileInView={{ width: '42%' }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1.2, delay: 0.7, ease: [0.16, 1, 0.3, 1] as const }}
-                  />
-                </div>
+                <span className="font-mono text-sm text-[var(--accent-red)] font-bold">42%</span>
               </div>
-              <p className="font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-wider mt-1">
-                O gap que ninguem mede
-              </p>
+              <div className="h-4 rounded-full bg-[var(--bg-hover)] overflow-hidden">
+                <motion.div
+                  className="h-full rounded-full"
+                  style={{ background: 'linear-gradient(90deg, #E74C3C, #C0392B)' }}
+                  initial={{ width: 0 }}
+                  whileInView={{ width: '42%' }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1.2, delay: 0.7, ease: [0.16, 1, 0.3, 1] as const }}
+                />
+              </div>
             </div>
-          </ScrollReveal>
+            {/* Gap indicator */}
+            <motion.div
+              className="flex items-center gap-3 pt-4 border-t border-[var(--border-subtle)]"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 1.2 }}
+            >
+              <span className="font-display text-3xl text-[var(--accent-blue)] font-bold">43%</span>
+              <span className="font-mono text-xs text-[var(--text-muted)] uppercase tracking-wider leading-tight">
+                perception<br />gap
+              </span>
+            </motion.div>
+          </div>
+        </ScrollReveal>
+      </div>
 
-          <ScrollReveal delay={0.4}>
-            <Card variant="highlight" accentColor="green" hover={false}>
-              <Overline className="text-[var(--accent-teal)] mb-2 block">
-                Insight
-              </Overline>
-              <Body className="text-[var(--text-primary)] font-medium">
-                {content.cxExperiencia.insight}
-              </Body>
-            </Card>
-          </ScrollReveal>
-        </div>
+      {/* Bottom row: stat + insight side by side */}
+      <div className="mt-16 flex flex-col md:flex-row gap-8 items-center max-w-4xl">
+        <ScrollReveal variant="rise" delay={0.4} className="md:w-1/3 text-center">
+          <CinematicCounter
+            value={parseFloat(content.cxExperiencia.stat.replace(/[^0-9.]/g, ''))}
+            suffix={content.cxExperiencia.stat.replace(/[0-9.]/g, '')}
+            className="text-[clamp(3rem,8vw,5rem)]"
+            glowIntensity="high"
+            color="var(--accent-blue-vivid)"
+          />
+          <Body className="mt-3 text-sm max-w-xs mx-auto text-[var(--text-secondary)]">
+            {content.cxExperiencia.statContext}
+          </Body>
+        </ScrollReveal>
 
-        <div className="lg:col-span-3 flex flex-col items-center justify-center">
-          <ScrollReveal variant="rise" delay={0.3}>
-            <div className="text-center">
-              <StatNumber className="block text-[clamp(3.5rem,10vw,6rem)]">
-                {content.cxExperiencia.stat}
-              </StatNumber>
-              <Body className="mt-4 text-sm max-w-xs mx-auto">
-                {content.cxExperiencia.statContext}
-              </Body>
-            </div>
-          </ScrollReveal>
-        </div>
+        <ScrollReveal delay={0.5} className="md:w-2/3">
+          <div className="p-6 rounded-xl border-l-2 border-[var(--accent-teal)]/40 bg-[var(--accent-teal-soft)]">
+            <Overline className="text-[var(--accent-teal)] mb-2 block">
+              Insight
+            </Overline>
+            <Body className="text-[var(--text-primary)] font-medium">
+              {content.cxExperiencia.insight}
+            </Body>
+          </div>
+        </ScrollReveal>
       </div>
       </div>
     </Section>
-    </Spotlight>
   )
 }
 
@@ -555,31 +632,50 @@ export function CxReflexao() {
   const marginSteps = ['ml-0', 'ml-6 md:ml-12', 'ml-12 md:ml-24', 'ml-18 md:ml-36']
 
   return (
-    <Spotlight className="w-full" color="rgba(52, 152, 219, 0.15)" size={600}>
     <Section id="cx-momento-reflexao" bg="vignette" spacing="compact">
-      <BackgroundBeams color="rgba(52, 152, 219, 0.35)" beamCount={2} />
+      <AmbientBackground variant="mesh-dark" />
+      {/* Rising gradient columns — unique maturity bar visual */}
+      <div className="absolute inset-0 pointer-events-none z-[1] flex items-end justify-center gap-[6vw] pb-0 overflow-hidden opacity-[0.06]">
+        {[0.25, 0.45, 0.65, 0.9].map((h, i) => (
+          <motion.div
+            key={i}
+            className="w-[8vw] max-w-[80px] rounded-t-lg"
+            style={{
+              background: `linear-gradient(to top, var(--accent-blue), transparent)`,
+            }}
+            initial={{ height: 0 }}
+            whileInView={{ height: `${h * 100}%` }}
+            viewport={{ once: true }}
+            transition={{ duration: 1.5, delay: 0.3 + i * 0.2, ease: [0.16, 1, 0.3, 1] }}
+          />
+        ))}
+      </div>
       <div className="relative z-10">
-      <CinematicHeadline
-        overline="Reflexao"
-        headline={content.cxReflexao.headline}
-        align="left"
-        size="display"
-        icon={<MessageSquare className="w-4 h-4 text-[var(--accent-blue)]" />}
-      />
+      <Overline className="mb-6 text-[var(--text-muted)] inline-flex items-center gap-2">
+        <MessageSquare className="w-4 h-4 text-[var(--accent-blue)]" />Reflexao
+      </Overline>
+      <GsapTextReveal
+        tag="h2"
+        className="text-[clamp(1.75rem,4.5vw,3.5rem)] max-w-3xl"
+        variant="words"
+        stagger={0.06}
+        glowColor="rgba(52, 152, 219, 0.3)"
+      >
+        {content.cxReflexao.headline}
+      </GsapTextReveal>
 
       <div className="mt-16 space-y-4">
         {content.cxReflexao.levels.map((lvl, i) => (
           <ScrollReveal key={lvl.level} delay={i * 0.12}>
             <div className={cn(marginSteps[i], 'max-w-2xl')}>
-              <Card
-                variant="minimal"
-                hover={false}
+              <motion.div
                 className={cn(
-                  'gradient-border-top flex items-start gap-6 border-l-2 pl-6 rounded-none',
+                  'flex items-start gap-6 border-l-2 pl-6 py-5 pr-6 rounded-r-xl transition-colors',
                   i === 3
                     ? 'border-l-[var(--accent-blue)] bg-[var(--accent-blue-soft)]'
-                    : 'border-l-[var(--border-default)]'
+                    : 'border-l-[var(--border-default)] hover:border-l-[var(--accent-blue)]/40 hover:bg-[var(--bg-surface)]/40'
                 )}
+                whileHover={{ x: 4, transition: { duration: 0.3 } }}
               >
                 <span
                   className={cn(
@@ -603,7 +699,7 @@ export function CxReflexao() {
                   </SubHeading>
                   <Body className="mt-1 text-sm">{lvl.desc}</Body>
                 </div>
-              </Card>
+              </motion.div>
             </div>
           </ScrollReveal>
         ))}
@@ -617,7 +713,6 @@ export function CxReflexao() {
       </ScrollReveal>
       </div>
     </Section>
-    </Spotlight>
   )
 }
 

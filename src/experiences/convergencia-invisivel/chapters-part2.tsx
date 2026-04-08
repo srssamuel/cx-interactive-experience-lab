@@ -3,22 +3,18 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Section } from '@/components/design-system'
-import { SubHeading, Body, Overline, StatNumber } from '@/components/design-system/typography'
-import { Card } from '@/components/design-system/card'
+import { SubHeading, Body, Overline } from '@/components/design-system/typography'
 import { ScrollReveal } from '@/components/motion/scroll-reveal'
 import { StaggerGroup, StaggerItem } from '@/components/motion/stagger-group'
 import { AnimatedCounter } from '@/components/motion/animated-counter'
 import { CinematicHeadline } from '@/components/cinematic/cinematic-headline'
 import { AmbientBackground } from '@/components/cinematic/ambient-background'
-import { DiscussionPrompt } from '@/components/workshop/discussion-prompt'
 import { PausePoint } from '@/components/workshop/pause-point'
-import { TextReveal } from '@/components/motion/text-reveal'
 import { ParallaxContainer } from '@/components/motion/parallax-container'
 import { BorderRevealCard } from '@/components/effects/border-reveal-card'
 import { LazyParticleField } from '@/components/three/lazy-particle-field'
 import { Spotlight } from '@/components/effects/spotlight'
 import { BackgroundBeams } from '@/components/effects/background-beams'
-import { CharReveal } from '@/components/motion/char-reveal'
 import { FloatingElements } from '@/components/effects/floating-elements'
 import { MovingBorder } from '@/components/effects/moving-border'
 import { GsapTextReveal } from '@/components/cinematic/gsap-text-reveal'
@@ -233,72 +229,84 @@ export { AiOQueFaz as ChapterAiOQueFaz }
    ═══════════════════════════════════════════════════ */
 
 export function AiOndeGanha() {
-  const bgVariants = ['surface', 'elevated', 'surface'] as const
+  const podiumHeights = ['h-[180px]', 'h-[240px]', 'h-[160px]']
+  const podiumDelays = [0.4, 0.2, 0.6]
   return (
     <Section id="ai-onde-ganha" bg="primary">
-      <BackgroundBeams color="rgba(124, 77, 255, 0.35)" beamCount={4} />
-      <FloatingElements count={5} color="var(--accent-purple)" />
+      <AmbientBackground variant="diagonal-split" />
       <div className="relative z-10">
-      <CinematicHeadline
-        overline="Inteligencia Artificial"
-        headline={content.aiOndeGanha.headline}
-        align="left"
-        size="display"
-        icon={<Trophy className="w-4 h-4 text-[var(--accent-purple)]" />}
-      />
+      <Overline className="mb-6 text-[var(--accent-purple)] inline-flex items-center gap-2">
+        <Trophy className="w-4 h-4" />Inteligencia Artificial
+      </Overline>
+      <GsapTextReveal
+        tag="h2"
+        className="text-[clamp(1.75rem,4.5vw,3.5rem)] max-w-3xl"
+        variant="words"
+        stagger={0.06}
+        glowColor="rgba(124, 77, 255, 0.4)"
+      >
+        {content.aiOndeGanha.headline}
+      </GsapTextReveal>
 
-      {/* Stacked full-width case study cards — each with watermark company name */}
-      <div className="mt-16 space-y-6">
+      {/* Podium-style case cards — varying heights like a winners' podium */}
+      <div className="mt-16 flex flex-col md:flex-row items-end gap-6 max-w-5xl mx-auto">
         {content.aiOndeGanha.cases.map((c, i) => (
-          <ScrollReveal key={c.company} delay={i * 0.15} variant={i === 1 ? 'blur' : 'rise'}>
-            <BorderRevealCard
-              glowColor="rgba(124, 77, 255, 0.35)"
-              tilt={false}
+          <ScrollReveal key={c.company} delay={podiumDelays[i]} variant="rise" className="flex-1 w-full">
+            <motion.div
               className={cn(
-                '!rounded-xl',
-                i === 0 && '!bg-[var(--bg-surface)]',
-                i === 1 && '!bg-[var(--bg-elevated)]',
-                i === 2 && '!bg-[var(--bg-surface)]'
+                'relative rounded-2xl border overflow-hidden p-8 flex flex-col justify-end',
+                'md:min-h-[200px]',
+                i === 1
+                  ? 'border-[var(--accent-purple)]/40 bg-[var(--accent-purple)]/10 md:min-h-[280px]'
+                  : 'border-[var(--border-subtle)] bg-[var(--bg-surface)]'
               )}
+              whileHover={{ y: -6, transition: { duration: 0.4 } }}
             >
-              <div className="relative overflow-hidden">
-              {/* Watermark company name */}
+              {/* Trophy icon for winner */}
+              {i === 1 && (
+                <motion.div
+                  className="absolute top-4 right-4"
+                  initial={{ scale: 0, rotate: -20 }}
+                  whileInView={{ scale: 1, rotate: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.8, type: 'spring' }}
+                >
+                  <Trophy className="w-8 h-8 text-[var(--accent-purple)] opacity-40" />
+                </motion.div>
+              )}
+
+              {/* Watermark rank */}
               <span
-                className="absolute -right-4 top-1/2 -translate-y-1/2 font-display text-[clamp(4rem,12vw,8rem)] text-[var(--accent-purple)] opacity-[0.08] leading-none select-none pointer-events-none"
+                className="absolute -bottom-4 -right-2 font-display text-[7rem] leading-none font-bold opacity-[0.05] select-none pointer-events-none"
+                style={{ color: i === 1 ? 'var(--accent-purple)' : 'var(--text-primary)' }}
                 aria-hidden="true"
               >
-                {c.company}
+                #{i + 1}
               </span>
 
-              <div className="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-                <div className="flex-1">
-                  <Overline className="block text-[var(--accent-purple)] mb-3">
-                    {c.area}
-                  </Overline>
-                  <h3 className="font-display text-2xl md:text-3xl tracking-tight text-[var(--text-primary)]">
-                    {c.company}
-                  </h3>
-                </div>
-                <div className="md:text-right md:max-w-sm">
-                  <Body className="text-lg text-[var(--text-primary)] font-medium leading-snug">
-                    {c.result}
-                  </Body>
-                </div>
-              </div>
-              </div>
-            </BorderRevealCard>
+              <Overline className="block text-[var(--accent-purple)] mb-3 relative z-10">
+                {c.area}
+              </Overline>
+              <h3 className={cn(
+                'font-display text-2xl tracking-tight relative z-10',
+                i === 1 ? 'text-[var(--accent-purple)]' : 'text-[var(--text-primary)]'
+              )}>
+                {c.company}
+              </h3>
+              <Body className="mt-4 text-base text-[var(--text-primary)] font-medium leading-snug relative z-10">
+                {c.result}
+              </Body>
+            </motion.div>
           </ScrollReveal>
         ))}
       </div>
 
-      {/* Insight — centered breathing glow */}
-      <ScrollReveal delay={0.5} className="mt-16">
-        <div className="text-center max-w-2xl mx-auto">
-          <div className="inline-block px-8 py-6 rounded-2xl bg-[var(--accent-blue-soft)] border border-[var(--accent-blue)]/20">
-            <Body className="text-lg text-[var(--text-primary)] font-medium italic">
-              {content.aiOndeGanha.insight}
-            </Body>
-          </div>
+      {/* Insight — horizontal accent bar */}
+      <ScrollReveal delay={0.7} className="mt-16">
+        <div className="max-w-3xl mx-auto px-8 py-6 rounded-xl border-l-2 border-[var(--accent-purple)]/40 bg-[var(--accent-purple)]/8">
+          <Body className="text-lg text-[var(--text-primary)] font-medium italic">
+            {content.aiOndeGanha.insight}
+          </Body>
         </div>
       </ScrollReveal>
       </div>
@@ -474,88 +482,102 @@ export { ConvergenciaSistema as ChapterConvergenciaSistema }
    ═══════════════════════════════════════════════════ */
 
 export function ConvergenciaLidera() {
-  const roleAccents = ['var(--accent-blue)', 'var(--accent-teal)', 'var(--accent-blue)']
-  const roleBorders = ['rgba(52, 152, 219, 0.25)', 'rgba(0, 188, 212, 0.25)', 'rgba(38, 198, 218, 0.25)']
+  const roleAccents = ['#42A5F5', '#00BCD4', '#26C6DA']
+  const roleIcons = ['CXO', 'CSO', 'CDO']
 
   return (
     <Section id="convergencia-quem-lidera" bg="gradient-up">
-      <BackgroundBeams color="rgba(52, 152, 219, 0.35)" beamCount={3} />
+      <AmbientBackground variant="bottom-fade" />
+      {/* Connecting hexagonal network — unique to leadership chapter */}
+      <div className="absolute inset-0 pointer-events-none z-[1] overflow-hidden">
+        <svg width="100%" height="100%" viewBox="0 0 800 600" className="opacity-[0.04]" preserveAspectRatio="xMidYMid slice">
+          {/* Hexagonal grid pattern */}
+          {[
+            { cx: 200, cy: 150 }, { cx: 400, cy: 100 }, { cx: 600, cy: 150 },
+            { cx: 300, cy: 300 }, { cx: 500, cy: 300 },
+            { cx: 200, cy: 450 }, { cx: 400, cy: 500 }, { cx: 600, cy: 450 },
+          ].map((pos, i) => (
+            <g key={i}>
+              <polygon
+                points={`${pos.cx},${pos.cy - 30} ${pos.cx + 26},${pos.cy - 15} ${pos.cx + 26},${pos.cy + 15} ${pos.cx},${pos.cy + 30} ${pos.cx - 26},${pos.cy + 15} ${pos.cx - 26},${pos.cy - 15}`}
+                fill="none" stroke="#3498DB" strokeWidth="1"
+              />
+            </g>
+          ))}
+          {/* Connecting lines */}
+          <line x1="200" y1="150" x2="400" y2="100" stroke="#3498DB" strokeWidth="0.5" />
+          <line x1="400" y1="100" x2="600" y2="150" stroke="#3498DB" strokeWidth="0.5" />
+          <line x1="200" y1="150" x2="300" y2="300" stroke="#3498DB" strokeWidth="0.5" />
+          <line x1="600" y1="150" x2="500" y2="300" stroke="#3498DB" strokeWidth="0.5" />
+          <line x1="300" y1="300" x2="500" y2="300" stroke="#3498DB" strokeWidth="0.5" />
+        </svg>
+      </div>
       <div className="relative z-10">
-      <CinematicHeadline
-        overline="Lideranca"
-        headline={content.convergenciaLidera.headline}
-        align="left"
-        size="display"
-        icon={<Users className="w-4 h-4 text-[var(--accent-blue)]" />}
-      />
+      <Overline className="mb-6 text-[var(--text-muted)] inline-flex items-center gap-2">
+        <Users className="w-4 h-4 text-[var(--accent-blue)]" />Lideranca
+      </Overline>
+      <GsapTextReveal
+        tag="h2"
+        className="text-[clamp(1.75rem,4.5vw,3.5rem)] max-w-3xl"
+        variant="words"
+        stagger={0.06}
+        glowColor="rgba(52, 152, 219, 0.3)"
+      >
+        {content.convergenciaLidera.headline}
+      </GsapTextReveal>
 
       <ScrollReveal className="mt-6 max-w-3xl">
         <Body className="text-lg">{content.convergenciaLidera.body}</Body>
       </ScrollReveal>
 
-      {/* Alternating left-right role cards with connecting vertical line */}
-      <div className="mt-16 relative">
-        {/* Vertical connector line */}
-        <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-[var(--border-default)] to-transparent hidden md:block" aria-hidden="true" />
+      {/* Horizontal role cards with unique "badge" identifiers */}
+      <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        {content.convergenciaLidera.roles.map((role, i) => (
+          <ScrollReveal key={role.title} delay={i * 0.2} variant="rise">
+            <motion.div
+              className="relative rounded-2xl border p-8 pt-14 overflow-hidden transition-colors h-full"
+              style={{ borderColor: `${roleAccents[i]}30` }}
+              whileHover={{
+                borderColor: `${roleAccents[i]}60`,
+                y: -4,
+                transition: { duration: 0.4 },
+              }}
+            >
+              {/* Role badge */}
+              <div
+                className="absolute top-0 left-0 right-0 h-1.5"
+                style={{ background: `linear-gradient(90deg, transparent, ${roleAccents[i]}, transparent)` }}
+              />
+              <span
+                className="absolute top-4 right-4 font-mono text-[10px] uppercase tracking-[0.2em] opacity-40"
+                style={{ color: roleAccents[i] }}
+              >
+                {roleIcons[i]}
+              </span>
 
-        <div className="space-y-12 md:space-y-16">
-          {content.convergenciaLidera.roles.map((role, i) => {
-            const isLeft = i % 2 === 0
-            return (
-              <ScrollReveal key={role.title} delay={i * 0.2} variant={isLeft ? 'slide-left' : 'slide-right'}>
-                <div className={cn(
-                  'relative flex flex-col md:flex-row items-center gap-8',
-                  !isLeft && 'md:flex-row-reverse'
-                )}>
-                  {/* Role card — takes half width */}
-                  <div className={cn('w-full md:w-5/12', isLeft ? 'md:text-right' : 'md:text-left')}>
-                    <span
-                      className="block font-mono text-xs uppercase tracking-[0.2em] mb-3 opacity-50"
-                      style={{ color: roleAccents[i] }}
-                    >
-                      Role 0{i + 1}
-                    </span>
-                    <h3
-                      className="font-display text-2xl md:text-3xl tracking-tight mb-4"
-                      style={{ color: roleAccents[i] }}
-                    >
-                      {role.title}
-                    </h3>
-                    <Body className="text-base">{role.desc}</Body>
-                  </div>
-
-                  {/* Center node */}
-                  <div className="hidden md:flex items-center justify-center w-2/12">
-                    <motion.div
-                      className="w-4 h-4 rounded-full border-2"
-                      style={{ borderColor: roleAccents[i], backgroundColor: `${roleBorders[i]}` }}
-                      initial={{ scale: 0 }}
-                      whileInView={{ scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.5, delay: i * 0.2 + 0.3, ease: [0.16, 1, 0.3, 1] as const }}
-                    />
-                  </div>
-
-                  {/* Empty half for asymmetry */}
-                  <div className="hidden md:block w-5/12" />
-                </div>
-              </ScrollReveal>
-            )
-          })}
-        </div>
+              <h3
+                className="font-display text-2xl tracking-tight mb-4"
+                style={{ color: roleAccents[i] }}
+              >
+                {role.title}
+              </h3>
+              <Body className="text-base">{role.desc}</Body>
+            </motion.div>
+          </ScrollReveal>
+        ))}
       </div>
 
-      {/* Provocation — full-width centered */}
-      <ScrollReveal delay={0.6} className="mt-20">
-        <motion.p
-          className="font-display text-2xl md:text-3xl leading-[1.2] text-[var(--text-primary)] text-center max-w-2xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] as const }}
+      {/* Provocation — dramatic centered */}
+      <ScrollReveal delay={0.7} className="mt-20">
+        <GsapTextReveal
+          tag="p"
+          className="text-center text-[clamp(1.25rem,3vw,2rem)] max-w-2xl mx-auto text-[var(--text-primary)]"
+          variant="words"
+          stagger={0.04}
+          delay={0.2}
         >
           {content.convergenciaLidera.provocation}
-        </motion.p>
+        </GsapTextReveal>
       </ScrollReveal>
       </div>
     </Section>
@@ -571,7 +593,7 @@ export { ConvergenciaLidera as ChapterConvergenciaLidera }
 
 export function WorkshopDiagnostico() {
   const dimColors: Record<string, string> = {
-    CX: '#26C6DA',
+    CX: '#42A5F5',
     CS: '#00BCD4',
     Dados: '#7C4DFF',
     AI: '#E74C3C',
@@ -579,28 +601,56 @@ export function WorkshopDiagnostico() {
   }
 
   return (
-    <Spotlight className="w-full" color="rgba(52, 152, 219, 0.15)" size={600}>
     <Section id="workshop-diagnostico" bg="surface" className="dot-grid" spacing="generous">
-      <AmbientBackground variant="radial-blue" />
+      {/* Radar chart background — unique diagnostic visual */}
+      <div className="absolute inset-0 pointer-events-none z-[1] flex items-center justify-center overflow-hidden">
+        <svg viewBox="0 0 400 400" className="w-[500px] h-[500px] opacity-[0.06]">
+          {/* Concentric pentagons */}
+          {[0.3, 0.5, 0.7, 0.9].map((scale, ri) => {
+            const points = Array.from({ length: 5 }, (_, i) => {
+              const angle = (i * 2 * Math.PI) / 5 - Math.PI / 2
+              return `${200 + 150 * scale * Math.cos(angle)},${200 + 150 * scale * Math.sin(angle)}`
+            }).join(' ')
+            return <polygon key={ri} points={points} fill="none" stroke="#3498DB" strokeWidth="1" />
+          })}
+          {/* Radial lines */}
+          {Array.from({ length: 5 }, (_, i) => {
+            const angle = (i * 2 * Math.PI) / 5 - Math.PI / 2
+            return (
+              <line key={i}
+                x1="200" y1="200"
+                x2={200 + 150 * Math.cos(angle)} y2={200 + 150 * Math.sin(angle)}
+                stroke="#3498DB" strokeWidth="0.5"
+              />
+            )
+          })}
+        </svg>
+      </div>
       <div className="relative z-10">
       <PausePoint label="Workshop" />
 
-      <CinematicHeadline
-        overline="Diagnostico"
-        headline={content.workshopDiagnostico.headline}
-        align="center"
-        size="display"
-        icon={<ClipboardCheck className="w-4 h-4 text-[var(--accent-blue)]" />}
-      />
+      <Overline className="text-center mb-6 flex items-center justify-center gap-2">
+        <ClipboardCheck className="w-4 h-4 text-[var(--accent-blue)]" />Diagnostico
+      </Overline>
+      <GsapTextReveal
+        tag="h2"
+        className="text-center text-[clamp(1.75rem,4.5vw,3.5rem)] max-w-3xl mx-auto"
+        variant="words"
+        stagger={0.06}
+        glowColor="rgba(52, 152, 219, 0.3)"
+      >
+        {content.workshopDiagnostico.headline}
+      </GsapTextReveal>
 
       <StaggerGroup className="mt-12 space-y-5 max-w-3xl mx-auto">
         {content.workshopDiagnostico.dimensions.map((dim, i) => {
           const color = dimColors[dim.dim] || 'var(--text-secondary)'
           return (
           <StaggerItem key={dim.dim}>
-            <div
+            <motion.div
               className="relative overflow-hidden rounded-xl border border-[var(--border-subtle)] hover:border-[var(--border-hover)] transition-colors"
               style={{ paddingLeft: `${20 + i * 8}px` }}
+              whileHover={{ x: 4, transition: { duration: 0.3 } }}
             >
               {/* Colored left accent bar */}
               <div
@@ -609,9 +659,7 @@ export function WorkshopDiagnostico() {
               />
               <div className="flex items-start gap-5 p-6 pl-4">
                 <div className="shrink-0 flex flex-col items-center gap-1">
-                  <span
-                    className="font-mono text-[0.65rem] font-bold tracking-widest uppercase opacity-50"
-                  >
+                  <span className="font-mono text-[0.65rem] font-bold tracking-widest uppercase opacity-50">
                     {String(i + 1).padStart(2, '0')}
                   </span>
                   <span
@@ -627,14 +675,13 @@ export function WorkshopDiagnostico() {
                 </div>
                 <Body className="text-base text-[var(--text-primary)] pt-1 leading-relaxed">{dim.q}</Body>
               </div>
-            </div>
+            </motion.div>
           </StaggerItem>
           )
         })}
       </StaggerGroup>
       </div>
     </Section>
-    </Spotlight>
   )
 }
 
@@ -738,28 +785,79 @@ export { WorkshopDiscussao as ChapterWorkshopDiscussao }
 export function FechamentoJanela() {
   return (
     <Section id="fechamento-janela" bg="primary">
-      <AmbientBackground variant="bottom-fade" />
-      <BackgroundBeams color="rgba(52, 152, 219, 0.35)" beamCount={2} />
-      <FloatingElements count={4} color="var(--accent-blue)" />
+      <AmbientBackground variant="mesh-dark" />
+      {/* Countdown clock rings — unique urgency visual */}
+      <div className="absolute inset-0 pointer-events-none z-[1] flex items-center justify-end pr-[10%] overflow-hidden">
+        <svg viewBox="0 0 300 300" className="w-[400px] h-[400px] opacity-[0.05]">
+          {/* Clock rings */}
+          <circle cx="150" cy="150" r="140" fill="none" stroke="#3498DB" strokeWidth="1" />
+          <circle cx="150" cy="150" r="110" fill="none" stroke="#3498DB" strokeWidth="0.5" strokeDasharray="4 8" />
+          <circle cx="150" cy="150" r="80" fill="none" stroke="#3498DB" strokeWidth="0.5" />
+          {/* Hour marks */}
+          {Array.from({ length: 12 }, (_, i) => {
+            const angle = (i * 30 - 90) * (Math.PI / 180)
+            const x1 = 150 + 130 * Math.cos(angle)
+            const y1 = 150 + 130 * Math.sin(angle)
+            const x2 = 150 + 140 * Math.cos(angle)
+            const y2 = 150 + 140 * Math.sin(angle)
+            return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#3498DB" strokeWidth={i % 3 === 0 ? 2 : 1} />
+          })}
+          {/* Clock hands */}
+          <line x1="150" y1="150" x2="150" y2="50" stroke="#3498DB" strokeWidth="2" strokeLinecap="round" />
+          <line x1="150" y1="150" x2="220" y2="120" stroke="#3498DB" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+      </div>
       <div className="relative z-10">
-      <CinematicHeadline
-        overline="Fechamento"
-        headline={content.fechamentoJanela.headline}
-        align="left"
-        size="display"
-        icon={<Clock className="w-4 h-4 text-[var(--accent-blue)]" />}
-      />
+      <Overline className="mb-6 text-[var(--text-muted)] inline-flex items-center gap-2">
+        <Clock className="w-4 h-4 text-[var(--accent-blue)]" />Fechamento
+      </Overline>
+      <GsapTextReveal
+        tag="h2"
+        className="text-[clamp(1.75rem,4.5vw,3.5rem)] max-w-3xl"
+        variant="words"
+        stagger={0.06}
+        glowColor="rgba(52, 152, 219, 0.3)"
+      >
+        {content.fechamentoJanela.headline}
+      </GsapTextReveal>
 
       <ScrollReveal className="mt-6 max-w-3xl">
         <Body className="text-lg">{content.fechamentoJanela.body}</Body>
       </ScrollReveal>
 
-      <div className="mt-16 grid grid-cols-1 lg:grid-cols-5 gap-8 items-start">
-        <div className="lg:col-span-3 space-y-0">
+      {/* Stat as hero element — full width, dramatic */}
+      <ScrollReveal delay={0.3} variant="scale" className="mt-16 text-center">
+        <MovingBorder borderColor="var(--accent-blue)" duration={8} borderWidth={1} className="inline-block rounded-2xl">
+          <div className="px-12 py-8 md:px-20 md:py-10 bg-[var(--bg-surface)] rounded-2xl">
+            <CinematicCounter
+              value={48}
+              prefix="$"
+              suffix="B"
+              className="text-[clamp(3rem,10vw,7rem)]"
+              glowIntensity="high"
+              color="var(--accent-blue-vivid)"
+            />
+            <Body className="mt-3 text-sm text-[var(--text-muted)] max-w-sm mx-auto">
+              {content.fechamentoJanela.statContext}
+            </Body>
+          </div>
+        </MovingBorder>
+      </ScrollReveal>
+
+      {/* Timeline — horizontal on desktop, vertical on mobile */}
+      <div className="mt-16 max-w-4xl mx-auto">
+        <div className="flex flex-col md:flex-row md:items-start gap-0">
           {content.fechamentoJanela.timeline.map((t, i) => (
-            <ScrollReveal key={t.period} delay={i * 0.2} variant="blur">
-              <div className="flex items-stretch gap-6">
-                <div className="flex flex-col items-center">
+            <ScrollReveal key={t.period} delay={0.4 + i * 0.15} variant="rise" className="flex-1">
+              <div className="relative pb-8 md:pb-0 md:px-4">
+                {/* Connector line */}
+                {i < content.fechamentoJanela.timeline.length - 1 && (
+                  <>
+                    <div className="hidden md:block absolute top-2 left-[calc(50%+8px)] right-0 h-px bg-gradient-to-r from-[var(--accent-blue)]/30 to-[var(--border-subtle)]" />
+                    <div className="md:hidden absolute left-2 top-4 bottom-0 w-px bg-[var(--border-subtle)]" />
+                  </>
+                )}
+                <div className="flex md:flex-col items-start md:items-center gap-4 md:gap-3 md:text-center">
                   <span
                     className={cn(
                       'w-4 h-4 rounded-full border-2 shrink-0',
@@ -768,39 +866,20 @@ export function FechamentoJanela() {
                         : 'bg-transparent border-[var(--text-muted)]'
                     )}
                   />
-                  {i < content.fechamentoJanela.timeline.length - 1 && (
-                    <div className="w-px flex-1 bg-[var(--border-subtle)] my-1" />
-                  )}
-                </div>
-                <div className="pb-8">
-                  <span className={cn(
-                    'font-display text-2xl',
-                    i === 0 ? 'text-[var(--accent-blue)]' : 'text-[var(--text-tertiary)]'
-                  )}>
-                    {t.period}
-                  </span>
-                  <Body className="mt-2 text-base">{t.status}</Body>
+                  <div>
+                    <span className={cn(
+                      'font-display text-xl md:text-lg block',
+                      i === 0 ? 'text-[var(--accent-blue)]' : 'text-[var(--text-tertiary)]'
+                    )}>
+                      {t.period}
+                    </span>
+                    <Body className="mt-1 text-sm">{t.status}</Body>
+                  </div>
                 </div>
               </div>
             </ScrollReveal>
           ))}
         </div>
-
-        <ScrollReveal delay={0.5} variant="blur" className="lg:col-span-2">
-          <Card variant="stat" accentColor="amber" className="text-center">
-            <CinematicCounter
-              value={48}
-              prefix="$"
-              suffix="B"
-              className="text-5xl md:text-6xl"
-              glowIntensity="high"
-              color="var(--accent-blue-vivid)"
-            />
-            <Body className="mt-4 text-sm">
-              {content.fechamentoJanela.statContext}
-            </Body>
-          </Card>
-        </ScrollReveal>
       </div>
       </div>
     </Section>
