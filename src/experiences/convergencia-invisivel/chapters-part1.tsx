@@ -19,6 +19,8 @@ import { CinematicCounter } from '@/components/cinematic/cinematic-counter'
 import { GlitchText } from '@/components/cinematic/glitch-text'
 import { HeartbeatLine } from '@/components/cinematic/heartbeat-line'
 import { AnimatedEquation } from '@/components/cinematic/animated-equation'
+import { InteractiveParticles } from '@/components/effects/interactive-particles'
+import { LazyWaveDistortion } from '@/components/three/lazy-wave-distortion'
 import { Globe, Sparkles, BarChart3, TrendingUp, DollarSign, MessageSquare, HeartHandshake, ChartNoAxesCombined, Unplug, Database } from 'lucide-react'
 import { cn } from '@/lib/cn'
 import { content } from './content'
@@ -34,7 +36,7 @@ export function Abertura() {
     <Section id="abertura" bg="blue-glow" fullHeight>
       <AmbientBackground variant="radial-blue" />
       <BackgroundBeams color="rgba(52, 152, 219, 0.4)" beamCount={5} />
-      <FloatingElements count={7} color="var(--accent-blue)" />
+      <InteractiveParticles preset="constellation" color="#3498DB" count={80} interactive />
       {/* Concentric pulse rings — unique to Abertura */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[1]">
         {[1, 2, 3].map((ring) => (
@@ -549,9 +551,15 @@ export { CxExperiencia as ChapterCxExperiencia }
 export function CxCusto() {
   return (
     <Section id="cx-custo-do-atrito" bg="gradient-up" spacing="dramatic">
-      <AmbientBackground variant="deep-ocean" />
-      {/* Scan line effect — unique to this chapter */}
-      <div className="scan-line absolute inset-0 z-[1] pointer-events-none" />
+      {/* WebGL liquid distortion — unique to this chapter */}
+      <LazyWaveDistortion
+        color1="#0A1628"
+        color2="#1A6BA8"
+        color3="#3498DB"
+        speed={0.3}
+        intensity={0.8}
+      />
+      <InteractiveParticles preset="fireflies" color="#5DADE2" count={30} speed={0.5} />
       <div className="relative overflow-hidden">
         {/* Watermark stat numbers — giant, ghostly, layered */}
         <div
@@ -889,7 +897,7 @@ export { CsMetricas as ChapterCsMetricas }
 export function CsExpansao() {
   return (
     <Section id="cs-expansao-escondida" bg="green-glow" spacing="dramatic">
-      <FloatingElements count={8} color="var(--accent-teal)" />
+      <InteractiveParticles preset="rising-bubbles" color="#00BCD4" count={40} speed={0.8} />
       <div className="relative z-10">
         <Overline className="text-center mb-6 flex items-center justify-center gap-2">
           <Unplug className="w-4 h-4 text-[var(--accent-teal)]" />Customer Success
