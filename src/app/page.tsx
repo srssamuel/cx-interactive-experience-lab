@@ -25,7 +25,7 @@ export default function PortalPage() {
           ========================================= */}
       <section className="relative min-h-[100dvh] flex items-center overflow-hidden"
         style={{
-          background: 'radial-gradient(ellipse at 30% 30%, rgba(52,152,219,0.30) 0%, transparent 50%), radial-gradient(ellipse at 70% 60%, rgba(124,77,255,0.15) 0%, transparent 50%), radial-gradient(ellipse at 50% 100%, rgba(0,188,212,0.12) 0%, transparent 40%), #0A1628',
+          background: 'radial-gradient(ellipse at 30% 30%, rgba(52,152,219,0.25) 0%, transparent 50%), radial-gradient(ellipse at 70% 60%, rgba(124,77,255,0.12) 0%, transparent 50%), radial-gradient(ellipse at 50% 100%, rgba(0,188,212,0.10) 0%, transparent 40%), rgba(10,22,40,0.6)',
         }}
       >
         <GradientMesh opacity={0.55} />
@@ -123,7 +123,7 @@ export default function PortalPage() {
           ========================================= */}
       <section className="relative py-32 md:py-48 overflow-hidden"
         style={{
-          background: 'linear-gradient(180deg, #0A1628 0%, #0F1E35 30%, #142842 70%, #0F1E35 100%)',
+          background: 'linear-gradient(180deg, rgba(10,22,40,0.7) 0%, rgba(15,30,53,0.6) 30%, rgba(20,40,66,0.5) 70%, rgba(15,30,53,0.6) 100%)',
         }}
       >
         <div className="absolute inset-x-0 top-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, #3498DB, transparent)' }} />
@@ -292,7 +292,7 @@ export default function PortalPage() {
           ========================================= */}
       <section className="relative py-32 md:py-40 overflow-hidden"
         style={{
-          background: 'radial-gradient(ellipse at 50% 0%, rgba(52,152,219,0.30) 0%, transparent 60%), radial-gradient(ellipse at 50% 100%, rgba(0,188,212,0.15) 0%, transparent 50%), #0A1628',
+          background: 'radial-gradient(ellipse at 50% 0%, rgba(52,152,219,0.25) 0%, transparent 60%), radial-gradient(ellipse at 50% 100%, rgba(0,188,212,0.12) 0%, transparent 50%), rgba(10,22,40,0.55)',
         }}
       >
         <BackgroundBeams color="rgba(52, 152, 219, 0.45)" beamCount={5} />
@@ -346,7 +346,7 @@ export default function PortalPage() {
           ========================================= */}
       <footer className="relative py-24 md:py-32 overflow-hidden"
         style={{
-          background: 'linear-gradient(180deg, #0F1E35 0%, #0A1628 100%)',
+          background: 'linear-gradient(180deg, rgba(15,30,53,0.65) 0%, rgba(10,22,40,0.75) 100%)',
         }}
       >
         <div className="absolute inset-x-0 top-0 h-[2px]" style={{ background: 'linear-gradient(90deg, transparent 10%, #00BCD4 50%, transparent 90%)', boxShadow: '0 0 15px rgba(0,188,212,0.4)' }} />

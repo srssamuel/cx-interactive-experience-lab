@@ -92,34 +92,36 @@
   --shadow-glow-green: var(--shadow-glow-teal);
 }
 
-/* Section Background Variants */
+/* Section Background Variants — semi-transparent for 3D scene bleed-through */
 .section-bg-primary {
-  background: radial-gradient(ellipse at 50% 50%, rgba(15,30,53,0.6) 0%, var(--bg-primary) 70%);
+  background: radial-gradient(ellipse at 50% 50%, rgba(15,30,53,0.5) 0%, rgba(10,22,40,0.75) 70%);
 }
 .section-bg-surface {
-  background: radial-gradient(ellipse at 50% 50%, rgba(20,40,66,0.8) 0%, var(--bg-surface) 70%);
+  background: radial-gradient(ellipse at 50% 50%, rgba(20,40,66,0.55) 0%, rgba(15,30,53,0.7) 70%);
 }
-.section-bg-elevated { background-color: var(--bg-elevated); }
+.section-bg-elevated {
+  background: rgba(20,40,66,0.75);
+}
 .section-bg-gradient-down {
-  background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-surface) 50%, var(--bg-primary) 100%);
+  background: linear-gradient(180deg, rgba(10,22,40,0.7) 0%, rgba(15,30,53,0.6) 50%, rgba(10,22,40,0.7) 100%);
 }
 .section-bg-gradient-up {
-  background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-primary) 100%);
+  background: linear-gradient(180deg, rgba(15,30,53,0.6) 0%, rgba(10,22,40,0.7) 100%);
 }
 .section-bg-amber-glow {
-  background: radial-gradient(ellipse at 50% 0%, rgba(52, 152, 219, 0.35) 0%, rgba(52, 152, 219, 0.08) 50%, var(--bg-primary) 80%);
+  background: radial-gradient(ellipse at 50% 0%, rgba(52, 152, 219, 0.30) 0%, rgba(52, 152, 219, 0.06) 40%, rgba(10,22,40,0.65) 80%);
 }
 .section-bg-green-glow {
-  background: radial-gradient(ellipse at 50% 100%, rgba(0, 188, 212, 0.35) 0%, rgba(0, 188, 212, 0.08) 50%, var(--bg-primary) 80%);
+  background: radial-gradient(ellipse at 50% 100%, rgba(0, 188, 212, 0.30) 0%, rgba(0, 188, 212, 0.06) 40%, rgba(10,22,40,0.65) 80%);
 }
 .section-bg-blue-glow {
-  background: radial-gradient(ellipse at 50% 50%, rgba(52, 152, 219, 0.30) 0%, rgba(52, 152, 219, 0.06) 50%, var(--bg-primary) 80%);
+  background: radial-gradient(ellipse at 50% 50%, rgba(52, 152, 219, 0.25) 0%, rgba(52, 152, 219, 0.04) 40%, rgba(10,22,40,0.60) 80%);
 }
 .section-bg-purple-glow {
-  background: radial-gradient(ellipse at 50% 50%, rgba(124, 77, 255, 0.30) 0%, rgba(124, 77, 255, 0.06) 50%, var(--bg-primary) 80%);
+  background: radial-gradient(ellipse at 50% 50%, rgba(124, 77, 255, 0.25) 0%, rgba(124, 77, 255, 0.04) 40%, rgba(10,22,40,0.60) 80%);
 }
 .section-bg-vignette {
-  background: radial-gradient(ellipse at 50% 50%, var(--bg-surface) 0%, var(--bg-primary) 80%);
+  background: radial-gradient(ellipse at 50% 50%, rgba(15,30,53,0.5) 0%, rgba(10,22,40,0.7) 80%);
 }
 
 /* Grain Overlay — VISIBLE */
@@ -220,11 +222,11 @@
 
 /* Glass card with backdrop-filter */
 .glass-card {
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  background: rgba(15, 30, 53, 0.8);
-  border: 1px solid rgba(52, 152, 219, 0.15);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(52, 152, 219, 0.08);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  background: rgba(10, 22, 40, 0.6);
+  border: 1px solid rgba(52, 152, 219, 0.2);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(52, 152, 219, 0.1);
 }
 
 /* Pulse ring animation for stats */

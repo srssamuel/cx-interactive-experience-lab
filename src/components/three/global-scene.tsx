@@ -98,10 +98,10 @@ function AtmosphericParticles({
         <bufferAttribute attach="attributes-size" args={[sizes, 1]} />
       </bufferGeometry>
       <pointsMaterial
-        size={0.035}
+        size={0.055}
         sizeAttenuation
         transparent
-        opacity={0.4}
+        opacity={0.6}
         depthWrite={false}
         blending={THREE.AdditiveBlending}
         color={activeColor}
@@ -132,7 +132,7 @@ function DepthLayers({ activeColor }: { activeColor: THREE.Color }) {
         <meshBasicMaterial
           color={activeColor}
           transparent
-          opacity={0.03}
+          opacity={0.06}
           depthWrite={false}
           blending={THREE.AdditiveBlending}
         />
@@ -143,7 +143,18 @@ function DepthLayers({ activeColor }: { activeColor: THREE.Color }) {
         <meshBasicMaterial
           color={activeColor}
           transparent
-          opacity={0.02}
+          opacity={0.04}
+          depthWrite={false}
+          blending={THREE.AdditiveBlending}
+        />
+      </mesh>
+      {/* Foreground accent layer */}
+      <mesh position={[-3, 2, -4]} rotation={[0.05, -0.1, 0.02]}>
+        <planeGeometry args={[8, 6]} />
+        <meshBasicMaterial
+          color={activeColor}
+          transparent
+          opacity={0.025}
           depthWrite={false}
           blending={THREE.AdditiveBlending}
         />
@@ -165,22 +176,22 @@ function SceneContent({ activeBlock, intensity }: SceneContentProps) {
 
   return (
     <>
-      <AtmosphericParticles count={1200} activeColor={activeColor} intensity={intensity} />
+      <AtmosphericParticles count={1800} activeColor={activeColor} intensity={intensity} />
       <DepthLayers activeColor={activeColor} />
       <EffectComposer>
         <Bloom
-          intensity={0.6 + intensity * 0.4}
-          luminanceThreshold={0.4}
-          luminanceSmoothing={0.6}
+          intensity={0.9 + intensity * 0.6}
+          luminanceThreshold={0.3}
+          luminanceSmoothing={0.5}
           mipmapBlur
         />
         <ChromaticAberration
           blendFunction={BlendFunction.NORMAL}
-          offset={new THREE.Vector2(0.0004 + intensity * 0.0004, 0.0004 + intensity * 0.0004)}
+          offset={new THREE.Vector2(0.0006 + intensity * 0.0006, 0.0006 + intensity * 0.0006)}
           radialModulation
           modulationOffset={0.3}
         />
-        <Vignette darkness={0.4 + intensity * 0.2} offset={0.25} blendFunction={BlendFunction.NORMAL} />
+        <Vignette darkness={0.5 + intensity * 0.25} offset={0.2} blendFunction={BlendFunction.NORMAL} />
       </EffectComposer>
     </>
   )
