@@ -135,6 +135,15 @@ When resuming work ("continue"):
 - `/build-fix` — Autonomous build error detection and fix loop
 - `/chapter-rebuild` — Batched chapter generation with quality gates (max 4 agents per wave)
 - `/red-team` — Adversarial design quality audit (senior design director perspective)
+- `/ux-audit` — UX Design & Performance Auditor (5-dimension human-simulation evaluation)
+
+---
+
+## QA Pipeline
+
+- **Lighthouse CI** — Runs on every push/PR to main via GitHub Actions. Gates: performance >= 70, accessibility >= 85.
+- **ux-auditor-prompt.json** — Evaluation matrix for the UX audit agent. 5 dimensions, 0-10 scoring.
+- **`/ux-audit`** — On-demand human-simulation audit of any file against the evaluation matrix.
 
 ---
 

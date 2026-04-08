@@ -1,31 +1,74 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { ScrollReveal } from '@/components/motion/scroll-reveal'
 import { TextReveal } from '@/components/motion/text-reveal'
+import { AnimatedCounter } from '@/components/motion/animated-counter'
 import { MagneticButton } from '@/components/effects/magnetic-button'
 
 const ease = [0.16, 1, 0.3, 1] as const
 
 const dimensions = [
-  { label: 'CX', stat: '$3.8T', desc: 'em risco global por experiencias que falham', color: '#42A5F5' },
-  { label: 'CS', stat: '120%', desc: 'NRR quando expansao supera aquisicao', color: '#00BCD4' },
-  { label: 'Data', stat: '245%', desc: 'mais decisoes acertadas com dados integrados', color: '#26C6DA' },
-  { label: 'AI', stat: '82%', desc: 'de processos repetitivos eliminados', color: '#7C4DFF' },
+  {
+    label: 'CX',
+    prefix: '$',
+    value: 3.8,
+    suffix: 'T',
+    decimals: 1,
+    desc: 'em risco global por experiencias que falham',
+    color: '#42A5F5',
+    accent: 'pulse-ring',
+  },
+  {
+    label: 'CS',
+    prefix: '',
+    value: 120,
+    suffix: '%',
+    decimals: 0,
+    desc: 'NRR quando expansao supera aquisicao',
+    color: '#00BCD4',
+    accent: 'rising-bar',
+  },
+  {
+    label: 'Data',
+    prefix: '',
+    value: 245,
+    suffix: '%',
+    decimals: 0,
+    desc: 'mais decisoes acertadas com dados integrados',
+    color: '#26C6DA',
+    accent: 'scan-line',
+  },
+  {
+    label: 'AI',
+    prefix: '',
+    value: 82,
+    suffix: '%',
+    decimals: 0,
+    desc: 'de processos repetitivos eliminados',
+    color: '#7C4DFF',
+    accent: 'glitch',
+  },
 ]
 
 export default function PortalPage() {
+  const reducedMotion = useReducedMotion()
+  const motionProps = reducedMotion
+    ? { initial: { opacity: 1 }, animate: { opacity: 1 }, transition: { duration: 0 } }
+    : undefined
+
   return (
     <main className="relative w-full">
 
       {/* =========================================
           SECTION 1 — HERO
-          Fundo 100% transparente — só o 3D global
+          Transparent over global 3D. Convergence orb
+          as visual anchor. Staggered reveals.
           ========================================= */}
       <section className="relative min-h-[100dvh] flex items-center">
-        {/* Subtle vignette overlay for text readability */}
+        {/* Vignette for readability */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -33,13 +76,49 @@ export default function PortalPage() {
           }}
         />
 
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-8 md:px-16 lg:px-24">
+        {/* Convergence orb — visual focal point */}
+        <div className="absolute inset-0 flex items-center justify-end pointer-events-none overflow-hidden">
+          <motion.div
+            className="relative -mr-[10vw] md:mr-[8vw]"
+            {...(reducedMotion ? {} : {
+              animate: { scale: [1, 1.08, 1], opacity: [0.5, 0.8, 0.5] },
+              transition: { duration: 6, repeat: Infinity, ease: 'easeInOut' },
+            })}
+          >
+            <div
+              className="w-[40vw] h-[40vw] max-w-[500px] max-h-[500px] rounded-full"
+              style={{
+                background: 'radial-gradient(circle, rgba(52,152,219,0.15) 0%, rgba(52,152,219,0.05) 40%, transparent 70%)',
+                boxShadow: '0 0 120px rgba(52,152,219,0.15), 0 0 240px rgba(52,152,219,0.05)',
+              }}
+            />
+            {/* Inner convergence rings */}
+            {[0.6, 0.4, 0.2].map((scale, i) => (
+              <motion.div
+                key={i}
+                className="absolute inset-0 rounded-full border"
+                style={{
+                  borderColor: `rgba(52,152,219,${0.08 + i * 0.04})`,
+                  transform: `scale(${scale})`,
+                }}
+                {...(reducedMotion ? {} : {
+                  animate: { rotate: i % 2 === 0 ? 360 : -360 },
+                  transition: { duration: 30 + i * 10, repeat: Infinity, ease: 'linear' },
+                })}
+              />
+            ))}
+          </motion.div>
+        </div>
+
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-8 md:px-16 lg:px-24 2xl:px-32">
           <div className="max-w-3xl">
             <motion.span
               className="block font-mono text-xs uppercase tracking-[0.3em] text-[var(--accent-blue-vivid)] mb-10"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.3, ease }}
+              {...(motionProps ?? {
+                initial: { opacity: 0, x: -20 },
+                animate: { opacity: 1, x: 0 },
+                transition: { duration: 0.6, delay: 0.3, ease },
+              })}
             >
               CX Experience Lab
             </motion.span>
@@ -47,9 +126,11 @@ export default function PortalPage() {
             <motion.h1
               className="font-display leading-[0.92]"
               style={{ fontSize: 'clamp(3.2rem, 8vw, 7.5rem)' }}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.2, delay: 0.6, ease }}
+              {...(motionProps ?? {
+                initial: { opacity: 0, y: 50 },
+                animate: { opacity: 1, y: 0 },
+                transition: { duration: 1.2, delay: 0.6, ease },
+              })}
             >
               <span className="block text-shimmer">
                 A Convergencia
@@ -60,34 +141,47 @@ export default function PortalPage() {
             </motion.h1>
 
             <motion.p
-              className="mt-10 max-w-lg text-lg leading-relaxed text-[var(--text-secondary)]"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 1.0, ease }}
+              className="mt-10 max-w-lg text-lg md:text-xl leading-relaxed text-[var(--text-secondary)]"
+              {...(motionProps ?? {
+                initial: { opacity: 0, y: 30 },
+                animate: { opacity: 1, y: 0 },
+                transition: { duration: 0.9, delay: 1.0, ease },
+              })}
             >
               CX, CS, Dados e IA operam como silos. Mas as empresas que vencem
               ja os fundiram num unico sistema nervoso. Esta experiencia revela
               o modelo que ninguem esta documentando.
             </motion.p>
 
-            <motion.div
-              className="mt-12 flex items-center gap-6 text-sm font-mono"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 1.2, ease }}
-            >
-              <span className="text-[var(--accent-blue-vivid)]">22 capitulos</span>
-              <span className="w-px h-4 bg-[var(--accent-blue)] opacity-40" />
-              <span className="text-[var(--text-secondary)]">90 min</span>
-              <span className="w-px h-4 bg-[var(--accent-blue)] opacity-40" />
-              <span className="text-[var(--text-secondary)]">4 dimensoes</span>
-            </motion.div>
+            {/* Metadata — staggered individually */}
+            <div className="mt-12 flex items-center gap-6 text-sm font-mono">
+              {[
+                { text: '22 capitulos', color: 'var(--accent-blue-vivid)' },
+                { text: '90 min', color: 'var(--text-secondary)' },
+                { text: '4 dimensoes', color: 'var(--text-secondary)' },
+              ].map((item, i) => (
+                <motion.span
+                  key={item.text}
+                  style={{ color: item.color }}
+                  {...(motionProps ?? {
+                    initial: { opacity: 0, y: 15 },
+                    animate: { opacity: 1, y: 0 },
+                    transition: { duration: 0.5, delay: 1.2 + i * 0.15, ease },
+                  })}
+                >
+                  {i > 0 && <span className="inline-block w-px h-4 bg-[var(--accent-blue)] opacity-40 mr-6 align-middle" />}
+                  {item.text}
+                </motion.span>
+              ))}
+            </div>
 
             <motion.div
               className="mt-14"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.4, ease }}
+              {...(motionProps ?? {
+                initial: { opacity: 0, y: 20 },
+                animate: { opacity: 1, y: 0 },
+                transition: { duration: 0.6, delay: 1.6, ease },
+              })}
             >
               <MagneticButton strength={0.3} radius={120}>
                 <Link
@@ -107,33 +201,82 @@ export default function PortalPage() {
           </div>
         </div>
 
+        {/* Scroll indicator — animated pulse */}
         <motion.div
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.5 }}
-          transition={{ duration: 1, delay: 2.5 }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+          {...(motionProps ?? {
+            initial: { opacity: 0 },
+            animate: { opacity: 0.6 },
+            transition: { duration: 1, delay: 2.5 },
+          })}
         >
-          <span className="block w-px h-16 bg-gradient-to-b from-transparent to-[var(--accent-blue)]" />
+          <motion.span
+            className="block font-mono text-[9px] uppercase tracking-[0.3em] text-[var(--text-muted)]"
+            {...(reducedMotion ? {} : {
+              animate: { opacity: [0.4, 0.8, 0.4] },
+              transition: { duration: 2, repeat: Infinity },
+            })}
+          >
+            scroll
+          </motion.span>
+          <span className="block w-px h-12 bg-gradient-to-b from-transparent to-[var(--accent-blue)]" />
         </motion.div>
       </section>
 
       {/* =========================================
-          SECTION 2 — FOUR DIMENSIONS
-          Narrativa espacial — sem cards, cada dimensão
-          emerge do 3D com tipografia dramatica
+          CONVERGING LINES DIVIDER
+          SVG transition between hero and dimensions
           ========================================= */}
-      <section className="relative py-40 md:py-56 overflow-hidden">
-        {/* Soft darkening for legibility, 3D still visible */}
+      <div className="relative h-32 md:h-48 overflow-hidden">
+        <svg
+          viewBox="0 0 1200 200"
+          className="absolute inset-0 w-full h-full"
+          preserveAspectRatio="none"
+        >
+          {/* Four converging lines — one per dimension */}
+          {dimensions.map((dim, i) => {
+            const startX = 50 + i * 300
+            return (
+              <motion.line
+                key={dim.label}
+                x1={startX}
+                y1="0"
+                x2="600"
+                y2="200"
+                stroke={dim.color}
+                strokeWidth="1"
+                strokeOpacity="0.3"
+                initial={{ pathLength: 0 }}
+                whileInView={{ pathLength: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.5, delay: i * 0.2, ease: [0.16, 1, 0.3, 1] }}
+              />
+            )
+          })}
+          {/* Convergence point glow */}
+          <circle cx="600" cy="200" r="4" fill="#3498DB" opacity="0.6">
+            <animate attributeName="r" values="3;8;3" dur="3s" repeatCount="indefinite" />
+            <animate attributeName="opacity" values="0.6;0.2;0.6" dur="3s" repeatCount="indefinite" />
+          </circle>
+        </svg>
+      </div>
+
+      {/* =========================================
+          SECTION 2 — FOUR DIMENSIONS
+          Each dimension has unique visual treatment.
+          Stats animate counting up on scroll.
+          ========================================= */}
+      <section className="relative py-32 md:py-48 overflow-hidden">
+        {/* Soft darkening — 3D still visible */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: 'linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.3) 15%, rgba(0,0,0,0.35) 85%, transparent 100%)',
+            background: 'linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.3) 10%, rgba(0,0,0,0.35) 90%, transparent 100%)',
           }}
         />
-        <div className="absolute inset-x-0 top-0 h-px" style={{ background: 'linear-gradient(90deg, transparent, rgba(52,152,219,0.5), transparent)' }} />
 
-        <div className="relative z-10 max-w-6xl mx-auto px-8 md:px-16 lg:px-24">
-          <div className="mb-32">
+        <div className="relative z-10 max-w-6xl mx-auto px-8 md:px-16 lg:px-24 2xl:px-32">
+          <div className="mb-28 md:mb-36">
             <TextReveal
               tag="h2"
               className="font-display text-[clamp(2rem,5vw,4rem)] leading-[1.05] text-[var(--text-primary)]"
@@ -147,8 +290,8 @@ export default function PortalPage() {
             </ScrollReveal>
           </div>
 
-          {/* Spatial dimension reveals — each offset differently */}
-          <div className="space-y-32 md:space-y-40">
+          {/* Dimension reveals — each visually differentiated */}
+          <div className="space-y-28 md:space-y-36">
             {dimensions.map((dim, i) => (
               <ScrollReveal
                 key={dim.label}
@@ -161,23 +304,73 @@ export default function PortalPage() {
                   }`}
                   style={{ maxWidth: '900px', marginLeft: i % 2 !== 0 ? 'auto' : '0' }}
                 >
-                  {/* Giant stat */}
-                  <div className="flex-shrink-0">
+                  {/* Stat block with unique accent per dimension */}
+                  <div className="flex-shrink-0 relative">
+                    {/* Unique visual accent per dimension */}
+                    {dim.accent === 'pulse-ring' && (
+                      <motion.div
+                        className="absolute -inset-6 rounded-full border"
+                        style={{ borderColor: `${dim.color}20` }}
+                        {...(reducedMotion ? {} : {
+                          animate: { scale: [1, 1.3, 1], opacity: [0.3, 0, 0.3] },
+                          transition: { duration: 3, repeat: Infinity },
+                        })}
+                      />
+                    )}
+                    {dim.accent === 'rising-bar' && (
+                      <motion.div
+                        className="absolute -left-4 bottom-0 w-1 rounded-full"
+                        style={{ background: `linear-gradient(to top, transparent, ${dim.color})` }}
+                        initial={{ height: 0 }}
+                        whileInView={{ height: '100%' }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1.5, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                      />
+                    )}
+                    {dim.accent === 'scan-line' && (
+                      <motion.div
+                        className="absolute inset-x-0 h-px"
+                        style={{ background: dim.color, opacity: 0.4 }}
+                        {...(reducedMotion ? {} : {
+                          animate: { top: ['0%', '100%', '0%'] },
+                          transition: { duration: 4, repeat: Infinity, ease: 'linear' },
+                        })}
+                      />
+                    )}
+                    {dim.accent === 'glitch' && (
+                      <motion.div
+                        className="absolute inset-0 pointer-events-none"
+                        style={{ mixBlendMode: 'screen' }}
+                        {...(reducedMotion ? {} : {
+                          animate: { x: [0, -2, 2, 0], opacity: [0, 0.15, 0.15, 0] },
+                          transition: { duration: 0.3, repeat: Infinity, repeatDelay: 4 },
+                        })}
+                      >
+                        <div className="w-full h-full" style={{ background: dim.color, opacity: 0.1 }} />
+                      </motion.div>
+                    )}
+
                     <span
-                      className="font-mono text-xs uppercase tracking-[0.3em] block mb-3"
+                      className="font-mono text-xs uppercase tracking-[0.3em] block mb-3 relative"
                       style={{ color: dim.color }}
                     >
                       {dim.label}
                     </span>
                     <span
-                      className="font-display leading-none block"
+                      className="font-display leading-none block relative"
                       style={{
                         fontSize: 'clamp(4rem, 10vw, 8rem)',
                         color: dim.color,
                         textShadow: `0 0 60px ${dim.color}60, 0 0 120px ${dim.color}20`,
                       }}
                     >
-                      {dim.stat}
+                      <AnimatedCounter
+                        value={dim.value}
+                        prefix={dim.prefix}
+                        suffix={dim.suffix}
+                        decimals={dim.decimals}
+                        duration={2.5}
+                      />
                     </span>
                   </div>
 
@@ -187,9 +380,10 @@ export default function PortalPage() {
                       {dim.desc}
                     </p>
                     <div
-                      className="mt-6 h-px w-24"
+                      className="mt-6 h-px"
                       style={{
-                        background: `linear-gradient(90deg, ${dim.color}, transparent)`,
+                        width: `${60 + i * 10}%`,
+                        background: `linear-gradient(${i % 2 !== 0 ? '270deg' : '90deg'}, ${dim.color}, transparent)`,
                         boxShadow: `0 0 20px ${dim.color}40`,
                       }}
                     />
@@ -199,9 +393,9 @@ export default function PortalPage() {
             ))}
           </div>
 
-          {/* Convergence reveal */}
+          {/* Closing provocation */}
           <ScrollReveal delay={0.3}>
-            <div className="mt-40 text-center">
+            <div className="mt-36 md:mt-44 text-center">
               <p className="font-display text-[clamp(1.5rem,3.5vw,2.5rem)] leading-[1.2] text-[var(--text-primary)]">
                 &ldquo;As empresas mais valiosas nao otimizam funcoes —
                 <br className="hidden md:block" />
@@ -230,89 +424,66 @@ export default function PortalPage() {
       </section>
 
       {/* =========================================
-          SECTION 3 — FOOTER
+          SECTION 3 — FOOTER AS CLOSING STATEMENT
+          Not a sitemap. A keynote-ending provocation.
           ========================================= */}
-      <footer className="relative py-24 md:py-32">
+      <footer className="relative py-28 md:py-40">
         <div
           className="absolute inset-0 pointer-events-none"
           style={{ background: 'linear-gradient(180deg, transparent, rgba(0,0,0,0.5))' }}
         />
-        <div className="absolute inset-x-0 top-0 h-px" style={{ background: 'linear-gradient(90deg, transparent 10%, rgba(0,188,212,0.4) 50%, transparent 90%)' }} />
+        <div className="absolute inset-x-0 top-0 h-px" style={{ background: 'linear-gradient(90deg, transparent 10%, rgba(52,152,219,0.4) 50%, transparent 90%)' }} />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-8 md:px-16 lg:px-24">
+        <div className="relative z-10 max-w-5xl mx-auto px-8 md:px-16 lg:px-24 2xl:px-32 text-center">
+          {/* Closing statement — keynote style */}
           <ScrollReveal>
-            <div className="mb-16">
-              <span className="font-display text-3xl md:text-4xl text-gradient-blue tracking-tight block">
-                CX Experience Lab
-              </span>
-              <p className="mt-4 text-base leading-relaxed text-[var(--text-secondary)] max-w-lg">
-                Experiencias digitais interativas para keynotes, workshops e apresentacoes executivas.
-              </p>
+            <span className="font-mono text-xs uppercase tracking-[0.3em] text-[var(--accent-blue-vivid)] block mb-8">
+              CX Experience Lab
+            </span>
+            <p className="font-display text-[clamp(1.8rem,4vw,3.2rem)] leading-[1.1] text-[var(--text-primary)] max-w-3xl mx-auto">
+              A janela para construir esse sistema esta aberta.
+              <br />
+              <span className="text-[var(--text-secondary)]">Mas fechando.</span>
+            </p>
+          </ScrollReveal>
+
+          {/* Dimension badges — horizontal */}
+          <ScrollReveal delay={0.2}>
+            <div className="mt-14 flex flex-wrap justify-center gap-3">
+              {dimensions.map((dim) => (
+                <span
+                  key={dim.label}
+                  className="font-mono text-xs px-5 py-2.5 rounded transition-colors duration-300"
+                  style={{
+                    color: dim.color,
+                    border: `1px solid ${dim.color}30`,
+                    background: `${dim.color}08`,
+                  }}
+                >
+                  {dim.label}
+                </span>
+              ))}
             </div>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16">
-            <ScrollReveal delay={0.1}>
-              <div>
-                <span className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--text-secondary)] mb-5 block">
-                  Dimensoes
-                </span>
-                <div className="flex flex-wrap gap-3">
-                  {dimensions.map((dim) => (
-                    <span
-                      key={dim.label}
-                      className="font-mono text-xs px-4 py-2 rounded"
-                      style={{
-                        color: dim.color,
-                        border: `1px solid ${dim.color}40`,
-                        background: `${dim.color}10`,
-                      }}
-                    >
-                      {dim.label}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal delay={0.2}>
-              <div>
-                <span className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--text-secondary)] mb-5 block">
-                  Navegacao
-                </span>
-                <nav className="flex flex-col gap-3">
-                  <Link href="/experiencias/convergencia-invisivel" className="text-sm text-[var(--text-secondary)] hover:text-[var(--accent-blue-vivid)] transition-colors duration-300 font-mono group flex items-center gap-2">
-                    A Convergencia Invisivel
-                    <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-1 group-hover:translate-x-0" />
-                  </Link>
-                </nav>
-              </div>
-            </ScrollReveal>
-
-            <ScrollReveal delay={0.3}>
-              <div>
-                <span className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--text-secondary)] mb-5 block">
-                  Sobre
-                </span>
-                <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
-                  Projetado para presenca de palco. Cada pixel comunica antes do texto.
-                </p>
-              </div>
-            </ScrollReveal>
-          </div>
-
-          <ScrollReveal delay={0.4}>
-            <div className="mt-20 pt-8 flex flex-col md:flex-row items-center justify-between gap-4"
-              style={{ borderTop: '1px solid rgba(52,152,219,0.15)' }}
+          {/* Bottom line */}
+          <ScrollReveal delay={0.3}>
+            <div
+              className="mt-20 pt-8 flex flex-col md:flex-row items-center justify-between gap-4"
+              style={{ borderTop: '1px solid rgba(52,152,219,0.12)' }}
             >
               <span className="font-mono text-xs text-[var(--text-muted)]">
                 2025 &mdash; Designed for stage presence
               </span>
               <div className="flex items-center gap-4">
-                <span className="font-mono text-[10px] text-[var(--accent-blue-vivid)]">22 capitulos</span>
-                <span className="w-px h-3 bg-[var(--accent-blue)] opacity-30" />
-                <span className="font-mono text-[10px] text-[var(--accent-teal)]">4 dimensoes</span>
-                <span className="w-px h-3 bg-[var(--accent-teal)] opacity-30" />
+                <Link
+                  href="/experiencias/convergencia-invisivel"
+                  className="font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--accent-blue-vivid)] hover:text-white transition-colors duration-300 flex items-center gap-2 group"
+                >
+                  Entrar
+                  <ArrowRight className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-0.5" />
+                </Link>
+                <span className="w-px h-3 bg-[var(--accent-blue)] opacity-20" />
                 <span className="font-mono text-[10px] text-[var(--text-muted)]">Next.js + Three.js + GSAP</span>
               </div>
             </div>
