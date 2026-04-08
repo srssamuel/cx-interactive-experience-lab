@@ -4,7 +4,7 @@
       "staticDistDir": "./out",
       "url": [
         "http://localhost/",
-        "http://localhost/experiencias/convergencia-invisivel"
+        "http://localhost/experiencias/convergencia-invisivel/"
       ],
       "numberOfRuns": 3
     },
