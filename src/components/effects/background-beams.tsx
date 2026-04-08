@@ -38,23 +38,23 @@ export function BackgroundBeams({
       >
         {beams.map((beam, i) => (
           <g key={i}>
-            {/* Glow layer — wide, soft */}
+            {/* Glow layer — wide, visible */}
             <path
               d={beam.d}
               stroke={color}
-              strokeWidth="1.5"
+              strokeWidth="2.5"
               filter="url(#beam-glow)"
               strokeDasharray={`${beam.dashArray} ${beam.dashArray * 2}`}
               style={{
                 animation: `beam-dash ${beam.duration}s linear ${beam.delay}s infinite`,
-                opacity: 0.4,
+                opacity: 0.6,
               }}
             />
-            {/* Core beam — bright, thin */}
+            {/* Core beam — bright */}
             <path
               d={beam.d}
               stroke={color}
-              strokeWidth="0.4"
+              strokeWidth="0.8"
               filter="url(#beam-blur)"
               strokeDasharray={`${beam.dashArray} ${beam.dashArray * 2}`}
               style={{

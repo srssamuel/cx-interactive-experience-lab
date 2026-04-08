@@ -73,26 +73,30 @@
 }
 
 /* Section Background Variants */
-.section-bg-primary { background-color: var(--bg-primary); }
-.section-bg-surface { background-color: var(--bg-surface); }
+.section-bg-primary {
+  background: radial-gradient(ellipse at 50% 50%, rgba(21,25,33,0.6) 0%, var(--bg-primary) 70%);
+}
+.section-bg-surface {
+  background: radial-gradient(ellipse at 50% 50%, rgba(28,33,43,0.8) 0%, var(--bg-surface) 70%);
+}
 .section-bg-elevated { background-color: var(--bg-elevated); }
 .section-bg-gradient-down {
-  background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-surface) 100%);
+  background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-surface) 50%, var(--bg-primary) 100%);
 }
 .section-bg-gradient-up {
   background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-primary) 100%);
 }
 .section-bg-amber-glow {
-  background: radial-gradient(ellipse at 50% 0%, rgba(200, 135, 58, 0.25) 0%, var(--bg-primary) 70%);
+  background: radial-gradient(ellipse at 50% 0%, rgba(200, 135, 58, 0.35) 0%, rgba(200, 135, 58, 0.08) 50%, var(--bg-primary) 80%);
 }
 .section-bg-green-glow {
-  background: radial-gradient(ellipse at 50% 100%, rgba(74, 124, 92, 0.25) 0%, var(--bg-primary) 70%);
+  background: radial-gradient(ellipse at 50% 100%, rgba(74, 124, 92, 0.35) 0%, rgba(74, 124, 92, 0.08) 50%, var(--bg-primary) 80%);
 }
 .section-bg-blue-glow {
-  background: radial-gradient(ellipse at 50% 50%, rgba(91, 143, 185, 0.20) 0%, var(--bg-primary) 70%);
+  background: radial-gradient(ellipse at 50% 50%, rgba(91, 143, 185, 0.30) 0%, rgba(91, 143, 185, 0.06) 50%, var(--bg-primary) 80%);
 }
 .section-bg-purple-glow {
-  background: radial-gradient(ellipse at 50% 50%, rgba(139, 111, 176, 0.20) 0%, var(--bg-primary) 70%);
+  background: radial-gradient(ellipse at 50% 50%, rgba(139, 111, 176, 0.30) 0%, rgba(139, 111, 176, 0.06) 50%, var(--bg-primary) 80%);
 }
 .section-bg-vignette {
   background: radial-gradient(ellipse at 50% 50%, var(--bg-surface) 0%, var(--bg-primary) 80%);

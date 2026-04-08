@@ -13,8 +13,8 @@ interface SpotlightProps {
 export function Spotlight({
   children,
   className,
-  color = 'rgba(200, 135, 58, 0.15)',
-  size = 700,
+  color = 'rgba(200, 135, 58, 0.30)',
+  size = 800,
 }: SpotlightProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [isHovered, setIsHovered] = useState(false)
@@ -54,8 +54,8 @@ export function Spotlight({
       <div
         className="pointer-events-none absolute inset-0 z-0"
         style={{
-          background: `radial-gradient(ellipse at 30% 40%, ${color}, transparent 70%)`,
-          opacity: 0.5,
+          background: `radial-gradient(ellipse at 30% 40%, ${color}, transparent 60%)`,
+          opacity: 0.8,
         }}
       />
       {/* Spotlight gradient layer — follows mouse */}

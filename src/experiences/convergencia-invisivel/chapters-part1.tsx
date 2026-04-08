@@ -30,10 +30,11 @@ import { content } from './content'
 
 export function Abertura() {
   return (
-    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.15)" size={800}>
-    <Section id="abertura" bg="primary" fullHeight>
-      <AmbientBackground variant="spotlight" />
-      <FloatingElements count={5} color="var(--accent-amber)" />
+    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.35)" size={900}>
+    <Section id="abertura" bg="amber-glow" fullHeight>
+      <AmbientBackground variant="radial-amber" />
+      <BackgroundBeams color="rgba(200, 135, 58, 0.4)" beamCount={4} />
+      <FloatingElements count={7} color="var(--accent-amber)" />
       <ParallaxContainer speed={0.15} className="relative z-10">
         <div className="flex flex-col items-center justify-center text-center">
           <motion.div
