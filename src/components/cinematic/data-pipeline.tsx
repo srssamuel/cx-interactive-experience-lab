@@ -175,7 +175,6 @@ export function DataPipeline({ stages, className }: DataPipelineProps) {
           const nextPos = stagePositions[idx + 1]
           const fromX = pos.x + stageWidth
           const toX = nextPos.x
-          const midX = (fromX + toX) / 2
 
           return (
             <g key={`arrow-${idx}`}>

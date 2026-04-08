@@ -2,7 +2,6 @@
 
 import { useRef, useState, useEffect, useCallback, createContext, useContext } from 'react'
 import { gsap } from 'gsap'
-import { cn } from '@/lib/cn'
 import { useLenis } from '@/lib/providers/smooth-scroll-provider'
 import type { Chapter } from '@/lib/types'
 

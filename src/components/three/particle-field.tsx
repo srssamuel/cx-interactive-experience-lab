@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useMemo, useCallback } from 'react'
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import * as THREE from 'three'
 
@@ -16,7 +16,6 @@ function Particles({
 }) {
   const mesh = useRef<THREE.Points>(null)
   const pointer = useRef(new THREE.Vector2(0, 0))
-  const { camera } = useThree()
 
   // Store original positions for spring-back
   const [positions, originalPositions, sizes] = useMemo(() => {

@@ -152,11 +152,6 @@ export function HeartbeatLine({ state = 'healthy', className }: HeartbeatLinePro
       stateRef.current === 'healthy'
         ? 'rgba(0, 188, 212, 0.6)'
         : 'rgba(231, 76, 60, 0.6)'
-    const ambientGlow =
-      stateRef.current === 'healthy'
-        ? 'rgba(0, 188, 212, 0.12)'
-        : 'rgba(231, 76, 60, 0.12)'
-
     // Draw wide ambient glow layer
     ctx.save()
     ctx.shadowColor = glowColor

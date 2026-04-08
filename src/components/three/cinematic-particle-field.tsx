@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useMemo } from 'react'
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { EffectComposer, Bloom, ChromaticAberration, Vignette } from '@react-three/postprocessing'
 import { BlendFunction } from 'postprocessing'
 import * as THREE from 'three'
@@ -18,11 +18,10 @@ function CinematicParticles({
   const mesh = useRef<THREE.Points>(null)
   const pointer = useRef(new THREE.Vector2(0, 0))
 
-  const [positions, originalPositions, sizes, opacities] = useMemo(() => {
+  const [positions, originalPositions, sizes] = useMemo(() => {
     const pos = new Float32Array(count * 3)
     const orig = new Float32Array(count * 3)
     const sz = new Float32Array(count)
-    const op = new Float32Array(count)
     for (let i = 0; i < count; i++) {
       const theta = Math.random() * Math.PI * 2
       const phi = Math.acos(2 * Math.random() - 1)
@@ -37,9 +36,8 @@ function CinematicParticles({
       orig[i * 3 + 1] = y
       orig[i * 3 + 2] = z
       sz[i] = Math.random() * 3 + 0.5
-      op[i] = Math.random() * 0.6 + 0.2
     }
-    return [pos, orig, sz, op]
+    return [pos, orig, sz]
   }, [count])
 
   const handlePointerMove = (e: { point: THREE.Vector3 }) => {

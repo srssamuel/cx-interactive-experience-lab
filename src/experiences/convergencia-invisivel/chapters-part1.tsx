@@ -150,8 +150,6 @@ export { Abertura as ChapterAbertura }
    Each card tilts slightly, large stat dominates.
    ═══════════════════════════════════════════════════ */
 
-const ch2Rotations = ['-1deg', '0deg', '1deg'] as const
-
 export function ContextoMundoMudou() {
   return (
     <Section id="contexto-o-mundo-mudou" bg="gradient-down" spacing="generous">
@@ -355,12 +353,6 @@ export { ContextoIlusao as ChapterContextoIlusao }
    ═══════════════════════════════════════════════════ */
 
 export function CxEquacao() {
-  const nodePositions = [
-    'md:col-start-2 md:col-span-2 md:justify-self-center', // Expectativa — top center
-    'md:col-start-1 md:col-span-2',                        // Percepcao — bottom left
-    'md:col-start-3 md:col-span-2 md:justify-self-end',    // Memoria — bottom right
-  ]
-
   return (
     <Section id="cx-equacao-invisivel" bg="blue-glow">
       <AmbientBackground variant="radial-blue" breathe={true} />

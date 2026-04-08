@@ -237,7 +237,6 @@ export { AiOQueFaz as ChapterAiOQueFaz }
    ═══════════════════════════════════════════════════ */
 
 export function AiOndeGanha() {
-  const podiumHeights = ['h-[180px]', 'h-[240px]', 'h-[160px]']
   const podiumDelays = [0.4, 0.2, 0.6]
   return (
     <Section id="ai-onde-ganha" bg="primary">
