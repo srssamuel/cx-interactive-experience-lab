@@ -154,83 +154,85 @@ export function ContextoMundoMudou() {
   return (
     <Section id="contexto-o-mundo-mudou" bg="gradient-down" spacing="generous">
       <AmbientBackground variant="deep-ocean" />
-      {/* Seismograph-style grid — unique to this chapter */}
-      <div className="absolute inset-0 pointer-events-none z-[1] overflow-hidden">
-        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style={{ opacity: 0.08 }}>
-          {Array.from({ length: 12 }, (_, i) => (
-            <line key={`h${i}`} x1="0" y1={`${(i + 1) * 8.33}%`} x2="100%" y2={`${(i + 1) * 8.33}%`} stroke="#3498DB" strokeWidth="0.5" />
-          ))}
-          {Array.from({ length: 16 }, (_, i) => (
-            <line key={`v${i}`} x1={`${(i + 1) * 6.25}%`} y1="0" x2={`${(i + 1) * 6.25}%`} y2="100%" stroke="#3498DB" strokeWidth="0.5" />
-          ))}
-          {/* Seismograph wave crossing the grid */}
-          <path
-            d="M0,50% Q10%,45% 15%,50% T30%,50% Q35%,30% 38%,50% T50%,50% Q55%,20% 60%,50% T75%,50% Q80%,40% 85%,50% T100%,50%"
-            stroke="#3498DB" strokeWidth="2" fill="none" opacity="0.4"
-            strokeDasharray="1200" strokeDashoffset="1200"
-          >
-            <animate attributeName="stroke-dashoffset" from="1200" to="0" dur="3s" fill="freeze" begin="0.5s" />
-          </path>
-        </svg>
-      </div>
       <div className="relative z-10">
-      <Overline className="block mb-6 text-[var(--text-muted)] inline-flex items-center gap-2"><Globe className="w-4 h-4 text-[var(--accent-blue)]" />Contexto</Overline>
-      <GsapTextReveal
-        tag="h2"
-        className="text-[clamp(1.75rem,4.5vw,3.5rem)] max-w-4xl"
-        variant="words"
-        stagger={0.08}
-        glowColor="rgba(52, 152, 219, 0.3)"
-      >
-        {content.contextoMundoMudou.headline}
-      </GsapTextReveal>
+        <Overline className="block mb-6 text-[var(--text-muted)] inline-flex items-center gap-2">
+          <Globe className="w-4 h-4 text-[var(--accent-blue)]" />Contexto
+        </Overline>
+        <GsapTextReveal
+          tag="h2"
+          className="text-[clamp(1.75rem,4.5vw,3.5rem)] max-w-4xl"
+          variant="words"
+          stagger={0.08}
+          glowColor="rgba(52, 152, 219, 0.3)"
+        >
+          {content.contextoMundoMudou.headline}
+        </GsapTextReveal>
 
-      {/* Horizontal scroll-like stat parade — unique layout */}
-      <div className="mt-20 flex flex-col md:flex-row items-stretch gap-6 max-w-5xl mx-auto">
-        {content.contextoMundoMudou.points.map((point, i) => (
-          <ScrollReveal
-            key={point.stat}
-            variant="scale"
-            delay={i * 0.2}
-            className="flex-1"
-          >
+        {/* Seismograph timeline — stats integrated into wave markers */}
+        <div className="mt-24 relative max-w-5xl mx-auto">
+          {/* Animated wave line connecting all points */}
+          <div className="absolute top-[60px] left-0 right-0 h-px hidden md:block">
             <motion.div
-              className={cn(
-                'relative h-full p-8 md:p-10 rounded-2xl border overflow-hidden',
-                'hover:border-[var(--accent-blue)]/40 transition-all duration-700',
-                i === 2
-                  ? 'border-[var(--accent-blue)]/30 bg-[var(--accent-blue-soft)]'
-                  : 'border-[var(--border-subtle)] bg-[var(--bg-surface)]'
-              )}
-              whileHover={{ y: -4, transition: { duration: 0.4 } }}
-            >
-              {/* Giant faded index number */}
-              <span className="absolute -top-6 -right-2 font-display text-[8rem] leading-none text-[var(--accent-blue)] opacity-[0.06] select-none pointer-events-none">
-                0{i + 1}
-              </span>
-              <CinematicCounter
-                value={parseFloat(point.stat.replace(/[^0-9.]/g, ''))}
-                suffix={point.stat.replace(/[0-9.]/g, '')}
-                className="text-[clamp(2.5rem,6vw,4rem)]"
-                glowIntensity={i === 2 ? 'high' : 'medium'}
-                color="var(--accent-blue-vivid)"
-              />
-              <Body className="mt-4 text-[var(--text-primary)] font-medium text-base">
-                {point.text}
-              </Body>
-              <span className="mt-3 block font-mono text-xs text-[var(--text-muted)]">
-                {point.source}
-              </span>
-            </motion.div>
-          </ScrollReveal>
-        ))}
-      </div>
+              className="h-full origin-left"
+              style={{ background: 'linear-gradient(90deg, rgba(52,152,219,0.1), rgba(52,152,219,0.5), rgba(52,152,219,0.1))' }}
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+            />
+          </div>
 
-      <ScrollReveal delay={0.7} className="mt-16">
-        <Body className="max-w-2xl text-lg text-[var(--text-primary)] font-medium italic border-l-2 border-[var(--accent-blue)]/30 pl-6">
-          {content.contextoMundoMudou.closing}
-        </Body>
-      </ScrollReveal>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+            {content.contextoMundoMudou.points.map((point, i) => (
+              <ScrollReveal key={point.stat} delay={0.3 + i * 0.3}>
+                <div className={cn(
+                  'relative flex flex-col items-center text-center px-6',
+                  i === 1 ? 'md:border-x md:border-[rgba(52,152,219,0.1)]' : ''
+                )}>
+                  {/* Pulse marker on the wave line */}
+                  <motion.div
+                    className="relative w-4 h-4 rounded-full mb-8 hidden md:block"
+                    style={{
+                      background: 'var(--accent-blue)',
+                      boxShadow: '0 0 20px rgba(52,152,219,0.6), 0 0 40px rgba(52,152,219,0.3)',
+                    }}
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.5 + i * 0.3 }}
+                  >
+                    <motion.div
+                      className="absolute inset-0 rounded-full bg-[var(--accent-blue)]"
+                      animate={{ scale: [1, 2.5], opacity: [0.4, 0] }}
+                      transition={{ duration: 2, repeat: Infinity, delay: i * 0.7 }}
+                    />
+                  </motion.div>
+
+                  {/* Stat */}
+                  <CinematicCounter
+                    value={parseFloat(point.stat.replace(/[^0-9.]/g, ''))}
+                    suffix={point.stat.replace(/[0-9.]/g, '')}
+                    className="text-[clamp(3rem,7vw,5rem)]"
+                    glowIntensity={i === 0 ? 'high' : 'medium'}
+                    color="var(--accent-blue-vivid)"
+                  />
+                  <Body className="mt-4 text-[var(--text-primary)] text-sm leading-relaxed max-w-[260px]">
+                    {point.text}
+                  </Body>
+                  <span className="mt-3 font-mono text-[10px] text-[var(--text-muted)] uppercase tracking-wider">
+                    {point.source}
+                  </span>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+
+        <ScrollReveal delay={0.7} className="mt-20">
+          <Body className="max-w-2xl mx-auto text-lg text-[var(--text-primary)] font-medium italic text-center opacity-80">
+            &ldquo;{content.contextoMundoMudou.closing}&rdquo;
+          </Body>
+        </ScrollReveal>
       </div>
     </Section>
   )

@@ -13,14 +13,11 @@ import { PausePoint } from '@/components/workshop/pause-point'
 import { ParallaxContainer } from '@/components/motion/parallax-container'
 import { BorderRevealCard } from '@/components/effects/border-reveal-card'
 import { Spotlight } from '@/components/effects/spotlight'
-import { BackgroundBeams } from '@/components/effects/background-beams'
 import { FloatingElements } from '@/components/effects/floating-elements'
 import { MovingBorder } from '@/components/effects/moving-border'
 import { GsapTextReveal } from '@/components/cinematic/gsap-text-reveal'
 import { CinematicCounter } from '@/components/cinematic/cinematic-counter'
 import { GlitchText } from '@/components/cinematic/glitch-text'
-import { DataPipeline } from '@/components/cinematic/data-pipeline'
-import { HeartbeatLine } from '@/components/cinematic/heartbeat-line'
 import { InteractiveParticles } from '@/components/effects/interactive-particles'
 import { LazyCinematicParticleField } from '@/components/three/lazy-cinematic-particle-field'
 import { LazyWaveDistortion } from '@/components/three/lazy-wave-distortion'
@@ -30,86 +27,198 @@ import { content } from './content'
 
 /* ═══════════════════════════════════════════════════
    Chapter 12 — O Modelo de Maturidade
-   Ascending levels with accent-blue labels + rise animation.
+   RADIAL GAUGE — concentric arcs for each maturity level,
+   giant stat at center, unique circular visualization.
    ═══════════════════════════════════════════════════ */
 
+function RadialMaturityGauge({ levels, activeLevelIndex = 4 }: { levels: { name: string; desc: string }[]; activeLevelIndex?: number }) {
+  const size = 420
+  const center = size / 2
+  const baseRadius = 60
+  const ringGap = 38
+  const arcColors = ['#1A3A4A', '#1E5C6A', '#26898A', '#26C6DA', '#42E8FF']
+
+  return (
+    <div className="relative flex items-center justify-center">
+      <svg viewBox={`0 0 ${size} ${size}`} className="w-[320px] h-[320px] md:w-[420px] md:h-[420px]">
+        <defs>
+          <filter id="radial-glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        {/* Background rings (dim) */}
+        {levels.map((_, i) => {
+          const r = baseRadius + i * ringGap
+          return (
+            <circle
+              key={`bg-${i}`}
+              cx={center}
+              cy={center}
+              r={r}
+              fill="none"
+              stroke="rgba(38, 198, 218, 0.06)"
+              strokeWidth={ringGap - 6}
+            />
+          )
+        })}
+
+        {/* Active arcs — each fills proportionally */}
+        {levels.map((_, i) => {
+          const r = baseRadius + i * ringGap
+          const circumference = 2 * Math.PI * r
+          const fillPct = i <= activeLevelIndex ? 0.15 + (i / (levels.length - 1)) * 0.85 : 0.05
+          const isActive = i === activeLevelIndex
+
+          return (
+            <motion.circle
+              key={`arc-${i}`}
+              cx={center}
+              cy={center}
+              r={r}
+              fill="none"
+              stroke={arcColors[i]}
+              strokeWidth={ringGap - 8}
+              strokeLinecap="round"
+              strokeDasharray={`${circumference * fillPct} ${circumference * (1 - fillPct)}`}
+              strokeDashoffset={circumference * 0.25}
+              opacity={isActive ? 1 : 0.5 + i * 0.1}
+              filter={isActive ? 'url(#radial-glow)' : undefined}
+              initial={{ strokeDasharray: `0 ${circumference}` }}
+              whileInView={{ strokeDasharray: `${circumference * fillPct} ${circumference * (1 - fillPct)}` }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.8, delay: 0.3 + i * 0.2, ease: [0.16, 1, 0.3, 1] }}
+            />
+          )
+        })}
+
+        {/* Level labels on arcs */}
+        {levels.map((level, i) => {
+          const r = baseRadius + i * ringGap
+          // Position label at the end of each arc
+          const fillPct = 0.15 + (i / (levels.length - 1)) * 0.85
+          const angle = -Math.PI / 2 + fillPct * 2 * Math.PI
+          const lx = center + r * Math.cos(angle)
+          const ly = center + r * Math.sin(angle)
+
+          return (
+            <g key={`label-${i}`}>
+              <circle cx={lx} cy={ly} r="4" fill={arcColors[i]} opacity={0.9} />
+              {i === levels.length - 1 && (
+                <circle cx={lx} cy={ly} r="8" fill="none" stroke={arcColors[i]} strokeWidth="1.5" opacity={0.5}>
+                  <animate attributeName="r" values="8;14;8" dur="2.5s" repeatCount="indefinite" />
+                  <animate attributeName="opacity" values="0.5;0;0.5" dur="2.5s" repeatCount="indefinite" />
+                </circle>
+              )}
+            </g>
+          )
+        })}
+
+        {/* Center stat */}
+        <text x={center} y={center - 8} textAnchor="middle" dominantBaseline="middle" fill="#26C6DA" fontSize="48" fontWeight="700" fontFamily="var(--font-mono, monospace)" filter="url(#radial-glow)">
+          245%
+        </text>
+        <text x={center} y={center + 22} textAnchor="middle" dominantBaseline="middle" fill="#8A919C" fontSize="10" letterSpacing="2" fontFamily="var(--font-mono, monospace)">
+          ROI EM 3 ANOS
+        </text>
+      </svg>
+    </div>
+  )
+}
+
 export function DataMaturidade() {
+  const levelCount = content.dataMaturidade.levels.length
+
   return (
     <Section id="data-maturidade" bg="gradient-down" spacing="generous">
       <AmbientBackground variant="mesh-dark" />
-      <BackgroundBeams color="rgba(38, 198, 218, 0.35)" beamCount={3} />
-      <FloatingElements count={4} color="var(--accent-blue)" />
       <div className="relative z-10">
-      <CinematicHeadline
-        overline="Dados"
-        headline={content.dataMaturidade.headline}
-        align="left"
-        size="display"
-        icon={<Layers className="w-4 h-4 text-[var(--accent-blue)]" />}
-      />
+        {/* Headline — left-aligned, tight */}
+        <Overline className="mb-4 text-[#26C6DA] flex items-center gap-2">
+          <Layers className="w-4 h-4" />Dados
+        </Overline>
+        <GsapTextReveal
+          tag="h2"
+          className="text-[clamp(1.75rem,4.5vw,3.5rem)] max-w-4xl"
+          variant="words"
+          stagger={0.06}
+          glowColor="rgba(38, 198, 218, 0.3)"
+        >
+          {content.dataMaturidade.headline}
+        </GsapTextReveal>
 
-      <div className="mt-16 space-y-4">
-        {content.dataMaturidade.levels.map((level, i) => (
-          <ScrollReveal key={level.name} delay={i * 0.1} variant="rise">
-            <div
-              className={cn(
-                'flex flex-col md:flex-row md:items-center gap-4 rounded-xl border transition-all',
-                i === content.dataMaturidade.levels.length - 1
-                  ? 'border-[var(--accent-blue)]/30 bg-[var(--accent-blue-soft)] hover:border-[var(--accent-blue)]/50'
-                  : 'border-[var(--border-subtle)] hover:border-[var(--border-hover)]'
-              )}
-              style={{
-                padding: `${16 + i * 4}px ${24 + i * 4}px`,
-                opacity: 0.5 + i * 0.125,
-                marginLeft: `${i * 16}px`,
-              }}
-            >
-              <span
-                className="font-mono text-xs shrink-0 w-8 font-bold"
-                style={{ color: 'var(--accent-blue, #26C6DA)' }}
-              >
-                L{i + 1}
-              </span>
-              <SubHeading
-                as="h3"
-                className={cn(
-                  'text-base font-semibold shrink-0 min-w-[140px] text-[var(--accent-blue)]',
-                  i === content.dataMaturidade.levels.length - 1 && 'text-[var(--accent-blue)]'
-                )}
-              >
-                {level.name}
-              </SubHeading>
-              <Body as="span" className="text-sm">
-                {level.desc}
-              </Body>
-              {i === content.dataMaturidade.levels.length - 1 && (
-                <span className="ml-auto shrink-0 font-mono text-[10px] uppercase tracking-widest text-[var(--accent-blue)] opacity-70">
-                  target
-                </span>
-              )}
-            </div>
+        {/* Two-panel layout: radial gauge + level descriptions */}
+        <div className="mt-20 flex flex-col lg:flex-row items-center gap-16 lg:gap-20">
+          {/* Left: Radial gauge */}
+          <ScrollReveal variant="scale" className="flex-shrink-0">
+            <RadialMaturityGauge levels={content.dataMaturidade.levels} activeLevelIndex={4} />
           </ScrollReveal>
-        ))}
-      </div>
 
-      <ScrollReveal delay={0.5} className="mt-12">
-        <div className="max-w-3xl mx-auto rounded-xl overflow-hidden border border-[var(--accent-blue)]/15 bg-[var(--bg-primary)]/60">
-          <HeartbeatLine state="healthy" className="h-[130px]" />
+          {/* Right: Level descriptions — vertical timeline style */}
+          <div className="flex-1 space-y-0">
+            {content.dataMaturidade.levels.map((level, i) => (
+              <ScrollReveal key={level.name} delay={i * 0.1} variant="slide-right">
+                <div className="flex items-start gap-5 py-5" style={{ borderBottom: i < levelCount - 1 ? '1px solid rgba(38, 198, 218, 0.08)' : 'none' }}>
+                  {/* Level indicator dot + line */}
+                  <div className="flex flex-col items-center shrink-0 pt-1">
+                    <motion.div
+                      className="w-3 h-3 rounded-full"
+                      style={{
+                        background: i === levelCount - 1 ? '#26C6DA' : `rgba(38, 198, 218, ${0.2 + i * 0.15})`,
+                        boxShadow: i === levelCount - 1 ? '0 0 12px rgba(38, 198, 218, 0.6)' : 'none',
+                      }}
+                      whileInView={i === levelCount - 1 ? { scale: [1, 1.4, 1] } : undefined}
+                      transition={i === levelCount - 1 ? { duration: 2, repeat: Infinity } : undefined}
+                      viewport={{ once: false }}
+                    />
+                  </div>
+
+                  <div>
+                    <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--text-muted)] block mb-1">
+                      Nivel {i + 1}
+                    </span>
+                    <h3 className={cn(
+                      'font-display text-lg tracking-tight',
+                      i === levelCount - 1 ? 'text-[#26C6DA]' : 'text-[var(--text-primary)]'
+                    )}>
+                      {level.name}
+                    </h3>
+                    <Body className="text-sm mt-1 text-[var(--text-secondary)]">
+                      {level.desc}
+                    </Body>
+                  </div>
+
+                  {i === levelCount - 1 && (
+                    <span className="ml-auto shrink-0 font-mono text-[9px] uppercase tracking-[0.3em] text-[#26C6DA] bg-[#26C6DA]/10 px-3 py-1 rounded-full self-center">
+                      alvo
+                    </span>
+                  )}
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
         </div>
-      </ScrollReveal>
 
-      <ScrollReveal delay={0.6} variant="rise" className="mt-10 flex items-baseline gap-4">
-        <CinematicCounter
-          value={245}
-          suffix="%"
-          className="text-5xl md:text-6xl"
-          glowIntensity="high"
-          color="var(--accent-blue-vivid)"
-        />
-        <Body className="text-lg max-w-md">
-          {content.dataMaturidade.statContext}
-        </Body>
-      </ScrollReveal>
+        {/* Bottom insight bar */}
+        <ScrollReveal delay={0.6} className="mt-16">
+          <div className="flex items-center gap-6 px-8 py-6 rounded-xl border border-[#26C6DA]/15 bg-[#26C6DA]/5">
+            <CinematicCounter
+              value={245}
+              suffix="%"
+              className="text-4xl md:text-5xl shrink-0"
+              glowIntensity="medium"
+              color="#26C6DA"
+            />
+            <div className="h-10 w-px bg-[#26C6DA]/20 shrink-0" />
+            <Body className="text-base text-[var(--text-primary)]">
+              {content.dataMaturidade.statContext}
+            </Body>
+          </div>
+        </ScrollReveal>
       </div>
     </Section>
   )
@@ -119,40 +228,177 @@ export { DataMaturidade as ChapterDataMaturidade }
 
 /* ═══════════════════════════════════════════════════
    Chapter 13 — Dado vs Insight
-   Pipeline with accent-blue stages + glass cards.
+   TRANSFORMATION FUNNEL — diagonal cascade from raw data
+   chaos to crystallized insight, with contrast panels.
    ═══════════════════════════════════════════════════ */
 
 export function DataDadoVsInsight() {
-  return (
-    <Spotlight className="w-full" color="rgba(38, 198, 218, 0.15)" size={700}>
-    <Section id="data-dado-vs-insight" bg="surface" spacing="compact">
-      <AmbientBackground variant="top-light" />
-      <div className="relative z-10">
-        <CinematicHeadline
-          overline="Dados"
-          headline={content.dataDadoVsInsight.headline}
-          align="center"
-          size="display"
-          icon={<ScanSearch className="w-4 h-4 text-[var(--accent-blue)]" />}
-        />
+  const pipeline = content.dataDadoVsInsight.pipeline
+  // Visual progression: from chaotic/dim to clear/bright
+  const stageColors = ['#1A3A4A', '#1E5C6A', '#26898A', '#26C6DA', '#42E8FF']
+  const stageOpacities = [0.5, 0.6, 0.75, 0.9, 1]
 
-        <ScrollReveal className="mt-6 max-w-2xl mx-auto text-center">
+  return (
+    <Section id="data-dado-vs-insight" bg="surface" spacing="generous">
+      <AmbientBackground variant="top-light" />
+
+      {/* Background: scattered "raw data" numbers — chaotic ambience */}
+      <div className="absolute inset-0 pointer-events-none z-[1] overflow-hidden opacity-[0.04]">
+        {Array.from({ length: 30 }).map((_, i) => (
+          <motion.span
+            key={i}
+            className="absolute font-mono text-[10px] text-[#26C6DA]"
+            style={{
+              left: `${(i * 37) % 100}%`,
+              top: `${(i * 23 + 11) % 100}%`,
+            }}
+            animate={{ y: [0, -20, 0], opacity: [0.3, 0.8, 0.3] }}
+            transition={{ duration: 3 + (i % 4), repeat: Infinity, delay: i * 0.2 }}
+          >
+            {['2847', '0.34', 'NPS:67', 'Q3', 'churn%', '-40%', '+12', 'feat_X', 'ticket', 'CLV'][i % 10]}
+          </motion.span>
+        ))}
+      </div>
+
+      <div className="relative z-10">
+        {/* Headline — centered dramatic */}
+        <div className="text-center mb-6">
+          <Overline className="mb-4 text-[#26C6DA] inline-flex items-center gap-2">
+            <ScanSearch className="w-4 h-4" />Dados
+          </Overline>
+        </div>
+        <h2 className="font-display text-center text-[clamp(2rem,5vw,4rem)] leading-[0.95] tracking-[-0.02em]">
+          <GlitchText intensity="low" color="#26C6DA">
+            {content.dataDadoVsInsight.headline}
+          </GlitchText>
+        </h2>
+
+        <ScrollReveal className="mt-8 max-w-2xl mx-auto text-center">
           <Body className="text-lg">{content.dataDadoVsInsight.body}</Body>
         </ScrollReveal>
 
-        {/* Animated data pipeline visualization */}
-        <ScrollReveal delay={0.3} className="mt-16">
-          <DataPipeline
-            stages={content.dataDadoVsInsight.pipeline.map((step) => ({
-              label: step.stage,
-              description: step.example,
-            }))}
-            className="mb-8"
-          />
+        {/* Transformation cascade — 5 stages as diagonal steps */}
+        <div className="mt-20 max-w-5xl mx-auto">
+          {pipeline.map((step, i) => {
+            const isLast = i === pipeline.length - 1
+            const isFirst = i === 0
+
+            return (
+              <ScrollReveal
+                key={step.stage}
+                delay={i * 0.12}
+                variant={i % 2 === 0 ? 'slide-right' : 'slide-left'}
+              >
+                <div
+                  className="relative flex items-stretch gap-0 mb-0"
+                  style={{
+                    marginLeft: `${i * 4}%`,
+                    maxWidth: `${100 - i * 4}%`,
+                  }}
+                >
+                  {/* Stage number + connector line */}
+                  <div className="flex flex-col items-center shrink-0 w-12 md:w-16">
+                    <motion.div
+                      className="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center font-mono text-sm font-bold border-2 shrink-0"
+                      style={{
+                        borderColor: stageColors[i],
+                        color: stageColors[i],
+                        background: `${stageColors[i]}15`,
+                        boxShadow: isLast ? `0 0 20px ${stageColors[i]}40` : 'none',
+                      }}
+                      whileInView={isLast ? { scale: [1, 1.15, 1] } : undefined}
+                      transition={isLast ? { duration: 2, repeat: Infinity } : undefined}
+                      viewport={{ once: false }}
+                    >
+                      {String(i + 1).padStart(2, '0')}
+                    </motion.div>
+                    {!isLast && (
+                      <div
+                        className="flex-1 w-px min-h-[24px]"
+                        style={{ background: `linear-gradient(to bottom, ${stageColors[i]}, ${stageColors[i + 1]})`, opacity: 0.3 }}
+                      />
+                    )}
+                  </div>
+
+                  {/* Stage content */}
+                  <div
+                    className="flex-1 pb-8 pl-4 md:pl-6"
+                    style={{ borderBottom: !isLast ? `1px solid ${stageColors[i]}15` : 'none' }}
+                  >
+                    <div className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-6">
+                      <h3
+                        className="font-display text-xl md:text-2xl tracking-tight shrink-0"
+                        style={{ color: stageColors[i], opacity: stageOpacities[i] }}
+                      >
+                        {step.stage}
+                      </h3>
+
+                      {/* Arrow indicator between stage name and example */}
+                      <motion.span
+                        className="hidden md:block font-mono text-sm"
+                        style={{ color: stageColors[i], opacity: 0.4 }}
+                        animate={{ x: [0, 4, 0] }}
+                        transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
+                      >
+                        {isFirst ? '////' : isLast ? '>>>>' : '---\u203A'}
+                      </motion.span>
+
+                      <p
+                        className={cn(
+                          'font-mono text-sm',
+                          isLast ? 'text-[var(--text-primary)] font-semibold' : 'text-[var(--text-secondary)]'
+                        )}
+                      >
+                        {step.example}
+                      </p>
+                    </div>
+
+                    {/* Visual intensity bar — grows brighter per stage */}
+                    <div className="mt-3 h-1 rounded-full overflow-hidden" style={{ maxWidth: `${40 + i * 15}%` }}>
+                      <motion.div
+                        className="h-full rounded-full"
+                        style={{
+                          background: `linear-gradient(90deg, ${stageColors[i]}60, ${stageColors[i]})`,
+                          boxShadow: isLast ? `0 0 12px ${stageColors[i]}60` : 'none',
+                        }}
+                        initial={{ width: 0 }}
+                        whileInView={{ width: '100%' }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1.2, delay: 0.3 + i * 0.15, ease: [0.16, 1, 0.3, 1] }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </ScrollReveal>
+            )
+          })}
+        </div>
+
+        {/* Bottom contrast: before vs after — split panel */}
+        <ScrollReveal delay={0.5} className="mt-16 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 rounded-xl overflow-hidden border border-[#26C6DA]/15">
+            {/* Left: noise */}
+            <div className="p-8 bg-[var(--bg-surface)]/80 border-b md:border-b-0 md:border-r border-[#26C6DA]/10">
+              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--text-muted)] block mb-4">Sem contexto</span>
+              <p className="font-mono text-3xl md:text-4xl font-bold text-[var(--text-muted)] opacity-40 tracking-tight">
+                2.847
+              </p>
+              <p className="font-mono text-xs text-[var(--text-muted)] mt-2">tickets no Q3</p>
+              <p className="text-sm text-[var(--text-secondary)] mt-4 italic">Dado. Ruido. Sem acao.</p>
+            </div>
+            {/* Right: insight */}
+            <div className="p-8 bg-[#26C6DA]/5">
+              <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-[#26C6DA] block mb-4">Com contexto</span>
+              <p className="font-display text-3xl md:text-4xl font-bold text-[#42E8FF] tracking-tight">
+                -40%
+              </p>
+              <p className="font-mono text-xs text-[#26C6DA] mt-2">tickets + 12 NPS + 23% menos churn</p>
+              <p className="text-sm text-[var(--text-primary)] mt-4 font-medium">Insight. Acao. Impacto mensuravel.</p>
+            </div>
+          </div>
         </ScrollReveal>
       </div>
     </Section>
-    </Spotlight>
   )
 }
 
