@@ -10,7 +10,7 @@ interface BackgroundBeamsProps {
 
 export function BackgroundBeams({
   className,
-  color = 'rgba(52, 152, 219, 0.4)',
+  color = 'rgba(200, 135, 58, 0.4)',
   beamCount = 4,
 }: BackgroundBeamsProps) {
   const beams = Array.from({ length: beamCount }, (_, i) => {
