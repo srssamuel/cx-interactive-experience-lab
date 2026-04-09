@@ -8,7 +8,7 @@ import * as THREE from 'three'
 
 function CinematicParticles({
   count = 2000,
-  color = '#3498DB',
+  color = '#C8873A',
   interactive = false,
 }: {
   count?: number
@@ -117,7 +117,7 @@ interface CinematicParticleFieldProps {
 
 export function CinematicParticleField({
   className,
-  color = '#3498DB',
+  color = '#C8873A',
   count = 2000,
   interactive = true,
   bloomIntensity = 1.2,

@@ -418,7 +418,7 @@ export function AiOQueFaz() {
       <LazyWaveDistortion
         color1="#0a1a10"
         color2="#7C4DFF"
-        color3="#00BCD4"
+        color3="#B388FF"
         speed={0.25}
         intensity={0.6}
       />
@@ -435,20 +435,20 @@ export function AiOQueFaz() {
         <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6">
           {content.aiOQueFaz.stats.map((stat, i) => (
             <ScrollReveal key={stat.label} delay={i * 0.12} variant="clip-up">
-              <div className="terminal-card rounded-lg border border-[#00BCD4]/30 p-6 bg-[#0a1a10]">
-                <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[#00BCD4]/20">
+              <div className="terminal-card rounded-lg border border-[#7C4DFF]/30 p-6 bg-[#0a1a10]">
+                <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[#7C4DFF]/20">
                   <span className="w-2.5 h-2.5 rounded-full bg-[#E74C3C]" />
                   <span className="w-2.5 h-2.5 rounded-full bg-[var(--accent-amber)]" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#00BCD4]" />
-                  <span className="font-mono text-[10px] text-[#00BCD4]/60 ml-2">terminal</span>
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#7C4DFF]" />
+                  <span className="font-mono text-[10px] text-[#7C4DFF]/60 ml-2">terminal</span>
                 </div>
-                <p className="font-mono text-xs text-[#00BCD4]/70 mb-3">
+                <p className="font-mono text-xs text-[#7C4DFF]/70 mb-3">
                   {commands[i] || '$ ai --run'}
                 </p>
-                <span className="font-mono text-4xl font-bold block" style={{ color: '#00BCD4' }}>
+                <span className="font-mono text-4xl font-bold block" style={{ color: '#7C4DFF' }}>
                   <AnimatedCounter value={stat.value} suffix={stat.suffix} />
                 </span>
-                <p className="font-mono text-sm mt-3" style={{ color: '#00BCD4' }}>
+                <p className="font-mono text-sm mt-3" style={{ color: '#7C4DFF' }}>
                   {stat.label}
                 </p>
                 <p className="font-mono text-[10px] mt-2 text-[var(--text-muted)]">
@@ -464,9 +464,9 @@ export function AiOQueFaz() {
         </ScrollReveal>
 
         <ScrollReveal delay={0.6} variant="clip-up" className="mt-8">
-          <div className="terminal-card rounded-lg border border-[#00BCD4]/30 p-5 bg-[#0a1a10]">
+          <div className="terminal-card rounded-lg border border-[#7C4DFF]/30 p-5 bg-[#0a1a10]">
             <p className="font-mono text-xs text-[#E74C3C] mb-2">$ WARNING: ROI_CHECK_FAILED</p>
-            <p className="font-mono text-sm" style={{ color: '#00BCD4' }}>
+            <p className="font-mono text-sm" style={{ color: '#7C4DFF' }}>
               {content.aiOQueFaz.warning}
             </p>
           </div>

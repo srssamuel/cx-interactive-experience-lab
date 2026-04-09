@@ -12,15 +12,15 @@ interface ChapterNavProps {
 }
 
 const blockColors: Record<string, string> = {
-  abertura: 'bg-[var(--accent-blue)]',
+  abertura: 'bg-[var(--accent-amber)]',
   contexto: 'bg-[var(--text-secondary)]',
   cx: 'bg-[var(--accent-cx)]',
   cs: 'bg-[var(--accent-cs)]',
   data: 'bg-[var(--accent-data)]',
   ai: 'bg-[var(--accent-ai)]',
-  convergencia: 'bg-[var(--accent-blue)]',
+  convergencia: 'bg-[var(--accent-amber)]',
   workshop: 'bg-[var(--accent-cs)]',
-  fechamento: 'bg-[var(--accent-ice)]',
+  fechamento: 'bg-[var(--accent-amber-vivid)]',
 }
 
 export function ChapterNav({ chapters, className }: ChapterNavProps) {

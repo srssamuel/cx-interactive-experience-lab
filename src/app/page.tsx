@@ -135,7 +135,7 @@ export default function PortalPage() {
               <span className="block text-shimmer">
                 A Convergencia
               </span>
-              <span className="block text-gradient-blue">
+              <span className="block text-gradient-amber">
                 Invisivel
               </span>
             </motion.h1>
@@ -156,7 +156,7 @@ export default function PortalPage() {
             {/* Metadata — staggered individually */}
             <div className="mt-12 flex items-center gap-6 text-sm font-mono">
               {[
-                { text: '22 capitulos', color: 'var(--accent-blue-vivid)' },
+                { text: '22 capitulos', color: 'var(--accent-amber-vivid)' },
                 { text: '90 min', color: 'var(--text-secondary)' },
                 { text: '4 dimensoes', color: 'var(--text-secondary)' },
               ].map((item, i) => (
@@ -398,7 +398,7 @@ export default function PortalPage() {
               <p className="font-display text-[clamp(1.5rem,3.5vw,2.5rem)] leading-[1.2] text-[var(--text-primary)]">
                 &ldquo;As empresas mais valiosas nao otimizam funcoes —
                 <br className="hidden md:block" />
-                elas <span className="text-gradient-blue">eliminam as fronteiras</span> entre elas.&rdquo;
+                elas <span className="text-gradient-amber">eliminam as fronteiras</span> entre elas.&rdquo;
               </p>
 
               <div className="mt-16">

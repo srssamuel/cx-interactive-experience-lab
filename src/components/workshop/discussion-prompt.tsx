@@ -13,7 +13,7 @@ export function DiscussionPrompt({ question, context, className }: DiscussionPro
   return (
     <motion.div
       className={cn(
-        'border border-[var(--accent-blue)]/30 bg-[var(--accent-blue-soft)] rounded-2xl p-8 md:p-12',
+        'border border-[var(--accent-green)]/30 bg-[var(--accent-green-soft)] rounded-2xl p-8 md:p-12',
         className
       )}
       initial={{ opacity: 0, scale: 0.97 }}
@@ -21,7 +21,7 @@ export function DiscussionPrompt({ question, context, className }: DiscussionPro
       viewport={{ once: true }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] as const }}
     >
-      <span className="overline text-[var(--accent-blue-vivid)] mb-4 block">
+      <span className="overline text-[var(--accent-cs)] mb-4 block">
         Pausa para discussao
       </span>
       <p className="font-display text-2xl md:text-3xl leading-[1.2] text-[var(--text-primary)]">

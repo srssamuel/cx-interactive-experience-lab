@@ -27,7 +27,7 @@ export function CinematicCounter({
   suffix = '',
   className,
   duration = 2.5,
-  color = 'var(--accent-blue-vivid)',
+  color = 'var(--accent-amber-vivid)',
   glowIntensity = 'high',
 }: CinematicCounterProps) {
   const numberRef = useRef<HTMLSpanElement>(null)

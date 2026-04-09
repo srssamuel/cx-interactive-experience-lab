@@ -146,9 +146,9 @@ interface WaveDistortionProps {
 
 export function WaveDistortion({
   className,
-  color1 = '#1A6BA8',
-  color2 = '#3498DB',
-  color3 = '#00BCD4',
+  color1 = '#8B5E1A',
+  color2 = '#C8873A',
+  color3 = '#E8923A',
   speed = 0.4,
   intensity = 1.0,
 }: WaveDistortionProps) {

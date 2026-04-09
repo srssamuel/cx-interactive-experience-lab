@@ -193,7 +193,7 @@ export function ContextoMundoMudou() {
                   <motion.div
                     className="relative w-4 h-4 rounded-full mb-8 hidden md:block"
                     style={{
-                      background: 'var(--accent-blue)',
+                      background: 'var(--accent-amber)',
                       boxShadow: '0 0 20px rgba(200,135,58,0.6), 0 0 40px rgba(200,135,58,0.3)',
                     }}
                     initial={{ scale: 0 }}
@@ -202,7 +202,7 @@ export function ContextoMundoMudou() {
                     transition={{ duration: 0.5, delay: 0.5 + i * 0.3 }}
                   >
                     <motion.div
-                      className="absolute inset-0 rounded-full bg-[var(--accent-blue)]"
+                      className="absolute inset-0 rounded-full bg-[var(--accent-amber)]"
                       animate={{ scale: [1, 2.5], opacity: [0.4, 0] }}
                       transition={{ duration: 2, repeat: Infinity, delay: i * 0.7 }}
                     />
@@ -1030,7 +1030,7 @@ export function CxReflexao() {
             key={i}
             className="w-[8vw] max-w-[80px] rounded-t-lg"
             style={{
-              background: `linear-gradient(to top, var(--accent-blue), transparent)`,
+              background: `linear-gradient(to top, var(--accent-amber), transparent)`,
             }}
             initial={{ height: 0 }}
             whileInView={{ height: `${h * 100}%` }}
@@ -1062,8 +1062,8 @@ export function CxReflexao() {
                 className={cn(
                   'flex items-start gap-6 border-l-2 pl-6 py-5 pr-6 rounded-r-xl transition-colors',
                   i === 3
-                    ? 'border-l-[var(--accent-blue)] bg-[var(--accent-blue-soft)]'
-                    : 'border-l-[var(--border-default)] hover:border-l-[var(--accent-blue)]/40 hover:bg-[var(--bg-surface)]/40'
+                    ? 'border-l-[var(--accent-amber)] bg-[var(--accent-amber-soft)]'
+                    : 'border-l-[var(--border-default)] hover:border-l-[var(--accent-amber)]/40 hover:bg-[var(--bg-surface)]/40'
                 )}
                 whileHover={{ x: 4, transition: { duration: 0.3 } }}
               >
@@ -1071,7 +1071,7 @@ export function CxReflexao() {
                   className={cn(
                     'shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-mono text-sm font-bold',
                     i === 3
-                      ? 'bg-[var(--accent-blue)] text-[var(--bg-primary)]'
+                      ? 'bg-[var(--accent-amber)] text-[var(--bg-primary)]'
                       : 'bg-[var(--bg-surface)] text-[var(--text-secondary)]'
                   )}
                 >
@@ -1082,7 +1082,7 @@ export function CxReflexao() {
                     as="h3"
                     className={cn(
                       'text-lg',
-                      i === 3 && 'text-[var(--accent-blue)]'
+                      i === 3 && 'text-[var(--accent-amber)]'
                     )}
                   >
                     {lvl.name}
@@ -1155,13 +1155,13 @@ export function CsParadoxo() {
           {/* Center divider — glowing gap */}
           <div className="hidden md:flex items-center justify-center w-16 relative">
             <motion.div
-              className="w-px h-full bg-gradient-to-b from-transparent via-[var(--accent-blue)] to-transparent"
+              className="w-px h-full bg-gradient-to-b from-transparent via-[var(--accent-cs)] to-transparent"
               initial={{ scaleY: 0 }}
               whileInView={{ scaleY: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] as const }}
             />
-            <span className="absolute font-display text-sm text-[var(--accent-blue)] bg-[var(--bg-surface)] px-2">vs</span>
+            <span className="absolute font-display text-sm text-[var(--accent-cs)] bg-[var(--bg-surface)] px-2">vs</span>
           </div>
 
           {/* Right panel — "reality" */}
@@ -1190,7 +1190,7 @@ export function CsParadoxo() {
 
         {/* Paradox insight — revealed below the tension */}
         <ScrollReveal delay={0.7} className="mt-8">
-          <div className="text-center max-w-2xl mx-auto px-6 py-5 border-t border-b border-[var(--accent-blue)]/15">
+          <div className="text-center max-w-2xl mx-auto px-6 py-5 border-t border-b border-[var(--accent-cs)]/15">
             <Body className="text-lg text-[var(--text-primary)] font-medium italic">
               {content.csParadoxo.insight}
             </Body>
@@ -1211,7 +1211,7 @@ export { CsParadoxo as ChapterCsParadoxo }
 
 export function CsMetricas() {
   return (
-    <Spotlight className="w-full" color="rgba(0, 188, 212, 0.15)" size={700}>
+    <Spotlight className="w-full" color="rgba(74, 124, 92, 0.15)" size={700}>
     <Section id="cs-metricas-que-mentem" bg="primary" spacing="dramatic">
       <Overline className="mb-6 text-[var(--text-muted)] text-center flex items-center justify-center gap-2">
         <ChartNoAxesCombined className="w-4 h-4 text-[var(--accent-teal)]" />Customer Success
@@ -1228,7 +1228,7 @@ export function CsMetricas() {
           <div key={metric.name}>
             {/* The struck metric name with glitch distortion */}
             <ScrollReveal variant="fade" delay={i * 0.1}>
-              <span className="line-through decoration-[3px] decoration-[var(--accent-blue)]/60">
+              <span className="line-through decoration-[3px] decoration-[var(--accent-cs)]/60">
                 <GlitchText
                   className="font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-none"
                   intensity={i === 0 ? 'high' : 'medium'}
@@ -1279,7 +1279,7 @@ export { CsMetricas as ChapterCsMetricas }
 export function CsExpansao() {
   return (
     <Section id="cs-expansao-escondida" bg="green-glow" spacing="dramatic">
-      <InteractiveParticles preset="rising-bubbles" color="#00BCD4" count={40} speed={0.8} />
+      <InteractiveParticles preset="rising-bubbles" color="#4A7C5C" count={40} speed={0.8} />
       <div className="relative z-10">
         <Overline className="text-center mb-6 flex items-center justify-center gap-2">
           <Unplug className="w-4 h-4 text-[var(--accent-teal)]" />Customer Success

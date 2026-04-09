@@ -32,15 +32,15 @@ interface SlideDeckProps {
 }
 
 const blockAccentMap: Record<string, string> = {
-  abertura: '#3498DB',
-  contexto: '#8BAAC8',
-  cx: '#42A5F5',
-  cs: '#00BCD4',
+  abertura: '#C8873A',
+  contexto: '#8A919C',
+  cx: '#C8873A',
+  cs: '#4A7C5C',
   data: '#26C6DA',
   ai: '#7C4DFF',
-  convergencia: '#3498DB',
-  workshop: '#00BCD4',
-  fechamento: '#AED6F1',
+  convergencia: '#C8873A',
+  workshop: '#4A7C5C',
+  fechamento: '#E8923A',
 }
 
 export function SlideDeck({ children, chapters }: SlideDeckProps) {
@@ -76,7 +76,7 @@ export function SlideDeck({ children, chapters }: SlideDeckProps) {
 
     isAnimatingRef.current = true
     const direction = index > currentSlideRef.current ? 1 : -1
-    const accent = blockAccentMap[chapters[index].block] || '#3498DB'
+    const accent = blockAccentMap[chapters[index].block] || '#C8873A'
 
     // Animate transition overlay
     const overlay = overlayRef.current
@@ -268,7 +268,7 @@ export function SlideDeck({ children, chapters }: SlideDeckProps) {
           </span>
           <div className="w-24 h-px bg-[var(--border-subtle)] relative">
             <div
-              className="absolute left-0 top-0 h-full bg-[var(--accent-blue)] transition-all duration-500 ease-out"
+              className="absolute left-0 top-0 h-full bg-[var(--accent-amber)] transition-all duration-500 ease-out"
               style={{ width: `${((currentSlide + 1) / chapters.length) * 100}%` }}
             />
           </div>

@@ -13,7 +13,7 @@ interface MovingBorderProps {
 export function MovingBorder({
   children,
   className,
-  borderColor = 'var(--accent-blue)',
+  borderColor = 'var(--accent-amber)',
   duration = 4,
   borderWidth = 1,
 }: MovingBorderProps) {
