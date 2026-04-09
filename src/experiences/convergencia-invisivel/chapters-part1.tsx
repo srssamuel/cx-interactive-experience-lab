@@ -1273,7 +1273,9 @@ export { CsMetricas as ChapterCsMetricas }
 
 /* ═══════════════════════════════════════════════════
    Chapter 10 — A Expansao Escondida
-   "scale" variant for the big stat.
+   OVERFLOW METER — asymmetric layout with animated
+   capacity bar that "overflows" past 100% to 250%.
+   Left: visual meter + stat. Right: narrative.
    ═══════════════════════════════════════════════════ */
 
 export function CsExpansao() {
@@ -1281,61 +1283,106 @@ export function CsExpansao() {
     <Section id="cs-expansao-escondida" bg="green-glow" spacing="dramatic">
       <InteractiveParticles preset="rising-bubbles" color="#4A7C5C" count={40} speed={0.8} />
       <div className="relative z-10">
-        <Overline className="text-center mb-6 flex items-center justify-center gap-2">
-          <Unplug className="w-4 h-4 text-[var(--accent-teal)]" />Customer Success
+        <Overline className="mb-10 flex items-center gap-2">
+          <Unplug className="w-4 h-4 text-[var(--accent-cs)]" />Customer Success
         </Overline>
 
-        {/* Giant centered stat — hero-scale, unique to this chapter */}
-        <ScrollReveal variant="scale">
-          <div className="text-center">
-            <MovingBorder borderColor="var(--accent-teal)" duration={6} borderWidth={1} className="inline-block rounded-2xl">
-              <div className="px-16 py-12 md:px-24 md:py-16 bg-[var(--bg-surface)] rounded-2xl">
-                <CinematicCounter
-                  value={parseFloat(content.csExpansao.stat.replace(/[^0-9.]/g, ''))}
-                  suffix={content.csExpansao.stat.replace(/[0-9.]/g, '')}
-                  className="text-[clamp(5rem,16vw,12rem)]"
-                  glowIntensity="high"
-                  color="var(--accent-teal)"
-                  duration={3}
+        {/* Asymmetric two-column: meter left, narrative right */}
+        <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] lg:grid-cols-[340px_1fr] gap-12 lg:gap-20 items-start">
+
+          {/* LEFT — Overflow meter visual */}
+          <ScrollReveal variant="slide-left" className="relative">
+            <div className="relative mx-auto md:mx-0 w-full max-w-[280px] lg:max-w-[340px]">
+              {/* Meter container — represents 100% */}
+              <div className="relative h-[320px] md:h-[400px] rounded-2xl border border-[var(--accent-cs)]/20 bg-[var(--bg-surface)]/60 overflow-visible">
+                {/* 100% reference line */}
+                <div className="absolute top-0 left-0 right-0 flex items-center gap-2 -translate-y-1/2 z-20">
+                  <div className="flex-1 h-px bg-[var(--text-muted)]/30" />
+                  <span className="font-mono text-[10px] text-[var(--text-muted)] shrink-0">100%</span>
+                  <div className="flex-1 h-px bg-[var(--text-muted)]/30" />
+                </div>
+
+                {/* The fill bar that overflows upward */}
+                <motion.div
+                  className="absolute bottom-0 left-2 right-2 rounded-xl"
+                  style={{
+                    background: 'linear-gradient(to top, var(--accent-cs), rgba(74, 124, 92, 0.4))',
+                    boxShadow: '0 0 40px rgba(74, 124, 92, 0.3), inset 0 0 20px rgba(74, 124, 92, 0.1)',
+                  }}
+                  initial={{ height: '0%' }}
+                  whileInView={{ height: '250%' }}
+                  viewport={{ once: true, margin: '-20%' }}
+                  transition={{ duration: 2.5, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
                 />
+
+                {/* Stat number floating in the overflow zone */}
+                <motion.div
+                  className="absolute -top-[200px] md:-top-[280px] left-1/2 -translate-x-1/2 z-30"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1, delay: 1.5, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <CinematicCounter
+                    value={250}
+                    suffix="%"
+                    className="text-[clamp(4rem,12vw,7rem)]"
+                    glowIntensity="high"
+                    color="var(--accent-cs)"
+                    duration={2}
+                  />
+                </motion.div>
               </div>
-            </MovingBorder>
-            <ScrollReveal delay={0.2}>
-              <Body className="mt-6 text-sm text-[var(--text-muted)] max-w-md mx-auto">
+
+              {/* Label below meter */}
+              <motion.p
+                className="mt-4 font-mono text-[10px] text-center text-[var(--text-muted)] tracking-wide"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 0.6 }}
+                viewport={{ once: true }}
+                transition={{ delay: 2 }}
+              >
                 {content.csExpansao.statContext}
+              </motion.p>
+            </div>
+          </ScrollReveal>
+
+          {/* RIGHT — Narrative stack */}
+          <div className="flex flex-col justify-center min-h-[400px]">
+            <GsapTextReveal
+              tag="h2"
+              className="text-[clamp(1.75rem,4vw,3.5rem)] leading-[1.05] max-w-xl"
+              variant="words"
+              stagger={0.04}
+              glowColor="rgba(74, 124, 92, 0.3)"
+            >
+              {content.csExpansao.headline}
+            </GsapTextReveal>
+
+            <ScrollReveal delay={0.3} className="mt-8">
+              <Body className="text-lg leading-relaxed max-w-lg text-[var(--text-secondary)]">
+                {content.csExpansao.body}
               </Body>
             </ScrollReveal>
+
+            {/* Closing — asymmetric accent strip */}
+            <ScrollReveal delay={0.5} className="mt-12">
+              <div className="relative pl-6 border-l-2 border-l-[var(--accent-cs)] max-w-lg">
+                <motion.div
+                  className="absolute left-0 top-0 w-0.5 h-full origin-top"
+                  style={{ background: 'var(--accent-cs)', boxShadow: '0 0 12px rgba(74, 124, 92, 0.5)' }}
+                  initial={{ scaleY: 0 }}
+                  whileInView={{ scaleY: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.6 }}
+                />
+                <Body className="text-base text-[var(--text-primary)] font-medium italic">
+                  {content.csExpansao.closing}
+                </Body>
+              </div>
+            </ScrollReveal>
           </div>
-        </ScrollReveal>
-
-        {/* Wide headline below stat */}
-        <ScrollReveal delay={0.3} className="mt-16">
-          <TextReveal
-            tag="h2"
-            className="text-center text-[clamp(1.75rem,4vw,3rem)] max-w-3xl mx-auto"
-          >
-            {content.csExpansao.headline}
-          </TextReveal>
-        </ScrollReveal>
-
-        {/* Body text — wide, centered, breathing room */}
-        <ScrollReveal delay={0.4} className="mt-10">
-          <Body className="text-lg leading-relaxed text-center max-w-2xl mx-auto">
-            {content.csExpansao.body}
-          </Body>
-        </ScrollReveal>
-
-        {/* Closing — full-width accent bar */}
-        <ScrollReveal delay={0.6} className="mt-16">
-          <div className="relative max-w-3xl mx-auto px-8 py-6 rounded-xl border border-[var(--accent-teal)]/20 bg-[var(--accent-teal-soft)]">
-            <span className="absolute -top-3 left-8 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--accent-teal)] bg-[var(--bg-primary)] px-3">
-              Insight
-            </span>
-            <Body className="text-lg text-[var(--text-primary)] font-medium text-center">
-              {content.csExpansao.closing}
-            </Body>
-          </div>
-        </ScrollReveal>
+        </div>
       </div>
     </Section>
   )
