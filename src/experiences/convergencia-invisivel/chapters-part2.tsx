@@ -438,7 +438,7 @@ export function AiOQueFaz() {
               <div className="terminal-card rounded-lg border border-[#00BCD4]/30 p-6 bg-[#0a1a10]">
                 <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[#00BCD4]/20">
                   <span className="w-2.5 h-2.5 rounded-full bg-[#E74C3C]" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-[var(--accent-blue)]" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[var(--accent-amber)]" />
                   <span className="w-2.5 h-2.5 rounded-full bg-[#00BCD4]" />
                   <span className="font-mono text-[10px] text-[#00BCD4]/60 ml-2">terminal</span>
                 </div>
@@ -648,27 +648,27 @@ export { AiArmadilhas as ChapterAiArmadilhas }
    ═══════════════════════════════════════════════════ */
 
 export function ConvergenciaSistema() {
-  const quadrantColors = ['#42A5F5', '#00BCD4', '#26C6DA', '#7C4DFF']
+  const quadrantColors = ['#C8873A', '#4A7C5C', '#26C6DA', '#7C4DFF']
 
   return (
-    <Spotlight className="w-full" color="rgba(52, 152, 219, 0.25)" size={900}>
+    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.2)" size={900}>
     <Section id="convergencia-sistema-unico" bg="vignette" spacing="dramatic">
       <LazyCinematicParticleField
-        color="#3498DB"
+        color="#C8873A"
         count={2500}
         interactive
         bloomIntensity={1.5}
         chromaticAberration
         vignette
       />
-      <InteractiveParticles preset="neural-network" color="#5DADE2" count={50} interactive />
+      <InteractiveParticles preset="neural-network" color="#E8923A" count={50} interactive />
       {/* Convergence center orb — unique to climax */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-[1]">
         <motion.div
           className="w-32 h-32 rounded-full"
           style={{
-            background: 'radial-gradient(circle, rgba(52,152,219,0.6) 0%, rgba(52,152,219,0.2) 40%, transparent 70%)',
-            boxShadow: '0 0 80px rgba(52,152,219,0.4), 0 0 160px rgba(52,152,219,0.2)',
+            background: 'radial-gradient(circle, rgba(200,135,58,0.6) 0%, rgba(200,135,58,0.2) 40%, transparent 70%)',
+            boxShadow: '0 0 80px rgba(200,135,58,0.4), 0 0 160px rgba(200,135,58,0.2)',
           }}
           animate={{
             scale: [1, 1.3, 1],
@@ -743,13 +743,13 @@ export { ConvergenciaSistema as ChapterConvergenciaSistema }
    ═══════════════════════════════════════════════════ */
 
 export function ConvergenciaLidera() {
-  const roleAccents = ['#42A5F5', '#00BCD4', '#26C6DA']
+  const roleAccents = ['#C8873A', '#4A7C5C', '#26C6DA']
   const roleIcons = ['CXO', 'CSO', 'CDO']
 
   return (
     <Section id="convergencia-quem-lidera" bg="gradient-up">
       <AmbientBackground variant="bottom-fade" />
-      <InteractiveParticles preset="neural-network" color="#3498DB" count={45} interactive />
+      <InteractiveParticles preset="neural-network" color="#C8873A" count={45} interactive />
       {/* Animated hexagonal network — unique to leadership chapter */}
       <div className="absolute inset-0 pointer-events-none z-[1] overflow-hidden">
         <svg width="100%" height="100%" viewBox="0 0 800 600" className="opacity-[0.06]" preserveAspectRatio="xMidYMid slice">
@@ -761,12 +761,12 @@ export function ConvergenciaLidera() {
             <g key={i}>
               <polygon
                 points={`${pos.cx},${pos.cy - 30} ${pos.cx + 26},${pos.cy - 15} ${pos.cx + 26},${pos.cy + 15} ${pos.cx},${pos.cy + 30} ${pos.cx - 26},${pos.cy + 15} ${pos.cx - 26},${pos.cy - 15}`}
-                fill="none" stroke="#3498DB" strokeWidth="1.5"
+                fill="none" stroke="#C8873A" strokeWidth="1.5"
               >
                 <animate attributeName="opacity" values="0.3;0.8;0.3" dur={`${3 + i * 0.5}s`} repeatCount="indefinite" />
               </polygon>
               {/* Pulsing dot at center */}
-              <circle cx={pos.cx} cy={pos.cy} r="3" fill="#3498DB">
+              <circle cx={pos.cx} cy={pos.cy} r="3" fill="#C8873A">
                 <animate attributeName="r" values="2;5;2" dur={`${2.5 + i * 0.3}s`} repeatCount="indefinite" />
                 <animate attributeName="opacity" values="0.4;1;0.4" dur={`${2.5 + i * 0.3}s`} repeatCount="indefinite" />
               </circle>
@@ -781,9 +781,9 @@ export function ConvergenciaLidera() {
             { x1: 300, y1: 300, x2: 500, y2: 300 },
           ].map((line, i) => (
             <g key={`line-${i}`}>
-              <line x1={line.x1} y1={line.y1} x2={line.x2} y2={line.y2} stroke="#3498DB" strokeWidth="0.8" opacity="0.4" />
+              <line x1={line.x1} y1={line.y1} x2={line.x2} y2={line.y2} stroke="#C8873A" strokeWidth="0.8" opacity="0.4" />
               {/* Traveling dot */}
-              <circle r="2.5" fill="#5DADE2">
+              <circle r="2.5" fill="#E8923A">
                 <animateMotion dur={`${3 + i * 0.7}s`} repeatCount="indefinite">
                   <mpath href={`#path-${i}`} />
                 </animateMotion>
@@ -875,16 +875,16 @@ export { ConvergenciaLidera as ChapterConvergenciaLidera }
 
 export function WorkshopDiagnostico() {
   const dimColors: Record<string, string> = {
-    CX: '#42A5F5',
-    CS: '#00BCD4',
-    Dados: '#7C4DFF',
-    AI: '#E74C3C',
-    Integracao: '#3498DB',
+    CX: '#C8873A',
+    CS: '#4A7C5C',
+    Dados: '#26C6DA',
+    AI: '#7C4DFF',
+    Integracao: '#C8873A',
   }
 
   return (
     <Section id="workshop-diagnostico" bg="surface" className="dot-grid" spacing="generous">
-      <InteractiveParticles preset="constellation" color="#3498DB" count={35} interactive speed={0.6} />
+      <InteractiveParticles preset="constellation" color="#C8873A" count={35} interactive speed={0.6} />
       {/* Animated radar chart background — unique diagnostic visual */}
       <div className="absolute inset-0 pointer-events-none z-[1] flex items-center justify-center overflow-hidden">
         <svg viewBox="0 0 400 400" className="w-[500px] h-[500px] opacity-[0.08]">
@@ -895,7 +895,7 @@ export function WorkshopDiagnostico() {
               return `${200 + 150 * scale * Math.cos(angle)},${200 + 150 * scale * Math.sin(angle)}`
             }).join(' ')
             return (
-              <polygon key={ri} points={points} fill="none" stroke="#3498DB" strokeWidth="1">
+              <polygon key={ri} points={points} fill="none" stroke="#C8873A" strokeWidth="1">
                 <animate attributeName="opacity" values="0.3;0.9;0.3" dur={`${3 + ri}s`} repeatCount="indefinite" />
               </polygon>
             )
@@ -907,7 +907,7 @@ export function WorkshopDiagnostico() {
               <line key={i}
                 x1="200" y1="200"
                 x2={200 + 150 * Math.cos(angle)} y2={200 + 150 * Math.sin(angle)}
-                stroke="#3498DB" strokeWidth="0.5"
+                stroke="#C8873A" strokeWidth="0.5"
               />
             )
           })}
@@ -919,7 +919,7 @@ export function WorkshopDiagnostico() {
               return `${200 + 150 * s * Math.cos(angle)},${200 + 150 * s * Math.sin(angle)}`
             }).join(' ')
             return (
-              <polygon points={dataPoints} fill="#3498DB" fillOpacity="0.08" stroke="#5DADE2" strokeWidth="2">
+              <polygon points={dataPoints} fill="#C8873A" fillOpacity="0.08" stroke="#E8923A" strokeWidth="2">
                 <animate attributeName="stroke-opacity" values="0.3;0.8;0.3" dur="4s" repeatCount="indefinite" />
               </polygon>
             )
@@ -928,7 +928,7 @@ export function WorkshopDiagnostico() {
           {[0.7, 0.5, 0.8, 0.4, 0.6].map((s, i) => {
             const angle = (i * 2 * Math.PI) / 5 - Math.PI / 2
             return (
-              <circle key={`dot-${i}`} cx={200 + 150 * s * Math.cos(angle)} cy={200 + 150 * s * Math.sin(angle)} r="4" fill="#5DADE2">
+              <circle key={`dot-${i}`} cx={200 + 150 * s * Math.cos(angle)} cy={200 + 150 * s * Math.sin(angle)} r="4" fill="#E8923A">
                 <animate attributeName="r" values="3;6;3" dur={`${2 + i * 0.4}s`} repeatCount="indefinite" />
                 <animate attributeName="opacity" values="0.5;1;0.5" dur={`${2 + i * 0.4}s`} repeatCount="indefinite" />
               </circle>
@@ -1096,19 +1096,19 @@ export { WorkshopDiscussao as ChapterWorkshopDiscussao }
 export function FechamentoJanela() {
   return (
     <Section id="fechamento-janela" bg="primary">
-      <InteractiveParticles preset="snow" color="#3498DB" count={20} speed={0.4} />
+      <InteractiveParticles preset="snow" color="#C8873A" count={20} speed={0.4} />
       {/* Animated countdown clock — unique urgency visual */}
       <div className="absolute inset-0 pointer-events-none z-[1] flex items-center justify-end pr-[10%] overflow-hidden">
         <svg viewBox="0 0 300 300" className="w-[400px] h-[400px] opacity-[0.08]">
           {/* Outer ring with sweep animation */}
-          <circle cx="150" cy="150" r="140" fill="none" stroke="#3498DB" strokeWidth="1.5">
+          <circle cx="150" cy="150" r="140" fill="none" stroke="#C8873A" strokeWidth="1.5">
             <animate attributeName="stroke-opacity" values="0.3;0.8;0.3" dur="4s" repeatCount="indefinite" />
           </circle>
           {/* Dashed ring — rotates slowly */}
-          <circle cx="150" cy="150" r="110" fill="none" stroke="#3498DB" strokeWidth="0.8" strokeDasharray="4 8">
+          <circle cx="150" cy="150" r="110" fill="none" stroke="#C8873A" strokeWidth="0.8" strokeDasharray="4 8">
             <animateTransform attributeName="transform" type="rotate" from="0 150 150" to="360 150 150" dur="30s" repeatCount="indefinite" />
           </circle>
-          <circle cx="150" cy="150" r="80" fill="none" stroke="#3498DB" strokeWidth="0.5" />
+          <circle cx="150" cy="150" r="80" fill="none" stroke="#C8873A" strokeWidth="0.5" />
           {/* Hour marks */}
           {Array.from({ length: 12 }, (_, i) => {
             const angle = (i * 30 - 90) * (Math.PI / 180)
@@ -1116,18 +1116,18 @@ export function FechamentoJanela() {
             const y1 = 150 + 130 * Math.sin(angle)
             const x2 = 150 + 140 * Math.cos(angle)
             const y2 = 150 + 140 * Math.sin(angle)
-            return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#3498DB" strokeWidth={i % 3 === 0 ? 2.5 : 1} />
+            return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#C8873A" strokeWidth={i % 3 === 0 ? 2.5 : 1} />
           })}
           {/* Minute hand — rotates */}
-          <line x1="150" y1="150" x2="150" y2="50" stroke="#3498DB" strokeWidth="2" strokeLinecap="round">
+          <line x1="150" y1="150" x2="150" y2="50" stroke="#C8873A" strokeWidth="2" strokeLinecap="round">
             <animateTransform attributeName="transform" type="rotate" from="0 150 150" to="360 150 150" dur="60s" repeatCount="indefinite" />
           </line>
           {/* Hour hand — rotates slowly */}
-          <line x1="150" y1="150" x2="150" y2="80" stroke="#5DADE2" strokeWidth="2.5" strokeLinecap="round">
+          <line x1="150" y1="150" x2="150" y2="80" stroke="#E8923A" strokeWidth="2.5" strokeLinecap="round">
             <animateTransform attributeName="transform" type="rotate" from="120 150 150" to="480 150 150" dur="720s" repeatCount="indefinite" />
           </line>
           {/* Center dot pulsing */}
-          <circle cx="150" cy="150" r="4" fill="#5DADE2">
+          <circle cx="150" cy="150" r="4" fill="#E8923A">
             <animate attributeName="r" values="3;6;3" dur="2s" repeatCount="indefinite" />
             <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite" />
           </circle>
@@ -1157,7 +1157,7 @@ export function FechamentoJanela() {
 
       {/* Stat as hero element — full width, dramatic */}
       <ScrollReveal delay={0.3} variant="scale" className="mt-16 text-center">
-        <MovingBorder borderColor="var(--accent-blue)" duration={8} borderWidth={1} className="inline-block rounded-2xl">
+        <MovingBorder borderColor="var(--accent-amber)" duration={8} borderWidth={1} className="inline-block rounded-2xl">
           <div className="px-12 py-8 md:px-20 md:py-10 bg-[var(--bg-surface)] rounded-2xl">
             <CinematicCounter
               value={48}
@@ -1165,7 +1165,7 @@ export function FechamentoJanela() {
               suffix="B"
               className="text-[clamp(3rem,10vw,7rem)]"
               glowIntensity="high"
-              color="var(--accent-blue-vivid)"
+              color="var(--accent-amber-vivid)"
             />
             <Body className="mt-3 text-sm text-[var(--text-muted)] max-w-sm mx-auto">
               {content.fechamentoJanela.statContext}
@@ -1183,7 +1183,7 @@ export function FechamentoJanela() {
                 {/* Connector line */}
                 {i < content.fechamentoJanela.timeline.length - 1 && (
                   <>
-                    <div className="hidden md:block absolute top-2 left-[calc(50%+8px)] right-0 h-px bg-gradient-to-r from-[var(--accent-blue)]/30 to-[var(--border-subtle)]" />
+                    <div className="hidden md:block absolute top-2 left-[calc(50%+8px)] right-0 h-px bg-gradient-to-r from-[var(--accent-amber)]/30 to-[var(--border-subtle)]" />
                     <div className="md:hidden absolute left-2 top-4 bottom-0 w-px bg-[var(--border-subtle)]" />
                   </>
                 )}
@@ -1192,14 +1192,14 @@ export function FechamentoJanela() {
                     className={cn(
                       'w-4 h-4 rounded-full border-2 shrink-0',
                       i === 0
-                        ? 'bg-[var(--accent-blue)] border-[var(--accent-blue)]'
+                        ? 'bg-[var(--accent-amber)] border-[var(--accent-amber)]'
                         : 'bg-transparent border-[var(--text-muted)]'
                     )}
                   />
                   <div>
                     <span className={cn(
                       'font-display text-xl md:text-lg block',
-                      i === 0 ? 'text-[var(--accent-blue)]' : 'text-[var(--text-tertiary)]'
+                      i === 0 ? 'text-[var(--accent-amber)]' : 'text-[var(--text-tertiary)]'
                     )}>
                       {t.period}
                     </span>
@@ -1225,10 +1225,10 @@ export { FechamentoJanela as ChapterFechamentoJanela }
 
 export function FechamentoProvocacao() {
   return (
-    <Spotlight className="w-full" color="rgba(52, 152, 219, 0.15)" size={800}>
+    <Spotlight className="w-full" color="rgba(200, 135, 58, 0.15)" size={800}>
     <Section id="fechamento-provocacao" bg="primary" fullHeight spacing="dramatic">
       <LazyCinematicParticleField
-        color="#3498DB"
+        color="#C8873A"
         count={3000}
         interactive
         bloomIntensity={1.8}
@@ -1268,7 +1268,7 @@ export function FechamentoProvocacao() {
             viewport={{ once: true }}
             transition={{ duration: 1, delay: 0.8, ease: [0.16, 1, 0.3, 1] as const }}
           >
-            <MovingBorder borderColor="var(--accent-blue)" duration={5} borderWidth={1} className="inline-block rounded-lg">
+            <MovingBorder borderColor="var(--accent-amber)" duration={5} borderWidth={1} className="inline-block rounded-lg">
               <div className="px-10 py-5 md:px-16 md:py-7 bg-[var(--bg-primary)]/80 rounded-lg">
                 <p className="font-display text-2xl md:text-4xl text-gradient-blue">
                   {content.fechamentoProvocacao.subline}
@@ -1291,8 +1291,8 @@ export function FechamentoProvocacao() {
           <motion.div
             className="mt-16 w-32 h-px mx-auto ambient-breathe"
             style={{
-              background: 'linear-gradient(90deg, transparent, var(--accent-blue), transparent)',
-              boxShadow: '0 0 12px rgba(52, 152, 219, 0.3)',
+              background: 'linear-gradient(90deg, transparent, var(--accent-amber), transparent)',
+              boxShadow: '0 0 12px rgba(200, 135, 58, 0.3)',
             }}
             initial={{ opacity: 0, scaleX: 0 }}
             whileInView={{ opacity: 1, scaleX: 1 }}
