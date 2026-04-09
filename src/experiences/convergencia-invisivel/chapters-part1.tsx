@@ -4,7 +4,6 @@ import { motion } from 'framer-motion'
 import { Section } from '@/components/design-system'
 import { SubHeading, Body, Overline, StatNumber } from '@/components/design-system/typography'
 import { ScrollReveal } from '@/components/motion/scroll-reveal'
-import { AnimatedCounter } from '@/components/motion/animated-counter'
 import { CinematicHeadline } from '@/components/cinematic/cinematic-headline'
 import { AmbientBackground } from '@/components/cinematic/ambient-background'
 import { DiscussionPrompt } from '@/components/workshop/discussion-prompt'
@@ -13,7 +12,7 @@ import { ParallaxContainer } from '@/components/motion/parallax-container'
 import { Spotlight } from '@/components/effects/spotlight'
 import { BackgroundBeams } from '@/components/effects/background-beams'
 import { MovingBorder } from '@/components/effects/moving-border'
-/* FloatingElements removed — not used */
+import { BorderRevealCard } from '@/components/effects/border-reveal-card'
 import { GsapTextReveal } from '@/components/cinematic/gsap-text-reveal'
 import { CinematicCounter } from '@/components/cinematic/cinematic-counter'
 import { GlitchText } from '@/components/cinematic/glitch-text'
@@ -33,7 +32,7 @@ export function Abertura() {
   return (
     <Spotlight className="w-full" color="rgba(200, 135, 58, 0.2)" size={900}>
     <Section id="abertura" bg="amber-glow" fullHeight>
-      <AmbientBackground variant="radial-blue" />
+      <AmbientBackground variant="radial-amber" />
       <BackgroundBeams color="rgba(200, 135, 58, 0.3)" beamCount={5} />
       <InteractiveParticles preset="constellation" color="#C8873A" count={80} interactive />
       {/* Concentric pulse rings — unique to Abertura */}
@@ -935,7 +934,7 @@ export function CxCusto() {
       {/* WebGL liquid distortion — unique to this chapter */}
       <LazyWaveDistortion
         color1="#0A1628"
-        color2="#1A6BA8"
+        color2="#C8873A"
         color3="#4A7C5C"
         speed={0.3}
         intensity={0.8}
@@ -1115,15 +1114,43 @@ export { CxReflexao as ChapterCxReflexao }
 
 export function CsParadoxo() {
   return (
-    <Section id="cs-paradoxo-retencao" bg="surface">
-      <BackgroundBeams color="rgba(0, 188, 212, 0.35)" beamCount={3} />
+    <Spotlight className="w-full" color="rgba(74, 124, 92, 0.12)" size={700}>
+    <Section id="cs-paradoxo-retencao" bg="surface" spacing="generous">
+      <BackgroundBeams color="rgba(74, 124, 92, 0.35)" beamCount={3} />
+      <InteractiveParticles preset="fireflies" color="#4A7C5C" count={20} speed={0.4} />
+      {/* Oscilloscope background — unique to paradoxo */}
+      <div className="absolute inset-0 pointer-events-none z-[1] flex items-center justify-center overflow-hidden">
+        <svg viewBox="0 0 800 200" className="w-full h-[300px] opacity-[0.06]" preserveAspectRatio="none">
+          <motion.path
+            d="M0,100 Q100,20 200,100 T400,100 T600,100 T800,100"
+            fill="none"
+            stroke="#4A7C5C"
+            strokeWidth="2"
+            initial={{ pathLength: 0, opacity: 0 }}
+            whileInView={{ pathLength: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 3, ease: 'easeOut' }}
+          />
+          <motion.path
+            d="M0,100 Q100,180 200,100 T400,100 T600,100 T800,100"
+            fill="none"
+            stroke="#E74C3C"
+            strokeWidth="1.5"
+            strokeDasharray="8 12"
+            initial={{ pathLength: 0 }}
+            whileInView={{ pathLength: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 3, delay: 0.5, ease: 'easeOut' }}
+          />
+        </svg>
+      </div>
       <div className="relative z-10">
         <CinematicHeadline
           overline="Customer Success"
           headline={content.csParadoxo.headline}
           align="left"
           size="display"
-          icon={<HeartHandshake className="w-4 h-4 text-[var(--accent-teal)]" />}
+          icon={<HeartHandshake className="w-4 h-4 text-[var(--accent-cs)]" />}
         />
 
         <ScrollReveal delay={0.1} className="mt-8 max-w-3xl">
@@ -1134,25 +1161,27 @@ export function CsParadoxo() {
         <div className="mt-16 flex flex-col md:flex-row gap-4 md:gap-0 items-stretch min-h-[280px]">
           {/* Left panel — "healthy" metrics */}
           <ScrollReveal variant="slide-left" delay={0.2} className="flex-1">
-            <div className="h-full p-8 rounded-l-xl md:rounded-r-none rounded-xl border border-[var(--accent-teal)]/20 bg-[var(--accent-teal-soft)]">
-              <Overline className="text-[var(--accent-teal)] mb-6 block">O que o numero diz</Overline>
+            <BorderRevealCard glowColor="rgba(74, 124, 92, 0.5)" tilt={false} className="h-full !p-8 !rounded-l-xl md:!rounded-r-none !rounded-xl !border-[var(--accent-cs)]/20 !bg-[var(--accent-cs)]/5">
+              <Overline className="text-[var(--accent-cs)] mb-6 block">O que o numero diz</Overline>
               <div className="space-y-4">
                 {content.csParadoxo.stats.slice(0, 2).map((stat) => (
                   <div key={stat.label}>
-                    <AnimatedCounter
+                    <CinematicCounter
                       value={stat.value}
                       suffix={stat.suffix}
-                      className="block text-[var(--accent-teal)] text-[clamp(1.5rem,4vw,2.5rem)] leading-none font-display"
+                      className="text-[clamp(1.5rem,4vw,2.5rem)]"
+                      color="#4A7C5C"
+                      glowIntensity="low"
                     />
                     <Body className="mt-1 text-sm">{stat.label}</Body>
                     <span className="font-mono text-[0.6rem] text-[var(--text-muted)]">{stat.source}</span>
                   </div>
                 ))}
               </div>
-            </div>
+            </BorderRevealCard>
           </ScrollReveal>
 
-          {/* Center divider — glowing gap */}
+          {/* Center divider — glowing gap with animated pulse */}
           <div className="hidden md:flex items-center justify-center w-16 relative">
             <motion.div
               className="w-px h-full bg-gradient-to-b from-transparent via-[var(--accent-cs)] to-transparent"
@@ -1161,43 +1190,54 @@ export function CsParadoxo() {
               viewport={{ once: true }}
               transition={{ duration: 0.8, delay: 0.5, ease: [0.16, 1, 0.3, 1] as const }}
             />
-            <span className="absolute font-display text-sm text-[var(--accent-cs)] bg-[var(--bg-surface)] px-2">vs</span>
+            <motion.span
+              className="absolute font-display text-sm text-[var(--accent-cs)] bg-[var(--bg-surface)] px-2"
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              vs
+            </motion.span>
           </div>
 
-          {/* Right panel — "reality" */}
+          {/* Right panel — "reality" with danger glow */}
           <ScrollReveal variant="slide-right" delay={0.3} className="flex-1">
-            <div className="h-full p-8 rounded-r-xl md:rounded-l-none rounded-xl border border-[var(--accent-red)]/20 bg-[rgba(231,76,60,0.15)]">
+            <BorderRevealCard glowColor="rgba(231, 76, 60, 0.5)" tilt={false} className="h-full !p-8 !rounded-r-xl md:!rounded-l-none !rounded-xl !border-[var(--accent-red)]/20 !bg-[rgba(231,76,60,0.08)]">
               <Overline className="text-[var(--accent-red)] mb-6 block">O que o cliente sente</Overline>
               <div>
-                <AnimatedCounter
+                <CinematicCounter
                   value={content.csParadoxo.stats[2].value}
                   suffix={content.csParadoxo.stats[2].suffix}
-                  className="block text-[var(--accent-red)] text-[clamp(1.5rem,4vw,2.5rem)] leading-none font-display"
+                  className="text-[clamp(1.5rem,4vw,2.5rem)]"
+                  color="#E74C3C"
+                  glowIntensity="medium"
                 />
                 <Body className="mt-1 text-sm">{content.csParadoxo.stats[2].label}</Body>
                 <span className="font-mono text-[0.6rem] text-[var(--text-muted)]">{content.csParadoxo.stats[2].source}</span>
               </div>
-            </div>
+            </BorderRevealCard>
           </ScrollReveal>
         </div>
 
-        {/* Heartbeat monitor — showing the paradox visually */}
+        {/* Heartbeat monitor — full-width dramatic */}
         <ScrollReveal delay={0.5} className="mt-12">
-          <div className="max-w-3xl mx-auto rounded-xl overflow-hidden border border-[var(--accent-teal)]/20 bg-[var(--bg-primary)]/80">
+          <div className="max-w-3xl mx-auto rounded-xl overflow-hidden border border-[var(--accent-cs)]/20 bg-[var(--bg-primary)]/80">
             <HeartbeatLine state="danger" className="h-[160px]" />
           </div>
         </ScrollReveal>
 
-        {/* Paradox insight — revealed below the tension */}
-        <ScrollReveal delay={0.7} className="mt-8">
-          <div className="text-center max-w-2xl mx-auto px-6 py-5 border-t border-b border-[var(--accent-cs)]/15">
-            <Body className="text-lg text-[var(--text-primary)] font-medium italic">
-              {content.csParadoxo.insight}
-            </Body>
-          </div>
+        {/* Paradox insight — MovingBorder for premium emphasis */}
+        <ScrollReveal delay={0.7} className="mt-10 flex justify-center">
+          <MovingBorder borderColor="var(--accent-cs)" duration={6} borderWidth={1} className="inline-block rounded-xl">
+            <div className="px-8 py-5 bg-[var(--bg-surface)] rounded-xl max-w-2xl">
+              <Body className="text-lg text-[var(--text-primary)] font-medium italic text-center">
+                {content.csParadoxo.insight}
+              </Body>
+            </div>
+          </MovingBorder>
         </ScrollReveal>
       </div>
     </Section>
+    </Spotlight>
   )
 }
 

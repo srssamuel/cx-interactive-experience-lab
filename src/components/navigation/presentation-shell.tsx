@@ -28,7 +28,7 @@ export function PresentationShell({
       <header
         className={cn(
           'fixed top-0 left-0 right-0 z-40 flex items-center justify-between px-6 py-4 transition-all duration-500',
-          'bg-[rgba(0,0,0,0.3)] backdrop-blur-md border-b border-[rgba(52,152,219,0.1)]',
+          'bg-[rgba(0,0,0,0.3)] backdrop-blur-md border-b border-[rgba(200,135,58,0.1)]',
           isStage && 'opacity-0 hover:opacity-100'
         )}
       >
