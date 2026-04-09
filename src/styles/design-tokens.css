@@ -1,14 +1,14 @@
 :root {
-  /* Palette — Deep Ocean Blue */
-  --bg-primary: #0A1628;
-  --bg-surface: #0F1E35;
-  --bg-elevated: #142842;
-  --bg-hover: #1A3356;
+  /* Palette — Midnight Authority */
+  --bg-primary: #0C0F14;
+  --bg-surface: #12161E;
+  --bg-elevated: #181D28;
+  --bg-hover: #1E2533;
 
-  --text-primary: #E0ECF8;
-  --text-secondary: #8BAAC8;
-  --text-tertiary: #4F7090;
-  --text-muted: #3A5A7A;
+  --text-primary: #E8EDF2;
+  --text-secondary: #8A919C;
+  --text-tertiary: #5A6270;
+  --text-muted: #3E4550;
 
   --accent-blue: #3498DB;
   --accent-blue-vivid: #5DADE2;
@@ -17,9 +17,9 @@
   --accent-blue-deep: #1A6BA8;
   --accent-ice: #D6EAF8;
 
-  /* Dimension accents */
-  --accent-cx: #42A5F5;
-  --accent-cs: #00BCD4;
+  /* Dimension accents — Midnight Authority palette */
+  --accent-cx: #C8873A;
+  --accent-cs: #4A7C5C;
   --accent-data: #26C6DA;
   --accent-ai: #7C4DFF;
 
@@ -28,16 +28,16 @@
   --accent-emerald: #1ABC9C;
   --accent-purple: #7C4DFF;
   --accent-red: #E74C3C;
-  --accent-amber: #F5A623;
-  --accent-amber-vivid: #FFB74D;
+  --accent-amber: #C8873A;
+  --accent-amber-vivid: #E8923A;
 
   /* Legacy compat — map old names to new palette */
-  --accent-green: #00BCD4;
-  --accent-green-soft: rgba(0, 188, 212, 0.15);
+  --accent-green: #4A7C5C;
+  --accent-green-soft: rgba(74, 124, 92, 0.15);
 
-  --border-subtle: rgba(52, 152, 219, 0.12);
-  --border-default: rgba(52, 152, 219, 0.22);
-  --border-hover: rgba(93, 173, 226, 0.40);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-default: rgba(255, 255, 255, 0.12);
+  --border-hover: rgba(255, 255, 255, 0.20);
 
   /* Typography — Geist Sans + Geist Mono */
   --font-display: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
@@ -87,41 +87,40 @@
   --shadow-glow-purple: 0 0 80px rgba(124, 77, 255, 0.4), 0 0 160px rgba(124, 77, 255, 0.15);
   --shadow-glow-ice: 0 0 80px rgba(174, 214, 241, 0.4), 0 0 160px rgba(174, 214, 241, 0.15);
 
-  /* Legacy compat */
-  --shadow-glow-amber: var(--shadow-glow-blue);
-  --shadow-glow-green: var(--shadow-glow-teal);
+  --shadow-glow-amber: 0 0 80px rgba(200, 135, 58, 0.45), 0 0 160px rgba(200, 135, 58, 0.15);
+  --shadow-glow-green: 0 0 80px rgba(74, 124, 92, 0.45), 0 0 160px rgba(74, 124, 92, 0.15);
 }
 
 /* Section Background Variants — semi-transparent for 3D scene bleed-through */
 .section-bg-primary {
-  background: radial-gradient(ellipse at 50% 50%, rgba(15,30,53,0.5) 0%, rgba(10,22,40,0.75) 70%);
+  background: radial-gradient(ellipse at 50% 50%, rgba(18,22,30,0.5) 0%, rgba(12,15,20,0.75) 70%);
 }
 .section-bg-surface {
-  background: radial-gradient(ellipse at 50% 50%, rgba(20,40,66,0.55) 0%, rgba(15,30,53,0.7) 70%);
+  background: radial-gradient(ellipse at 50% 50%, rgba(22,28,38,0.55) 0%, rgba(18,22,30,0.7) 70%);
 }
 .section-bg-elevated {
-  background: rgba(20,40,66,0.75);
+  background: rgba(22,28,38,0.75);
 }
 .section-bg-gradient-down {
-  background: linear-gradient(180deg, rgba(10,22,40,0.7) 0%, rgba(15,30,53,0.6) 50%, rgba(10,22,40,0.7) 100%);
+  background: linear-gradient(180deg, rgba(12,15,20,0.7) 0%, rgba(18,22,30,0.6) 50%, rgba(12,15,20,0.7) 100%);
 }
 .section-bg-gradient-up {
-  background: linear-gradient(180deg, rgba(15,30,53,0.6) 0%, rgba(10,22,40,0.7) 100%);
+  background: linear-gradient(180deg, rgba(18,22,30,0.6) 0%, rgba(12,15,20,0.7) 100%);
 }
 .section-bg-amber-glow {
-  background: radial-gradient(ellipse at 50% 0%, rgba(52, 152, 219, 0.30) 0%, rgba(52, 152, 219, 0.06) 40%, rgba(10,22,40,0.65) 80%);
+  background: radial-gradient(ellipse at 50% 0%, rgba(200, 135, 58, 0.30) 0%, rgba(200, 135, 58, 0.06) 40%, rgba(12,15,20,0.65) 80%);
 }
 .section-bg-green-glow {
-  background: radial-gradient(ellipse at 50% 100%, rgba(0, 188, 212, 0.30) 0%, rgba(0, 188, 212, 0.06) 40%, rgba(10,22,40,0.65) 80%);
+  background: radial-gradient(ellipse at 50% 100%, rgba(74, 124, 92, 0.30) 0%, rgba(74, 124, 92, 0.06) 40%, rgba(12,15,20,0.65) 80%);
 }
 .section-bg-blue-glow {
-  background: radial-gradient(ellipse at 50% 50%, rgba(52, 152, 219, 0.25) 0%, rgba(52, 152, 219, 0.04) 40%, rgba(10,22,40,0.60) 80%);
+  background: radial-gradient(ellipse at 50% 50%, rgba(52, 152, 219, 0.25) 0%, rgba(52, 152, 219, 0.04) 40%, rgba(12,15,20,0.60) 80%);
 }
 .section-bg-purple-glow {
-  background: radial-gradient(ellipse at 50% 50%, rgba(124, 77, 255, 0.25) 0%, rgba(124, 77, 255, 0.04) 40%, rgba(10,22,40,0.60) 80%);
+  background: radial-gradient(ellipse at 50% 50%, rgba(124, 77, 255, 0.25) 0%, rgba(124, 77, 255, 0.04) 40%, rgba(12,15,20,0.60) 80%);
 }
 .section-bg-vignette {
-  background: radial-gradient(ellipse at 50% 50%, rgba(15,30,53,0.5) 0%, rgba(10,22,40,0.7) 80%);
+  background: radial-gradient(ellipse at 50% 50%, rgba(18,22,30,0.5) 0%, rgba(12,15,20,0.7) 80%);
 }
 
 /* Grain Overlay — VISIBLE */
@@ -139,14 +138,14 @@
 
 /* Dot grid pattern for workshop sections */
 .dot-grid {
-  background-image: radial-gradient(circle, rgba(52,152,219,0.15) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
   background-size: 24px 24px;
 }
 
 /* Gradient border top accent */
 .gradient-border-top {
   border-top: 1px solid transparent;
-  border-image: linear-gradient(90deg, transparent, var(--accent-blue), transparent) 1;
+  border-image: linear-gradient(90deg, transparent, var(--accent-amber), transparent) 1;
 }
 
 /* Breathing animation for ambient elements */
@@ -169,9 +168,9 @@
   );
 }
 
-/* Gradient text effects — Blue palette */
+/* Gradient text effects */
 .text-gradient-amber {
-  background: linear-gradient(135deg, #5DADE2, #3498DB, #5DADE2);
+  background: linear-gradient(135deg, #E8923A, #C8873A, #F5A623);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -224,9 +223,9 @@
 .glass-card {
   backdrop-filter: blur(24px) saturate(200%);
   -webkit-backdrop-filter: blur(24px) saturate(200%);
-  background: rgba(10, 22, 40, 0.6);
-  border: 1px solid rgba(52, 152, 219, 0.2);
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(52, 152, 219, 0.1);
+  background: rgba(12, 15, 20, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 /* Pulse ring animation for stats */
@@ -250,7 +249,7 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(52,152,219,0.6), transparent);
+  background: linear-gradient(90deg, transparent, rgba(38,198,218,0.6), transparent);
   animation: scan-line 8s linear infinite;
   pointer-events: none;
 }
@@ -264,7 +263,7 @@
 .holo-border {
   border: 1px solid transparent;
   background-image: linear-gradient(var(--bg-surface), var(--bg-surface)),
-    linear-gradient(135deg, #42A5F5, #00BCD4, #7C4DFF, #42A5F5);
+    linear-gradient(135deg, #C8873A, #4A7C5C, #7C4DFF, #C8873A);
   background-origin: border-box;
   background-clip: padding-box, border-box;
   background-size: 100% 100%, 300% 300%;
