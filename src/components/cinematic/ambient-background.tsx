@@ -25,7 +25,7 @@ interface AmbientBackgroundProps {
 
 const variantStyles: Record<AmbientVariant, string> = {
   'radial-amber':
-    'bg-[radial-gradient(ellipse_at_30%_20%,rgba(52,152,219,0.50)_0%,rgba(52,152,219,0.12)_40%,transparent_70%)]',
+    'bg-[radial-gradient(ellipse_at_30%_20%,rgba(200,135,58,0.45)_0%,rgba(200,135,58,0.10)_40%,transparent_70%)]',
   'radial-blue':
     'bg-[radial-gradient(ellipse_at_30%_20%,rgba(52,152,219,0.50)_0%,rgba(52,152,219,0.12)_40%,transparent_70%)]',
   'radial-green':
