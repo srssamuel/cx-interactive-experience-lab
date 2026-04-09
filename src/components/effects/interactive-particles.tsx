@@ -173,7 +173,7 @@ const presets: Record<ParticlePreset, (color: string, count: number, speed: numb
 export function InteractiveParticles({
   className,
   preset = 'constellation',
-  color = '#3498DB',
+  color = '#C8873A',
   count = 60,
   speed = 1,
   interactive = true,

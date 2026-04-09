@@ -98,10 +98,10 @@ export function AnimatedEquation({ nodes, className }: AnimatedEquationProps) {
     return positions
   }
 
-  const nodeColors = ['#3498DB', '#5DADE2', '#42A5F5']
-  const lineColor = 'rgba(52, 152, 219, 0.4)'
-  const particleColor = '#5DADE2'
-  const particleGlowColor = '#D6EAF8'
+  const nodeColors = ['#C8873A', '#E8923A', '#F5A623']
+  const lineColor = 'rgba(200, 135, 58, 0.4)'
+  const particleColor = '#E8923A'
+  const particleGlowColor = '#F5E6D0'
 
   // Center orb pulse
   const centerPulse = 0.6 + Math.sin(time * 1.8) * 0.25
@@ -112,7 +112,7 @@ export function AnimatedEquation({ nodes, className }: AnimatedEquationProps) {
         ref={svgRef}
         viewBox="0 0 500 500"
         className="w-full h-auto"
-        style={{ filter: 'drop-shadow(0 0 60px rgba(52, 152, 219, 0.2))' }}
+        style={{ filter: 'drop-shadow(0 0 60px rgba(200, 135, 58, 0.2))' }}
       >
         <defs>
           {/* Node glow filter */}
@@ -142,8 +142,8 @@ export function AnimatedEquation({ nodes, className }: AnimatedEquationProps) {
 
           {/* Center orb radial */}
           <radialGradient id="aeq-center-orb">
-            <stop offset="0%" stopColor="rgba(93, 173, 226, 0.5)" />
-            <stop offset="40%" stopColor="rgba(52, 152, 219, 0.2)" />
+            <stop offset="0%" stopColor="rgba(232, 146, 58, 0.5)" />
+            <stop offset="40%" stopColor="rgba(200, 135, 58, 0.2)" />
             <stop offset="100%" stopColor="transparent" />
           </radialGradient>
 
@@ -151,7 +151,7 @@ export function AnimatedEquation({ nodes, className }: AnimatedEquationProps) {
           <radialGradient id="aeq-outer-ring">
             <stop offset="0%" stopColor="transparent" />
             <stop offset="70%" stopColor="transparent" />
-            <stop offset="85%" stopColor="rgba(52, 152, 219, 0.04)" />
+            <stop offset="85%" stopColor="rgba(200, 135, 58, 0.04)" />
             <stop offset="100%" stopColor="transparent" />
           </radialGradient>
         </defs>
@@ -171,7 +171,7 @@ export function AnimatedEquation({ nodes, className }: AnimatedEquationProps) {
           cx={cx}
           cy={cy}
           r={25 + Math.sin(time * 2.5) * 4}
-          fill="rgba(93, 173, 226, 0.12)"
+          fill="rgba(232, 146, 58, 0.12)"
           filter="url(#aeq-node-glow)"
         />
 
@@ -188,7 +188,7 @@ export function AnimatedEquation({ nodes, className }: AnimatedEquationProps) {
                 y1={from.y}
                 x2={to.x}
                 y2={to.y}
-                stroke="rgba(52, 152, 219, 0.15)"
+                stroke="rgba(200, 135, 58, 0.15)"
                 strokeWidth={8}
                 strokeLinecap="round"
                 filter="url(#aeq-line-glow)"
@@ -223,7 +223,7 @@ export function AnimatedEquation({ nodes, className }: AnimatedEquationProps) {
                 y1={from.y}
                 x2={to.x}
                 y2={to.y}
-                stroke="#D6EAF8"
+                stroke="#F5E6D0"
                 strokeWidth={1}
                 strokeLinecap="round"
                 strokeDasharray="4 36"
@@ -384,12 +384,12 @@ export function AnimatedEquation({ nodes, className }: AnimatedEquationProps) {
                 y={ly}
                 textAnchor="middle"
                 dominantBaseline="middle"
-                fill="#E0ECF8"
+                fill="#F5E6D0"
                 fontSize={15}
                 fontWeight={700}
                 letterSpacing={1}
                 style={{
-                  textShadow: `0 0 16px rgba(52, 152, 219, 0.5), 0 0 30px rgba(52, 152, 219, 0.2)`,
+                  textShadow: `0 0 16px rgba(200, 135, 58, 0.5), 0 0 30px rgba(200, 135, 58, 0.2)`,
                 }}
               >
                 {nodes[idx].label}

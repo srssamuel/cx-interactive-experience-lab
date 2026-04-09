@@ -23,7 +23,7 @@ const elements = [
 export function FloatingElements({
   className,
   count = 6,
-  color = 'var(--accent-blue)',
+  color = 'var(--accent-amber)',
 }: FloatingElementsProps) {
   const visibleElements = elements.slice(0, count)
 

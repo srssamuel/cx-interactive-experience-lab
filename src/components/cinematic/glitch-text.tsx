@@ -17,7 +17,7 @@ export function GlitchText({
   children,
   className,
   intensity = 'medium',
-  color = 'var(--accent-blue-vivid)',
+  color = 'var(--accent-amber-vivid)',
 }: GlitchTextProps) {
   const intensityMap = {
     low: { offset: '1px', duration: '4s' },

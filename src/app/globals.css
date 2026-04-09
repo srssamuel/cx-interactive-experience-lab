@@ -92,7 +92,7 @@ body {
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-blue);
+  background: var(--accent-amber);
 }
 
 /* Display Font — Geist Sans Black weight for headlines */
@@ -175,10 +175,10 @@ body {
 .gradient-divider-blue {
   border: none;
   height: 2px;
-  background: linear-gradient(90deg, transparent 5%, var(--accent-blue) 50%, transparent 95%);
+  background: linear-gradient(90deg, transparent 5%, var(--accent-data) 50%, transparent 95%);
   opacity: 0.5;
   margin: 0;
-  box-shadow: 0 0 20px rgba(52, 152, 219, 0.3), 0 0 60px rgba(52, 152, 219, 0.1);
+  box-shadow: 0 0 20px rgba(38, 198, 218, 0.3), 0 0 60px rgba(38, 198, 218, 0.1);
 }
 .gradient-divider-purple {
   border: none;

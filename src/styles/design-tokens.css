@@ -24,7 +24,7 @@
   --accent-ai: #7C4DFF;
 
   /* Utility accents */
-  --accent-teal: #00BCD4;
+  --accent-teal: #26C6DA;
   --accent-emerald: #1ABC9C;
   --accent-purple: #7C4DFF;
   --accent-red: #E74C3C;
@@ -177,21 +177,21 @@
   -webkit-text-fill-color: transparent;
 }
 .text-gradient-blue {
-  background: linear-gradient(135deg, #AED6F1, #3498DB, #1A6BA8);
+  background: linear-gradient(135deg, #26C6DA, #4DD0E1, #1A8A9E);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .text-gradient-multi {
-  background: linear-gradient(135deg, #42A5F5, #7C4DFF, #00BCD4);
+  background: linear-gradient(135deg, #C8873A, #7C4DFF, #26C6DA);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .text-gradient-cool {
-  background: linear-gradient(135deg, #00BCD4, #26C6DA);
+  background: linear-gradient(135deg, #26C6DA, #4DD0E1);
   background-size: 200% 200%;
   -webkit-background-clip: text;
   background-clip: text;

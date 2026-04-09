@@ -82,13 +82,13 @@ export function HeartbeatLine({ state = 'healthy', className }: HeartbeatLinePro
   const xOffsetRef = useRef<number>(0)
   const animRef = useRef<number>(0)
   const [currentColor, setCurrentColor] = useState(
-    state === 'danger' || state === 'flatline' ? '#E74C3C' : '#00BCD4'
+    state === 'danger' || state === 'flatline' ? '#E74C3C' : '#4A7C5C'
   )
 
   useEffect(() => {
     stateRef.current = state
     if (state === 'healthy') {
-      setCurrentColor('#00BCD4')
+      setCurrentColor('#4A7C5C')
     } else {
       setCurrentColor('#E74C3C')
     }
@@ -147,10 +147,10 @@ export function HeartbeatLine({ state = 'healthy', className }: HeartbeatLinePro
 
     ctx.clearRect(0, 0, displayWidth, displayHeight)
 
-    const mainColor = stateRef.current === 'healthy' ? '#00BCD4' : '#E74C3C'
+    const mainColor = stateRef.current === 'healthy' ? '#4A7C5C' : '#E74C3C'
     const glowColor =
       stateRef.current === 'healthy'
-        ? 'rgba(0, 188, 212, 0.6)'
+        ? 'rgba(74, 124, 92, 0.6)'
         : 'rgba(231, 76, 60, 0.6)'
     // Draw wide ambient glow layer
     ctx.save()
@@ -289,7 +289,7 @@ export function HeartbeatLine({ state = 'healthy', className }: HeartbeatLinePro
         animate={{
           background:
             state === 'healthy'
-              ? 'radial-gradient(ellipse at 70% 50%, rgba(0, 188, 212, 0.1) 0%, transparent 70%)'
+              ? 'radial-gradient(ellipse at 70% 50%, rgba(74, 124, 92, 0.1) 0%, transparent 70%)'
               : 'radial-gradient(ellipse at 70% 50%, rgba(231, 76, 60, 0.1) 0%, transparent 70%)',
         }}
         transition={{ duration: 1.5 }}
@@ -344,7 +344,7 @@ export function HeartbeatLine({ state = 'healthy', className }: HeartbeatLinePro
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="hb-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#5DADE2" strokeWidth="0.5" />
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#C8873A" strokeWidth="0.5" />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#hb-grid)" />

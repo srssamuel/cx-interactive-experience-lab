@@ -18,12 +18,12 @@ export function Card({
   hover = true,
 }: CardProps) {
   const accentMap = {
-    amber: { border: 'var(--accent-blue)', soft: 'var(--accent-blue-soft)', shadow: 'var(--shadow-glow-blue)' },
-    green: { border: 'var(--accent-teal)', soft: 'var(--accent-green-soft)', shadow: 'var(--shadow-glow-teal)' },
-    blue: { border: 'var(--accent-blue)', soft: 'var(--accent-blue-soft)', shadow: 'var(--shadow-glow-blue)' },
-    teal: { border: 'var(--accent-teal)', soft: 'var(--accent-green-soft)', shadow: 'var(--shadow-glow-teal)' },
+    amber: { border: 'var(--accent-amber)', soft: 'var(--accent-amber-soft)', shadow: 'var(--shadow-glow-amber)' },
+    green: { border: 'var(--accent-green)', soft: 'var(--accent-green-soft)', shadow: 'var(--shadow-glow-green)' },
+    blue: { border: 'var(--accent-amber)', soft: 'var(--accent-amber-soft)', shadow: 'var(--shadow-glow-amber)' },
+    teal: { border: 'var(--accent-green)', soft: 'var(--accent-green-soft)', shadow: 'var(--shadow-glow-green)' },
   }
-  const accent = accentMap[accentColor] || accentMap.blue
+  const accent = accentMap[accentColor] || accentMap.amber
 
   const variants = {
     default: 'bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-2xl p-8',
@@ -31,7 +31,7 @@ export function Card({
     highlight: `border-l-[3px] bg-[var(--bg-surface)]/50 rounded-r-xl p-8 border-l-[${accent.border}]`,
     stat: `bg-[var(--bg-surface)] rounded-2xl p-8 text-center shadow-[${accent.shadow}]`,
     minimal: 'p-6',
-    glow: `bg-[var(--bg-surface)] rounded-2xl p-8 border border-[var(--border-subtle)] shadow-[0_0_40px_rgba(52,152,219,0.1),inset_0_0_20px_rgba(52,152,219,0.03)]`,
+    glow: `bg-[var(--bg-surface)] rounded-2xl p-8 border border-[var(--border-subtle)] shadow-[0_0_40px_rgba(200,135,58,0.1),inset_0_0_20px_rgba(200,135,58,0.03)]`,
     accent: `rounded-2xl p-8 border bg-[${accent.soft}] border-[${accent.border}]/20`,
   }
 
