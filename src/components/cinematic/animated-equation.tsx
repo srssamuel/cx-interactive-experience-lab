@@ -410,5 +410,3 @@ export function AnimatedEquation({ nodes, className }: AnimatedEquationProps) {
     </div>
   )
 }
-
-export { AnimatedEquation as CapAnimatedEquation }
