@@ -14,15 +14,15 @@ import * as THREE from 'three'
 
 // Chapter color palette for reactive lighting
 const chapterPalette: Record<string, THREE.Color> = {
-  abertura: new THREE.Color('#3498DB'),
-  contexto: new THREE.Color('#5DADE2'),
-  cx: new THREE.Color('#42A5F5'),
-  cs: new THREE.Color('#00BCD4'),
+  abertura: new THREE.Color('#C8873A'),
+  contexto: new THREE.Color('#C8873A'),
+  cx: new THREE.Color('#C8873A'),
+  cs: new THREE.Color('#4A7C5C'),
   data: new THREE.Color('#26C6DA'),
   ai: new THREE.Color('#7C4DFF'),
-  convergencia: new THREE.Color('#3498DB'),
-  workshop: new THREE.Color('#00BCD4'),
-  fechamento: new THREE.Color('#AED6F1'),
+  convergencia: new THREE.Color('#C8873A'),
+  workshop: new THREE.Color('#4A7C5C'),
+  fechamento: new THREE.Color('#E8923A'),
 }
 
 function AtmosphericParticles({

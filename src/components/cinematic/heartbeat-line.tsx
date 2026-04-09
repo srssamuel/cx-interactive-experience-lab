@@ -353,5 +353,3 @@ export function HeartbeatLine({ state = 'healthy', className }: HeartbeatLinePro
     </div>
   )
 }
-
-export { HeartbeatLine as CapHeartbeatLine }
