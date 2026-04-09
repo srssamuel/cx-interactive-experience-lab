@@ -591,15 +591,14 @@ export function AiOndeGanha() {
         ))}
       </div>
 
-      {/* Insight — MovingBorder for premium */}
-      <ScrollReveal delay={0.7} className="mt-16 flex justify-center">
-        <MovingBorder borderColor="var(--accent-purple)" duration={5} borderWidth={1} className="inline-block rounded-xl">
-          <div className="px-8 py-6 bg-[var(--bg-surface)] rounded-xl max-w-3xl">
-            <Body className="text-lg text-[var(--text-primary)] font-medium italic">
-              {content.aiOndeGanha.insight}
-            </Body>
-          </div>
-        </MovingBorder>
+      {/* Insight — gradient border accent */}
+      <ScrollReveal delay={0.7} className="mt-16">
+        <div className="max-w-3xl mx-auto px-8 py-6 rounded-xl border-l-4 border-[var(--accent-purple)] bg-[var(--accent-purple)]/5 relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-[var(--accent-purple)]/8 to-transparent pointer-events-none" />
+          <Body className="text-lg text-[var(--text-primary)] font-medium italic relative z-10">
+            {content.aiOndeGanha.insight}
+          </Body>
+        </div>
       </ScrollReveal>
       </div>
     </Section>
@@ -1070,11 +1069,15 @@ function FlipCard({ front, back }: { front: string; back: string }) {
 
   return (
     <div
-      className="relative w-full"
+      className="relative w-full cursor-pointer"
       style={{ perspective: '600px' }}
+      role="button"
+      tabIndex={0}
+      aria-label={flipped ? back : front}
       onMouseEnter={() => setFlipped(true)}
       onMouseLeave={() => setFlipped(false)}
       onClick={() => setFlipped((f) => !f)}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setFlipped((f) => !f) } }}
     >
       <motion.div
         className="relative w-full min-h-[260px]"

@@ -10,12 +10,12 @@
   --text-tertiary: #5A6270;
   --text-muted: #3E4550;
 
-  --accent-blue: #26C6DA;
-  --accent-blue-vivid: #4DD0E1;
-  --accent-blue-light: #B2EBF2;
-  --accent-blue-soft: rgba(38, 198, 218, 0.15);
-  --accent-blue-deep: #1A8A9E;
-  --accent-ice: #E0F7FA;
+  --accent-blue: #2196B8;
+  --accent-blue-vivid: #35B0D0;
+  --accent-blue-light: #A8D8EA;
+  --accent-blue-soft: rgba(33, 150, 184, 0.15);
+  --accent-blue-deep: #176A82;
+  --accent-ice: #DAEDF5;
 
   /* Dimension accents — Midnight Authority palette */
   --accent-cx: #C8873A;
@@ -87,7 +87,7 @@
   --shadow-glow-blue: 0 0 80px rgba(38, 198, 218, 0.45), 0 0 160px rgba(38, 198, 218, 0.18);
   --shadow-glow-teal: 0 0 80px rgba(38, 198, 218, 0.45), 0 0 160px rgba(38, 198, 218, 0.15);
   --shadow-glow-purple: 0 0 80px rgba(124, 77, 255, 0.4), 0 0 160px rgba(124, 77, 255, 0.15);
-  --shadow-glow-ice: 0 0 80px rgba(174, 214, 241, 0.4), 0 0 160px rgba(174, 214, 241, 0.15);
+  --shadow-glow-ice: 0 0 80px rgba(178, 235, 242, 0.35), 0 0 160px rgba(178, 235, 242, 0.12);
 
   --shadow-glow-amber: 0 0 80px rgba(200, 135, 58, 0.45), 0 0 160px rgba(200, 135, 58, 0.15);
   --shadow-glow-green: 0 0 80px rgba(74, 124, 92, 0.45), 0 0 160px rgba(74, 124, 92, 0.15);

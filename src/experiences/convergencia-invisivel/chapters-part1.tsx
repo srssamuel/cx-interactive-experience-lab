@@ -1225,15 +1225,15 @@ export function CsParadoxo() {
           </div>
         </ScrollReveal>
 
-        {/* Paradox insight — MovingBorder for premium emphasis */}
+        {/* Paradox insight — holographic border emphasis */}
         <ScrollReveal delay={0.7} className="mt-10 flex justify-center">
-          <MovingBorder borderColor="var(--accent-cs)" duration={6} borderWidth={1} className="inline-block rounded-xl">
+          <div className="holo-border rounded-xl">
             <div className="px-8 py-5 bg-[var(--bg-surface)] rounded-xl max-w-2xl">
               <Body className="text-lg text-[var(--text-primary)] font-medium italic text-center">
                 {content.csParadoxo.insight}
               </Body>
             </div>
-          </MovingBorder>
+          </div>
         </ScrollReveal>
       </div>
     </Section>
