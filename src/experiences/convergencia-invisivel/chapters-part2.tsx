@@ -144,8 +144,9 @@ export function DataMaturidade() {
         <GsapTextReveal
           tag="h2"
           className="text-[clamp(1.75rem,4.5vw,3.5rem)] max-w-4xl"
-          variant="words"
-          stagger={0.06}
+          variant="chars"
+          stagger={0.018}
+          duration={0.7}
           glowColor="rgba(38, 198, 218, 0.3)"
         >
           {content.dataMaturidade.headline}
@@ -494,8 +495,8 @@ export function AiOndeGanha() {
       <GsapTextReveal
         tag="h2"
         className="text-[clamp(1.75rem,4.5vw,3.5rem)] max-w-3xl"
-        variant="words"
-        stagger={0.06}
+        variant="lines"
+        duration={1.0}
         glowColor="rgba(124, 77, 255, 0.4)"
       >
         {content.aiOndeGanha.headline}
@@ -677,15 +678,15 @@ export function ConvergenciaSistema() {
         />
       </div>
       <div className="relative z-10">
-        <Overline className="text-center mb-6 flex items-center justify-center gap-2"><Merge className="w-4 h-4 text-[var(--accent-blue)]" />A Convergencia</Overline>
+        <Overline className="text-center mb-6 flex items-center justify-center gap-2"><Merge className="w-4 h-4 text-[var(--accent-amber)]" />A Convergencia</Overline>
         <GsapTextReveal
           tag="h1"
           className="text-center text-[var(--text-hero)]"
           variant="chars"
           delay={0.2}
           stagger={0.025}
-          color="var(--accent-blue)"
-          glowColor="rgba(52, 152, 219, 0.6)"
+          color="var(--accent-amber)"
+          glowColor="rgba(200, 135, 58, 0.6)"
         >
           {content.convergenciaSistema.headline}
         </GsapTextReveal>
@@ -794,14 +795,15 @@ export function ConvergenciaLidera() {
       </div>
       <div className="relative z-10">
       <Overline className="mb-6 text-[var(--text-muted)] inline-flex items-center gap-2">
-        <Users className="w-4 h-4 text-[var(--accent-blue)]" />Lideranca
+        <Users className="w-4 h-4 text-[var(--accent-amber)]" />Lideranca
       </Overline>
       <GsapTextReveal
         tag="h2"
         className="text-[clamp(1.75rem,4.5vw,3.5rem)] max-w-3xl"
         variant="words"
-        stagger={0.06}
-        glowColor="rgba(52, 152, 219, 0.3)"
+        stagger={0.08}
+        scrub
+        glowColor="rgba(200, 135, 58, 0.3)"
       >
         {content.convergenciaLidera.headline}
       </GsapTextReveal>
@@ -938,14 +940,15 @@ export function WorkshopDiagnostico() {
       <PausePoint label="Workshop" />
 
       <Overline className="text-center mb-6 flex items-center justify-center gap-2">
-        <ClipboardCheck className="w-4 h-4 text-[var(--accent-blue)]" />Diagnostico
+        <ClipboardCheck className="w-4 h-4 text-[var(--accent-green)]" />Diagnostico
       </Overline>
       <GsapTextReveal
         tag="h2"
         className="text-center text-[clamp(1.75rem,4.5vw,3.5rem)] max-w-3xl mx-auto"
-        variant="words"
-        stagger={0.06}
-        glowColor="rgba(52, 152, 219, 0.3)"
+        variant="chars"
+        stagger={0.02}
+        duration={0.6}
+        glowColor="rgba(74, 124, 92, 0.35)"
       >
         {content.workshopDiagnostico.headline}
       </GsapTextReveal>
@@ -1136,14 +1139,14 @@ export function FechamentoJanela() {
       </div>
       <div className="relative z-10">
       <Overline className="mb-6 text-[var(--text-muted)] inline-flex items-center gap-2">
-        <Clock className="w-4 h-4 text-[var(--accent-blue)]" />Fechamento
+        <Clock className="w-4 h-4 text-[var(--accent-amber)]" />Fechamento
       </Overline>
       <GsapTextReveal
         tag="h2"
         className="text-[clamp(1.75rem,4.5vw,3.5rem)] max-w-3xl"
-        variant="words"
-        stagger={0.06}
-        glowColor="rgba(52, 152, 219, 0.3)"
+        variant="lines"
+        duration={1.4}
+        glowColor="rgba(200, 135, 58, 0.35)"
       >
         {content.fechamentoJanela.headline}
       </GsapTextReveal>
@@ -1242,7 +1245,7 @@ export function FechamentoProvocacao() {
             transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] as const }}
           >
             <Overline className="mb-8 flex items-center justify-center gap-2">
-              <Flame className="w-4 h-4 text-[var(--accent-blue)]" />Provocacao Final
+              <Flame className="w-4 h-4 text-[var(--accent-amber)]" />Provocacao Final
             </Overline>
           </motion.div>
 
@@ -1251,8 +1254,9 @@ export function FechamentoProvocacao() {
             className="text-[var(--text-hero)]"
             variant="chars"
             delay={0.3}
-            stagger={0.03}
-            glowColor="rgba(52, 152, 219, 0.4)"
+            stagger={0.04}
+            duration={1.2}
+            glowColor="rgba(200, 135, 58, 0.5)"
           >
             {content.fechamentoProvocacao.headline}
           </GsapTextReveal>

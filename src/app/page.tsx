@@ -18,7 +18,7 @@ const dimensions = [
     suffix: 'T',
     decimals: 1,
     desc: 'em risco global por experiencias que falham',
-    color: '#42A5F5',
+    color: '#C8873A',
     accent: 'pulse-ring',
   },
   {
@@ -28,7 +28,7 @@ const dimensions = [
     suffix: '%',
     decimals: 0,
     desc: 'NRR quando expansao supera aquisicao',
-    color: '#00BCD4',
+    color: '#4A7C5C',
     accent: 'rising-bar',
   },
   {
@@ -72,7 +72,7 @@ export default function PortalPage() {
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: 'radial-gradient(ellipse at 30% 40%, rgba(52,152,219,0.08) 0%, transparent 60%), radial-gradient(ellipse at 100% 100%, rgba(0,0,0,0.4) 0%, transparent 50%)',
+            background: 'radial-gradient(ellipse at 30% 40%, rgba(200,135,58,0.06) 0%, transparent 60%), radial-gradient(ellipse at 100% 100%, rgba(0,0,0,0.4) 0%, transparent 50%)',
           }}
         />
 
@@ -88,8 +88,8 @@ export default function PortalPage() {
             <div
               className="w-[40vw] h-[40vw] max-w-[500px] max-h-[500px] rounded-full"
               style={{
-                background: 'radial-gradient(circle, rgba(52,152,219,0.15) 0%, rgba(52,152,219,0.05) 40%, transparent 70%)',
-                boxShadow: '0 0 120px rgba(52,152,219,0.15), 0 0 240px rgba(52,152,219,0.05)',
+                background: 'radial-gradient(circle, rgba(200,135,58,0.12) 0%, rgba(200,135,58,0.04) 40%, transparent 70%)',
+                boxShadow: '0 0 120px rgba(200,135,58,0.12), 0 0 240px rgba(200,135,58,0.04)',
               }}
             />
             {/* Inner convergence rings */}
@@ -98,7 +98,7 @@ export default function PortalPage() {
                 key={i}
                 className="absolute inset-0 rounded-full border"
                 style={{
-                  borderColor: `rgba(52,152,219,${0.08 + i * 0.04})`,
+                  borderColor: `rgba(200,135,58,${0.06 + i * 0.03})`,
                   transform: `scale(${scale})`,
                 }}
                 {...(reducedMotion ? {} : {
@@ -113,7 +113,7 @@ export default function PortalPage() {
         <div className="relative z-10 w-full max-w-7xl mx-auto px-8 md:px-16 lg:px-24 2xl:px-32">
           <div className="max-w-3xl">
             <motion.span
-              className="block font-mono text-xs uppercase tracking-[0.3em] text-[var(--accent-blue-vivid)] mb-10"
+              className="block font-mono text-xs uppercase tracking-[0.3em] text-[var(--accent-amber-vivid)] mb-10"
               {...(motionProps ?? {
                 initial: { opacity: 0, x: -20 },
                 animate: { opacity: 1, x: 0 },
@@ -169,7 +169,7 @@ export default function PortalPage() {
                     transition: { duration: 0.5, delay: 1.2 + i * 0.15, ease },
                   })}
                 >
-                  {i > 0 && <span className="inline-block w-px h-4 bg-[var(--accent-blue)] opacity-40 mr-6 align-middle" />}
+                  {i > 0 && <span className="inline-block w-px h-4 bg-[var(--accent-amber)] opacity-40 mr-6 align-middle" />}
                   {item.text}
                 </motion.span>
               ))}
@@ -186,11 +186,10 @@ export default function PortalPage() {
               <MagneticButton strength={0.3} radius={120}>
                 <Link
                   href="/experiencias/convergencia-invisivel"
-                  className="group relative inline-flex items-center gap-4 px-10 py-5 text-base font-mono uppercase tracking-[0.12em] text-white rounded-sm transition-all duration-500"
+                  className="group relative inline-flex items-center gap-4 px-10 py-5 text-base font-mono uppercase tracking-[0.12em] text-white rounded-sm transition-all duration-500 hover:brightness-110"
                   style={{
-                    background: 'rgba(52,152,219,0.9)',
-                    boxShadow: '0 0 40px rgba(52,152,219,0.5), 0 0 80px rgba(52,152,219,0.25)',
-                    backdropFilter: 'blur(8px)',
+                    background: '#C8873A',
+                    boxShadow: '0 0 40px rgba(200,135,58,0.4), 0 0 80px rgba(200,135,58,0.15)',
                   }}
                 >
                   <span className="relative z-10">Iniciar Experiencia</span>
@@ -219,7 +218,7 @@ export default function PortalPage() {
           >
             scroll
           </motion.span>
-          <span className="block w-px h-12 bg-gradient-to-b from-transparent to-[var(--accent-blue)]" />
+          <span className="block w-px h-12 bg-gradient-to-b from-transparent to-[var(--accent-amber)]" />
         </motion.div>
       </section>
 
@@ -254,7 +253,7 @@ export default function PortalPage() {
             )
           })}
           {/* Convergence point glow */}
-          <circle cx="600" cy="200" r="4" fill="#3498DB" opacity="0.6">
+          <circle cx="600" cy="200" r="4" fill="#C8873A" opacity="0.6">
             <animate attributeName="r" values="3;8;3" dur="3s" repeatCount="indefinite" />
             <animate attributeName="opacity" values="0.6;0.2;0.6" dur="3s" repeatCount="indefinite" />
           </circle>
@@ -406,11 +405,10 @@ export default function PortalPage() {
                 <MagneticButton strength={0.25} radius={100}>
                   <Link
                     href="/experiencias/convergencia-invisivel"
-                    className="group inline-flex items-center gap-4 px-12 py-5 text-base font-mono uppercase tracking-[0.12em] text-white rounded-sm transition-all duration-500"
+                    className="group inline-flex items-center gap-4 px-12 py-5 text-base font-mono uppercase tracking-[0.12em] text-white rounded-sm transition-all duration-500 hover:brightness-110"
                     style={{
-                      background: 'rgba(52,152,219,0.85)',
-                      boxShadow: '0 0 50px rgba(52,152,219,0.5), 0 0 100px rgba(52,152,219,0.2)',
-                      backdropFilter: 'blur(8px)',
+                      background: '#C8873A',
+                      boxShadow: '0 0 50px rgba(200,135,58,0.4), 0 0 100px rgba(200,135,58,0.15)',
                     }}
                   >
                     Explorar os 22 capitulos
@@ -432,12 +430,12 @@ export default function PortalPage() {
           className="absolute inset-0 pointer-events-none"
           style={{ background: 'linear-gradient(180deg, transparent, rgba(0,0,0,0.5))' }}
         />
-        <div className="absolute inset-x-0 top-0 h-px" style={{ background: 'linear-gradient(90deg, transparent 10%, rgba(52,152,219,0.4) 50%, transparent 90%)' }} />
+        <div className="absolute inset-x-0 top-0 h-px" style={{ background: 'linear-gradient(90deg, transparent 10%, rgba(200,135,58,0.3) 50%, transparent 90%)' }} />
 
         <div className="relative z-10 max-w-5xl mx-auto px-8 md:px-16 lg:px-24 2xl:px-32 text-center">
           {/* Closing statement — keynote style */}
           <ScrollReveal>
-            <span className="font-mono text-xs uppercase tracking-[0.3em] text-[var(--accent-blue-vivid)] block mb-8">
+            <span className="font-mono text-xs uppercase tracking-[0.3em] text-[var(--accent-amber-vivid)] block mb-8">
               CX Experience Lab
             </span>
             <p className="font-display text-[clamp(1.8rem,4vw,3.2rem)] leading-[1.1] text-[var(--text-primary)] max-w-3xl mx-auto">
@@ -470,7 +468,7 @@ export default function PortalPage() {
           <ScrollReveal delay={0.3}>
             <div
               className="mt-20 pt-8 flex flex-col md:flex-row items-center justify-between gap-4"
-              style={{ borderTop: '1px solid rgba(52,152,219,0.12)' }}
+              style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}
             >
               <span className="font-mono text-xs text-[var(--text-muted)]">
                 2025 &mdash; Designed for stage presence
@@ -478,12 +476,12 @@ export default function PortalPage() {
               <div className="flex items-center gap-4">
                 <Link
                   href="/experiencias/convergencia-invisivel"
-                  className="font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--accent-blue-vivid)] hover:text-white transition-colors duration-300 flex items-center gap-2 group"
+                  className="font-mono text-[10px] uppercase tracking-[0.15em] text-[var(--accent-amber-vivid)] hover:text-white transition-colors duration-300 flex items-center gap-2 group"
                 >
                   Entrar
                   <ArrowRight className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-0.5" />
                 </Link>
-                <span className="w-px h-3 bg-[var(--accent-blue)] opacity-20" />
+                <span className="w-px h-3 bg-[var(--accent-amber)] opacity-20" />
                 <span className="font-mono text-[10px] text-[var(--text-muted)]">Next.js + Three.js + GSAP</span>
               </div>
             </div>

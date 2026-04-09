@@ -90,9 +90,10 @@ export function Abertura() {
               tag="h1"
               className="text-[clamp(1.5rem,4vw,3rem)]"
               variant="chars"
-              stagger={0.025}
+              stagger={0.02}
               delay={0.8}
-              glowColor="rgba(52, 152, 219, 0.5)"
+              duration={1.0}
+              glowColor="rgba(200, 135, 58, 0.5)"
             >
               {content.abertura.headline}
             </GsapTextReveal>
@@ -109,7 +110,7 @@ export function Abertura() {
           </motion.div>
 
           <motion.p
-            className="mt-12 font-display text-lg italic text-[var(--accent-blue)] max-w-lg"
+            className="mt-12 font-display text-lg italic text-[var(--accent-amber)] max-w-lg"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -156,14 +157,14 @@ export function ContextoMundoMudou() {
       <AmbientBackground variant="deep-ocean" />
       <div className="relative z-10">
         <Overline className="block mb-6 text-[var(--text-muted)] inline-flex items-center gap-2">
-          <Globe className="w-4 h-4 text-[var(--accent-blue)]" />Contexto
+          <Globe className="w-4 h-4 text-[var(--accent-amber)]" />Contexto
         </Overline>
         <GsapTextReveal
           tag="h2"
           className="text-[clamp(1.75rem,4.5vw,3.5rem)] max-w-4xl"
-          variant="words"
-          stagger={0.08}
-          glowColor="rgba(52, 152, 219, 0.3)"
+          variant="lines"
+          duration={1.2}
+          glowColor="rgba(200, 135, 58, 0.25)"
         >
           {content.contextoMundoMudou.headline}
         </GsapTextReveal>
@@ -174,7 +175,7 @@ export function ContextoMundoMudou() {
           <div className="absolute top-[60px] left-0 right-0 h-px hidden md:block">
             <motion.div
               className="h-full origin-left"
-              style={{ background: 'linear-gradient(90deg, rgba(52,152,219,0.1), rgba(52,152,219,0.5), rgba(52,152,219,0.1))' }}
+              style={{ background: 'linear-gradient(90deg, rgba(200,135,58,0.1), rgba(200,135,58,0.4), rgba(200,135,58,0.1))' }}
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
               viewport={{ once: true }}
@@ -269,7 +270,7 @@ export function ContextoIlusao() {
       </div>
       <div className="relative z-10">
       <Overline className="mb-6 text-[var(--text-muted)] inline-flex items-center gap-2">
-        <Sparkles className="w-4 h-4 text-[var(--accent-blue)]" />Contexto
+        <Sparkles className="w-4 h-4 text-[var(--accent-amber)]" />Contexto
       </Overline>
       {/* GlitchText headline — the illusion distorts */}
       <h2 className="font-display text-[clamp(1.75rem,4.5vw,3.5rem)] leading-[0.95] tracking-[-0.02em] max-w-3xl">
@@ -360,7 +361,7 @@ export function CxEquacao() {
       <AmbientBackground variant="radial-blue" breathe={true} />
       <FloatingElements count={6} color="var(--accent-blue)" />
       <div className="relative z-10">
-        <Overline className="text-center mb-6 inline-flex items-center gap-2 w-full justify-center"><BarChart3 className="w-4 h-4 text-[var(--accent-blue)]" />Customer Experience</Overline>
+        <Overline className="text-center mb-6 inline-flex items-center gap-2 w-full justify-center"><BarChart3 className="w-4 h-4 text-[var(--accent-cx)]" />Customer Experience</Overline>
         <TextReveal
           tag="h2"
           className="text-center text-[clamp(1.75rem,4vw,3.5rem)]"
@@ -431,14 +432,15 @@ export function CxExperiencia() {
       <AmbientBackground variant="bottom-fade" />
       <div className="relative z-10">
       <Overline className="mb-6 text-[var(--text-muted)] inline-flex items-center gap-2">
-        <TrendingUp className="w-4 h-4 text-[var(--accent-blue)]" />Customer Experience
+        <TrendingUp className="w-4 h-4 text-[var(--accent-cx)]" />Customer Experience
       </Overline>
       <GsapTextReveal
         tag="h2"
         className="text-[clamp(1.75rem,4.5vw,3.5rem)] max-w-3xl"
         variant="words"
-        stagger={0.06}
-        glowColor="rgba(52, 152, 219, 0.3)"
+        stagger={0.10}
+        duration={0.6}
+        glowColor="rgba(200, 135, 58, 0.3)"
       >
         {content.cxExperiencia.headline}
       </GsapTextReveal>
@@ -575,7 +577,7 @@ export function CxCusto() {
 
         {/* Actual content overlaid */}
         <div className="relative z-10">
-          <Overline className="mb-6 text-[var(--text-muted)] inline-flex items-center gap-2"><DollarSign className="w-4 h-4 text-[var(--accent-blue)]" />Customer Experience</Overline>
+          <Overline className="mb-6 text-[var(--text-muted)] inline-flex items-center gap-2"><DollarSign className="w-4 h-4 text-[var(--accent-cx)]" />Customer Experience</Overline>
           <TextReveal
             tag="h2"
             className="text-[clamp(1.75rem,4.5vw,3.5rem)] max-w-3xl"
@@ -654,14 +656,15 @@ export function CxReflexao() {
       </div>
       <div className="relative z-10">
       <Overline className="mb-6 text-[var(--text-muted)] inline-flex items-center gap-2">
-        <MessageSquare className="w-4 h-4 text-[var(--accent-blue)]" />Reflexao
+        <MessageSquare className="w-4 h-4 text-[var(--accent-cx)]" />Reflexao
       </Overline>
       <GsapTextReveal
         tag="h2"
         className="text-[clamp(1.75rem,4.5vw,3.5rem)] max-w-3xl"
-        variant="words"
-        stagger={0.06}
-        glowColor="rgba(52, 152, 219, 0.3)"
+        variant="chars"
+        stagger={0.015}
+        scrub
+        color="var(--accent-amber)"
       >
         {content.cxReflexao.headline}
       </GsapTextReveal>
