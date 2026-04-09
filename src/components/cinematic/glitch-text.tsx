@@ -74,7 +74,7 @@ export function GlitchText({
           mix-blend-mode: screen;
         }
         [data-text="${children}"]::after {
-          color: #00BCD4;
+          color: #26C6DA;
           animation: glitch-2 ${duration} infinite linear reverse;
           mix-blend-mode: screen;
         }

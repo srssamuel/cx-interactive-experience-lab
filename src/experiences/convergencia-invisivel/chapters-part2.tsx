@@ -19,6 +19,7 @@ import { GsapTextReveal } from '@/components/cinematic/gsap-text-reveal'
 import { CinematicCounter } from '@/components/cinematic/cinematic-counter'
 import { GlitchText } from '@/components/cinematic/glitch-text'
 import { InteractiveParticles } from '@/components/effects/interactive-particles'
+import { BackgroundBeams } from '@/components/effects/background-beams'
 import { LazyCinematicParticleField } from '@/components/three/lazy-cinematic-particle-field'
 import { LazyWaveDistortion } from '@/components/three/lazy-wave-distortion'
 import { Layers, ScanSearch, BrainCircuit, Trophy, ShieldAlert, Merge, Users, ClipboardCheck, MessagesSquare, Clock, Flame } from 'lucide-react'
@@ -485,9 +486,44 @@ export { AiOQueFaz as ChapterAiOQueFaz }
 
 export function AiOndeGanha() {
   const podiumDelays = [0.4, 0.2, 0.6]
+  const podiumHeights = ['md:min-h-[220px]', 'md:min-h-[300px]', 'md:min-h-[180px]']
   return (
-    <Section id="ai-onde-ganha" bg="primary">
-      <AmbientBackground variant="diagonal-split" />
+    <Spotlight className="w-full" color="rgba(124, 77, 255, 0.12)" size={800}>
+    <Section id="ai-onde-ganha" bg="primary" spacing="generous">
+      <AmbientBackground variant="radial-purple" />
+      <InteractiveParticles preset="constellation" color="#7C4DFF" count={40} interactive speed={0.5} />
+      {/* Neural network background — unique to AiOndeGanha */}
+      <div className="absolute inset-0 pointer-events-none z-[1] overflow-hidden">
+        <svg viewBox="0 0 600 400" className="w-full h-full opacity-[0.05]" preserveAspectRatio="xMidYMid slice">
+          {/* AI neural nodes */}
+          {[
+            { cx: 100, cy: 80 }, { cx: 200, cy: 200 }, { cx: 100, cy: 320 },
+            { cx: 300, cy: 120 }, { cx: 300, cy: 280 },
+            { cx: 500, cy: 80 }, { cx: 500, cy: 200 }, { cx: 500, cy: 320 },
+          ].map((pos, i) => (
+            <g key={i}>
+              <circle cx={pos.cx} cy={pos.cy} r="6" fill="#7C4DFF" opacity="0.6">
+                <animate attributeName="r" values="4;8;4" dur={`${2 + i * 0.3}s`} repeatCount="indefinite" />
+              </circle>
+            </g>
+          ))}
+          {/* Connections */}
+          {[
+            [0,3],[1,3],[1,4],[2,4],[3,5],[3,6],[4,6],[4,7],
+          ].map(([from, to], i) => {
+            const nodes = [
+              { cx: 100, cy: 80 }, { cx: 200, cy: 200 }, { cx: 100, cy: 320 },
+              { cx: 300, cy: 120 }, { cx: 300, cy: 280 },
+              { cx: 500, cy: 80 }, { cx: 500, cy: 200 }, { cx: 500, cy: 320 },
+            ]
+            return (
+              <line key={i} x1={nodes[from].cx} y1={nodes[from].cy} x2={nodes[to].cx} y2={nodes[to].cy} stroke="#B388FF" strokeWidth="1" opacity="0.4">
+                <animate attributeName="opacity" values="0.2;0.6;0.2" dur={`${3 + i * 0.4}s`} repeatCount="indefinite" />
+              </line>
+            )
+          })}
+        </svg>
+      </div>
       <div className="relative z-10">
       <Overline className="mb-6 text-[var(--accent-purple)] inline-flex items-center gap-2">
         <Trophy className="w-4 h-4" />Inteligencia Artificial
@@ -506,15 +542,15 @@ export function AiOndeGanha() {
       <div className="mt-16 flex flex-col md:flex-row items-end gap-6 max-w-5xl mx-auto">
         {content.aiOndeGanha.cases.map((c, i) => (
           <ScrollReveal key={c.company} delay={podiumDelays[i]} variant="rise" className="flex-1 w-full">
-            <motion.div
+            <BorderRevealCard
+              glowColor={i === 1 ? 'rgba(124, 77, 255, 0.6)' : 'rgba(124, 77, 255, 0.3)'}
               className={cn(
-                'relative rounded-2xl border overflow-hidden p-8 flex flex-col justify-end',
-                'md:min-h-[200px]',
+                'h-full !flex !flex-col !justify-end',
+                podiumHeights[i],
                 i === 1
-                  ? 'border-[var(--accent-purple)]/40 bg-[var(--accent-purple)]/10 md:min-h-[280px]'
-                  : 'border-[var(--border-subtle)] bg-[var(--bg-surface)]'
+                  ? '!border-[var(--accent-purple)]/40 !bg-[var(--accent-purple)]/8'
+                  : '!border-[var(--border-subtle)] !bg-[var(--bg-surface)]'
               )}
-              whileHover={{ y: -6, transition: { duration: 0.4 } }}
             >
               {/* Trophy icon for winner */}
               {i === 1 && (
@@ -550,21 +586,24 @@ export function AiOndeGanha() {
               <Body className="mt-4 text-base text-[var(--text-primary)] font-medium leading-snug relative z-10">
                 {c.result}
               </Body>
-            </motion.div>
+            </BorderRevealCard>
           </ScrollReveal>
         ))}
       </div>
 
-      {/* Insight — horizontal accent bar */}
-      <ScrollReveal delay={0.7} className="mt-16">
-        <div className="max-w-3xl mx-auto px-8 py-6 rounded-xl border-l-2 border-[var(--accent-purple)]/40 bg-[var(--accent-purple)]/8">
-          <Body className="text-lg text-[var(--text-primary)] font-medium italic">
-            {content.aiOndeGanha.insight}
-          </Body>
-        </div>
+      {/* Insight — MovingBorder for premium */}
+      <ScrollReveal delay={0.7} className="mt-16 flex justify-center">
+        <MovingBorder borderColor="var(--accent-purple)" duration={5} borderWidth={1} className="inline-block rounded-xl">
+          <div className="px-8 py-6 bg-[var(--bg-surface)] rounded-xl max-w-3xl">
+            <Body className="text-lg text-[var(--text-primary)] font-medium italic">
+              {content.aiOndeGanha.insight}
+            </Body>
+          </div>
+        </MovingBorder>
       </ScrollReveal>
       </div>
     </Section>
+    </Spotlight>
   )
 }
 
@@ -577,8 +616,20 @@ export { AiOndeGanha as ChapterAiOndeGanha }
 
 export function AiArmadilhas() {
   return (
-    <Section id="ai-armadilhas" bg="elevated" spacing="compact">
-      <AmbientBackground variant="diagonal-split" />
+    <Section id="ai-armadilhas" bg="elevated" spacing="generous">
+      <BackgroundBeams color="rgba(231, 76, 60, 0.25)" beamCount={3} />
+      {/* Danger zone ambient — scanning red line unique to this chapter */}
+      <div className="absolute inset-0 pointer-events-none z-[1] overflow-hidden">
+        <motion.div
+          className="absolute left-0 right-0 h-[2px]"
+          style={{
+            background: 'linear-gradient(90deg, transparent, rgba(231,76,60,0.5), transparent)',
+            boxShadow: '0 0 30px rgba(231,76,60,0.3)',
+          }}
+          animate={{ y: ['-100%', '100vh'] }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+        />
+      </div>
       <div className="relative z-10">
       <Overline className="text-center mb-6 text-sm tracking-[0.25em] uppercase text-[var(--accent-red)] flex items-center justify-center gap-2">
         <ShieldAlert className="w-4 h-4" />CAUTION
@@ -590,50 +641,61 @@ export function AiArmadilhas() {
         </GlitchText>
       </h2>
 
-      <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+      {/* Stacked danger cards — NOT a 3-col grid. Vertical stack with staggered widths */}
+      <div className="mt-16 space-y-6 max-w-4xl mx-auto">
         {content.aiArmadilhas.traps.map((trap, i) => (
           <ScrollReveal
             key={trap.name}
             delay={i * 0.18}
             variant={i % 2 === 0 ? 'slide-left' : 'slide-right'}
           >
-            <div
-              className="warning-stripes relative rounded-xl overflow-hidden border p-6 pt-20"
-              style={{ borderColor: 'rgba(231, 76, 60, 0.3)' }}
+            <motion.div
+              className="warning-stripes relative rounded-xl overflow-hidden border flex flex-col md:flex-row items-stretch"
+              style={{
+                borderColor: 'rgba(231, 76, 60, 0.3)',
+                marginLeft: `${i * 3}%`,
+                marginRight: `${(2 - i) * 3}%`,
+              }}
+              whileHover={{ x: 8, borderColor: 'rgba(231, 76, 60, 0.6)', transition: { duration: 0.3 } }}
             >
-              <span
-                className="absolute top-3 left-4 font-display text-[5rem] leading-none font-bold opacity-15 select-none"
-                style={{
-                  color: 'var(--accent-red, #E74C3C)',
-                  transform: `rotate(-8deg)`,
-                }}
-              >
-                {trap.icon.padStart(2, '0')}
-              </span>
+              {/* Danger index — left accent block */}
+              <div className="flex items-center justify-center px-6 py-4 md:py-0 md:min-w-[100px] bg-[var(--accent-red)]/10 border-b md:border-b-0 md:border-r border-[var(--accent-red)]/20">
+                <span className="font-display text-[3rem] md:text-[4rem] leading-none font-bold text-[var(--accent-red)] opacity-60">
+                  {trap.icon.padStart(2, '0')}
+                </span>
+              </div>
 
-              <SubHeading
-                as="h3"
-                className="relative z-10 text-lg mb-3 text-[var(--accent-red)]"
-              >
-                {trap.name}
-              </SubHeading>
-              <Body className="relative z-10 text-sm">{trap.desc}</Body>
-            </div>
+              {/* Content */}
+              <div className="p-6 flex-1">
+                <SubHeading
+                  as="h3"
+                  className="text-lg mb-2 text-[var(--accent-red)]"
+                >
+                  {trap.name}
+                </SubHeading>
+                <Body className="text-sm text-[var(--text-secondary)]">{trap.desc}</Body>
+              </div>
+            </motion.div>
           </ScrollReveal>
         ))}
       </div>
 
-      <ScrollReveal delay={0.5} variant="slide-left" className="mt-16 text-center">
-        <CinematicCounter
-          value={72}
-          suffix="%"
-          className="text-5xl md:text-6xl"
-          color="#E74C3C"
-          glowIntensity="high"
-        />
-        <Body className="mt-3 max-w-lg mx-auto">
-          {content.aiArmadilhas.statContext}
-        </Body>
+      {/* Stat — dramatic centered with MovingBorder */}
+      <ScrollReveal delay={0.5} variant="scale" className="mt-16 flex justify-center">
+        <MovingBorder borderColor="#E74C3C" duration={4} borderWidth={1} className="inline-block rounded-2xl">
+          <div className="px-12 py-8 bg-[var(--bg-primary)] rounded-2xl text-center">
+            <CinematicCounter
+              value={72}
+              suffix="%"
+              className="text-5xl md:text-6xl"
+              color="#E74C3C"
+              glowIntensity="high"
+            />
+            <Body className="mt-3 max-w-lg mx-auto">
+              {content.aiArmadilhas.statContext}
+            </Body>
+          </div>
+        </MovingBorder>
       </ScrollReveal>
       </div>
     </Section>
@@ -1050,10 +1112,30 @@ export function WorkshopDiscussao() {
     'O dado que conecta CX e CS e o que mostra comportamento, nao opiniao.',
     'O dono do sistema integrado e quem tem mandato sobre a experiencia end-to-end.',
   ]
+  const cardAccents = ['#C8873A', '#26C6DA', '#7C4DFF']
 
   return (
-    <Section id="workshop-discussao" bg="green-glow" className="dot-grid">
-      <FloatingElements count={6} color="var(--accent-teal)" />
+    <Spotlight className="w-full" color="rgba(74, 124, 92, 0.10)" size={700}>
+    <Section id="workshop-discussao" bg="green-glow" className="dot-grid" spacing="generous">
+      <FloatingElements count={8} color="var(--accent-cs)" />
+      <InteractiveParticles preset="fireflies" color="#4A7C5C" count={15} speed={0.3} />
+      {/* Speech bubble pattern background — unique to discussion */}
+      <div className="absolute inset-0 pointer-events-none z-[1] overflow-hidden opacity-[0.04]">
+        {[
+          { x: '10%', y: '20%', size: 60, delay: 0 },
+          { x: '80%', y: '15%', size: 45, delay: 1.5 },
+          { x: '65%', y: '70%', size: 55, delay: 3 },
+          { x: '25%', y: '75%', size: 40, delay: 2 },
+        ].map((bubble, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full border border-[var(--accent-cs)]"
+            style={{ left: bubble.x, top: bubble.y, width: bubble.size, height: bubble.size }}
+            animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.7, 0.3] }}
+            transition={{ duration: 4, delay: bubble.delay, repeat: Infinity }}
+          />
+        ))}
+      </div>
       <div className="relative z-10">
       <PausePoint label="Discussao em grupo" />
 
@@ -1062,27 +1144,54 @@ export function WorkshopDiscussao() {
         headline={content.workshopDiscussao.headline}
         align="center"
         size="display"
-        icon={<MessagesSquare className="w-4 h-4 text-[var(--accent-teal)]" />}
+        icon={<MessagesSquare className="w-4 h-4 text-[var(--accent-cs)]" />}
       />
 
-      <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+      {/* Staggered asymmetric flip cards — NOT uniform 3-col */}
+      <div className="mt-14 max-w-5xl mx-auto space-y-8">
         {content.workshopDiscussao.prompts.map((prompt, i) => (
-          <ScrollReveal key={i} delay={i * 0.2}>
-            <FlipCard
-              front={prompt}
-              back={backTexts[i] || `Reflexao ${i + 1}`}
-            />
+          <ScrollReveal key={i} delay={i * 0.2} variant={i % 2 === 0 ? 'slide-right' : 'slide-left'}>
+            <div
+              className="max-w-[85%]"
+              style={{ marginLeft: i % 2 === 0 ? '0' : 'auto' }}
+            >
+              <div className="flex items-start gap-4">
+                {/* Question number badge */}
+                <div
+                  className="shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-mono text-sm font-bold mt-1"
+                  style={{
+                    color: cardAccents[i],
+                    border: `2px solid ${cardAccents[i]}40`,
+                    background: `${cardAccents[i]}10`,
+                  }}
+                >
+                  {String(i + 1).padStart(2, '0')}
+                </div>
+                <FlipCard
+                  front={prompt}
+                  back={backTexts[i] || `Reflexao ${i + 1}`}
+                />
+              </div>
+            </div>
           </ScrollReveal>
         ))}
       </div>
 
-      <ScrollReveal delay={0.7} className="mt-8 text-center">
-        <Body className="text-sm text-[var(--text-muted)]">
-          Passe o mouse ou toque para revelar o contexto
-        </Body>
+      <ScrollReveal delay={0.7} className="mt-10 text-center">
+        <motion.div
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[var(--accent-cs)]/20 bg-[var(--accent-cs)]/5"
+          animate={{ opacity: [0.5, 1, 0.5] }}
+          transition={{ duration: 3, repeat: Infinity }}
+        >
+          <span className="w-2 h-2 rounded-full bg-[var(--accent-cs)] animate-pulse" />
+          <Body className="text-sm text-[var(--text-secondary)]">
+            Passe o mouse ou toque para revelar o contexto
+          </Body>
+        </motion.div>
       </ScrollReveal>
       </div>
     </Section>
+    </Spotlight>
   )
 }
 
@@ -1235,7 +1344,7 @@ export function FechamentoProvocacao() {
         chromaticAberration
         vignette
       />
-      <InteractiveParticles preset="fireflies" color="#AED6F1" count={25} speed={0.3} />
+      <InteractiveParticles preset="fireflies" color="#E8923A" count={25} speed={0.3} />
       <ParallaxContainer speed={0.12} className="relative z-10">
         <div className="flex flex-col items-center justify-center text-center min-h-[60vh]">
           <motion.div
@@ -1270,7 +1379,7 @@ export function FechamentoProvocacao() {
           >
             <MovingBorder borderColor="var(--accent-amber)" duration={5} borderWidth={1} className="inline-block rounded-lg">
               <div className="px-10 py-5 md:px-16 md:py-7 bg-[var(--bg-primary)]/80 rounded-lg">
-                <p className="font-display text-2xl md:text-4xl text-gradient-blue">
+                <p className="font-display text-2xl md:text-4xl text-gradient-amber">
                   {content.fechamentoProvocacao.subline}
                 </p>
               </div>
