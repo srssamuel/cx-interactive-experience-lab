@@ -2,17 +2,10 @@
 
 import { useRef, useMemo, useEffect, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { EffectComposer, Bloom, ChromaticAberration, Vignette } from '@react-three/postprocessing'
+import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing'
 import { BlendFunction } from 'postprocessing'
 import * as THREE from 'three'
 
-/*
- * Global WebGL Scene — fixed background Canvas
- * Responds to chapter index via context/props
- * Renders atmosphere: particles + depth fog + reactive lighting
- */
-
-// Chapter color palette for reactive lighting
 const chapterPalette: Record<string, THREE.Color> = {
   abertura: new THREE.Color('#C8873A'),
   contexto: new THREE.Color('#C8873A'),
@@ -26,7 +19,7 @@ const chapterPalette: Record<string, THREE.Color> = {
 }
 
 function AtmosphericParticles({
-  count = 1200,
+  count = 600,
   activeColor,
   intensity,
 }: {
@@ -47,15 +40,13 @@ function AtmosphericParticles({
     const vel = new Float32Array(count * 3)
     const sz = new Float32Array(count)
     for (let i = 0; i < count; i++) {
-      // Spread across a wide volume
-      pos[i * 3] = (Math.random() - 0.5) * 20
-      pos[i * 3 + 1] = (Math.random() - 0.5) * 12
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 15 - 3
-      // Slow drift velocities
-      vel[i * 3] = (Math.random() - 0.5) * 0.003
-      vel[i * 3 + 1] = (Math.random() - 0.5) * 0.002
+      pos[i * 3] = (Math.random() - 0.5) * 24
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 14
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 18 - 5
+      vel[i * 3] = (Math.random() - 0.5) * 0.002
+      vel[i * 3 + 1] = (Math.random() - 0.5) * 0.001
       vel[i * 3 + 2] = (Math.random() - 0.5) * 0.001
-      sz[i] = Math.random() * 2.5 + 0.5
+      sz[i] = Math.random() * 1.5 + 0.3
     }
     return [pos, vel, sz]
   }, [count])
@@ -64,29 +55,25 @@ function AtmosphericParticles({
     if (!meshRef.current) return
     const t = clock.elapsedTime
 
-    // Smooth color interpolation
-    currentColor.current.lerp(targetColor.current, 0.02)
+    currentColor.current.lerp(targetColor.current, 0.015)
     const mat = meshRef.current.material as THREE.PointsMaterial
     mat.color.copy(currentColor.current)
-    mat.opacity = 0.3 + intensity * 0.4
+    mat.opacity = 0.12 + intensity * 0.15
 
-    // Slow global rotation
-    meshRef.current.rotation.y = t * 0.008
-    meshRef.current.rotation.x = Math.sin(t * 0.006) * 0.05
+    meshRef.current.rotation.y = t * 0.005
+    meshRef.current.rotation.x = Math.sin(t * 0.004) * 0.03
 
-    // Drift particles
     const posAttr = meshRef.current.geometry.attributes.position
     const posArray = posAttr.array as Float32Array
     for (let i = 0; i < count; i++) {
       const ix = i * 3
-      posArray[ix] += velocities[ix] + Math.sin(t * 0.5 + i) * 0.0005
-      posArray[ix + 1] += velocities[ix + 1] + Math.cos(t * 0.3 + i * 0.5) * 0.0003
+      posArray[ix] += velocities[ix]
+      posArray[ix + 1] += velocities[ix + 1]
       posArray[ix + 2] += velocities[ix + 2]
 
-      // Wrap particles that drift too far
-      if (Math.abs(posArray[ix]) > 12) posArray[ix] *= -0.95
-      if (Math.abs(posArray[ix + 1]) > 8) posArray[ix + 1] *= -0.95
-      if (posArray[ix + 2] > 2 || posArray[ix + 2] < -18) velocities[ix + 2] *= -1
+      if (Math.abs(posArray[ix]) > 14) posArray[ix] *= -0.95
+      if (Math.abs(posArray[ix + 1]) > 9) posArray[ix + 1] *= -0.95
+      if (posArray[ix + 2] > 2 || posArray[ix + 2] < -20) velocities[ix + 2] *= -1
     }
     posAttr.needsUpdate = true
   })
@@ -98,68 +85,15 @@ function AtmosphericParticles({
         <bufferAttribute attach="attributes-size" args={[sizes, 1]} />
       </bufferGeometry>
       <pointsMaterial
-        size={0.055}
+        size={0.035}
         sizeAttenuation
         transparent
-        opacity={0.6}
+        opacity={0.2}
         depthWrite={false}
         blending={THREE.AdditiveBlending}
         color={activeColor}
       />
     </points>
-  )
-}
-
-// Depth fog planes — creates foreground/midground/background separation
-function DepthLayers({ activeColor }: { activeColor: THREE.Color }) {
-  const group = useRef<THREE.Group>(null)
-
-  useFrame(({ clock }) => {
-    if (!group.current) return
-    const t = clock.elapsedTime
-    group.current.children.forEach((child, i) => {
-      const mesh = child as THREE.Mesh
-      const mat = mesh.material as THREE.MeshBasicMaterial
-      mat.opacity = 0.02 + Math.sin(t * (0.3 + i * 0.1)) * 0.015
-    })
-  })
-
-  return (
-    <group ref={group}>
-      {/* Background layer — far */}
-      <mesh position={[0, 0, -12]}>
-        <planeGeometry args={[30, 18]} />
-        <meshBasicMaterial
-          color={activeColor}
-          transparent
-          opacity={0.06}
-          depthWrite={false}
-          blending={THREE.AdditiveBlending}
-        />
-      </mesh>
-      {/* Midground layer */}
-      <mesh position={[2, -1, -6]} rotation={[0, 0.1, 0]}>
-        <planeGeometry args={[15, 10]} />
-        <meshBasicMaterial
-          color={activeColor}
-          transparent
-          opacity={0.04}
-          depthWrite={false}
-          blending={THREE.AdditiveBlending}
-        />
-      </mesh>
-      {/* Foreground accent layer */}
-      <mesh position={[-3, 2, -4]} rotation={[0.05, -0.1, 0.02]}>
-        <planeGeometry args={[8, 6]} />
-        <meshBasicMaterial
-          color={activeColor}
-          transparent
-          opacity={0.025}
-          depthWrite={false}
-          blending={THREE.AdditiveBlending}
-        />
-      </mesh>
-    </group>
   )
 }
 
@@ -176,22 +110,15 @@ function SceneContent({ activeBlock, intensity }: SceneContentProps) {
 
   return (
     <>
-      <AtmosphericParticles count={1800} activeColor={activeColor} intensity={intensity} />
-      <DepthLayers activeColor={activeColor} />
+      <AtmosphericParticles count={600} activeColor={activeColor} intensity={intensity} />
       <EffectComposer>
         <Bloom
-          intensity={0.9 + intensity * 0.6}
-          luminanceThreshold={0.3}
-          luminanceSmoothing={0.5}
+          intensity={0.3 + intensity * 0.2}
+          luminanceThreshold={0.5}
+          luminanceSmoothing={0.7}
           mipmapBlur
         />
-        <ChromaticAberration
-          blendFunction={BlendFunction.NORMAL}
-          offset={new THREE.Vector2(0.0006 + intensity * 0.0006, 0.0006 + intensity * 0.0006)}
-          radialModulation
-          modulationOffset={0.3}
-        />
-        <Vignette darkness={0.5 + intensity * 0.25} offset={0.2} blendFunction={BlendFunction.NORMAL} />
+        <Vignette darkness={0.4} offset={0.25} blendFunction={BlendFunction.NORMAL} />
       </EffectComposer>
     </>
   )
@@ -202,7 +129,7 @@ interface GlobalSceneProps {
   intensity?: number
 }
 
-export function GlobalScene({ activeBlock = 'abertura', intensity = 0.5 }: GlobalSceneProps) {
+export function GlobalScene({ activeBlock = 'abertura', intensity = 0.3 }: GlobalSceneProps) {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -217,8 +144,8 @@ export function GlobalScene({ activeBlock = 'abertura', intensity = 0.5 }: Globa
   return (
     <div className="global-scene">
       <Canvas
-        camera={{ position: [0, 0, 8], fov: 55 }}
-        dpr={[1, 2]}
+        camera={{ position: [0, 0, 10], fov: 50 }}
+        dpr={[1, 1.5]}
         gl={{ antialias: false, alpha: true, powerPreference: 'high-performance' }}
         style={{ background: 'transparent' }}
       >

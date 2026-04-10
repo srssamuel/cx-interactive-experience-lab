@@ -20,7 +20,7 @@ export function AnimatedCounter({
   className,
   decimals = 0,
 }: AnimatedCounterProps) {
-  const [display, setDisplay] = useState('0')
+  const [display, setDisplay] = useState(value.toFixed(decimals))
   const ref = useRef<HTMLSpanElement>(null)
   const hasAnimated = useRef(false)
 
@@ -33,6 +33,9 @@ export function AnimatedCounter({
       setDisplay(value.toFixed(decimals))
       return
     }
+
+    // Start from 0 for animation
+    setDisplay((0).toFixed(decimals))
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -57,7 +60,7 @@ export function AnimatedCounter({
           observer.disconnect()
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.05 }
     )
 
     observer.observe(el)
