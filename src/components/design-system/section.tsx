@@ -43,7 +43,7 @@ export const Section = forwardRef<HTMLElement, SectionProps>(
         id={id}
         className={cn(
           `section-bg-${bg}`,
-          'relative h-[100dvh] overflow-y-auto overflow-x-hidden',
+          'relative min-h-[100dvh] flex flex-col justify-center overflow-hidden',
           fullHeight && 'section-fullscreen',
           className
         )}

@@ -13,8 +13,8 @@ interface SpotlightProps {
 export function Spotlight({
   children,
   className,
-  color = 'rgba(200, 135, 58, 0.30)',
-  size = 800,
+  color = 'rgba(200, 135, 58, 0.08)',
+  size = 600,
 }: SpotlightProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [isHovered, setIsHovered] = useState(false)
@@ -50,17 +50,9 @@ export function Spotlight({
       onMouseLeave={() => setIsHovered(false)}
       className={cn('relative', className)}
     >
-      {/* Ambient glow — always visible */}
+      {/* Spotlight gradient layer — follows mouse, very subtle */}
       <div
-        className="pointer-events-none absolute inset-0 z-0"
-        style={{
-          background: `radial-gradient(ellipse at 30% 40%, ${color}, transparent 60%)`,
-          opacity: 0.8,
-        }}
-      />
-      {/* Spotlight gradient layer — follows mouse */}
-      <div
-        className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-500"
+        className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-700"
         style={{
           background: `radial-gradient(${size}px circle at ${position.x}px ${position.y}px, ${color}, transparent 70%)`,
           opacity: isHovered ? 1 : 0,

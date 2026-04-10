@@ -17,10 +17,6 @@ interface CinematicCounterProps {
   glowIntensity?: 'low' | 'medium' | 'high'
 }
 
-/**
- * Dramatic number counter with glow effect.
- * The number counts up with GSAP and pulses with light.
- */
 export function CinematicCounter({
   value,
   prefix = '',
@@ -28,17 +24,11 @@ export function CinematicCounter({
   className,
   duration = 2.5,
   color = 'var(--accent-amber-vivid)',
-  glowIntensity = 'high',
+  glowIntensity: _glowIntensity = 'medium',
 }: CinematicCounterProps) {
   const numberRef = useRef<HTMLSpanElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const [displayValue, setDisplayValue] = useState(0)
-
-  const glowMap = {
-    low: '0 0 20px',
-    medium: '0 0 40px',
-    high: '0 0 60px',
-  }
+  const [displayValue, setDisplayValue] = useState(value)
 
   useEffect(() => {
     const el = containerRef.current
@@ -51,13 +41,14 @@ export function CinematicCounter({
       return
     }
 
+    // Start from 0 for animation
+    setDisplayValue(0)
     const obj = { val: 0 }
 
     ScrollTrigger.create({
       trigger: el,
-      start: 'top 80%',
+      start: 'top 90%',
       onEnter: () => {
-        // Counter animation
         gsap.to(obj, {
           val: value,
           duration,
@@ -67,20 +58,14 @@ export function CinematicCounter({
           },
         })
 
-        // Glow pulse animation
         if (numberRef.current) {
           gsap.fromTo(
             numberRef.current,
+            { opacity: 0.6, scale: 0.97 },
             {
-              textShadow: `${glowMap[glowIntensity]} transparent`,
-              scale: 0.95,
-              opacity: 0.5,
-            },
-            {
-              textShadow: `${glowMap[glowIntensity]} ${color}, 0 0 120px ${color}`,
-              scale: 1,
               opacity: 1,
-              duration: duration * 0.6,
+              scale: 1,
+              duration: duration * 0.5,
               ease: 'power3.out',
             }
           )
@@ -94,9 +79,8 @@ export function CinematicCounter({
         if (st.trigger === el) st.kill()
       })
     }
-  }, [value, duration, color, glowIntensity])
+  }, [value, duration, color, _glowIntensity])
 
-  // Format the display value
   const formatted = Number.isInteger(value)
     ? Math.round(displayValue).toLocaleString()
     : displayValue.toFixed(1)

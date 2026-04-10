@@ -36,8 +36,7 @@ body {
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  background: radial-gradient(ellipse at 50% 40%, rgba(200, 135, 58, 0.04) 0%, transparent 70%),
-    var(--bg-primary);
+  background: var(--bg-primary);
 }
 
 /* HTML OVERLAY LAYER — sits above the Canvas */
@@ -67,32 +66,24 @@ body {
   padding: clamp(2rem, 4vw, 6rem);
 }
 @supports not (height: 100dvh) {
-  .stage-slide {
-    height: 100vh;
-  }
-  .stage-slide-inner {
-    max-width: calc(100vh * 16 / 9);
-  }
+  .stage-slide { height: 100vh; }
+  .stage-slide-inner { max-width: calc(100vh * 16 / 9); }
 }
 
 ::selection {
-  background: rgba(200, 135, 58, 0.35);
+  background: rgba(200, 135, 58, 0.25);
   color: var(--text-primary);
 }
 
 /* Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg-primary);
-}
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: var(--border-hover);
-  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-amber);
+  background: rgba(255, 255, 255, 0.25);
 }
 
 /* Display Font — Geist Sans Black weight for headlines */
@@ -116,105 +107,34 @@ body {
   font-weight: 500;
 }
 
-/* Backdrop blur glass effect for cards */
-.glass {
-  backdrop-filter: blur(24px) saturate(200%);
-  -webkit-backdrop-filter: blur(24px) saturate(200%);
-  background: rgba(12, 15, 20, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.04);
-}
-
-/* Terminal aesthetic for AI chapters */
-.terminal-card {
-  font-family: var(--font-mono);
-  background: #060D1A;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0;
-  position: relative;
-}
-.terminal-card::before {
-  content: '>';
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  color: var(--accent-green);
-  font-size: 0.75rem;
-  opacity: 0.6;
-}
-
-/* Custom cursor — hide native cursor on desktop when active */
-.custom-cursor-active,
-.custom-cursor-active * {
-  cursor: none !important;
-}
-@media (hover: none) {
-  .custom-cursor-active,
-  .custom-cursor-active * {
-    cursor: auto !important;
-  }
-}
-
 /* Gradient divider between chapters */
 .gradient-divider {
   border: none;
-  height: 2px;
+  height: 1px;
   background: linear-gradient(90deg, transparent 5%, var(--accent-amber) 50%, transparent 95%);
-  opacity: 0.5;
+  opacity: 0.3;
   margin: 0;
-  box-shadow: 0 0 20px rgba(200, 135, 58, 0.3), 0 0 60px rgba(200, 135, 58, 0.1);
 }
 .gradient-divider-green {
   border: none;
-  height: 2px;
+  height: 1px;
   background: linear-gradient(90deg, transparent 5%, var(--accent-green) 50%, transparent 95%);
-  opacity: 0.5;
+  opacity: 0.3;
   margin: 0;
-  box-shadow: 0 0 20px rgba(74, 124, 92, 0.3), 0 0 60px rgba(74, 124, 92, 0.1);
 }
 .gradient-divider-blue {
   border: none;
-  height: 2px;
+  height: 1px;
   background: linear-gradient(90deg, transparent 5%, var(--accent-data) 50%, transparent 95%);
-  opacity: 0.5;
+  opacity: 0.3;
   margin: 0;
-  box-shadow: 0 0 20px rgba(38, 198, 218, 0.3), 0 0 60px rgba(38, 198, 218, 0.1);
 }
 .gradient-divider-purple {
   border: none;
-  height: 2px;
-  background: linear-gradient(90deg, transparent 5%, var(--accent-purple) 50%, transparent 95%);
-  opacity: 0.5;
-  margin: 0;
-  box-shadow: 0 0 20px rgba(124, 77, 255, 0.3), 0 0 60px rgba(124, 77, 255, 0.1);
-}
-
-/* Breathing glow for CTA buttons */
-@keyframes cta-glow {
-  0%, 100% { box-shadow: 0 0 30px rgba(200, 135, 58, 0.3), 0 0 60px rgba(200, 135, 58, 0.1); }
-  50% { box-shadow: 0 0 50px rgba(200, 135, 58, 0.5), 0 0 100px rgba(200, 135, 58, 0.2); }
-}
-.cta-glow {
-  animation: cta-glow 3s ease-in-out infinite;
-}
-
-/* Link hover underline — grows from left */
-.link-underline {
-  position: relative;
-  text-decoration: none;
-}
-.link-underline::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
   height: 1px;
-  background: currentColor;
-  transition: width var(--duration-normal) var(--ease-out);
-}
-.link-underline:hover::after {
-  width: 100%;
+  background: linear-gradient(90deg, transparent 5%, var(--accent-purple) 50%, transparent 95%);
+  opacity: 0.3;
+  margin: 0;
 }
 
 /* Fullscreen sections — dynamic viewport height */
@@ -227,27 +147,13 @@ body {
   z-index: 10;
 }
 @supports not (min-height: 100dvh) {
-  .section-fullscreen {
-    min-height: 100vh;
-  }
-}
-
-/* Stage/Presentation Mode */
-body.stage-mode {
-  overflow-y: auto;
-  scroll-snap-type: y mandatory;
-}
-body.stage-mode section {
-  scroll-snap-align: start;
-}
-body.stage-mode::-webkit-scrollbar {
-  width: 0;
+  .section-fullscreen { min-height: 100vh; }
 }
 
 /* Scroll indicator — animated chevron */
 @keyframes scroll-hint {
-  0%, 100% { opacity: 0.4; transform: translateY(0); }
-  50% { opacity: 0.8; transform: translateY(6px); }
+  0%, 100% { opacity: 0.3; transform: translateY(0); }
+  50% { opacity: 0.6; transform: translateY(4px); }
 }
 .scroll-indicator {
   animation: scroll-hint 2.5s ease-in-out infinite;
@@ -255,7 +161,7 @@ body.stage-mode::-webkit-scrollbar {
 @media (prefers-reduced-motion: reduce) {
   .scroll-indicator {
     animation: none;
-    opacity: 0.4;
+    opacity: 0.3;
   }
 }
 
